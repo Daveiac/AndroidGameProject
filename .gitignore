@@ -1,6 +1,13 @@
+# Java
 *.class
 
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.ear
+
+# IntelliJ
+.idea
+*.iml
+*.iws
+out
