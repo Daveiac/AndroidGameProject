@@ -11,3 +11,15 @@
 *.iml
 *.iws
 out
+
+# Misc
+*.pdf
+*.zip
+*.gz
+*.tar
+*.exe
+
+# Other/windows
+Thumbs.db
+*.tmp
+
