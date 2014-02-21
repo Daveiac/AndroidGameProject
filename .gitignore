@@ -12,6 +12,9 @@
 *.iws
 out
 
+# Generated files
+gen
+
 # Misc
 *.pdf
 *.zip
