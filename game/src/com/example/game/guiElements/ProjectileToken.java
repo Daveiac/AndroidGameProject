@@ -1,14 +1,6 @@
 package com.example.game.guiElements;
 
-import sheep.collision.CollisionListener;
-import sheep.game.Sprite;
-
-public class ProjectileToken extends Token implements CollisionListener {
+public class ProjectileToken extends Token {
 	// TODO
-
-	@Override
-	public void collided(Sprite a, Sprite b) {
-		// TODO
-	}
 
 }
