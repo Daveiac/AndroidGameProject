@@ -1,4 +1,4 @@
-package com.example.game.models;
+package no.ntnu.folk.game.models;
 
 import sheep.game.Sprite;
 

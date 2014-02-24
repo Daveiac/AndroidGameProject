@@ -1,4 +1,4 @@
-package com.example.game.states;
+package no.ntnu.folk.game.states;
 
 import sheep.game.State;
 
