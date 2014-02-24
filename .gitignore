@@ -16,6 +16,8 @@ out
 gen
 
 # Misc
+assets
+libs
 *.pdf
 *.zip
 *.gz

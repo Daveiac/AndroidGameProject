@@ -1,4 +1,4 @@
-package com.example.game;
+package no.ntnu.folk.game;
 
 import android.app.Activity;
 import android.os.Bundle;
