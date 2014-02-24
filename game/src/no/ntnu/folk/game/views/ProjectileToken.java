@@ -1,4 +1,4 @@
-package no.ntnu.folk.game.guiElements;
+package no.ntnu.folk.game.views;
 
 public class ProjectileToken extends Token {
 	// TODO
