@@ -2,12 +2,7 @@ package no.ntnu.folk.game.models;
 
 import no.ntnu.folk.game.models.enums.Projectiles;
 
-public class ProjectileModel {
-	/*
-	 * Constants for the direct and area damages of this projectile. If -1 this
-	 * projectile
-	 */
-
+public class ProjectileModel extends Model {
 	private int directDamage;
 	private int areaDamage;
 	private int areaDamageRange;
@@ -18,6 +13,7 @@ public class ProjectileModel {
 	 * @param projectile data for this projectile
 	 */
 	public ProjectileModel(Projectiles projectile) {
+		super(projectile.name(), projectile.getImageWidth(), projectile.getImageHeight());
 		this.directDamage = projectile.getDirectDamage();
 		this.areaDamage = projectile.getAreaDamage();
 		this.areaDamageRange = projectile.getAreaDamageRange();

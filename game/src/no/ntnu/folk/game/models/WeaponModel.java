@@ -2,7 +2,7 @@ package no.ntnu.folk.game.models;
 
 import no.ntnu.folk.game.models.enums.Weapons;
 
-public class WeaponModel {
+public class WeaponModel extends Model {
 	private final ProjectileModel projectile;
 
 	/**
@@ -11,6 +11,7 @@ public class WeaponModel {
 	 * @param weapon data for this weapon
 	 */
 	public WeaponModel(Weapons weapon) {
+		super(weapon.name(), weapon.getImageWidth(), weapon.getImageHeight());
 		this.projectile = new ProjectileModel(weapon.getProjectile());
 	}
 
