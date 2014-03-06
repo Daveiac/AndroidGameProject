@@ -19,8 +19,9 @@ public class WeaponToken extends Token {
 	 */
 	@Override
 	protected void setImages() {
-		images = new Image[0];
-		// TODO Fill the image array
+		images = new Image[]{
+				// TODO Fill the image array
+		};
 	}
 
 	// TODO
