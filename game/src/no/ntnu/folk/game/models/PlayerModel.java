@@ -1,5 +1,7 @@
 package no.ntnu.folk.game.models;
 
+import no.ntnu.folk.game.models.enums.Weapons;
+
 import java.util.ArrayList;
 
 /**
