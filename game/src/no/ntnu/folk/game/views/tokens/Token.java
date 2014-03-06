@@ -52,8 +52,16 @@ public abstract class Token extends Sprite {
 	 */
 	private void updateTransformationMatrix() {
 		transformation.setTranslate(-width / 2, -height / 2);   // Use the center of the sprite as center for drawing
+		// TODO scale for mirroring
+		transformation.postRotate(getRotation());
 		transformation.postTranslate(this.getX(), this.getY()); // getX and getY is located in Sprite
 	}
+	/**
+	 * Get the rotation of the images for tokens where this apply.
+	 *
+	 * @return token rotation. Tokens that does not rotate should return 0.
+	 */
+	protected abstract int getRotation();
 
 	@Override
 	public void draw(Canvas canvas) {

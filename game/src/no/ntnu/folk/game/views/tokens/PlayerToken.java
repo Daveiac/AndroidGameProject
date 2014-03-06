@@ -31,4 +31,11 @@ public class PlayerToken extends Token {
 	public PlayerModel getModel() {
 		return model;
 	}
+	/**
+	 * @return 0 as the player does not rotate.
+	 */
+	@Override
+	protected int getRotation() {
+		return 0;
+	}
 }
