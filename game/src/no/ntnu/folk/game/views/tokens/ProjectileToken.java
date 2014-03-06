@@ -31,5 +31,12 @@ public class ProjectileToken extends Token {
 	public ProjectileModel getModel() {
 		return model;
 	}
+	/**
+	 * @return the angle of the projectile. Calculated from it's velocity.
+	 */
+	@Override
+	protected int getRotation() {
+		return (int) Math.toDegrees(Math.acos(getSpeed().getX() / getSpeed().getLength()));
+	}
 
 }

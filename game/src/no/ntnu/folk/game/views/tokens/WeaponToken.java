@@ -5,6 +5,7 @@ import sheep.graphics.Image;
 
 public class WeaponToken extends Token {
 	private final WeaponModel model;
+	private int rotation = 0; // TODO implement
 
 	/**
 	 * @param model WeaponModel for this token
@@ -15,7 +16,7 @@ public class WeaponToken extends Token {
 	}
 
 	/**
-	 *  Fill the array containing the images for this token
+	 * Fill the array containing the images for this token
 	 */
 	@Override
 	protected void setImages() {
@@ -30,6 +31,14 @@ public class WeaponToken extends Token {
 	 */
 	public WeaponModel getModel() {
 		return model;
+	}
+
+	/**
+	 * @return The rotation of the weapon. (Based on where it is pointing.)
+	 */
+	@Override
+	protected int getRotation() {
+		return rotation;
 	}
 
 }
