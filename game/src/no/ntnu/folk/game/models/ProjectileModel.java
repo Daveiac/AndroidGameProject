@@ -1,23 +1,31 @@
 package no.ntnu.folk.game.models;
 
+import no.ntnu.folk.game.models.enums.Projectiles;
+
 public abstract class ProjectileModel {
 	/*
 	 * Constants for the direct and area damages of this projectile. If -1 this
 	 * projectile
 	 */
 	
-	private int collisionDamage;
+	private int directDamage;
 	private int areaDamage;
-	private int areaEffect;
+	private int areaDamageRange;
 
-	public int getCollisionDamage() {
-		return collisionDamage;
+	public ProjectileModel(Projectiles projectile) {
+		this.directDamage = projectile.getDirectDamage();
+		this.areaDamage = projectile.getAreaDamage();
+		this.areaDamageRange = projectile.getAreaDamageRange();
+	}
+
+	public int getDirectDamage() {
+		return directDamage;
 	}
 	public int getAreaDamage() {
 		return areaDamage;
 	}
-	public int getAreaEffect() {
-		return areaEffect;
+	public int getAreaDamageRange() {
+		return areaDamageRange;
 	}
 
 }
