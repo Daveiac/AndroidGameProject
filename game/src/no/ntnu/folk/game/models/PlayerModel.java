@@ -1,5 +1,6 @@
 package no.ntnu.folk.game.models;
 
+import no.ntnu.folk.game.models.enums.Teams;
 import no.ntnu.folk.game.models.enums.Weapons;
 
 import java.util.ArrayList;
@@ -9,32 +10,37 @@ import java.util.ArrayList;
  *
  * @author Rune
  */
-public class PlayerModel {
-	private final int TEAM_ID;
-	private final String NAME;
+public class PlayerModel extends Model {
+	private final Teams TEAM;
 	private int health;
 	private ArrayList<WeaponModel> weaponList;
 	private WeaponModel currentWeapon;
 
 	/**
-	 * @param name   Constant name for the player during gameplay, will be used to identify different players
-	 * @param teamID The ID for the team of this player
+	 * @param name Constant name for the player during gameplay, will be used to identify different players
+	 * @param team The ID for the team of this player
 	 */
-	public PlayerModel(String name, int teamID) {
-		this.TEAM_ID = teamID;
-		this.NAME = name;
+	public PlayerModel(String name, Teams team) {
+		super(name, 20, 10);
+		this.TEAM = team;
 		this.health = 100;
 		this.weaponList = Weapons.getDefaultWeapons();
 		this.currentWeapon = weaponList.get(0);
 	}
 
 	/**
-	 * @param weapon The weapon you want to add to the weaponlist for this player
+	 * @param weapon The weapon you want to add to the list of weapons for this player
 	 */
 	public void addToWeaponList(WeaponModel weapon) {
 		if (!weaponList.contains(weapon)) {
 			weaponList.add(weapon);
 		}
+	}
+	/**
+	 * @return player team
+	 */
+	public Teams getTeam() {
+		return TEAM;
 	}
 
 	/**
@@ -49,13 +55,6 @@ public class PlayerModel {
 	 */
 	public void setHealth(int health) {
 		this.health = health;
-	}
-
-	/**
-	 * @return Return the constant NAME for this player
-	 */
-	public String getName() {
-		return NAME;
 	}
 
 	/**
@@ -75,7 +74,7 @@ public class PlayerModel {
 	}
 
 	/**
-	 * @return Returns the ist of this players available weapons
+	 * @return Returns the list of this players available weapons
 	 */
 	public ArrayList<WeaponModel> getWeaponList() {
 		return this.weaponList;
