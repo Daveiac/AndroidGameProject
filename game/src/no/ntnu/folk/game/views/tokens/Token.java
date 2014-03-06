@@ -24,7 +24,9 @@ public abstract class Token extends Sprite {
 		this.name = name;
 		this.width = imageSize[0];
 		this.height = imageSize[1];
+		setImages();
 	}
+	protected abstract void setImages();
 
 	@Override
 	public void update(float dt) {
