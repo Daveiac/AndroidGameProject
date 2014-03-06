@@ -1,6 +1,7 @@
 package no.ntnu.folk.game.views.tokens;
 
 import no.ntnu.folk.game.models.PlayerModel;
+import sheep.graphics.Image;
 
 public class PlayerToken extends Token {
 	private PlayerModel model;
@@ -11,7 +12,15 @@ public class PlayerToken extends Token {
 	public PlayerToken(PlayerModel model) {
 		super(model.getName(), model.getImageSize());
 		this.model = model;
-		//TODO
+	}
+
+	/**
+	 *  Fill the array containing the images for this token
+	 */
+	@Override
+	protected void setImages() {
+		images = new Image[0];
+		// TODO Fill the image array
 	}
 
 	// TODO
@@ -22,5 +31,4 @@ public class PlayerToken extends Token {
 	public PlayerModel getModel() {
 		return model;
 	}
-
 }
