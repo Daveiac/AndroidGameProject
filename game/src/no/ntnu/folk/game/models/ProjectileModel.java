@@ -2,7 +2,7 @@ package no.ntnu.folk.game.models;
 
 import no.ntnu.folk.game.models.enums.Projectiles;
 
-public abstract class ProjectileModel {
+public class ProjectileModel {
 	/*
 	 * Constants for the direct and area damages of this projectile. If -1 this
 	 * projectile
