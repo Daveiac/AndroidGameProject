@@ -16,7 +16,7 @@ public class PlayerToken extends Token {
 	}
 
 	/**
-	 *  Fill the array containing the images for this token
+	 * Fill the array containing the images for this token
 	 */
 	@Override
 	protected void setImages() {
@@ -33,7 +33,7 @@ public class PlayerToken extends Token {
 		canvas.drawText(this.toString(),
 				getX() - model.getImageHeight() / 2,
 				getY() - model.getImageHeight() / 2,
-				((PlayerModel)model).getTeam().getTagColor());
+				((PlayerModel) model).getTeam().getTagColor());
 	}
 
 	/**

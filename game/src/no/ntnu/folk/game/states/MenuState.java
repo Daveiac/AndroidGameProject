@@ -8,7 +8,6 @@ import sheep.game.State;
 import sheep.graphics.Color;
 
 import static android.graphics.Color.BLACK;
-import static android.graphics.Color.WHITE;
 
 public abstract class MenuState extends State {
 	protected MenuItem[] menuItems;
@@ -20,6 +19,7 @@ public abstract class MenuState extends State {
 	}
 
 	protected abstract void addMenuItems();
+
 	protected abstract void clickMenuItem(MenuItem menuItem);
 
 	private MenuItem getMenuItemAt(MotionEvent event) {

@@ -2,12 +2,6 @@ package no.ntnu.folk.game.states;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
-import no.ntnu.folk.game.models.PlayerModel;
-import no.ntnu.folk.game.models.enums.Teams;
-import no.ntnu.folk.game.views.tokens.PlayerToken;
-import sheep.collision.CollisionLayer;
-import sheep.collision.CollisionListener;
-import sheep.game.Sprite;
 import sheep.game.State;
 import sheep.game.World;
 

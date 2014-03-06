@@ -10,7 +10,7 @@ public class Constants {
 	public static void setWindowSize(int[] windowSize) {
 		Constants.windowSize = windowSize;
 	}
-	
+
 	public static boolean isDebugging() {
 		return debugging;
 	}
