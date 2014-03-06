@@ -10,9 +10,8 @@ import java.util.ArrayList;
  *
  * @author Rune
  */
-public class PlayerModel {
+public class PlayerModel extends Model {
 	private final Teams TEAM;
-	private final String NAME;
 	private int health;
 	private ArrayList<WeaponModel> weaponList;
 	private WeaponModel currentWeapon;
@@ -22,8 +21,8 @@ public class PlayerModel {
 	 * @param team The ID for the team of this player
 	 */
 	public PlayerModel(String name, Teams team) {
+		super(name, 20, 10);
 		this.TEAM = team;
-		this.NAME = name;
 		this.health = 100;
 		this.weaponList = Weapons.getDefaultWeapons();
 		this.currentWeapon = weaponList.get(0);
@@ -59,13 +58,6 @@ public class PlayerModel {
 	}
 
 	/**
-	 * @return Return the constant NAME for this player
-	 */
-	public String getName() {
-		return NAME;
-	}
-
-	/**
 	 * @return The weapon that is currently active for this player
 	 */
 	public Object getCurrentWeapon() {
@@ -82,7 +74,7 @@ public class PlayerModel {
 	}
 
 	/**
-	 * @return Returns the ist of this players available weapons
+	 * @return Returns the list of this players available weapons
 	 */
 	public ArrayList<WeaponModel> getWeaponList() {
 		return this.weaponList;
