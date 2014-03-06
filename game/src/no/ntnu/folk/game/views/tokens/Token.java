@@ -77,6 +77,7 @@ public abstract class Token extends Sprite {
 	}
 	/**
 	 * Draw debug information using this.toString
+	 *
 	 * @param canvas
 	 */
 	protected void drawDebugInformation(Canvas canvas) {

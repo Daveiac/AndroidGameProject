@@ -14,7 +14,7 @@ public class ProjectileToken extends Token {
 	}
 
 	/**
-	 *  Fill the array containing the images for this token
+	 * Fill the array containing the images for this token
 	 */
 	@Override
 	protected void setImages() {
