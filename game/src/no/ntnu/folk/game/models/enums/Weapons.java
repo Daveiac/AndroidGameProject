@@ -9,7 +9,7 @@ public enum Weapons {
 	HANDGUN(Projectiles.BULLET),
 	ROCKET_LAUNCHER(Projectiles.ROCKET);
 
-	private Projectiles projectile;
+	private final Projectiles projectile;
 
 	private static WeaponModel[] defaultWeapons = new WeaponModel[]{
 			new WeaponModel(HANDGUN),
