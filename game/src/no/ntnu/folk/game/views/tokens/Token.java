@@ -2,7 +2,9 @@ package no.ntnu.folk.game.views.tokens;
 
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import no.ntnu.folk.game.Constants;
 import sheep.game.Sprite;
+import sheep.graphics.Color;
 import sheep.graphics.Image;
 
 public abstract class Token extends Sprite {
@@ -66,6 +68,22 @@ public abstract class Token extends Sprite {
 	@Override
 	public void draw(Canvas canvas) {
 		images[currentFrame].draw(canvas, transformation);
+		if (Constants.isDebugging()) {
+			drawDebugInformation(canvas);
+		}
+	}
+	/**
+	 * Draw debug information using this.toString
+	 * @param canvas
+	 */
+	protected void drawDebugInformation(Canvas canvas) {
+		canvas.drawText(this.toString(), getX() - width / 2, getY() - height / 2, Color.WHITE);
 	}
 
+	@Override
+	public String toString() {
+		return "Token{" +
+				"name='" + name + '\'' +
+				'}';
+	}
 }

@@ -1,5 +1,6 @@
 package no.ntnu.folk.game.views.tokens;
 
+import android.graphics.Canvas;
 import no.ntnu.folk.game.models.PlayerModel;
 import sheep.graphics.Image;
 
@@ -25,6 +26,11 @@ public class PlayerToken extends Token {
 
 	// TODO
 
+
+	@Override
+	protected void drawDebugInformation(Canvas canvas) {
+		canvas.drawText(this.toString(), getX() - width / 2, getY() - height / 2, model.getTeam().getTagColor());
+	}
 	/**
 	 * @return The model for this token
 	 */
