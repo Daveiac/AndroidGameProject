@@ -15,4 +15,8 @@ public enum Teams {
 		this.tagColor = tagColor;
 	}
 
+	public Color getTagColor() {
+		return tagColor;
+	}
+
 }

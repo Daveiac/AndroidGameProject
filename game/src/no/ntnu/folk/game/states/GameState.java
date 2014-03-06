@@ -2,48 +2,48 @@ package no.ntnu.folk.game.states;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
-import no.ntnu.folk.game.models.PlayerModel;
-import no.ntnu.folk.game.models.enums.Teams;
-import no.ntnu.folk.game.views.tokens.PlayerToken;
-import sheep.collision.CollisionListener;
-import sheep.game.Sprite;
 import sheep.game.State;
+import sheep.game.World;
 
 import static android.graphics.Color.BLACK;
 
-public class GameState extends State implements CollisionListener {
-	private PlayerToken player = new PlayerToken(new PlayerModel("Player 1", Teams.RED));
+public class GameState extends State {
+	private World gameWorld;
+	private GameLayer gameLayer;
 
-	// TODO
+	public GameState() {
+		gameWorld = new World();
+		gameLayer = new GameLayer();
+		gameWorld.addLayer(gameLayer);
+	}
 
 	@Override
 	public void update(float dt) {
-		super.update(dt);    // TODO
+		super.update(dt);
+		gameWorld.update(dt);
 	}
 	@Override
 	public void draw(Canvas canvas) {
 		if (canvas == null) return;
 		canvas.drawColor(BLACK);
 
-		// TODO
+		gameWorld.draw(canvas);
 	}
 
 	@Override
 	public boolean onTouchDown(MotionEvent event) {
-		return super.onTouchDown(event);    // TODO
+		gameLayer.onTouchDown(event);
+		return super.onTouchDown(event);
 	}
 	@Override
 	public boolean onTouchMove(MotionEvent event) {
-		return super.onTouchMove(event);    // TODO
+		gameLayer.onTouchMove(event);
+		return super.onTouchMove(event);
 	}
 	@Override
 	public boolean onTouchUp(MotionEvent event) {
-		return super.onTouchUp(event);    // TODO
-	}
-
-	@Override
-	public void collided(Sprite a, Sprite b) {
-		// TODO
+		gameLayer.onTouchUp(event);
+		return super.onTouchUp(event);
 	}
 
 }

@@ -15,11 +15,18 @@ public abstract class Model {
 	public String getName() {
 		return name;
 	}
+
 	/**
-	 * @return Image size for the token associated with this model
+	 * @return Image width for the token associated with this model
 	 */
-	public float[] getImageSize() {
-		return imageSize;
+	public float getImageWidth() {
+		return imageSize[0];
+	}
+	/**
+	 * @return Image height for the token associated with this model
+	 */
+	public float getImageHeight() {
+		return imageSize[1];
 	}
 
 }

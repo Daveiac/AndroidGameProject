@@ -2,20 +2,19 @@ package no.ntnu.folk.game.views.tokens;
 
 import no.ntnu.folk.game.models.ProjectileModel;
 import sheep.graphics.Image;
+import sheep.math.Vector2;
 
 public class ProjectileToken extends Token {
-	private final ProjectileModel model;
 
 	/**
 	 * @param model ProjectileModel for this token
 	 */
-	protected ProjectileToken(ProjectileModel model) {
-		super(model.getName(), model.getImageSize());
-		this.model = model;
+	protected ProjectileToken(ProjectileModel model, Vector2 position) {
+		super(model, position);
 	}
 
 	/**
-	 *  Fill the array containing the images for this token
+	 * Fill the array containing the images for this token
 	 */
 	@Override
 	protected void setImages() {
@@ -26,10 +25,11 @@ public class ProjectileToken extends Token {
 	// TODO
 
 	/**
-	 * @return The model for this token
+	 * @return the angle of the projectile. Calculated from it's velocity.
 	 */
-	public ProjectileModel getModel() {
-		return model;
+	@Override
+	protected int getRotation() {
+		return (int) Math.toDegrees(Math.acos(getSpeed().getX() / getSpeed().getLength()));
 	}
 
 }
