@@ -2,10 +2,13 @@ package no.ntnu.folk.game.states;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
+import no.ntnu.folk.game.Constants;
 import no.ntnu.folk.game.states.menus.MenuItem;
 import sheep.game.State;
+import sheep.graphics.Color;
 
 import static android.graphics.Color.BLACK;
+import static android.graphics.Color.WHITE;
 
 public abstract class MenuState extends State {
 	protected MenuItem[] menuItems;
@@ -38,6 +41,8 @@ public abstract class MenuState extends State {
 	public void draw(Canvas canvas) {
 		if (canvas == null) return;
 		canvas.drawColor(BLACK);
+
+		canvas.drawText(getClass().getSimpleName(), Constants.getWindowSize()[0] / 2, Constants.getWindowSize()[1] / 28, Color.WHITE);  // Temp
 
 		for (MenuItem menuItem : menuItems) {
 			menuItem.draw(canvas);

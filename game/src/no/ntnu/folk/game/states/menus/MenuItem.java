@@ -27,4 +27,7 @@ public class MenuItem extends BoundingBox {
 		float offset = 20;
 		canvas.drawText(label, xmin + offset, ymin + offset, Color.WHITE);
 	}
+	public String getLabel() {
+		return label;
+	}
 }
