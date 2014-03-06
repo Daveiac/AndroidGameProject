@@ -23,6 +23,8 @@ public class PreGameMenu extends MenuState {
 			case BACK:
 				getGame().popState();
 				break;
+			default:
+				break;
 		}
 	}
 
