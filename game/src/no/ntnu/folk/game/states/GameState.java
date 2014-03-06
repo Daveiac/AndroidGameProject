@@ -6,6 +6,8 @@ import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
 import sheep.game.State;
 
+import static android.graphics.Color.BLACK;
+
 public class GameState extends State implements CollisionListener {
 	// TODO
 
@@ -15,8 +17,12 @@ public class GameState extends State implements CollisionListener {
 	}
 	@Override
 	public void draw(Canvas canvas) {
-		super.draw(canvas);    // TODO
+		if (canvas == null) return;
+		canvas.drawColor(BLACK);
+
+		// TODO
 	}
+
 	@Override
 	public boolean onTouchDown(MotionEvent event) {
 		return super.onTouchDown(event);    // TODO
@@ -29,6 +35,7 @@ public class GameState extends State implements CollisionListener {
 	public boolean onTouchUp(MotionEvent event) {
 		return super.onTouchUp(event);    // TODO
 	}
+
 	@Override
 	public void collided(Sprite a, Sprite b) {
 		// TODO

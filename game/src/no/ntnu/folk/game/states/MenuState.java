@@ -5,6 +5,8 @@ import android.view.MotionEvent;
 import no.ntnu.folk.game.states.menus.MenuItem;
 import sheep.game.State;
 
+import static android.graphics.Color.BLACK;
+
 public abstract class MenuState extends State {
 	protected MenuItem[] menuItems;
 
@@ -30,12 +32,18 @@ public abstract class MenuState extends State {
 
 	@Override
 	public void update(float dt) {
-		super.update(dt);    // TODO
+		super.update(dt); // Do nothing
 	}
 	@Override
 	public void draw(Canvas canvas) {
-		super.draw(canvas);    // TODO
+		if (canvas == null) return;
+		canvas.drawColor(BLACK);
+
+		for (MenuItem menuItem : menuItems) {
+			menuItem.draw(canvas);
+		}
 	}
+
 	@Override
 	public boolean onTouchDown(MotionEvent event) {
 		menuItemTouched = getMenuItemAt(event);
