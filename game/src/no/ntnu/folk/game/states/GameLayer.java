@@ -9,6 +9,7 @@ import sheep.collision.CollisionListener;
 import sheep.game.Layer;
 import sheep.game.Sprite;
 import sheep.math.BoundingBox;
+import sheep.math.Vector2;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class GameLayer extends Layer implements CollisionListener {
 	private ArrayList<PlayerToken> players = new ArrayList<>();
 
 	public GameLayer() {
-		this.players.add(new PlayerToken(new PlayerModel("Player 1", Teams.RED)));
+		this.players.add(new PlayerToken(new PlayerModel("Player 1", Teams.RED), new Vector2(100, 100)));
 	}
 
 	@Override

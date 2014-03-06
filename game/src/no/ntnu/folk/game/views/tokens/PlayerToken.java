@@ -3,14 +3,15 @@ package no.ntnu.folk.game.views.tokens;
 import android.graphics.Canvas;
 import no.ntnu.folk.game.models.PlayerModel;
 import sheep.graphics.Image;
+import sheep.math.Vector2;
 
 public class PlayerToken extends Token {
 
 	/**
 	 * @param model PlayerModel for this token
 	 */
-	public PlayerToken(PlayerModel model) {
-		super(model);
+	public PlayerToken(PlayerModel model, Vector2 position) {
+		super(model, position);
 	}
 
 	/**

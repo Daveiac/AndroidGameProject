@@ -7,6 +7,7 @@ import no.ntnu.folk.game.models.Model;
 import sheep.game.Sprite;
 import sheep.graphics.Color;
 import sheep.graphics.Image;
+import sheep.math.Vector2;
 
 public abstract class Token extends Sprite {
 	// Model
@@ -22,8 +23,9 @@ public abstract class Token extends Sprite {
 	/**
 	 * @param model The model for this token
 	 */
-	protected Token(Model model) {
+	protected Token(Model model, Vector2 position) {
 		this.model = model;
+		setPosition(position);
 		setImages();
 	}
 	/**
