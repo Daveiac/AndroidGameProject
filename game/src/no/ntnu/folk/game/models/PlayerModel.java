@@ -1,5 +1,6 @@
 package no.ntnu.folk.game.models;
 
+import no.ntnu.folk.game.models.enums.Teams;
 import no.ntnu.folk.game.models.enums.Weapons;
 
 import java.util.ArrayList;
@@ -10,18 +11,18 @@ import java.util.ArrayList;
  * @author Rune
  */
 public class PlayerModel {
-	private final int TEAM_ID;
+	private final Teams TEAM;
 	private final String NAME;
 	private int health;
 	private ArrayList<WeaponModel> weaponList;
 	private WeaponModel currentWeapon;
 
 	/**
-	 * @param name   Constant name for the player during gameplay, will be used to identify different players
-	 * @param teamID The ID for the team of this player
+	 * @param name Constant name for the player during gameplay, will be used to identify different players
+	 * @param team The ID for the team of this player
 	 */
-	public PlayerModel(String name, int teamID) {
-		this.TEAM_ID = teamID;
+	public PlayerModel(String name, Teams team) {
+		this.TEAM = team;
 		this.NAME = name;
 		this.health = 100;
 		this.weaponList = Weapons.getDefaultWeapons();
@@ -29,12 +30,18 @@ public class PlayerModel {
 	}
 
 	/**
-	 * @param weapon The weapon you want to add to the weaponlist for this player
+	 * @param weapon The weapon you want to add to the list of weapons for this player
 	 */
 	public void addToWeaponList(WeaponModel weapon) {
 		if (!weaponList.contains(weapon)) {
 			weaponList.add(weapon);
 		}
+	}
+	/**
+	 * @return player team
+	 */
+	public Teams getTeam() {
+		return TEAM;
 	}
 
 	/**
