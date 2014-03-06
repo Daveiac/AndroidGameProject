@@ -6,15 +6,17 @@ import no.ntnu.folk.game.Constants;
 
 public class PlayerModel {
 
-	private String name;
+	private final int TEAM_ID;
+	private final String NAME;
 	private int health;
 	private String currentWeapon;
-	private ArrayList weaponList;
+	private ArrayList<String> weaponList;
 
-	public PlayerModel(String name, String currentWeapon) {
-		this.name = name;
-		this.currentWeapon = currentWeapon;
+	public PlayerModel(String name, int teamID) {
+		this.NAME = name;
+		this.currentWeapon = weaponList.get(0);
 		this.health = 100;
+		this.TEAM_ID = teamID;
 		weaponList = Constants.getDefaultWeapons();
 	}
 
@@ -32,19 +34,19 @@ public class PlayerModel {
 	}
 
 	public String getName() {
-		return name;
+		return NAME;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getCurrWeapon() {
 		return currentWeapon;
 	}
 
-	public void setCurrWeapon(String currentWeapon) {
-		this.currentWeapon = currentWeapon;
+	public void setCurrentWeapon(int weaponListPosition) {
+		currentWeapon = weaponList.get(weaponListPosition);
 	}
-
+	
+	public ArrayList<String> getWeaponList(){
+		return this.weaponList;
+	}
 }
