@@ -7,8 +7,17 @@ public abstract class ProjectileModel {
 	 */
 	
 	private int collisionDamage;
+	private int areaDamage;
+	private int areaEffect;
 
-	public abstract int getCollisionDamage();
-	public abstract int getAreaDamage();
-	public abstract int getAreaEffect();
+	public int getCollisionDamage() {
+		return collisionDamage;
+	}
+	public int getAreaDamage() {
+		return areaDamage;
+	}
+	public int getAreaEffect() {
+		return areaEffect;
+	}
+
 }
