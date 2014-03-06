@@ -6,8 +6,11 @@ public class PreGameMenu extends MenuState {
 	// TODO
 
 	@Override
-	protected void clickMenuItem() {
+	protected void addMenuItems() {
 		// TODO
 	}
-
+	@Override
+	protected void clickMenuItem(MenuItem menuItem) {
+		// TODO
+	}
 }
