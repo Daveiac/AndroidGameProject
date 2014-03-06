@@ -25,6 +25,7 @@ public abstract class Token extends Sprite {
 	 */
 	protected Token(Model model, Vector2 position) {
 		this.model = model;
+		setShape(model.getImageWidth(), model.getImageHeight());
 		setPosition(position);
 		setImages();
 	}
