@@ -83,7 +83,7 @@ public abstract class Token extends Sprite {
 	protected void drawDebugInformation(Canvas canvas) {
 		canvas.drawText(this.toString(),
 				getX() - model.getImageWidth() / 2,
-				getY() - model.getImageHeight() / 2,
+				getY() - model.getImageHeight() * 3 / 4,
 				Color.WHITE);
 	}
 
@@ -93,4 +93,5 @@ public abstract class Token extends Sprite {
 				"name='" + model.getName() + '\'' +
 				'}';
 	}
+
 }
