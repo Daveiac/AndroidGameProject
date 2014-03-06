@@ -42,3 +42,6 @@ Thumbs.db
 *.tmp
 
 game/.project
+
+# images
+/game/res/drawable
