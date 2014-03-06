@@ -4,4 +4,10 @@ import no.ntnu.folk.game.states.MenuState;
 
 public class EndGameMenu extends MenuState {
 	// TODO
+
+	@Override
+	protected void clickMenuItem() {
+		// TODO
+	}
+
 }
