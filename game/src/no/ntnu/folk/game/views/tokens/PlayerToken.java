@@ -1,6 +1,7 @@
 package no.ntnu.folk.game.views.tokens;
 
 import android.graphics.Canvas;
+import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.models.PlayerModel;
 import sheep.graphics.Image;
 import sheep.math.Vector2;
@@ -19,8 +20,9 @@ public class PlayerToken extends Token {
 	 */
 	@Override
 	protected void setImages() {
-		images = new Image[0];
-		// TODO Fill the image array
+		images = new Image[]{
+				new Image(R.drawable.player0)
+		};
 	}
 
 	// TODO

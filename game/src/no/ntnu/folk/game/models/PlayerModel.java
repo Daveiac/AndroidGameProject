@@ -21,7 +21,7 @@ public class PlayerModel extends Model {
 	 * @param team The ID for the team of this player
 	 */
 	public PlayerModel(String name, Teams team) {
-		super(name, 20, 10);
+		super(name, 50, 50);
 		this.TEAM = team;
 		this.health = 100;
 		this.weaponList = Weapons.getDefaultWeapons();
