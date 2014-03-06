@@ -25,7 +25,8 @@ public class GameState extends State {
 
 	@Override
 	public void update(float dt) {
-		super.update(dt);    // TODO
+		super.update(dt);
+		gameWorld.update(dt);
 	}
 	@Override
 	public void draw(Canvas canvas) {
