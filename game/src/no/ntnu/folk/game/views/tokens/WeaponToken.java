@@ -2,6 +2,7 @@ package no.ntnu.folk.game.views.tokens;
 
 import no.ntnu.folk.game.models.WeaponModel;
 import sheep.graphics.Image;
+import sheep.math.Vector2;
 
 public class WeaponToken extends Token {
 	private int rotation = 0; // TODO implement
@@ -9,8 +10,8 @@ public class WeaponToken extends Token {
 	/**
 	 * @param model WeaponModel for this token
 	 */
-	protected WeaponToken(WeaponModel model) {
-		super(model);
+	protected WeaponToken(WeaponModel model, Vector2 position) {
+		super(model, position);
 	}
 
 	/**

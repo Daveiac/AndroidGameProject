@@ -2,14 +2,15 @@ package no.ntnu.folk.game.views.tokens;
 
 import no.ntnu.folk.game.models.ProjectileModel;
 import sheep.graphics.Image;
+import sheep.math.Vector2;
 
 public class ProjectileToken extends Token {
 
 	/**
 	 * @param model ProjectileModel for this token
 	 */
-	protected ProjectileToken(ProjectileModel model) {
-		super(model);
+	protected ProjectileToken(ProjectileModel model, Vector2 position) {
+		super(model, position);
 	}
 
 	/**
