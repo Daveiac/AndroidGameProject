@@ -6,15 +6,14 @@ import no.ntnu.folk.game.states.MenuState;
 
 public class PreGameMenu extends MenuState {
 	//OPTIONS
-	private int playerCount = 1;
-	// TODO
+	private int playerCount = Constants.DEFAULT_PLAYER_COUNT;
 
 	@Override
 	protected void addMenuItems() {
 		int position = 0;
 		menuItems = new MenuItem[]{
 				new MenuItem(MenuOptions.START_GAME, position++),
-				new MenuItem(MenuOptions.PLAYER_COUNT, position++),
+				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(Constants.DEFAULT_PLAYER_COUNT)),
 				new MenuItem(MenuOptions.BACK, position++),
 		};
 	}
@@ -25,6 +24,7 @@ public class PreGameMenu extends MenuState {
 				getGame().pushState(new GameState());
 				break;
 			case PLAYER_COUNT:
+				changePlayerCount();
 				menuItem.setData(Integer.toString(playerCount));
 				break;
 			case BACK:

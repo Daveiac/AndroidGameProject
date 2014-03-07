@@ -8,6 +8,7 @@ public class Constants {
 	private static int buttonHeight;
 
 	public static final int MAX_PLAYERS = 6;
+	public static final int DEFAULT_PLAYER_COUNT = 1;
 
 	public static int[] getWindowSize() {
 		return windowSize;

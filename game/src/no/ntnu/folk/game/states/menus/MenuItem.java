@@ -13,15 +13,19 @@ public class MenuItem {
 	private final float ymin;
 	private final float ymax;
 
-	private String data; // TODO
+	private String data = "";
 
-	public MenuItem(MenuOptions option, int position) { // TODO make an easier to use constructor
+	public MenuItem(MenuOptions option, int position, String data) {
 		this.option = option;
+		this.data = data;
 		this.xmin = Constants.getButtonWidth() / 2;
 		this.xmax = Constants.getButtonWidth() / 2 * 3;
 		this.ymin = Constants.getButtonHeight() * (1 + position);
 		this.ymax = Constants.getButtonHeight() * (2 + position);
 		boundingBox = new BoundingBox(xmin, xmax, ymin, ymax);
+	}
+	public MenuItem(MenuOptions option, int position) {
+		this(option, position, "");
 	}
 
 	public void draw(Canvas canvas) {
@@ -29,8 +33,10 @@ public class MenuItem {
 		canvas.drawLine(xmin, ymax, xmax, ymax, Color.WHITE);
 		canvas.drawLine(xmin, ymin, xmin, ymax, Color.WHITE);
 		canvas.drawLine(xmax, ymin, xmax, ymax, Color.WHITE);
-		float offset = 20;
-		canvas.drawText(option.getLabel(), xmin + offset, ymin + offset, Color.WHITE);
+		float labelOffset = 20;
+		canvas.drawText(option.getLabel(), xmin + labelOffset, ymin + labelOffset, Color.WHITE);
+		float dataOffset = 40;
+		canvas.drawText(this.getData(), xmin + dataOffset, ymin + dataOffset, Color.WHITE);
 	}
 
 	public MenuOptions getOption() {
@@ -43,6 +49,7 @@ public class MenuItem {
 	public String getData() {
 		return data;
 	}
+
 	public boolean contains(float x, float y) {
 		return boundingBox.contains(x, y);
 	}
