@@ -45,3 +45,5 @@ game/.project
 
 # images
 /game/res/drawable
+game/.classpath
+game/project.properties
