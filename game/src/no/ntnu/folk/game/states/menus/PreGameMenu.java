@@ -4,8 +4,8 @@ import no.ntnu.folk.game.states.GameState;
 import no.ntnu.folk.game.states.MenuState;
 
 public class PreGameMenu extends MenuState {
-	public static final String START_GAME = "Start game";
-	public static final String BACK = "Back";
+	public static final int START_GAME = 0;
+	public static final int BACK = 4;
 	// TODO
 
 	@Override

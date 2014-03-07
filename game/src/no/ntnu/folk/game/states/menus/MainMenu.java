@@ -4,9 +4,9 @@ import no.ntnu.folk.game.states.GameState;
 import no.ntnu.folk.game.states.MenuState;
 
 public class MainMenu extends MenuState {
-	public static final String START_GAME = "Start game";
-	public static final String PRE_GAME_MENU = "Pre game menu";
-	public static final String LOAD_MENU = "Load menu";
+	public static final int START_GAME = 0;
+	public static final int PRE_GAME_MENU = 1;
+	public static final int LOAD_MENU = 2;
 
 	// TODO
 
