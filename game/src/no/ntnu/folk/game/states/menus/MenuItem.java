@@ -1,25 +1,31 @@
 package no.ntnu.folk.game.states.menus;
 
 import android.graphics.Canvas;
+import no.ntnu.folk.game.Constants;
 import sheep.graphics.Color;
 import sheep.math.BoundingBox;
 
-public class MenuItem extends BoundingBox {
+public class MenuItem {
+	private final BoundingBox boundingBox;
 	private final MenuOptions option;
 	private final float xmin;
 	private final float xmax;
 	private final float ymin;
 	private final float ymax;
 
-	private String data; // TODO
+	private String data = "";
 
-	public MenuItem(MenuOptions option, float xmin, float xmax, float ymin, float ymax) { // TODO make an easier to use constructor
-		super(xmin, xmax, ymin, ymax);
+	public MenuItem(MenuOptions option, int position, String data) {
 		this.option = option;
-		this.xmin = xmin;
-		this.xmax = xmax;
-		this.ymin = ymin;
-		this.ymax = ymax;
+		this.data = data;
+		this.xmin = Constants.getButtonWidth() / 2;
+		this.xmax = Constants.getButtonWidth() / 2 * 3;
+		this.ymin = Constants.getButtonHeight() * (1 + position);
+		this.ymax = Constants.getButtonHeight() * (2 + position);
+		boundingBox = new BoundingBox(xmin, xmax, ymin, ymax);
+	}
+	public MenuItem(MenuOptions option, int position) {
+		this(option, position, "");
 	}
 
 	public void draw(Canvas canvas) {
@@ -27,8 +33,10 @@ public class MenuItem extends BoundingBox {
 		canvas.drawLine(xmin, ymax, xmax, ymax, Color.WHITE);
 		canvas.drawLine(xmin, ymin, xmin, ymax, Color.WHITE);
 		canvas.drawLine(xmax, ymin, xmax, ymax, Color.WHITE);
-		float offset = 20;
-		canvas.drawText(option.getLabel(), xmin + offset, ymin + offset, Color.WHITE);
+		float labelOffset = 20;
+		canvas.drawText(option.getLabel(), xmin + labelOffset, ymin + labelOffset, Color.WHITE);
+		float dataOffset = 40;
+		canvas.drawText(this.getData(), xmin + dataOffset, ymin + dataOffset, Color.WHITE);
 	}
 
 	public MenuOptions getOption() {
@@ -40,5 +48,9 @@ public class MenuItem extends BoundingBox {
 	}
 	public String getData() {
 		return data;
+	}
+
+	public boolean contains(float x, float y) {
+		return boundingBox.contains(x, y);
 	}
 }

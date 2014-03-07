@@ -8,9 +8,10 @@ public class LoadMenu extends MenuState {
 
 	@Override
 	protected void addMenuItems() {
+		int position = 0;
 		menuItems = new MenuItem[]{
-				new MenuItem(MenuOptions.LOAD_GAME, 0, 100, 0, 100),
-				new MenuItem(MenuOptions.BACK, 100, 200, 0, 100),
+				new MenuItem(MenuOptions.LOAD_GAME, position++),
+				new MenuItem(MenuOptions.BACK, position++),
 		};
 	}
 	@Override
