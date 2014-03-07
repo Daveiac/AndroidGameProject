@@ -11,12 +11,11 @@ public class PreGameMenu extends MenuState {
 
 	@Override
 	protected void addMenuItems() {
-		final int x = Constants.getWindowSize()[0];
-		final int y = Constants.getWindowSize()[1];
+		int position = 0;
 		menuItems = new MenuItem[]{
-				new MenuItem(MenuOptions.START_GAME, x / 2 - x / 4, x / 2 + x / 4, 100, 200),
-				new MenuItem(MenuOptions.BACK, x / 2 - x / 4, x / 2 + x / 4, 200, 300),
-				new MenuItem(MenuOptions.PLAYER_COUNT, x / 2 - x / 4, x / 2 + x / 4, 300, 400),
+				new MenuItem(MenuOptions.START_GAME, position++),
+				new MenuItem(MenuOptions.PLAYER_COUNT, position++),
+				new MenuItem(MenuOptions.BACK, position++),
 		};
 	}
 	@Override
@@ -25,11 +24,11 @@ public class PreGameMenu extends MenuState {
 			case START_GAME:
 				getGame().pushState(new GameState());
 				break;
-			case BACK:
-				getGame().popState();
-				break;
 			case PLAYER_COUNT:
 				menuItem.setData(Integer.toString(playerCount));
+				break;
+			case BACK:
+				getGame().popState();
 				break;
 			default:
 				break;

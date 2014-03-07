@@ -9,10 +9,11 @@ public class MainMenu extends MenuState {
 
 	@Override
 	protected void addMenuItems() {
+		int position = 0;
 		menuItems = new MenuItem[]{
-				new MenuItem(MenuOptions.START_GAME, 0, 100, 0, 100),
-				new MenuItem(MenuOptions.PRE_GAME_MENU, 100, 200, 0, 100),
-				new MenuItem(MenuOptions.LOAD_MENU, 200, 300, 0, 100),
+				new MenuItem(MenuOptions.START_GAME, position++),
+				new MenuItem(MenuOptions.PRE_GAME_MENU, position++),
+				new MenuItem(MenuOptions.LOAD_MENU, position++),
 		};
 	}
 	@Override

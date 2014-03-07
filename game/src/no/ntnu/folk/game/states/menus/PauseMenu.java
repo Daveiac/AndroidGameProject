@@ -7,8 +7,9 @@ public class PauseMenu extends MenuState {
 
 	@Override
 	protected void addMenuItems() {
+		int position = 0;
 		menuItems = new MenuItem[]{
-				new MenuItem(MenuOptions.START_GAME, 0, 100, 0, 100),
+				new MenuItem(MenuOptions.START_GAME, position++),
 		};
 	}
 	@Override
