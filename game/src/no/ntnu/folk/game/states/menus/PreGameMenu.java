@@ -11,12 +11,12 @@ public class PreGameMenu extends MenuState {
 	@Override
 	protected void addMenuItems() {
 		menuItems = new MenuItem[2];
-		menuItems[0] = new MenuItem(START_GAME, 0, 100, 0, 100);
-		menuItems[1] = new MenuItem(BACK, 100, 200, 0, 100);
+		menuItems[0] = new MenuItem(START_GAME,"Start game", 0, 100, 0, 100);
+		menuItems[1] = new MenuItem(BACK,"Back", 100, 200, 0, 100);
 	}
 	@Override
 	protected void clickMenuItem(MenuItem menuItem) {
-		switch (menuItem.getLabel()) {
+		switch (menuItem.getState()) {
 			case START_GAME:
 				getGame().pushState(new GameState());
 				break;

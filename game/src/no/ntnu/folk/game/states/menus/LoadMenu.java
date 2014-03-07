@@ -10,12 +10,12 @@ public class LoadMenu extends MenuState {
 	@Override
 	protected void addMenuItems() {
 		menuItems = new MenuItem[2];
-		menuItems[0] = new MenuItem(Constants.LOAD_GAME, 0, 100, 0, 100);
-		menuItems[1] = new MenuItem(Constants.BACK, 100, 200, 0, 100);
+		menuItems[0] = new MenuItem(Constants.LOAD_GAME,"Load Game", 0, 100, 0, 100);
+		menuItems[1] = new MenuItem(Constants.BACK,"Back", 100, 200, 0, 100);
 	}
 	@Override
 	protected void clickMenuItem(MenuItem menuItem) {
-		switch (menuItem.getLabel()) {
+		switch (menuItem.getState()) {
 			case Constants.LOAD_GAME:  // TODO
 				getGame().pushState(new GameState());
 				break;

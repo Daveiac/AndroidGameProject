@@ -5,15 +5,17 @@ import sheep.graphics.Color;
 import sheep.math.BoundingBox;
 
 public class MenuItem extends BoundingBox {
-	private int label;
+	private String label;
+	private final int gameState;
 	private final float xmin;
 	private final float xmax;
 	private final float ymin;
 	private final float ymax;
 
-	public MenuItem(int startGame, float xmin, float xmax, float ymin, float ymax) { // TODO make an easier to use constructor
+	public MenuItem(int gameState,String label, float xmin, float xmax, float ymin, float ymax) { // TODO make an easier to use constructor
 		super(xmin, xmax, ymin, ymax);
-		this.label = startGame;
+		this.gameState = gameState;
+		this.label = label;
 		this.xmin = xmin;
 		this.xmax = xmax;
 		this.ymin = ymin;
@@ -25,9 +27,9 @@ public class MenuItem extends BoundingBox {
 		canvas.drawLine(xmin, ymin, xmin, ymax, Color.WHITE);
 		canvas.drawLine(xmax, ymin, xmax, ymax, Color.WHITE);
 		float offset = 20;
-		canvas.drawText(Integer.toString(label), xmin + offset, ymin + offset, Color.WHITE);
+		canvas.drawText(label, xmin + offset, ymin + offset, Color.WHITE);
 	}
-	public Integer getLabel() {
-		return label;
+	public Integer getState() {
+		return gameState;
 	}
 }
