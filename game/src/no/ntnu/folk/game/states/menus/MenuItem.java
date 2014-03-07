@@ -21,6 +21,7 @@ public class MenuItem extends BoundingBox {
 		this.ymin = ymin;
 		this.ymax = ymax;
 	}
+
 	public void draw(Canvas canvas) {
 		canvas.drawLine(xmin, ymin, xmax, ymin, Color.WHITE);
 		canvas.drawLine(xmin, ymax, xmax, ymax, Color.WHITE);
@@ -29,9 +30,11 @@ public class MenuItem extends BoundingBox {
 		float offset = 20;
 		canvas.drawText(option.getLabel(), xmin + offset, ymin + offset, Color.WHITE);
 	}
+
 	public MenuOptions getOption() {
 		return option;
 	}
+
 	public void setData(String data) {
 		this.data = data;
 	}
