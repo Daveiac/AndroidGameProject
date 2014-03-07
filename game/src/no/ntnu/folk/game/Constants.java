@@ -2,7 +2,7 @@ package no.ntnu.folk.game;
 
 public class Constants {
 	private static int[] windowSize;
-	private static final boolean debugging = true;
+	public static final boolean IS_DEBUGGING = true;
 	
 	public static final int MAX_PLAYERS = 6;
 
@@ -13,7 +13,4 @@ public class Constants {
 		Constants.windowSize = windowSize;
 	}
 
-	public static boolean isDebugging() {
-		return debugging;
-	}
 }

@@ -72,7 +72,7 @@ public abstract class Token extends Sprite {
 	@Override
 	public void draw(Canvas canvas) {
 		images[currentFrame].draw(canvas, transformation);
-		if (Constants.isDebugging()) {
+		if (Constants.IS_DEBUGGING) {
 			drawDebugInformation(canvas);
 		}
 	}
