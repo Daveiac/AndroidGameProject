@@ -9,17 +9,22 @@ public class PauseMenu extends MenuState {
 	protected void addMenuItems() {
 		int position = 0;
 		menuItems = new MenuItem[]{
-				new MenuItem(MenuOptions.START_GAME, position++),
+				new MenuItem(MenuOptions.SAVE_MENU, position++),
+				new MenuItem(MenuOptions.RETURN_TO_GAME, position++),
 		};
 	}
 	@Override
 	protected void clickMenuItem(MenuItem menuItem) {
 		switch (menuItem.getOption()) {
-			case START_GAME:
+			case SAVE_MENU:
+				getGame().pushState(new SaveMenu());
+				break;
+			case RETURN_TO_GAME:
 				getGame().popState();
 				break;
 			default:
 				break;
 		}
 	}
+
 }
