@@ -8,6 +8,8 @@ public class Constants {
 	public static final int LOAD_MENU = 2;
 	public static final int LOAD_GAME = 3;
 	public static final int BACK = 4;
+	
+	public static final int MAX_PLAYERS = 6;
 
 	public static int[] getWindowSize() {
 		return windowSize;

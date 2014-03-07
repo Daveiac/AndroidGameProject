@@ -10,14 +10,14 @@ public class PauseMenu extends MenuState {
 	@Override
 	protected void addMenuItems() {
 		menuItems = new MenuItem[1];
-		menuItems[0] = new MenuItem(Constants.START_GAME, "Return to game", 0, 100, 0, 100);
+		menuItems[0] = new MenuItem(Constants.START_GAME, "Return to game","", 0, 100, 0, 100);
 		// TODO
 	}
 	@Override
 	protected void clickMenuItem(MenuItem menuItem) {
 		switch (menuItem.getState()) {
 		case Constants.START_GAME:
-			getGame().pushState(new GameState()); //TODO Change to last game, not make a new game
+			getGame().popState();
 			break;
 		default:
 			break;
