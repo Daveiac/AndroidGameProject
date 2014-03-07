@@ -33,7 +33,7 @@ public enum Weapons {
 	 * @return List of weapons given to a player by default
 	 */
 	public static ArrayList<WeaponModel> getDefaultWeapons() {
-		return new ArrayList(Arrays.asList(defaultWeapons));
+		return new ArrayList<WeaponModel>(Arrays.asList(defaultWeapons));
 	}
 
 	/**
