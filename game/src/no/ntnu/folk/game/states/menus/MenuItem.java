@@ -3,6 +3,7 @@ package no.ntnu.folk.game.states.menus;
 import android.graphics.Canvas;
 import no.ntnu.folk.game.Constants;
 import sheep.graphics.Color;
+import sheep.graphics.Font;
 import sheep.math.BoundingBox;
 
 public class MenuItem {
@@ -34,9 +35,9 @@ public class MenuItem {
 		canvas.drawLine(xmin, ymin, xmin, ymax, Color.WHITE);
 		canvas.drawLine(xmax, ymin, xmax, ymax, Color.WHITE);
 		float labelOffset = 20;
-		canvas.drawText(option.getLabel(), xmin + labelOffset, ymin + labelOffset, Color.WHITE);
+		canvas.drawText(option.getLabel(), xmin + labelOffset, ymin + labelOffset, Font.WHITE_SANS_BOLD_20);
 		float dataOffset = 40;
-		canvas.drawText(this.getData(), xmin + dataOffset, ymin + dataOffset, Color.WHITE);
+		canvas.drawText(this.getData(), xmin + dataOffset, ymin + dataOffset, Font.WHITE_SANS_BOLD_16);
 	}
 
 	public MenuOptions getOption() {
