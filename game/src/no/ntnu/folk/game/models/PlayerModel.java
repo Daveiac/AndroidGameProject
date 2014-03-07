@@ -60,7 +60,7 @@ public class PlayerModel extends Model {
 	/**
 	 * @return The weapon that is currently active for this player
 	 */
-	public Object getCurrentWeapon() {
+	public WeaponModel getCurrentWeapon() {
 		return currentWeapon;
 	}
 

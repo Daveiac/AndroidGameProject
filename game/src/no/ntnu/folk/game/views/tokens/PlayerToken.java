@@ -21,7 +21,8 @@ public class PlayerToken extends Token {
 	@Override
 	protected void setImages() {
 		images = new Image[]{
-				new Image(R.drawable.player0)
+				new Image(R.drawable.player0),
+//				new Image(R.drawable.player1),
 		};
 	}
 
@@ -32,7 +33,7 @@ public class PlayerToken extends Token {
 	protected void drawDebugInformation(Canvas canvas) {
 		canvas.drawText(this.toString(),
 				getX() - model.getImageHeight() / 2,
-				getY() - model.getImageHeight() / 2,
+				getY() - model.getImageHeight() * 3 / 4,
 				((PlayerModel) model).getTeam().getTagColor());
 	}
 
@@ -43,4 +44,5 @@ public class PlayerToken extends Token {
 	protected int getRotation() {
 		return 0;
 	}
+
 }
