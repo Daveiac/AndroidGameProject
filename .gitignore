@@ -47,3 +47,4 @@ game/.project
 /game/res/drawable
 game/.classpath
 game/lint.xml
+game/project.properties
