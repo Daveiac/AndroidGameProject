@@ -1,6 +1,5 @@
 package no.ntnu.folk.game.states.menus;
 
-import no.ntnu.folk.game.Constants;
 import no.ntnu.folk.game.states.GameState;
 import no.ntnu.folk.game.states.MenuState;
 
