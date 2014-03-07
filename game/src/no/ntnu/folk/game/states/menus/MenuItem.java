@@ -11,6 +11,8 @@ public class MenuItem extends BoundingBox {
 	private final float ymin;
 	private final float ymax;
 
+	private String data; // TODO
+
 	public MenuItem(MenuOptions option, float xmin, float xmax, float ymin, float ymax) { // TODO make an easier to use constructor
 		super(xmin, xmax, ymin, ymax);
 		this.option = option;
@@ -29,5 +31,8 @@ public class MenuItem extends BoundingBox {
 	}
 	public MenuOptions getOption() {
 		return option;
+	}
+	public void setData(String data) {
+		this.data = data;
 	}
 }

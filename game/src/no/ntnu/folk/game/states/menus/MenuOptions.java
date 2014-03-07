@@ -5,7 +5,8 @@ public enum MenuOptions {
 	START_GAME("Start game"),
 	LOAD_MENU("Load an old game"),
 	LOAD_GAME("Load game"),
-	BACK("Back"),;
+	BACK("Back"),
+	PLAYER_COUNT("Player count");
 
 	private final String label;
 
