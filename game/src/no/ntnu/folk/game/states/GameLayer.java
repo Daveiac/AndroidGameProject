@@ -23,7 +23,9 @@ public class GameLayer extends Layer implements CollisionListener {
 			String name = "Player " + i;
 			Vector2 position = new Vector2(75 * (i + 1), 100 + (20 * i));
 			Teams team = i < playerCount / 2 ? Teams.RED : Teams.BLUE;
-			players.add(new PlayerModel(name, position, team));
+			PlayerModel player = new PlayerModel(name, position, team);
+			players.add(player);
+			player.addCollisionListener(this);
 		}
 	}
 
