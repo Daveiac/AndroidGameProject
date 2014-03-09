@@ -21,7 +21,7 @@ public class WeaponToken extends Token {
 	@Override
 	protected void setImages() {
 		images = new Image[]{
-				new Image(R.drawable.bullet_medium), // TODO proper image
+				new Image(R.drawable.handgun),
 		};
 	}
 

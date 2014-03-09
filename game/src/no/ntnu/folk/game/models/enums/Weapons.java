@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public enum Weapons {
-	HANDGUN(Projectiles.BULLET, 15, 10),
+	HANDGUN(Projectiles.BULLET, 49, 36),
 	ROCKET_LAUNCHER(Projectiles.ROCKET, 28, 16);  // TODO set proper values
 
 	private final Projectiles projectile;

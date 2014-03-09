@@ -35,7 +35,9 @@ public class PlayerToken extends Token {
 				this.toString(),
 				model.getX() - model.getImageHeight() / 2,
 				model.getY() - model.getImageHeight() * 3 / 4,
-				((PlayerModel) model).getTeam().getTagColor());
+				((PlayerModel) model).getTeam().getTagColor()
+		);
+		drawOutline(canvas);
 	}
 
 	/**

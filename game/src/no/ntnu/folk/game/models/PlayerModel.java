@@ -1,5 +1,6 @@
 package no.ntnu.folk.game.models;
 
+import android.graphics.Canvas;
 import no.ntnu.folk.game.models.enums.Teams;
 import no.ntnu.folk.game.models.enums.Weapons;
 import no.ntnu.folk.game.views.tokens.PlayerToken;
@@ -41,6 +42,19 @@ public class PlayerModel extends Model {
 	protected Token createToken() {
 		return new PlayerToken(this);
 	}
+
+	@Override
+	public void update(float dt) {
+		super.update(dt);
+		currentWeapon.setPosition(getPosition());
+		currentWeapon.update(dt);
+	}
+	@Override
+	public void draw(Canvas canvas) {
+		super.draw(canvas);
+		currentWeapon.draw(canvas);
+	}
+
 	/**
 	 * @param weapon The weapon you want to add to the list of weapons for this player
 	 */
