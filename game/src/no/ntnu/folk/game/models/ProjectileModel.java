@@ -27,10 +27,14 @@ public class ProjectileModel extends Model {
 		this.areaDamageRange = projectile.getAreaDamageRange();
 	}
 
+	/**
+	 * @return A new ProjectileToken
+	 */
 	@Override
 	protected Token createToken() {
 		return new ProjectileToken(this);
 	}
+
 	/**
 	 * @return damage dealt by being hit directly by this projectile
 	 */

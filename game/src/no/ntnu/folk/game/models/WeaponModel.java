@@ -7,8 +7,8 @@ import no.ntnu.folk.game.views.tokens.WeaponToken;
 import sheep.math.Vector2;
 
 public class WeaponModel extends Model {
-
 	private final Projectiles projectileType;
+
 	/**
 	 * Constructing a weaponModel based on a weapon from Weapons
 	 *
@@ -23,6 +23,10 @@ public class WeaponModel extends Model {
 		);
 		projectileType = weapon.getProjectile();
 	}
+
+	/**
+	 * @return A new WeaponToken
+	 */
 	@Override
 	protected Token createToken() {
 		return new WeaponToken(this);
@@ -30,6 +34,9 @@ public class WeaponModel extends Model {
 
 	// TODO
 
+	/**
+	 * @return The type of projectiles this weapon fires
+	 */
 	public Projectiles getProjectileType() {
 		return projectileType;
 	}

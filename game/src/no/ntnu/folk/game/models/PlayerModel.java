@@ -21,9 +21,9 @@ public class PlayerModel extends Model {
 	private WeaponModel currentWeapon;
 
 	/**
-	 * @param name Constant name for the player during gameplay, will be used to identify different players
-	 * @param position
-	 * @param team The ID for the team of this player
+	 * @param name     Constant name for the player during gameplay, will be used to identify different players
+	 * @param position Position for this model
+	 * @param team     The ID for the team of this player
 	 */
 	public PlayerModel(String name, Vector2 position, Teams team) {
 		super(
@@ -38,6 +38,9 @@ public class PlayerModel extends Model {
 		this.currentWeapon = weaponList.get(0);
 	}
 
+	/**
+	 * @return A new PlayerToken
+	 */
 	@Override
 	protected Token createToken() {
 		return new PlayerToken(this);

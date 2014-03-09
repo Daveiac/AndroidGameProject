@@ -23,6 +23,9 @@ public abstract class Model extends Sprite {
 		imageSize = new float[]{imageWidth, imageHeight};
 		this.token = createToken();
 	}
+	/**
+	 * @return Create a token of the correct type
+	 */
 	protected abstract Token createToken();
 
 	@Override

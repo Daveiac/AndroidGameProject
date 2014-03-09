@@ -12,6 +12,11 @@ public class GameState extends State {
 	private World gameWorld;
 	private GameLayer gameLayer;
 
+	/**
+	 * Create a new game.
+	 *
+	 * @param playerCount Number of players
+	 */
 	public GameState(int playerCount) {
 		gameWorld = new World();
 		gameLayer = new GameLayer(playerCount);

@@ -48,7 +48,6 @@ public class GameLayer extends Layer implements CollisionListener {
 		}
 	}
 
-
 	public void onTouchDown(MotionEvent event) {
 		// TODO
 	}
@@ -59,7 +58,12 @@ public class GameLayer extends Layer implements CollisionListener {
 		// TODO
 	}
 
-
+	/**
+	 * Called when two Sprite collide.
+	 *
+	 * @param a The first Sprite (the sprite being listened to).
+	 * @param b The other Sprite.
+	 */
 	@Override
 	public void collided(Sprite a, Sprite b) {
 		// TODO

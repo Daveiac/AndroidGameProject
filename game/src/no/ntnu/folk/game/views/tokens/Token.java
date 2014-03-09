@@ -94,6 +94,11 @@ public abstract class Token {
 		);
 		drawOutline(canvas);
 	}
+	/**
+	 * Draw an outline of this token.
+	 *
+	 * @param canvas The canvas to draw the outline on
+	 */
 	protected void drawOutline(Canvas canvas) {
 		float xmin = model.getX() - model.getImageWidth() / 2;
 		float xmax = model.getX() + model.getImageWidth() / 2;

@@ -15,6 +15,9 @@ public enum Teams {
 		this.tagColor = tagColor;
 	}
 
+	/**
+	 * @return Team color. Use for drawing name tags etc.
+	 */
 	public Color getTagColor() {
 		return tagColor;
 	}
