@@ -13,9 +13,9 @@ public enum Weapons {
 	private final float imageWidth;
 	private final float imageHeight;
 
-	private static WeaponModel[] defaultWeapons = new WeaponModel[]{
-			new WeaponModel(HANDGUN),
-			new WeaponModel(ROCKET_LAUNCHER),
+	private static Weapons[] defaultWeapons = new Weapons[]{
+			HANDGUN,
+			ROCKET_LAUNCHER,
 	};
 
 	/**
@@ -33,7 +33,11 @@ public enum Weapons {
 	 * @return List of weapons given to a player by default
 	 */
 	public static ArrayList<WeaponModel> getDefaultWeapons() {
-		return new ArrayList<WeaponModel>(Arrays.asList(defaultWeapons));
+		ArrayList<WeaponModel> arrayList = new ArrayList<WeaponModel>();
+		for (Weapons weapon : defaultWeapons) {
+			arrayList.add(new WeaponModel(weapon));
+		}
+		return arrayList;
 	}
 
 	/**

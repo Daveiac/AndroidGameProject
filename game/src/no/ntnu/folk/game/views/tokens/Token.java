@@ -98,7 +98,7 @@ public abstract class Token {
 		float xmin = model.getX() - model.getImageWidth() / 2;
 		float xmax = model.getX() + model.getImageWidth() / 2;
 		float ymin = model.getY() - model.getImageHeight() / 2;
-		float ymax = model.getX() + model.getImageHeight() / 2;
+		float ymax = model.getY() + model.getImageHeight() / 2;
 		canvas.drawLine(xmin, ymin, xmax, ymin, Color.WHITE);
 		canvas.drawLine(xmin, ymax, xmax, ymax, Color.WHITE);
 		canvas.drawLine(xmin, ymin, xmin, ymax, Color.WHITE);
