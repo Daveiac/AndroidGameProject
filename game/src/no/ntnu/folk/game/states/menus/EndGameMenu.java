@@ -7,10 +7,20 @@ public class EndGameMenu extends MenuState {
 
 	@Override
 	protected void addMenuItems() {
-		// TODO
+		int position = 0;
+		menuItems = new MenuItem[]{
+				new MenuItem(MenuOptions.MAIN_MENU, position++),
+		};
 	}
 	@Override
 	protected void clickMenuItem(MenuItem menuItem) {
-		// TODO
+		switch (menuItem.getOption()) {
+			case MAIN_MENU:
+				getGame().popState();
+				break;
+			default:
+				break;
+		}
 	}
+
 }

@@ -2,7 +2,7 @@ package no.ntnu.folk.game;
 
 public class Constants {
 	// Debugging
-	public static final boolean IS_DEBUGGING = true;
+	public static boolean debugging = true;
 
 	// Player count
 	public static final int MAX_PLAYERS = 6;
@@ -29,4 +29,12 @@ public class Constants {
 	public static int getButtonHeight() {
 		return buttonHeight;
 	}
+
+	public static boolean isDebugging() {
+		return debugging;
+	}
+	public static void toggleDebugging() {
+		debugging = !debugging;
+	}
+
 }

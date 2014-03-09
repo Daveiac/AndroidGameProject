@@ -6,6 +6,7 @@ import no.ntnu.folk.game.Constants;
 import no.ntnu.folk.game.states.menus.MenuItem;
 import sheep.game.State;
 import sheep.graphics.Color;
+import sheep.graphics.Font;
 
 import static android.graphics.Color.BLACK;
 
@@ -42,7 +43,7 @@ public abstract class MenuState extends State {
 		if (canvas == null) return;
 		canvas.drawColor(BLACK);
 
-		canvas.drawText(getClass().getSimpleName(), Constants.getWindowSize()[0] / 2, Constants.getWindowSize()[1] / 28, Color.WHITE);  // Temp
+		canvas.drawText(getClass().getSimpleName(), Constants.getWindowSize()[0] / 2, Constants.getWindowSize()[1] / 28, Font.WHITE_SANS_BOLD_20);  // Temp
 
 		for (MenuItem menuItem : menuItems) {
 			menuItem.draw(canvas);

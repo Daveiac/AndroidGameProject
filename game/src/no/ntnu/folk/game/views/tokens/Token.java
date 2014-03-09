@@ -76,7 +76,7 @@ public abstract class Token {
 	 */
 	public void draw(Canvas canvas) {
 		images[currentFrame].draw(canvas, transformation);
-		if (Constants.IS_DEBUGGING) {
+		if (Constants.isDebugging()) {
 			drawDebugInformation(canvas);
 		}
 	}
