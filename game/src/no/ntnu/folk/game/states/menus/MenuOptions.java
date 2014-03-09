@@ -13,6 +13,9 @@ public enum MenuOptions {
 	MAIN_MENU("Return to main menu"),
 	RETURN_TO_GAME("Return to game"),
 	BACK("Back"),
+
+	DEV_MENU("Developer menu"),
+	TOGGLE_DEBUG("Toggle debug"),
 	;
 
 	private final String label;
