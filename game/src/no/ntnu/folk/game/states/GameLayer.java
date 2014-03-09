@@ -14,11 +14,17 @@ import sheep.math.Vector2;
 import java.util.ArrayList;
 
 public class GameLayer extends Layer implements CollisionListener {
-	private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
+	private ArrayList<PlayerModel> players;
 	private ArrayList<ProjectileModel> projectiles = new ArrayList<ProjectileModel>();
 
-	public GameLayer() {
-		this.players.add(new PlayerModel("Player 1", new Vector2(100, 100), Teams.RED));
+	public GameLayer(int playerCount) {
+		players = new ArrayList<PlayerModel>();
+		for (int i = 0; i < playerCount; i++) {
+			String name = "Player " + i;
+			Vector2 position = new Vector2(75 * (i + 1), 100 + (20 * i));
+			Teams team = i < playerCount / 2 ? Teams.RED : Teams.BLUE;
+			players.add(new PlayerModel(name, position, team));
+		}
 	}
 
 	@Override

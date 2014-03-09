@@ -12,9 +12,9 @@ public class GameState extends State {
 	private World gameWorld;
 	private GameLayer gameLayer;
 
-	public GameState() {
+	public GameState(int playerCount) {
 		gameWorld = new World();
-		gameLayer = new GameLayer();
+		gameLayer = new GameLayer(playerCount);
 		gameWorld.addLayer(gameLayer);
 	}
 
