@@ -5,6 +5,7 @@ import android.view.MotionEvent;
 import no.ntnu.folk.game.models.PlayerModel;
 import no.ntnu.folk.game.models.enums.Teams;
 import no.ntnu.folk.game.views.tokens.PlayerToken;
+import no.ntnu.folk.game.views.tokens.ProjectileToken;
 import sheep.collision.CollisionListener;
 import sheep.game.Layer;
 import sheep.game.Sprite;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 
 public class GameLayer extends Layer implements CollisionListener {
 	private ArrayList<PlayerToken> players = new ArrayList<PlayerToken>();
+	private ArrayList<ProjectileToken> projectiles = new ArrayList<ProjectileToken>();
 
 	public GameLayer() {
 		this.players.add(new PlayerToken(new PlayerModel("Player 1", Teams.RED), new Vector2(100, 100)));
@@ -25,11 +27,17 @@ public class GameLayer extends Layer implements CollisionListener {
 		for (PlayerToken player : players) {
 			player.update(dt);
 		}
+		for (ProjectileToken projectile : projectiles) {
+			projectile.update(dt);
+		}
 	}
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
 		for (PlayerToken player : players) {
 			player.draw(canvas);
+		}
+		for (ProjectileToken projectile : projectiles) {
+			projectile.draw(canvas);
 		}
 	}
 
