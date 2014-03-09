@@ -9,8 +9,8 @@ public class ProjectileToken extends Token {
 	/**
 	 * @param model ProjectileModel for this token
 	 */
-	protected ProjectileToken(ProjectileModel model, Vector2 position) {
-		super(model, position);
+	public ProjectileToken(ProjectileModel model) {
+		super(model);
 	}
 
 	/**

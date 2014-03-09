@@ -2,6 +2,9 @@ package no.ntnu.folk.game.models;
 
 import no.ntnu.folk.game.models.enums.Teams;
 import no.ntnu.folk.game.models.enums.Weapons;
+import no.ntnu.folk.game.views.tokens.PlayerToken;
+import no.ntnu.folk.game.views.tokens.Token;
+import sheep.math.Vector2;
 
 import java.util.ArrayList;
 
@@ -18,16 +21,26 @@ public class PlayerModel extends Model {
 
 	/**
 	 * @param name Constant name for the player during gameplay, will be used to identify different players
+	 * @param position
 	 * @param team The ID for the team of this player
 	 */
-	public PlayerModel(String name, Teams team) {
-		super(name, 50, 50);
+	public PlayerModel(String name, Vector2 position, Teams team) {
+		super(
+				name,
+				position,
+				50,
+				50
+		);
 		this.TEAM = team;
 		this.health = 100;
 		this.weaponList = Weapons.getDefaultWeapons();
 		this.currentWeapon = weaponList.get(0);
 	}
 
+	@Override
+	protected Token createToken() {
+		return new PlayerToken(this);
+	}
 	/**
 	 * @param weapon The weapon you want to add to the list of weapons for this player
 	 */

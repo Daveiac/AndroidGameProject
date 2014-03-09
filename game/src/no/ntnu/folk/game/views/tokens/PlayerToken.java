@@ -11,8 +11,8 @@ public class PlayerToken extends Token {
 	/**
 	 * @param model PlayerModel for this token
 	 */
-	public PlayerToken(PlayerModel model, Vector2 position) {
-		super(model, position);
+	public PlayerToken(PlayerModel model) {
+		super(model);
 	}
 
 	/**

@@ -6,7 +6,6 @@ import no.ntnu.folk.game.Constants;
 import no.ntnu.folk.game.models.Model;
 import sheep.graphics.Color;
 import sheep.graphics.Image;
-import sheep.math.Vector2;
 
 public abstract class Token {
 	// Model
@@ -22,10 +21,9 @@ public abstract class Token {
 	/**
 	 * @param model The model for this token
 	 */
-	protected Token(Model model, Vector2 position) {
+	protected Token(Model model) {
 		this.model = model;
 		model.setShape(model.getImageWidth(), model.getImageHeight());
-		model.setPosition(position);
 		setImages();
 	}
 	/**
@@ -39,7 +37,6 @@ public abstract class Token {
 	 * @param dt Time since last update
 	 */
 	public void update(float dt) {
-		model.update(dt);
 		updateAnimation(dt);
 		updateTransformationMatrix();
 	}

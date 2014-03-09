@@ -3,9 +3,8 @@ package no.ntnu.folk.game.states;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import no.ntnu.folk.game.models.PlayerModel;
+import no.ntnu.folk.game.models.ProjectileModel;
 import no.ntnu.folk.game.models.enums.Teams;
-import no.ntnu.folk.game.views.tokens.PlayerToken;
-import no.ntnu.folk.game.views.tokens.ProjectileToken;
 import sheep.collision.CollisionListener;
 import sheep.game.Layer;
 import sheep.game.Sprite;
@@ -15,28 +14,28 @@ import sheep.math.Vector2;
 import java.util.ArrayList;
 
 public class GameLayer extends Layer implements CollisionListener {
-	private ArrayList<PlayerToken> players = new ArrayList<PlayerToken>();
-	private ArrayList<ProjectileToken> projectiles = new ArrayList<ProjectileToken>();
+	private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
+	private ArrayList<ProjectileModel> projectiles = new ArrayList<ProjectileModel>();
 
 	public GameLayer() {
-		this.players.add(new PlayerToken(new PlayerModel("Player 1", Teams.RED), new Vector2(100, 100)));
+		this.players.add(new PlayerModel("Player 1", new Vector2(100, 100), Teams.RED));
 	}
 
 	@Override
 	public void update(float dt) {
-		for (PlayerToken player : players) {
+		for (PlayerModel player : players) {
 			player.update(dt);
 		}
-		for (ProjectileToken projectile : projectiles) {
+		for (ProjectileModel projectile : projectiles) {
 			projectile.update(dt);
 		}
 	}
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
-		for (PlayerToken player : players) {
+		for (PlayerModel player : players) {
 			player.draw(canvas);
 		}
-		for (ProjectileToken projectile : projectiles) {
+		for (ProjectileModel projectile : projectiles) {
 			projectile.draw(canvas);
 		}
 	}
