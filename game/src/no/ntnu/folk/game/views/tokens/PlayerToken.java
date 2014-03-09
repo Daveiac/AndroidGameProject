@@ -31,9 +31,10 @@ public class PlayerToken extends Token {
 
 	@Override
 	protected void drawDebugInformation(Canvas canvas) {
-		canvas.drawText(this.toString(),
-				getX() - model.getImageHeight() / 2,
-				getY() - model.getImageHeight() * 3 / 4,
+		canvas.drawText(
+				this.toString(),
+				model.getX() - model.getImageHeight() / 2,
+				model.getY() - model.getImageHeight() * 3 / 4,
 				((PlayerModel) model).getTeam().getTagColor());
 	}
 

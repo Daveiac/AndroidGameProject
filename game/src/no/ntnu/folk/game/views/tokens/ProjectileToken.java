@@ -30,7 +30,7 @@ public class ProjectileToken extends Token {
 	 */
 	@Override
 	protected int getRotation() {
-		return (int) Math.toDegrees(Math.acos(getSpeed().getX() / getSpeed().getLength()));
+		return (int) Math.toDegrees(Math.acos(model.getSpeed().getX() / model.getSpeed().getLength()));
 	}
 
 }

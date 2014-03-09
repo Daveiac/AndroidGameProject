@@ -1,6 +1,8 @@
 package no.ntnu.folk.game.models;
 
-public abstract class Model {
+import sheep.game.Sprite;
+
+public abstract class Model extends Sprite {
 	private final String name;
 	private float[] imageSize;
 

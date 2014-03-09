@@ -4,12 +4,11 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import no.ntnu.folk.game.Constants;
 import no.ntnu.folk.game.models.Model;
-import sheep.game.Sprite;
 import sheep.graphics.Color;
 import sheep.graphics.Image;
 import sheep.math.Vector2;
 
-public abstract class Token extends Sprite {
+public abstract class Token {
 	// Model
 	protected final Model model;
 
@@ -25,8 +24,8 @@ public abstract class Token extends Sprite {
 	 */
 	protected Token(Model model, Vector2 position) {
 		this.model = model;
-		setShape(model.getImageWidth(), model.getImageHeight());
-		setPosition(position);
+		model.setShape(model.getImageWidth(), model.getImageHeight());
+		model.setPosition(position);
 		setImages();
 	}
 	/**
@@ -34,9 +33,13 @@ public abstract class Token extends Sprite {
 	 */
 	protected abstract void setImages();
 
-	@Override
+	/**
+	 * Update model, animation, and transformation
+	 *
+	 * @param dt Time since last update
+	 */
 	public void update(float dt) {
-		super.update(dt);
+		model.update(dt);
 		updateAnimation(dt);
 		updateTransformationMatrix();
 	}
@@ -60,7 +63,7 @@ public abstract class Token extends Sprite {
 		transformation.setTranslate(-model.getImageWidth() / 2, -model.getImageHeight() / 2);   // Use the center of the sprite as center for drawing
 		// TODO scale for mirroring
 		transformation.postRotate(getRotation());
-		transformation.postTranslate(this.getX(), this.getY()); // getX and getY is located in Sprite
+		transformation.postTranslate(model.getX(), model.getY()); // getX and getY is located in Sprite
 	}
 	/**
 	 * Get the rotation of the images for tokens where this apply.
@@ -69,7 +72,11 @@ public abstract class Token extends Sprite {
 	 */
 	protected abstract int getRotation();
 
-	@Override
+	/**
+	 * Draw this Token
+	 *
+	 * @param canvas The canvas to draw this token on
+	 */
 	public void draw(Canvas canvas) {
 		images[currentFrame].draw(canvas, transformation);
 		if (Constants.IS_DEBUGGING) {
@@ -82,9 +89,10 @@ public abstract class Token extends Sprite {
 	 * @param canvas
 	 */
 	protected void drawDebugInformation(Canvas canvas) {
-		canvas.drawText(this.toString(),
-				getX() - model.getImageWidth() / 2,
-				getY() - model.getImageHeight() * 3 / 4,
+		canvas.drawText(
+				this.toString(),
+				model.getX() - model.getImageWidth() / 2,
+				model.getY() - model.getImageHeight() * 3 / 4,
 				Color.WHITE);
 	}
 
