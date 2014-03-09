@@ -11,6 +11,7 @@ public class PauseMenu extends MenuState {
 		menuItems = new MenuItem[]{
 				new MenuItem(MenuOptions.SAVE_MENU, position++),
 				new MenuItem(MenuOptions.RETURN_TO_GAME, position++),
+				new MenuItem(MenuOptions.MAIN_MENU, position++),
 		};
 	}
 	@Override
@@ -22,6 +23,8 @@ public class PauseMenu extends MenuState {
 			case RETURN_TO_GAME:
 				getGame().popState();
 				break;
+			case MAIN_MENU:
+				getGame().popState(2);
 			default:
 				break;
 		}
