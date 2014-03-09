@@ -24,7 +24,7 @@ public class PauseMenu extends MenuState {
 				getGame().popState();
 				break;
 			case MAIN_MENU:
-				getGame().popState(2);
+				getGame().popState(3);
 			default:
 				break;
 		}
