@@ -2,6 +2,7 @@ package no.ntnu.folk.game.states;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
+import no.ntnu.folk.game.states.menus.PauseMenu;
 import sheep.game.State;
 import sheep.game.World;
 
@@ -37,7 +38,11 @@ public class GameState extends State {
 	}
 	@Override
 	public boolean onTouchMove(MotionEvent event) {
-		gameLayer.onTouchMove(event);
+		if (event.getPointerCount() == 4) {
+			getGame().pushState(new PauseMenu());
+		} else {
+			gameLayer.onTouchMove(event);
+		}
 		return super.onTouchMove(event);
 	}
 	@Override
