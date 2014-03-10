@@ -2,36 +2,58 @@ package no.ntnu.folk.game.states;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
-import sheep.collision.CollisionListener;
-import sheep.game.Sprite;
+import no.ntnu.folk.game.states.menus.PauseMenu;
 import sheep.game.State;
+import sheep.game.World;
 
-public class GameState extends State implements CollisionListener {
-	// TODO
+import static android.graphics.Color.BLACK;
+
+public class GameState extends State {
+	private World gameWorld;
+	private GameLayer gameLayer;
+
+	/**
+	 * Create a new game.
+	 *
+	 * @param playerCount Number of players
+	 */
+	public GameState(int playerCount) {
+		gameWorld = new World();
+		gameLayer = new GameLayer(playerCount);
+		gameWorld.addLayer(gameLayer);
+	}
 
 	@Override
 	public void update(float dt) {
-		super.update(dt);    // TODO
+		super.update(dt);
+		gameWorld.update(dt);
 	}
 	@Override
 	public void draw(Canvas canvas) {
-		super.draw(canvas);    // TODO
+		if (canvas == null) return;
+		canvas.drawColor(BLACK);
+
+		gameWorld.draw(canvas);
 	}
+
 	@Override
 	public boolean onTouchDown(MotionEvent event) {
-		return super.onTouchDown(event);    // TODO
+		gameLayer.onTouchDown(event);
+		return super.onTouchDown(event);
 	}
 	@Override
 	public boolean onTouchMove(MotionEvent event) {
-		return super.onTouchMove(event);    // TODO
+		if (event.getPointerCount() == 4) {
+			getGame().pushState(new PauseMenu());
+		} else {
+			gameLayer.onTouchMove(event);
+		}
+		return super.onTouchMove(event);
 	}
 	@Override
 	public boolean onTouchUp(MotionEvent event) {
-		return super.onTouchUp(event);    // TODO
-	}
-	@Override
-	public void collided(Sprite a, Sprite b) {
-		// TODO
+		gameLayer.onTouchUp(event);
+		return super.onTouchUp(event);
 	}
 
 }

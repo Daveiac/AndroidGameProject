@@ -2,31 +2,70 @@ package no.ntnu.folk.game.states;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
+import no.ntnu.folk.game.Constants;
+import no.ntnu.folk.game.states.menus.MenuItem;
 import sheep.game.State;
+import sheep.graphics.Color;
+import sheep.graphics.Font;
+
+import static android.graphics.Color.BLACK;
 
 public abstract class MenuState extends State {
+	protected MenuItem[] menuItems;
 
-	protected abstract void clickMenuItem( /* TODO parameters */);
+	private MenuItem menuItemTouched = null;
+
+	protected MenuState() {
+		addMenuItems();
+	}
+
+	protected abstract void addMenuItems();
+
+	protected abstract void clickMenuItem(MenuItem menuItem);
+
+	private MenuItem getMenuItemAt(MotionEvent event) {
+		float x = event.getX();
+		float y = event.getY();
+		for (MenuItem menuItem : menuItems) {
+			if (menuItem.contains(x, y)) {
+				return menuItem;
+			}
+		}
+		return null;
+	}
 
 	@Override
 	public void update(float dt) {
-		super.update(dt);    // TODO
+		super.update(dt); // Do nothing
 	}
 	@Override
 	public void draw(Canvas canvas) {
-		super.draw(canvas);    // TODO
+		if (canvas == null) return;
+		canvas.drawColor(BLACK);
+
+		canvas.drawText(getClass().getSimpleName(), Constants.getWindowSize()[0] / 2, Constants.getWindowSize()[1] / 28, Font.WHITE_SANS_BOLD_20);  // Temp
+
+		for (MenuItem menuItem : menuItems) {
+			menuItem.draw(canvas);
+		}
 	}
+
 	@Override
 	public boolean onTouchDown(MotionEvent event) {
-		return super.onTouchDown(event);    // TODO
+		menuItemTouched = getMenuItemAt(event);
+		return super.onTouchDown(event);
 	}
 	@Override
 	public boolean onTouchMove(MotionEvent event) {
-		return super.onTouchMove(event);    // TODO
+		return super.onTouchMove(event);
 	}
 	@Override
 	public boolean onTouchUp(MotionEvent event) {
-		return super.onTouchUp(event);    // TODO
+		if (menuItemTouched != null && menuItemTouched.equals(getMenuItemAt(event))) {
+			clickMenuItem(menuItemTouched);
+		}
+		menuItemTouched = null;
+		return super.onTouchUp(event);
 	}
 
 }

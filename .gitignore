@@ -12,6 +12,19 @@
 *.iws
 out
 
+# Eclipse
+.metadata
+.gradle
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+
 # Generated files
 gen
 
@@ -28,3 +41,10 @@ libs
 Thumbs.db
 *.tmp
 
+game/.project
+
+# images
+/game/res/drawable
+game/.classpath
+game/lint.xml
+game/project.properties
