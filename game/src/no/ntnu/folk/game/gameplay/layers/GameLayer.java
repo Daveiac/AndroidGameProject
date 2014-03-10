@@ -5,6 +5,7 @@ import android.view.MotionEvent;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
+import no.ntnu.folk.game.gameplay.models.GameModel;
 import sheep.collision.CollisionListener;
 import sheep.game.Layer;
 import sheep.game.Sprite;
@@ -14,26 +15,22 @@ import sheep.math.Vector2;
 import java.util.ArrayList;
 
 public class GameLayer extends Layer implements CollisionListener {
-	private ArrayList<PlayerModel> players;
+
 	private ArrayList<ProjectileModel> projectiles = new ArrayList<ProjectileModel>();
 
 	private int currentPlayer = 0;
+	private GameModel model;
 
-	public GameLayer(int playerCount) {
-		players = new ArrayList<PlayerModel>();
-		for (int i = 0; i < playerCount; i++) {
-			String name = "Player " + i;
-			Vector2 position = new Vector2(75 * (i + 1), 100 + (20 * i));
-			Teams team = i < playerCount / 2 ? Teams.RED : Teams.BLUE;
-			PlayerModel player = new PlayerModel(name, position, team);
-			players.add(player);
+	public GameLayer(GameModel model) {
+		this.model = model;
+		for (PlayerModel player : model.getPlayerList()) {
 			player.addCollisionListener(this);
 		}
 	}
 
 	@Override
 	public void update(float dt) {
-		for (PlayerModel player : players) {
+		for (PlayerModel player : model.getPlayerList()) {
 			player.update(dt);
 		}
 		for (ProjectileModel projectile : projectiles) {
@@ -42,7 +39,7 @@ public class GameLayer extends Layer implements CollisionListener {
 	}
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
-		for (PlayerModel player : players) {
+		for (PlayerModel player : model.getPlayerList()) {
 			player.draw(canvas);
 		}
 		for (ProjectileModel projectile : projectiles) {

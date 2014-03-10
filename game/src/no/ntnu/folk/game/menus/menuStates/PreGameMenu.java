@@ -50,7 +50,7 @@ public class PreGameMenu extends MenuState {
 	protected void clickMenuItem(MenuItem menuItem) {
 		switch (menuItem.getOption()) {
 			case START_GAME:
-				getGame().pushState(new GameState(new GameModel(playerCount, 100, "1", "FFA"))); // TEMP! FIXME
+				getGame().pushState(new GameState(new GameModel(playerCount, currentHealth, Constants.LEVEL_LIST[currentLevel], Constants.GAME_TYPE[selectedGameType]))); // FIXME TEMP!
 				break;
 			case PLAYER_COUNT:
 				changePlayerCount();

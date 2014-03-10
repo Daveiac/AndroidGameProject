@@ -4,90 +4,75 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 import no.ntnu.folk.game.Constants;
 import no.ntnu.folk.game.R;
+import no.ntnu.folk.game.gameplay.Button;
+import no.ntnu.folk.game.gameplay.models.GameModel;
 import sheep.game.Layer;
-import sheep.game.Sprite;
-import sheep.graphics.Image;
 import sheep.input.TouchListener;
 import sheep.math.BoundingBox;
 
 public class KeyPadLayer extends Layer implements TouchListener {
-	private Constants constats;
+	private Button[] buttons;
+	private Button leftKey;
+	private Button rightKey;
 
-	private Image leftKeyImage = new Image(R.drawable.keypadleft);
-	private Image rightKeyImage = new Image(R.drawable.keypadright);
+	private GameModel gameModel;
 
-	private Sprite leftKeySprite;
-	private Sprite rightKeySprite;
-
-	private boolean leftKeyPressed;
-	private boolean rightKeyPressed;
-	private final float x;
-	private final float y;
-
-	public KeyPadLayer() {
-		this.x = constats.getWindowSize()[0];
-		this.y = constats.getWindowSize()[1];
-		leftKeySprite = new Sprite(leftKeyImage);
-		rightKeySprite = new Sprite(rightKeyImage);
-
+	public KeyPadLayer(GameModel gameModel) {
+		this.gameModel = gameModel;
+		float leftKeyX = Constants.getWindowSize()[0] * 0.25f;
+		float rightKeyX = Constants.getWindowSize()[0] * 0.75f;
+		float keyY = Constants.getWindowSize()[1] * 0.8f;
+		buttons = new Button[]{
+				leftKey = new Button(R.drawable.keypadleft, R.drawable.keypadleft, leftKeyX, keyY),
+				rightKey = new Button(R.drawable.keypadright, R.drawable.keypadright, rightKeyX, keyY),
+		};
 	}
 
 	@Override
 	public void update(float dt) {
-		if (leftKeyPressed) {
+		if (leftKey.isPressed()) {
+			gameModel.getCurrentPlayer().setSpeed(-Constants.PLAYER_SPEED, 0);
 		}
-		if (rightKeyPressed) {
+		if (rightKey.isPressed()) {
+			gameModel.getCurrentPlayer().setSpeed(Constants.PLAYER_SPEED, 0);
 		}
 	}
 
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
-
-		leftKeyImage.draw(canvas, x / 10, y / 10 * 9);
-		rightKeyImage.draw(canvas, x / 10 + leftKeyImage.getWidth() + 10, y / 10 * 9);
+		for (Button button : buttons) {
+			button.draw(canvas);
+		}
 	}
+
 	@Override
 	public boolean onTouchDown(MotionEvent event) {
-		System.out.println("ON TOUCH DOWN");
-		System.out.println(event.getX() + " " + event.getY());
-		System.out.println(x / 10 + " " + y / 10 * 9);
-		System.out.println(x / 10 + 25 + leftKeyImage.getWidth());
-		System.out.println(x / 10 + 2 * leftKeyImage.getWidth());
-		if (event.getX() <= x / 10 + leftKeyImage.getWidth() && event.getX() >= x / 10 - leftKeyImage.getWidth()) {
-			if (event.getY() <= y / 10 * 9 + 15 && event.getY() >= y / 10 * 9 - 15)
-				leftKeyPressed = true;
-		}
-		if (event.getX() <= x / 10 + 2 * leftKeyImage.getWidth() && event.getX() >= x / 10 + leftKeyImage.getWidth()) {
-			if (event.getY() <= y / 10 * 9 + 15 && event.getY() >= y / 10 * 9 - 15)
-				rightKeyPressed = true;
+		for (Button button : buttons) {
+			if (button.contanis(event.getX(), event.getY())) {
+				button.setPressed(true);
+			}
 		}
 		return true;
 	}
 	@Override
 	public boolean onTouchMove(MotionEvent event) {
-		if (!leftKeySprite.getBoundingBox().contains(event.getX(), event.getY())) {
-			System.out.println("left Key moved out");
-			leftKeyPressed = false;
-		}
-		if (!rightKeySprite.getBoundingBox().contains(event.getX(), event.getY())) {
-			System.out.println("right key moved out");
-			rightKeyPressed = false;
+		for (Button button : buttons) {
+			if (button.contanis(event.getX(), event.getY())) {
+				button.setPressed(true);
+			} else {
+				button.setPressed(false);
+			}
 		}
 		return true;
 	}
 	@Override
 	public boolean onTouchUp(MotionEvent event) {
-		leftKeyPressed = false;
-		rightKeyPressed = false;
+		for (Button button : buttons) {
+			if (button.contanis(event.getX(), event.getY())) {
+				button.setPressed(false);
+			}
+		}
 		return true;
 	}
-
-//	public boolean getLeftKeyPressed(){
-//		return leftKeyPressed;
-//	}
-//	
-//	public boolean getRightKeyPressed(){
-//		return rightKeyPressed;
-//	}
 
 }
