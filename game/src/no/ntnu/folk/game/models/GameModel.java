@@ -1,11 +1,8 @@
 package no.ntnu.folk.game.models;
 
-import java.util.ArrayList;
-
 import android.os.SystemClock;
 
-import no.ntnu.folk.game.Program;
-import no.ntnu.folk.game.states.menus.PreGameMenu;
+import java.util.ArrayList;
 
 /**
  * Class used to keep track of the game-state as the game evolves.
@@ -71,5 +68,9 @@ public class GameModel {
 	public boolean playerTimeUp(){
 		if (availablePlayerTime <= 0) return false;
 		return true;
+	}
+	
+	public int getPlayerCount(){
+		return this.playerCount;
 	}
 }

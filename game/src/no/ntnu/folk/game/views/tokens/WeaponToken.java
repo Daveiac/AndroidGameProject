@@ -3,7 +3,6 @@ package no.ntnu.folk.game.views.tokens;
 import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.models.WeaponModel;
 import sheep.graphics.Image;
-import sheep.math.Vector2;
 
 public class WeaponToken extends Token {
 	private int rotation = 0; // TODO implement

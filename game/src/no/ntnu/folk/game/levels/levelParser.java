@@ -1,15 +1,12 @@
 package no.ntnu.folk.game.levels;
 
+import no.ntnu.folk.game.views.tokens.Token;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-
-import sheep.game.Game;
-
-import no.ntnu.folk.game.views.tokens.Token;
 
 public class levelParser {
 

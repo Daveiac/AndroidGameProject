@@ -2,10 +2,10 @@ package no.ntnu.folk.game.views.level;
 
 import sheep.graphics.Image;
 
-public class Structure extends LevelToken {
+public class Structure extends Wall {
 
-	public Structure(Image image, int x, int y) {
-		super(image, x, y);
+	public Structure() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 	//  TODO

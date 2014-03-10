@@ -1,10 +1,10 @@
 package no.ntnu.folk.game.models;
 
+import sheep.game.Sprite;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-
-import sheep.game.Sprite;
 
 public class LevelModel extends Sprite {
 	// TODO

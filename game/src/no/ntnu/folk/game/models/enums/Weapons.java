@@ -3,7 +3,6 @@ package no.ntnu.folk.game.models.enums;
 import no.ntnu.folk.game.models.WeaponModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public enum Weapons {
 	HANDGUN(Projectiles.BULLET, 49, 36),
