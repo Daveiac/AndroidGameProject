@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Level controller. Loads levels from properties-files as level names.
+ * Level controller. Loads levels .
  * @author b2
  *
  */
@@ -18,7 +18,7 @@ public class LevelController {
 	private LevelModel levelmodel;
 
 	/**
-	 * Level controller constructor. Loads levels from levels folder.
+	 * Constructor. Constructs the level controller which loads levels from source folder.
 	 */
 	public LevelController() {
 		readLevels();

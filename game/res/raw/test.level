@@ -2,5 +2,11 @@
 
 # This is a test level
 
+# Level size
+Size(x=3000,y=3000)
+
+# Starting positions
+Startpos(x=50,y=50)
+
 # Walls
 Wall(x=100,y=100)
