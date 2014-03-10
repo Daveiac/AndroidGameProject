@@ -3,7 +3,9 @@ package no.ntnu.folk.game;
 public class Constants {
 	// Debugging
 	public static boolean debugging = true;
-
+	// Game options
+	public static final int DEFAULT_HEALTH = 100;
+	public static final int MAX_HEALTH = 1000;
 	public static String[] LEVEL_LIST = {"1","2"}; //TODO make level list
 	public static String[] GAME_TYPE = {"FFA", "TEAM"};
 	// Player count
