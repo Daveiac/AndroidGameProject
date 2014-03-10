@@ -39,6 +39,13 @@ public class PlayerToken extends EntityToken {
 		drawOutline(canvas);
 	}
 
+	@Override
+	public String toString() {
+		return "PlayerToken{name='" + entityModel.getName() + '\'' +
+				", health=" + ((PlayerModel) entityModel).getHealth() +
+				"}";
+	}
+
 	/**
 	 * @return 0 as the player does not rotate.
 	 */
