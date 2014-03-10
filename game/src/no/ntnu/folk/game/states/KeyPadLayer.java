@@ -54,12 +54,13 @@ public class KeyPadLayer extends Layer implements TouchListener{
 		System.out.println(event.getX() + " " + event.getY());
 		System.out.println(x/10 + " " + y/10*9);
 		System.out.println(x/10 + 25 + leftKeyImage.getWidth());
+		System.out.println(x/10 + 2*leftKeyImage.getWidth());
 		if(event.getX() <= x/10 + leftKeyImage.getWidth() && event.getX() >= x/10 - 20){
 			if(event.getY() <= y/10*9 + 15 && event.getY() >= y/10*9 - 15)
 				System.out.println("left Key is pressed!!!!!!!!!!!;");
 				leftKeyPressed = true;
 		}
-		if(event.getX() <= x/10 - 10 + leftKeyImage.getWidth()&& event.getX() >= x/10 + 25 + 2*leftKeyImage.getWidth()){
+		if(event.getX() <= x/10 + 2*leftKeyImage.getWidth()&& event.getX() >= x/10 + leftKeyImage.getWidth()){
 			if(event.getY() <= y/10*9 + 15 && event.getY() >= y/10*9 - 15)
 				System.out.println("rigth Key is pressed!!!!!!!!!");
 				rightKeyPressed = true;
