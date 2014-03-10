@@ -46,7 +46,6 @@ public class GameState extends State {
 
 	@Override
 	public boolean onTouchDown(MotionEvent event) {
-		gameLayer.onTouchDown(event);
 		keyLayer.onTouchDown(event);
 		return super.onTouchDown(event);
 	}
@@ -55,14 +54,12 @@ public class GameState extends State {
 		if (event.getPointerCount() == 4) {
 			getGame().pushState(new PauseMenu());
 		} else {
-			gameLayer.onTouchMove(event);
 			keyLayer.onTouchMove(event);
 		}
 		return super.onTouchMove(event);
 	}
 	@Override
 	public boolean onTouchUp(MotionEvent event) {
-		gameLayer.onTouchUp(event);
 		keyLayer.onTouchUp(event);
 		return super.onTouchUp(event);
 	}

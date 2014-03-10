@@ -47,16 +47,6 @@ public class GameLayer extends Layer implements CollisionListener {
 		}
 	}
 
-	public void onTouchDown(MotionEvent event) {
-		// TODO
-	}
-	public void onTouchMove(MotionEvent event) {
-		// TODO
-	}
-	public void onTouchUp(MotionEvent event) {
-		// TODO
-	}
-
 	/**
 	 * Called when two Sprite collide.
 	 *
