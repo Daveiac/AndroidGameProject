@@ -1,6 +1,7 @@
 package no.ntnu.folk.game.levels;
 
-import no.ntnu.folk.game.views.tokens.Token;
+import no.ntnu.folk.game.views.level.LevelToken;
+import no.ntnu.folk.game.views.level.TokenFactory;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -11,9 +12,9 @@ import java.util.ArrayList;
 public class levelParser {
 
 
-	public static ArrayList<Token> parseLevel(String levelName) {
+	public static ArrayList<LevelToken> parseLevel(String levelName) {
 
-		ArrayList<Token> tokens = new ArrayList<Token>();
+		ArrayList<LevelToken> tokens = new ArrayList<LevelToken>();
 
 		String path = "res/levels/" + levelName + ".level";
 		try {
@@ -26,6 +27,9 @@ public class levelParser {
 				}
 				line = br.readLine();
 			}
+
+			br.close();
+
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,8 +41,19 @@ public class levelParser {
 		return tokens;
 	}
 
-	private static Token parseLine(String line) {
+	private static LevelToken parseLine(String line) {
 		// TODO Auto-generated method stub
+		String[] tokenAttributes = line.split("[(),]");
+		String tokenName = tokenAttributes[0];
+		LevelToken lt = TokenFactory.createToken(tokenName);
+		
+		for (int i = 1; i < tokenAttributes.length; i++) {
+			String[] attributes = tokenAttributes[i].split("=");
+			String key = attributes[0];
+			int value = Integer.valueOf(attributes[1]);
+			
+			lt.setParameters(key, value);
+		}
 		return null;
 	}
 }

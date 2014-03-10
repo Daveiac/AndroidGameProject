@@ -18,7 +18,7 @@ public class Wall extends LevelToken {
 	}
 
 	@Override
-	protected void getParameters(String key, int value) {
+	public void setParameters(String key, int value) {
 		
 		switch (key.charAt(0)) {
 		case 'x': this.x = value; break;
