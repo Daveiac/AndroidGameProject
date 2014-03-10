@@ -6,22 +6,23 @@ import no.ntnu.folk.game.states.MenuState;
 
 public class PreGameMenu extends MenuState {
 	//OPTIONS
-	private int playerCount = Constants.DEFAULT_PLAYER_COUNT;
-	private String[] levelList = {"1","2"}; //TODO import levels 
-	private int currentLevel = 0;
-	private int currentHealth = Constants.DEFAULT_HEALTH;
-	private String[] gameType = {"FFA", "Teams"};
-	private int selectedGameType = 0;
+	private int playerCount;;
+	private int currentLevel;
+	private int currentHealth;
+	private int selectedGameType;
 
 	@Override
 	protected void addMenuItems() {
 		int position = 0;
+		currentLevel = 0;
+		currentHealth = Constants.DEFAULT_HEALTH;
+		selectedGameType = 0;
 		menuItems = new MenuItem[]{
 				new MenuItem(MenuOptions.START_GAME, position++),
-				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(playerCount)),
-				new MenuItem(MenuOptions.SELECT_MAP, position++,levelList[currentLevel]),
-				new MenuItem(MenuOptions.HEALTH, position++,Integer.toString(currentHealth)),
-				new MenuItem(MenuOptions.TEAMS, position++, gameType[selectedGameType]),
+				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(Constants.DEFAULT_PLAYER_COUNT)),
+				new MenuItem(MenuOptions.SELECT_MAP, position++,Constants.LEVEL_LIST[currentLevel]),
+				new MenuItem(MenuOptions.HEALTH, position++,Integer.toString(Constants.DEFAULT_HEALTH)),
+				new MenuItem(MenuOptions.TEAMS, position++, Constants.GAME_TYPE[0]),
 				new MenuItem(MenuOptions.BACK, position++),
 		};
 	}
@@ -37,7 +38,7 @@ public class PreGameMenu extends MenuState {
 				break;
 			case SELECT_MAP:
 				nextLevel();
-				menuItem.setData(levelList[currentLevel]);
+				menuItem.setData(Constants.LEVEL_LIST[currentLevel]);
 				break;
 			case HEALTH:
 				increaseHealth();
@@ -45,7 +46,7 @@ public class PreGameMenu extends MenuState {
 				break;
 			case TEAMS:
 				selectGameType();
-				menuItem.setData(gameType[selectedGameType]);
+				menuItem.setData(Constants.GAME_TYPE[selectedGameType]);
 				break;
 			case BACK:
 				getGame().popState();
@@ -56,7 +57,7 @@ public class PreGameMenu extends MenuState {
 	}
 
 	private void selectGameType() {
-		if(selectedGameType == gameType.length-1) selectedGameType = 0;
+		if(selectedGameType == Constants.GAME_TYPE.length-1) selectedGameType = 0;
 		else selectedGameType++;
 	}
 	private void increaseHealth() {
@@ -64,7 +65,7 @@ public class PreGameMenu extends MenuState {
 		else currentHealth +=100;
 	}
 	private void nextLevel() {
-		if(currentLevel == levelList.length-1) currentLevel = 0;
+		if(currentLevel == Constants.LEVEL_LIST.length-1) currentLevel = 0;
 		else currentLevel++;
 	}
 	private void changePlayerCount() {
