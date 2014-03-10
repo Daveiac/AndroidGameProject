@@ -7,14 +7,17 @@ import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.gameplay.Button;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.models.GameModel;
+import no.ntnu.folk.game.menus.menuStates.PauseMenu;
+import sheep.game.Game;
 import sheep.game.Layer;
 import sheep.input.TouchListener;
 import sheep.math.BoundingBox;
 
-public class KeyPadLayer extends Layer {
+public class KeyPadLayer extends Layer implements TouchListener {
 	private Button[] buttons;
 	private Button leftKey;
 	private Button rightKey;
+	private Button pauseButton;
 
 	private GameModel gameModel;
 
@@ -26,6 +29,7 @@ public class KeyPadLayer extends Layer {
 		buttons = new Button[]{
 				leftKey = new Button(R.drawable.keypadleft, R.drawable.keypadleft, leftKeyX, keyY),
 				rightKey = new Button(R.drawable.keypadright, R.drawable.keypadright, rightKeyX, keyY),
+				pauseButton = new Button(R.drawable.icon, R.drawable.icon, 32, 32), // TODO add proper pause button
 		};
 	}
 
@@ -50,7 +54,11 @@ public class KeyPadLayer extends Layer {
 		}
 	}
 
+	@Override
 	public boolean onTouchDown(MotionEvent event) {
+		if (pauseButton.contanis(event.getX(), event.getY())) {
+			Game.getInstance().pushState(new PauseMenu());
+		}
 		for (Button button : buttons) {
 			if (button.contanis(event.getX(), event.getY())) {
 				button.setPressed(true);
@@ -58,6 +66,7 @@ public class KeyPadLayer extends Layer {
 		}
 		return true;
 	}
+	@Override
 	public boolean onTouchMove(MotionEvent event) {
 		for (Button button : buttons) {
 			if (button.contanis(event.getX(), event.getY())) {
@@ -68,6 +77,7 @@ public class KeyPadLayer extends Layer {
 		}
 		return true;
 	}
+	@Override
 	public boolean onTouchUp(MotionEvent event) {
 		for (Button button : buttons) {
 			if (button.contanis(event.getX(), event.getY())) {

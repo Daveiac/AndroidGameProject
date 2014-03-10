@@ -19,8 +19,6 @@ public class GameState extends State {
 	private KeyPadLayer keyLayer;
 	private GameModel model;
 
-	private Button pauseButton = new Button(R.drawable.icon, R.drawable.icon, 32, 32); // TODO add proper pause button
-
 	/**
 	 * Create a new game.
 	 *
@@ -46,27 +44,6 @@ public class GameState extends State {
 		canvas.drawColor(BLACK);
 
 		gameWorld.draw(canvas);
-		pauseButton.draw(canvas);
-	}
-
-	@Override
-	public boolean onTouchDown(MotionEvent event) {
-		if (pauseButton.contanis(event.getX(), event.getY())) {
-			getGame().pushState(new PauseMenu());
-		} else {
-			keyLayer.onTouchDown(event);
-		}
-		return super.onTouchDown(event);
-	}
-	@Override
-	public boolean onTouchMove(MotionEvent event) {
-		keyLayer.onTouchMove(event);
-		return super.onTouchMove(event);
-	}
-	@Override
-	public boolean onTouchUp(MotionEvent event) {
-		keyLayer.onTouchUp(event);
-		return super.onTouchUp(event);
 	}
 
 }
