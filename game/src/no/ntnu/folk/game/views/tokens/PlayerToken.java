@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.models.PlayerModel;
 import sheep.graphics.Image;
-import sheep.math.Vector2;
 
 public class PlayerToken extends Token {
 

@@ -1,9 +1,9 @@
 package no.ntnu.folk.game.states;
 
-import no.ntnu.folk.game.R;
-import no.ntnu.folk.game.Constants;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
+import no.ntnu.folk.game.Constants;
+import no.ntnu.folk.game.R;
 import sheep.game.Layer;
 import sheep.game.Sprite;
 import sheep.graphics.Image;

@@ -1,11 +1,11 @@
 package no.ntnu.folk.game.controllers;
 
+import no.ntnu.folk.game.models.LevelModel;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-
-import no.ntnu.folk.game.models.LevelModel;
 
 /**
  * Level controller. Loads levels from properties-files as level names.
@@ -34,7 +34,7 @@ public class LevelController {
 
 	/**
 	 * Loads the specific level given by the parameter levelName and sets it as the current level model.
-	 * @param levelName. Name of the requested level.
+	 * @param levelName Name of the requested level.
 	 */
 	public void loadLevel(String levelName) {
 		// TODO Auto-generated method stub
