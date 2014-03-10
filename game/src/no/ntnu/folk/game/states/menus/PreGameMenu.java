@@ -37,7 +37,7 @@ public class PreGameMenu extends MenuState {
 
 	private void changePlayerCount() {
 		if (playerCount == Constants.MAX_PLAYERS) {
-			playerCount = 1;
+			playerCount = 2;
 		} else {
 			playerCount++;
 		}
