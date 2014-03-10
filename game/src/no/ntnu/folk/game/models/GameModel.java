@@ -72,4 +72,8 @@ public class GameModel {
 		if (availablePlayerTime <= 0) return false;
 		return true;
 	}
+	
+	public int getPlayerCount(){
+		return this.playerCount;
+	}
 }

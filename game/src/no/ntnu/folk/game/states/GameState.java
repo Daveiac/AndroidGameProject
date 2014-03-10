@@ -23,7 +23,7 @@ public class GameState extends State {
 	public GameState(GameModel model) {
 		this.model = model;
 		gameWorld = new World();
-		gameLayer = new GameLayer(model.getPlayerList().size()); //TODO
+		gameLayer = new GameLayer(model.getPlayerCount()); //TODO
 		keyLayer = new KeyPadLayer();
 		gameWorld.addLayer(gameLayer);
 		gameWorld.addLayer(keyLayer);
