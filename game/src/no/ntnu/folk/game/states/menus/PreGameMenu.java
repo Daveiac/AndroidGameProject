@@ -12,11 +12,11 @@ import no.ntnu.folk.game.states.MenuState;
  */
 public class PreGameMenu extends MenuState {
 	//OPTIONS
-	private int playerCount = Constants.DEFAULT_PLAYER_COUNT;
-
+	private int playerCount;;
 	private int currentLevel;
 	private int currentHealth;
 	private int selectedGameType;
+	// private GameModel gameModel; //TODO make a gameModel with the options set
 
 	
 	/**
