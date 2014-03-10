@@ -1,4 +1,4 @@
-package no.ntnu.folk.game.views.level;
+package no.ntnu.folk.game.gameplay.levels.views;
 
 public class TokenFactory {
 
@@ -9,7 +9,7 @@ public class TokenFactory {
 			token = new Wall();
 		}
 		else if (name.equals("Structure")) {
-			token = new Structure();
+//			token = new Structure(null, 0, 0);     // TODO fix
 		}
 		return token;
 	}

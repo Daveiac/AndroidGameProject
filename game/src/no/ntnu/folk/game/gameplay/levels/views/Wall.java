@@ -1,4 +1,4 @@
-package no.ntnu.folk.game.views.level;
+package no.ntnu.folk.game.gameplay.levels.views;
 
 /**
  * Used to make level tokens 
