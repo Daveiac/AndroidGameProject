@@ -15,7 +15,6 @@ import no.ntnu.folk.game.states.MenuState;
 public class PreGameMenu extends MenuState {
 	//OPTIONS
 	private int playerCount;
-	;
 	private int currentLevel;
 	private int currentHealth;
 	private int selectedGameType;
