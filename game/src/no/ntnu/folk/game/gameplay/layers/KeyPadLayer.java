@@ -13,7 +13,7 @@ import sheep.game.Layer;
 import sheep.input.TouchListener;
 import sheep.math.BoundingBox;
 
-public class KeyPadLayer extends Layer implements TouchListener {
+public class KeyPadLayer extends Layer {
 	private Button[] buttons;
 	private Button leftKey;
 	private Button rightKey;
@@ -54,7 +54,6 @@ public class KeyPadLayer extends Layer implements TouchListener {
 		}
 	}
 
-	@Override
 	public boolean onTouchDown(MotionEvent event) {
 		if (pauseButton.contanis(event.getX(), event.getY())) {
 			Game.getInstance().pushState(new PauseMenu());
@@ -66,7 +65,6 @@ public class KeyPadLayer extends Layer implements TouchListener {
 		}
 		return true;
 	}
-	@Override
 	public boolean onTouchMove(MotionEvent event) {
 		for (Button button : buttons) {
 			if (button.contanis(event.getX(), event.getY())) {
@@ -77,7 +75,6 @@ public class KeyPadLayer extends Layer implements TouchListener {
 		}
 		return true;
 	}
-	@Override
 	public boolean onTouchUp(MotionEvent event) {
 		for (Button button : buttons) {
 			if (button.contanis(event.getX(), event.getY())) {

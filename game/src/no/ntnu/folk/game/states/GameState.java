@@ -15,6 +15,7 @@ import static android.graphics.Color.BLACK;
 
 public class GameState extends State {
 	private World gameWorld;
+	private KeyPadLayer keyPadLayer;
 
 	/**
 	 * Create a new game.
@@ -24,7 +25,8 @@ public class GameState extends State {
 	public GameState(GameModel model) {
 		gameWorld = new World();
 		gameWorld.addLayer(new GameLayer(model));
-		gameWorld.addLayer(new KeyPadLayer(model));
+		keyPadLayer = new KeyPadLayer(model);
+		gameWorld.addLayer(keyPadLayer);
 	}
 
 	@Override
@@ -40,4 +42,16 @@ public class GameState extends State {
 		gameWorld.draw(canvas);
 	}
 
+	@Override
+	public boolean onTouchDown(MotionEvent event) {
+		return keyPadLayer.onTouchDown(event);
+	}
+	@Override
+	public boolean onTouchMove(MotionEvent event) {
+		return keyPadLayer.onTouchMove(event);
+	}
+	@Override
+	public boolean onTouchUp(MotionEvent event) {
+		return keyPadLayer.onTouchUp(event);
+	}
 }
