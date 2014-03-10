@@ -15,16 +15,27 @@ import no.ntnu.folk.game.states.menus.PreGameMenu;
  */
 public class GameModel {
 
+	// Players
+	private int playerCount;
+	private int maxHealth;
 	private ArrayList<PlayerModel> playerList;
+	private int currentPlayer;
+	
+	//Map
+	private String currentLevel;
+	private String gameMode;
+	
+	//Game time
 	private long gameTime;
 	private long lastUpdateTime;
-	private long currentPlayerTime;
+	private long availablePlayerTime;
 	
 	
-	public GameModel(){
-		gameTime = 0;
-		currentPlayerTime = 0;
-		lastUpdateTime = SystemClock.elapsedRealtime();
+	public GameModel(int playerCount, int playerHealth, String level, String gameMode){
+		this.playerCount = playerCount;
+		this.maxHealth = playerHealth;
+		this.currentLevel = level;
+		this.gameMode = gameMode;
 	}
 	
 	public ArrayList<PlayerModel> getPlayerList(){
@@ -33,8 +44,28 @@ public class GameModel {
 	
 	public void update(){
 		long time = SystemClock.elapsedRealtime();
-		gameTime = time - lastUpdateTime;
+		long timeDiff = lastUpdateTime - time;
+		gameTime += timeDiff;
 		lastUpdateTime = time;
-		currentPlayerTime = time - lastUpdateTime;
+		availablePlayerTime -= timeDiff;
+	}
+	
+	public void nextPlayer(){
+		if(currentPlayer == playerCount-1) currentPlayer = 0;
+		else currentPlayer++;
+	}
+	
+	public PlayerModel getCurrentPlayer(){
+		return this.playerList.get(currentPlayer);
+	}
+	
+	public Object[] getGameOptions(){
+		Object[] options = {playerCount, maxHealth, currentLevel, gameMode};
+		return options;
+	}
+	
+	public boolean playerTimeUp(){
+		if (availablePlayerTime <= 0) return false;
+		return true;
 	}
 }
