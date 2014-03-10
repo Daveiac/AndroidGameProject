@@ -8,7 +8,7 @@ public class TokenFactory {
 		if (name.equals("LevelToken")) {
 			token = new Wall();
 		} else if (name.equals("Structure")) {
-//			token = new Structure(null, 0, 0);     // TODO fix
+			token = new Structure();
 		}
 		return token;
 	}

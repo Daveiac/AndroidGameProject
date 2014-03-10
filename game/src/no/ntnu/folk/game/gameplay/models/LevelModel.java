@@ -1,6 +1,6 @@
 package no.ntnu.folk.game.gameplay.models;
 
-import no.ntnu.folk.game.gameplay.levels.levels.LevelParser;
+import no.ntnu.folk.game.gameplay.levels.controllers.LevelParser;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import sheep.game.Sprite;
 

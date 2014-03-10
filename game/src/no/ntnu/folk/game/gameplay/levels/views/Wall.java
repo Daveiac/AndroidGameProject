@@ -18,7 +18,6 @@ public class Wall extends LevelToken {
 
 	@Override
 	public void setParameters(String key, int value) {
-
 		switch (key.charAt(0)) {
 			case 'x':
 				this.x = value;

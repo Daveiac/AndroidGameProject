@@ -1,4 +1,4 @@
-package no.ntnu.folk.game.gameplay.levels.levels;
+package no.ntnu.folk.game.gameplay.levels.controllers;
 
 
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
@@ -14,7 +14,6 @@ public class LevelParser {
 
 
 	public static ArrayList<LevelToken> parseLevel(String levelName) {
-
 		ArrayList<LevelToken> tokens = new ArrayList<LevelToken>();
 
 		String path = "res/levels/" + levelName + ".level";
