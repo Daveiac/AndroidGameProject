@@ -1,6 +1,7 @@
 package no.ntnu.folk.game.states.menus;
 
 import no.ntnu.folk.game.Constants;
+import no.ntnu.folk.game.models.GameModel;
 import no.ntnu.folk.game.states.GameState;
 import no.ntnu.folk.game.states.MenuState;
 
@@ -48,7 +49,8 @@ public class PreGameMenu extends MenuState {
 	protected void clickMenuItem(MenuItem menuItem) {
 		switch (menuItem.getOption()) {
 			case START_GAME:
-				getGame().pushState(new GameState(playerCount));
+				constructGameModel();
+				getGame().pushState(new GameState(constructGameModel()));
 				break;
 			case PLAYER_COUNT:
 				changePlayerCount();
@@ -72,6 +74,11 @@ public class PreGameMenu extends MenuState {
 			default:
 				break;
 		}
+	}
+
+	private GameModel constructGameModel() {
+		GameModel model = new GameModel(playerCount, currentHealth, Constants.LEVEL_LIST[currentLevel], Constants.GAME_TYPE[selectedGameType]);
+		return model;
 	}
 
 	/**
