@@ -5,6 +5,7 @@ import android.view.MotionEvent;
 import no.ntnu.folk.game.Constants;
 import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.gameplay.Button;
+import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import sheep.game.Layer;
 import sheep.input.TouchListener;
@@ -30,11 +31,15 @@ public class KeyPadLayer extends Layer implements TouchListener {
 
 	@Override
 	public void update(float dt) {
+		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
 		if (leftKey.isPressed()) {
-			gameModel.getCurrentPlayer().setSpeed(-Constants.PLAYER_SPEED, 0);
+			currentPlayer.setSpeed(-Constants.PLAYER_SPEED, currentPlayer.getSpeed().getY());
 		}
 		if (rightKey.isPressed()) {
-			gameModel.getCurrentPlayer().setSpeed(Constants.PLAYER_SPEED, 0);
+			currentPlayer.setSpeed(Constants.PLAYER_SPEED, 0);
+		}
+		if (!leftKey.isPressed() && !rightKey.isPressed()) {
+			currentPlayer.setSpeed(0, currentPlayer.getSpeed().getY());
 		}
 	}
 
