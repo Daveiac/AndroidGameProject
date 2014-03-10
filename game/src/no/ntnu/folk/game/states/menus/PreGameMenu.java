@@ -4,6 +4,12 @@ import no.ntnu.folk.game.Constants;
 import no.ntnu.folk.game.states.GameState;
 import no.ntnu.folk.game.states.MenuState;
 
+/**
+ * The option menu that will let you change options before the game starts
+ * 
+ * @author Rune
+ *
+ */
 public class PreGameMenu extends MenuState {
 	//OPTIONS
 	private int playerCount;
@@ -11,8 +17,13 @@ public class PreGameMenu extends MenuState {
 	private int currentHealth;
 	private int selectedGameType;
 
+	
+	/**
+	 * Make all the buttons to the menu
+	 */
 	@Override
 	protected void addMenuItems() {
+		// Initialize variables here as this method is called before the class is "made"
 		playerCount = Constants.DEFAULT_PLAYER_COUNT;
 		currentLevel = 0;
 		currentHealth = Constants.DEFAULT_HEALTH;
@@ -28,6 +39,10 @@ public class PreGameMenu extends MenuState {
 				new MenuItem(MenuOptions.BACK, position++),
 		};
 	}
+	
+	/**
+	 * What should happen when buttons get clicked
+	 */
 	@Override
 	protected void clickMenuItem(MenuItem menuItem) {
 		switch (menuItem.getOption()) {
@@ -58,18 +73,33 @@ public class PreGameMenu extends MenuState {
 		}
 	}
 
+	/**
+	 * Just goes through the different game states defined in Constants
+	 */
 	private void selectGameType() {
 		if(selectedGameType == Constants.GAME_TYPE.length-1) selectedGameType = 0;
 		else selectedGameType++;
 	}
+	
+	/**
+	 * Increase start-health with 100 up to a max given in Constants
+	 */
 	private void increaseHealth() {
 		if(currentHealth == Constants.MAX_HEALTH) currentHealth = 100;
 		else currentHealth +=100;
 	}
+	
+	/**
+	 * Circles throught the available levels
+	 */
 	private void nextLevel() {
 		if(currentLevel == Constants.LEVEL_LIST.length-1) currentLevel = 0;
 		else currentLevel++;
 	}
+	
+	/**
+	 * Changes the player count to a max given in Constants
+	 */
 	private void changePlayerCount() {
 		if (playerCount == Constants.MAX_PLAYERS) {
 			playerCount = Constants.DEFAULT_PLAYER_COUNT;
