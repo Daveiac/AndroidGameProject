@@ -44,6 +44,7 @@ public class GameModel {
 	}
 	/**
 	 * Initialize the fields
+	 *
 	 * @param playerCount  Number of players for the start of this game
 	 * @param playerHealth Health all players starts with
 	 * @param level        Level name

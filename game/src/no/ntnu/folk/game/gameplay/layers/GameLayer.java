@@ -1,8 +1,6 @@
 package no.ntnu.folk.game.gameplay.layers;
 
 import android.graphics.Canvas;
-import android.view.MotionEvent;
-import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import no.ntnu.folk.game.gameplay.models.GameModel;
@@ -10,9 +8,6 @@ import sheep.collision.CollisionListener;
 import sheep.game.Layer;
 import sheep.game.Sprite;
 import sheep.math.BoundingBox;
-import sheep.math.Vector2;
-
-import java.util.ArrayList;
 
 public class GameLayer extends Layer implements CollisionListener {
 	private GameModel model;

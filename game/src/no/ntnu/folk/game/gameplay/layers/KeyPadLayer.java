@@ -10,7 +10,6 @@ import no.ntnu.folk.game.gameplay.models.GameModel;
 import no.ntnu.folk.game.menus.menuStates.PauseMenu;
 import sheep.game.Game;
 import sheep.game.Layer;
-import sheep.input.TouchListener;
 import sheep.math.BoundingBox;
 
 public class KeyPadLayer extends Layer {
