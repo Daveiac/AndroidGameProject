@@ -18,8 +18,7 @@ public enum MenuOptions {
 	BACK("Back"),
 
 	DEV_MENU("Developer menu"),
-	TOGGLE_DEBUG("Toggle debug"),
-	;
+	TOGGLE_DEBUG("Toggle debug"),;
 
 	private final String label;
 

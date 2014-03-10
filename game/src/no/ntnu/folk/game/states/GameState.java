@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 import no.ntnu.folk.game.gameplay.layers.GameLayer;
 import no.ntnu.folk.game.gameplay.layers.KeyPadLayer;
+import no.ntnu.folk.game.gameplay.models.GameModel;
 import no.ntnu.folk.game.menus.menuStates.PauseMenu;
 import sheep.game.State;
 import sheep.game.World;
@@ -19,7 +20,7 @@ public class GameState extends State {
 	/**
 	 * Create a new game.
 	 *
-	 * @param playerCount Number of players
+	 * @param model
 	 */
 	public GameState(GameModel model) {
 		this.model = model;

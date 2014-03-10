@@ -1,9 +1,7 @@
 package no.ntnu.folk.game.menus.menuStates;
 
-import no.ntnu.folk.game.Constants;
 import no.ntnu.folk.game.menus.MenuItem;
 import no.ntnu.folk.game.menus.MenuOptions;
-import no.ntnu.folk.game.states.GameState;
 import no.ntnu.folk.game.states.MenuState;
 
 public class LoadMenu extends MenuState {

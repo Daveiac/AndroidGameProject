@@ -2,9 +2,9 @@ package no.ntnu.folk.game.gameplay.layers;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
+import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
-import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import sheep.collision.CollisionListener;
 import sheep.game.Layer;
 import sheep.game.Sprite;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class GameLayer extends Layer implements CollisionListener {
 	private ArrayList<PlayerModel> players;
 	private ArrayList<ProjectileModel> projectiles = new ArrayList<ProjectileModel>();
-	
+
 	private int currentPlayer = 0;
 
 	public GameLayer(int playerCount) {

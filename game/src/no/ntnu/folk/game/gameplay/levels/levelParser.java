@@ -1,12 +1,12 @@
 package no.ntnu.folk.game.gameplay.levels;
 
+import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
 
 public class levelParser {
 

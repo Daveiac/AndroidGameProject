@@ -7,9 +7,8 @@ import java.util.ArrayList;
 
 /**
  * Class used to keep track of the game-state as the game evolves.
- * 
- * @author Rune
  *
+ * @author Rune
  */
 public class GameModel {
 
@@ -18,60 +17,59 @@ public class GameModel {
 	private int maxHealth;
 	private ArrayList<PlayerModel> playerList;
 	private int currentPlayer;
-	
+
 	//Map
 	private String currentLevel;
 	private String gameMode;
-	
+
 	//Game time
 	private long gameTime;
 	private long lastUpdateTime;
 	private long availablePlayerTime;
-	
-	
-	public GameModel(int playerCount, int playerHealth, String level, String gameMode){
+
+
+	public GameModel(int playerCount, int playerHealth, String level, String gameMode) {
 		this.playerCount = playerCount;
 		this.maxHealth = playerHealth;
 		this.currentLevel = level;
 		this.gameMode = gameMode;
 	}
-	
-	public ArrayList<PlayerModel> getPlayerList(){
+
+	public ArrayList<PlayerModel> getPlayerList() {
 		return this.playerList;
 	}
-	
-	public void update(){
+
+	public void update() {
 		long time = SystemClock.elapsedRealtime();
 		long timeDiff = lastUpdateTime - time;
 		gameTime += timeDiff;
 		lastUpdateTime = time;
 		availablePlayerTime -= timeDiff;
 	}
-	
-	public void nextPlayer(){
-		if(currentPlayer == playerCount-1) currentPlayer = 0;
+
+	public void nextPlayer() {
+		if (currentPlayer == playerCount - 1) currentPlayer = 0;
 		else currentPlayer++;
 	}
-	
-	public PlayerModel getCurrentPlayer(){
+
+	public PlayerModel getCurrentPlayer() {
 		return this.playerList.get(currentPlayer);
 	}
-	
+
 	/**
-	 * 
 	 * @return
 	 */
-	public Object[] getGameOptions(){
+	public Object[] getGameOptions() {
 		Object[] options = {playerCount, maxHealth, currentLevel, gameMode};
 		return options;
 	}
-	
-	public boolean playerTimeUp(){
+
+	public boolean playerTimeUp() {
 		if (availablePlayerTime <= 0) return false;
 		return true;
 	}
-	
-	public int getPlayerCount(){
+
+	public int getPlayerCount() {
 		return this.playerCount;
 	}
 }

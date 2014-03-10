@@ -1,7 +1,8 @@
-package no.ntnu.folk.game.levels;
+package no.ntnu.folk.game.gameplay.levels.levels;
 
-import no.ntnu.folk.game.views.level.LevelToken;
-import no.ntnu.folk.game.views.level.TokenFactory;
+
+import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
+import no.ntnu.folk.game.gameplay.levels.views.TokenFactory;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -46,12 +47,12 @@ public class LevelParser {
 		String[] tokenAttributes = line.split("[(),]");
 		String tokenName = tokenAttributes[0];
 		LevelToken lt = TokenFactory.createToken(tokenName);
-		
+
 		for (int i = 1; i < tokenAttributes.length; i++) {
 			String[] attributes = tokenAttributes[i].split("=");
 			String key = attributes[0];
 			int value = Integer.valueOf(attributes[1]);
-			
+
 			lt.setParameters(key, value);
 		}
 		return null;
