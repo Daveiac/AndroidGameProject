@@ -6,17 +6,19 @@ import no.ntnu.folk.game.states.MenuState;
 
 public class PreGameMenu extends MenuState {
 	//OPTIONS
-	private int playerCount;;
+	private int playerCount;
 	private int currentLevel;
 	private int currentHealth;
 	private int selectedGameType;
 
 	@Override
 	protected void addMenuItems() {
-		int position = 0;
+		playerCount = Constants.DEFAULT_PLAYER_COUNT;
 		currentLevel = 0;
 		currentHealth = Constants.DEFAULT_HEALTH;
 		selectedGameType = 0;
+		
+		int position = 0;
 		menuItems = new MenuItem[]{
 				new MenuItem(MenuOptions.START_GAME, position++),
 				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(Constants.DEFAULT_PLAYER_COUNT)),
