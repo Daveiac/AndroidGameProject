@@ -10,6 +10,8 @@ public class PreGameMenu extends MenuState {
 	private String[] levelList = {"1","2"}; //TODO import levels 
 	private int currentLevel = 0;
 	private int currentHealth = Constants.DEFAULT_HEALTH;
+	private String[] gameType = {"FFA", "Teams"};
+	private int selectedGameType = 0;
 
 	@Override
 	protected void addMenuItems() {
@@ -19,7 +21,7 @@ public class PreGameMenu extends MenuState {
 				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(playerCount)),
 				new MenuItem(MenuOptions.SELECT_MAP, position++,levelList[currentLevel]),
 				new MenuItem(MenuOptions.HEALTH, position++,Integer.toString(currentHealth)),
-				new MenuItem(MenuOptions.TEAMS, position++),
+				new MenuItem(MenuOptions.TEAMS, position++, gameType[selectedGameType]),
 				new MenuItem(MenuOptions.BACK, position++),
 		};
 	}
@@ -40,6 +42,11 @@ public class PreGameMenu extends MenuState {
 			case HEALTH:
 				increaseHealth();
 				menuItem.setData(Integer.toString(currentHealth));
+				break;
+			case TEAMS:
+				selectGameType();
+				menuItem.setData(gameType[selectedGameType]);
+				break;
 			case BACK:
 				getGame().popState();
 				break;
@@ -48,6 +55,10 @@ public class PreGameMenu extends MenuState {
 		}
 	}
 
+	private void selectGameType() {
+		if(selectedGameType == gameType.length-1) selectedGameType = 0;
+		else selectedGameType++;
+	}
 	private void increaseHealth() {
 		if(currentHealth == Constants.MAX_HEALTH) currentHealth = 100;
 		else currentHealth +=100;
