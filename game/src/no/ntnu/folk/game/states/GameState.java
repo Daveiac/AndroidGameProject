@@ -2,6 +2,7 @@ package no.ntnu.folk.game.states;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
+import no.ntnu.folk.game.models.GameModel;
 import no.ntnu.folk.game.states.menus.PauseMenu;
 import sheep.game.State;
 import sheep.game.World;
@@ -12,15 +13,17 @@ public class GameState extends State {
 	private World gameWorld;
 	private GameLayer gameLayer;
 	private KeyPadLayer keyLayer;
+	private GameModel model;
 
 	/**
 	 * Create a new game.
 	 *
 	 * @param playerCount Number of players
 	 */
-	public GameState(int playerCount) {
+	public GameState(GameModel model) {
+		this.model = model;
 		gameWorld = new World();
-		gameLayer = new GameLayer(playerCount);
+		gameLayer = new GameLayer(model.getPlayerList().size()); //TODO
 		keyLayer = new KeyPadLayer();
 		gameWorld.addLayer(gameLayer);
 		gameWorld.addLayer(keyLayer);
