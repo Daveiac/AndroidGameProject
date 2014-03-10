@@ -29,16 +29,36 @@ public class GameModel {
 	private long lastUpdateTime;
 	private long availablePlayerTime;
 
-
+	/**
+	 * @param playerCount  Number of players for the start of this game
+	 * @param playerHealth Health all players starts with
+	 * @param level        Level name
+	 * @param gameMode     Game type (teams / ffa)
+	 */
 	public GameModel(int playerCount, int playerHealth, String level, String gameMode) {
+		initializeFields(playerCount, playerHealth, level, gameMode);
+		createPlayers();
+	}
+	/**
+	 * Initialize the fields
+	 * @param playerCount  Number of players for the start of this game
+	 * @param playerHealth Health all players starts with
+	 * @param level        Level name
+	 * @param gameMode     Game type (teams / ffa)
+	 */
+	private void initializeFields(int playerCount, int playerHealth, String level, String gameMode) {
 		this.playerCount = playerCount;
 		this.maxHealth = playerHealth;
 		this.currentLevel = level;
 		this.gameMode = gameMode;
-		playerList = new ArrayList<PlayerModel>();
 		currentPlayer = 0;
 		gameTime = 0;
-
+	}
+	/**
+	 * Create the number of players
+	 */
+	private void createPlayers() {
+		playerList = new ArrayList<PlayerModel>(playerCount);
 		for (int i = 0; i < playerCount; i++) {
 			String name = "Player " + i;
 			Vector2 position = new Vector2(75 * (i + 1), 100 + (20 * i));
@@ -53,10 +73,16 @@ public class GameModel {
 		}
 	}
 
+	/**
+	 * @return The list of players in this game
+	 */
 	public ArrayList<PlayerModel> getPlayerList() {
 		return this.playerList;
 	}
 
+	/**
+	 * Update timer
+	 */
 	public void update() {
 		long time = SystemClock.elapsedRealtime();
 		long timeDiff = lastUpdateTime - time;
@@ -65,29 +91,40 @@ public class GameModel {
 		availablePlayerTime -= timeDiff;
 	}
 
+	/**
+	 * Set currentPlayer to the next player. Set to first player if a the end of the list.
+	 */
 	public void nextPlayer() {
 		if (currentPlayer == playerCount - 1) currentPlayer = 0;
 		else currentPlayer++;
 	}
-
+	/**
+	 * @return Current player
+	 */
 	public PlayerModel getCurrentPlayer() {
 		return this.playerList.get(currentPlayer);
 	}
 
 	/**
-	 * @return
+	 * @return Game options
 	 */
 	public Object[] getGameOptions() { // FIXME Do not use Object[]
 		Object[] options = {playerCount, maxHealth, currentLevel, gameMode};
 		return options;
 	}
 
+	/**
+	 * @return True if the time is up for current player
+	 */
 	public boolean playerTimeUp() {
-		if (availablePlayerTime <= 0) return false;
-		return true;
+		return availablePlayerTime <= 0;
 	}
 
+	/**
+	 * @return Number of players when the game started
+	 */
 	public int getPlayerCount() {
 		return this.playerCount;
 	}
+
 }
