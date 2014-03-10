@@ -28,25 +28,8 @@ public class LevelController {
 	 * Reads the level files from the levels folder and puts them in a list.
 	 */
 	private void readLevels() {
-		File folder = new File("src/no.ntnu.folk.game.levels");
+		File folder = new File("res/raw");
 		listOfLevels = folder.listFiles();
-	}
-
-	/**
-	 * Loads the specific level given by the parameter levelName and sets it as the current level model.
-	 * @param levelName Name of the requested level.
-	 */
-	public void loadLevel(String levelName) {
-		// TODO Auto-generated method stub
-		Properties p = new Properties();
-		String path = "src/no.ntnu.folk.game.levels." + levelName + ".properties";
-		try {
-			p.load(new FileInputStream(path));
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
-		String level = p.getProperty("level_name");
-		levelmodel.setLevel(level);
 	}
 
 	/**
