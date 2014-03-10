@@ -19,7 +19,7 @@ public class LoadMenu extends MenuState {
 	protected void clickMenuItem(MenuItem menuItem) {
 		switch (menuItem.getOption()) {
 			case LOAD_GAME:  // TODO
-				getGame().pushState(new GameState(Constants.DEFAULT_PLAYER_COUNT));
+				//getGame().pushState(new GameState(Constants.DEFAULT_PLAYER_COUNT)); TODO must load game, can't just make a new game
 				break;
 			case BACK:
 				getGame().popState();
