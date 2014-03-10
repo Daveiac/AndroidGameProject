@@ -72,7 +72,7 @@ public class GameModel {
 			} else {
 				team = i < playerCount / 2 ? Teams.RED : Teams.BLUE;
 			}
-			PlayerModel player = new PlayerModel(name, position, team);
+			PlayerModel player = new PlayerModel(name, position, team, maxHealth);
 			playerList.add(player);
 		}
 	}

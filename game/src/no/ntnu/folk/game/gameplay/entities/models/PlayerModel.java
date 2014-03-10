@@ -25,15 +25,10 @@ public class PlayerModel extends EntityModel {
 	 * @param position Position for this entityModel
 	 * @param team     The ID for the team of this player
 	 */
-	public PlayerModel(String name, Vector2 position, Teams team) {
-		super(
-				name,
-				position,
-				50,
-				50
-		);
+	public PlayerModel(String name, Vector2 position, Teams team, int health) {
+		super(name, position, 50, 50);
 		this.TEAM = team;
-		this.health = 100;
+		this.health = health;
 		this.weaponList = Weapons.getDefaultWeapons();
 		this.currentWeapon = weaponList.get(0);
 	}
