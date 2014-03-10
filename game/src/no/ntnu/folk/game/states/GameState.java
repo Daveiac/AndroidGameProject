@@ -15,9 +15,6 @@ import static android.graphics.Color.BLACK;
 
 public class GameState extends State {
 	private World gameWorld;
-	private GameLayer gameLayer;
-	private KeyPadLayer keyLayer;
-	private GameModel model;
 
 	/**
 	 * Create a new game.
@@ -25,12 +22,9 @@ public class GameState extends State {
 	 * @param model
 	 */
 	public GameState(GameModel model) {
-		this.model = model;
 		gameWorld = new World();
-		gameLayer = new GameLayer(model);
-		keyLayer = new KeyPadLayer(model);
-		gameWorld.addLayer(gameLayer);
-		gameWorld.addLayer(keyLayer);
+		gameWorld.addLayer(new GameLayer(model));
+		gameWorld.addLayer(new KeyPadLayer(model));
 	}
 
 	@Override
