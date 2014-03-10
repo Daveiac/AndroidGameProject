@@ -16,6 +16,8 @@ import java.util.ArrayList;
 public class GameLayer extends Layer implements CollisionListener {
 	private ArrayList<PlayerModel> players;
 	private ArrayList<ProjectileModel> projectiles = new ArrayList<ProjectileModel>();
+	
+	private int currentPlayer = 0;
 
 	public GameLayer(int playerCount) {
 		players = new ArrayList<PlayerModel>();
