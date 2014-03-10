@@ -6,7 +6,8 @@ import no.ntnu.folk.game.states.MenuState;
 
 public class PreGameMenu extends MenuState {
 	//OPTIONS
-	private int playerCount;
+	private int playerCount = Constants.DEFAULT_PLAYER_COUNT;
+
 	private int currentLevel;
 	private int currentHealth;
 	private int selectedGameType;
@@ -72,7 +73,7 @@ public class PreGameMenu extends MenuState {
 	}
 	private void changePlayerCount() {
 		if (playerCount == Constants.MAX_PLAYERS) {
-			playerCount = Constants.DEFAULT_PLAYER_COUNT;
+			playerCount = 2;
 		} else {
 			playerCount++;
 		}

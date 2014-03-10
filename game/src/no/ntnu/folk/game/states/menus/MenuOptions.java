@@ -3,9 +3,6 @@ package no.ntnu.folk.game.states.menus;
 public enum MenuOptions {
 	PRE_GAME_MENU("Start new game"),
 	PLAYER_COUNT("Player count"),
-	SELECT_MAP("Select map"),
-	HEALTH("Max health"),
-	TEAMS("Team game or FFA"),
 	START_GAME("Start game"),
 
 	SAVE_MENU("Save menu"),
