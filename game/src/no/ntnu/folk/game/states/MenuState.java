@@ -3,7 +3,7 @@ package no.ntnu.folk.game.states;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import no.ntnu.folk.game.Constants;
-import no.ntnu.folk.game.states.menus.MenuItem;
+import no.ntnu.folk.game.menus.MenuItem;
 import sheep.game.State;
 import sheep.graphics.Font;
 

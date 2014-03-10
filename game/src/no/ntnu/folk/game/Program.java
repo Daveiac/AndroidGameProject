@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Window;
-import no.ntnu.folk.game.states.menus.MainMenu;
+import no.ntnu.folk.game.menus.menuStates.MainMenu;
 import sheep.game.Game;
 
 public class Program extends Activity {
