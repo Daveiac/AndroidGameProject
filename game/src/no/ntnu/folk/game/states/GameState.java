@@ -5,6 +5,7 @@ import android.view.MotionEvent;
 import no.ntnu.folk.game.states.menus.PauseMenu;
 import sheep.game.State;
 import sheep.game.World;
+import no.ntnu.folk.game.models.GameModel;
 
 import static android.graphics.Color.BLACK;
 
@@ -18,10 +19,10 @@ public class GameState extends State {
 	 *
 	 * @param playerCount Number of players
 	 */
-	public GameState(int playerCount) {
+	public GameState(GameModel gameModel) {
 		gameWorld = new World();
-		gameLayer = new GameLayer(playerCount);
-		keyLayer = new KeyPadLayer();
+		gameLayer = new GameLayer(gameModel);
+		keyLayer = new KeyPadLayer(gameModel);
 		gameWorld.addLayer(gameLayer);
 		gameWorld.addLayer(keyLayer);
 	}

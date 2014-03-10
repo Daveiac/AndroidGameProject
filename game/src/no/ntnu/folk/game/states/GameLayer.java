@@ -10,6 +10,7 @@ import sheep.game.Layer;
 import sheep.game.Sprite;
 import sheep.math.BoundingBox;
 import sheep.math.Vector2;
+import no.ntnu.folk.game.models.GameModel;
 
 import java.util.ArrayList;
 
@@ -19,12 +20,12 @@ public class GameLayer extends Layer implements CollisionListener {
 	
 	private int currentPlayer = 0;
 
-	public GameLayer(int playerCount) {
+	public GameLayer(GameModel gameModel) {
 		players = new ArrayList<PlayerModel>();
-		for (int i = 0; i < playerCount; i++) {
+		for (int i = 0; i < gameModel.getPlayerList().size(); i++) {
 			String name = "Player " + i;
 			Vector2 position = new Vector2(75 * (i + 1), 100 + (20 * i));
-			Teams team = i < playerCount / 2 ? Teams.RED : Teams.BLUE;
+			Teams team = i < gameModel.getPlayerList().size() / 2 ? Teams.RED : Teams.BLUE;
 			PlayerModel player = new PlayerModel(name, position, team);
 			players.add(player);
 			player.addCollisionListener(this);

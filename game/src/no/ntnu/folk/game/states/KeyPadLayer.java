@@ -9,6 +9,7 @@ import sheep.game.Sprite;
 import sheep.graphics.Image;
 import sheep.input.TouchListener;
 import sheep.math.BoundingBox;
+import no.ntnu.folk.game.models.GameModel;
 
 public class KeyPadLayer extends Layer implements TouchListener{
 	private Constants constats;
@@ -23,8 +24,10 @@ public class KeyPadLayer extends Layer implements TouchListener{
 	private boolean rightKeyPressed;
 	private final float x;
 	private final float y;
+	private GameModel gameModel;
 	
-	public KeyPadLayer(){
+	public KeyPadLayer(GameModel gameModel){
+		this.gameModel = gameModel;
 		this.x = constats.getWindowSize()[0];
 		this.y = constats.getWindowSize()[1];
 		leftKeySprite = new Sprite(leftKeyImage);
@@ -35,29 +38,26 @@ public class KeyPadLayer extends Layer implements TouchListener{
 	@Override
 	public void update(float dt) {
 		if(leftKeyPressed){
+			gameModel.getCurrentPlayer().setSpeed(-10, 0);
 		}
 		if(rightKeyPressed){
+			gameModel.getCurrentPlayer().setSpeed(10, 0);
 		}
 	}
 
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
 		
-		leftKeyImage.draw(canvas, x/10, y/10*9);
-		rightKeyImage.draw(canvas, x/10+leftKeyImage.getWidth()+10, y/10*9);
+		leftKeyImage.draw(canvas, x/9, y/10*9);
+		rightKeyImage.draw(canvas, x/9+leftKeyImage.getWidth()+10, y/10*9);
 	}
 	@Override
 	public boolean onTouchDown(MotionEvent event) {
-		System.out.println("ON TOUCH DOWN");
-		System.out.println(event.getX() + " " + event.getY());
-		System.out.println(x/10 + " " + y/10*9);
-		System.out.println(x/10 + 25 + leftKeyImage.getWidth());
-		System.out.println(x/10 + 2*leftKeyImage.getWidth());
-		if(event.getX() <= x/10 + leftKeyImage.getWidth() && event.getX() >= x/10 - leftKeyImage.getWidth()){
+		if(event.getX() <= x/9 + leftKeyImage.getWidth() && event.getX() >= x/9 - leftKeyImage.getWidth()){
 			if(event.getY() <= y/10*9 + 15 && event.getY() >= y/10*9 - 15)
 				leftKeyPressed = true;
 		}
-		if(event.getX() <= x/10 + 2*leftKeyImage.getWidth()&& event.getX() >= x/10 + leftKeyImage.getWidth()){
+		if(event.getX() <= x/9 + 2*leftKeyImage.getWidth()&& event.getX() >= x/9 + leftKeyImage.getWidth()){
 			if(event.getY() <= y/10*9 + 15 && event.getY() >= y/10*9 - 15)
 				rightKeyPressed = true;
 		}
