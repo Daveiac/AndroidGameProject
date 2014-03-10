@@ -59,6 +59,10 @@ public class GameModel {
 		return this.playerList.get(currentPlayer);
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public Object[] getGameOptions(){
 		Object[] options = {playerCount, maxHealth, currentLevel, gameMode};
 		return options;
