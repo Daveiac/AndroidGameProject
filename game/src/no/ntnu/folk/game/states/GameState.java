@@ -2,7 +2,9 @@ package no.ntnu.folk.game.states;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
-import no.ntnu.folk.game.states.menus.PauseMenu;
+import no.ntnu.folk.game.gameplay.layers.GameLayer;
+import no.ntnu.folk.game.gameplay.layers.KeyPadLayer;
+import no.ntnu.folk.game.menus.menuStates.PauseMenu;
 import sheep.game.State;
 import sheep.game.World;
 
