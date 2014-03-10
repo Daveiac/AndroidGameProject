@@ -3,6 +3,7 @@ package no.ntnu.folk.game.gameplay.models;
 import android.os.SystemClock;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
+import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import sheep.math.Vector2;
 
 import java.util.ArrayList;
@@ -13,11 +14,13 @@ import java.util.ArrayList;
  * @author Rune
  */
 public class GameModel {
+	// Entity lists
+	private ArrayList<PlayerModel> playerList;
+	private ArrayList<ProjectileModel> projectiles;
 
 	// Players
 	private int playerCount;
 	private int maxHealth;
-	private ArrayList<PlayerModel> playerList;
 	private int currentPlayer;
 
 	//Map
@@ -51,6 +54,7 @@ public class GameModel {
 		this.maxHealth = playerHealth;
 		this.currentLevel = level;
 		this.gameMode = gameMode;
+		projectiles = new ArrayList<ProjectileModel>();
 		currentPlayer = 0;
 		gameTime = 0;
 	}
@@ -78,6 +82,12 @@ public class GameModel {
 	 */
 	public ArrayList<PlayerModel> getPlayerList() {
 		return this.playerList;
+	}
+	/**
+	 * @return The list of projectiles in this game
+	 */
+	public ArrayList<ProjectileModel> getProjectiles() {
+		return projectiles;
 	}
 
 	/**

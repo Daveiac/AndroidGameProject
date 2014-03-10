@@ -15,10 +15,6 @@ import sheep.math.Vector2;
 import java.util.ArrayList;
 
 public class GameLayer extends Layer implements CollisionListener {
-
-	private ArrayList<ProjectileModel> projectiles = new ArrayList<ProjectileModel>();
-
-	private int currentPlayer = 0;
 	private GameModel model;
 
 	public GameLayer(GameModel model) {
@@ -33,7 +29,7 @@ public class GameLayer extends Layer implements CollisionListener {
 		for (PlayerModel player : model.getPlayerList()) {
 			player.update(dt);
 		}
-		for (ProjectileModel projectile : projectiles) {
+		for (ProjectileModel projectile : model.getProjectiles()) {
 			projectile.update(dt);
 		}
 	}
@@ -42,7 +38,7 @@ public class GameLayer extends Layer implements CollisionListener {
 		for (PlayerModel player : model.getPlayerList()) {
 			player.draw(canvas);
 		}
-		for (ProjectileModel projectile : projectiles) {
+		for (ProjectileModel projectile : model.getProjectiles()) {
 			projectile.draw(canvas);
 		}
 	}
