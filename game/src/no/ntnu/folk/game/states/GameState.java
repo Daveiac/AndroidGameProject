@@ -2,6 +2,8 @@ package no.ntnu.folk.game.states;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
+import no.ntnu.folk.game.R;
+import no.ntnu.folk.game.gameplay.Button;
 import no.ntnu.folk.game.gameplay.layers.GameLayer;
 import no.ntnu.folk.game.gameplay.layers.KeyPadLayer;
 import no.ntnu.folk.game.gameplay.models.GameModel;
@@ -16,6 +18,8 @@ public class GameState extends State {
 	private GameLayer gameLayer;
 	private KeyPadLayer keyLayer;
 	private GameModel model;
+
+	private Button pauseButton = new Button(R.drawable.icon, R.drawable.icon, 32, 32); // TODO add proper pause button
 
 	/**
 	 * Create a new game.
@@ -42,20 +46,21 @@ public class GameState extends State {
 		canvas.drawColor(BLACK);
 
 		gameWorld.draw(canvas);
+		pauseButton.draw(canvas);
 	}
 
 	@Override
 	public boolean onTouchDown(MotionEvent event) {
-		keyLayer.onTouchDown(event);
+		if (pauseButton.contanis(event.getX(), event.getY())) {
+			getGame().pushState(new PauseMenu());
+		} else {
+			keyLayer.onTouchDown(event);
+		}
 		return super.onTouchDown(event);
 	}
 	@Override
 	public boolean onTouchMove(MotionEvent event) {
-		if (event.getPointerCount() == 4) {
-			getGame().pushState(new PauseMenu());
-		} else {
-			keyLayer.onTouchMove(event);
-		}
+		keyLayer.onTouchMove(event);
 		return super.onTouchMove(event);
 	}
 	@Override
