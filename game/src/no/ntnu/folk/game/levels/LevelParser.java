@@ -45,14 +45,23 @@ public class LevelParser {
 		// TODO Auto-generated method stub
 		String[] tokenAttributes = line.split("[(),]");
 		String tokenName = tokenAttributes[0];
-		LevelToken lt = TokenFactory.createToken(tokenName);
-		
-		for (int i = 1; i < tokenAttributes.length; i++) {
-			String[] attributes = tokenAttributes[i].split("=");
-			String key = attributes[0];
-			int value = Integer.valueOf(attributes[1]);
-			
-			lt.setParameters(key, value);
+		if (tokenName.equals("Size")) {
+			// set SIZE
+		}
+		else if (tokenName.equals("StartPosition")) {
+			// set start positions in an array
+		}
+		else {
+			LevelToken lt = TokenFactory.createToken(tokenName);
+
+			for (int i = 1; i < tokenAttributes.length; i++) {
+				String[] attributes = tokenAttributes[i].split("=");
+				String key = attributes[0];
+				int value = Integer.valueOf(attributes[1]);
+
+				lt.setParameters(key, value);
+			}
+
 		}
 		return null;
 	}

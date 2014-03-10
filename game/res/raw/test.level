@@ -6,12 +6,12 @@
 Size(x=1000,y=800)
 
 # Starting positions
-Startposition(x=150,y=150)
-Startposition(x=300,y=450)
-Startposition(x=500,y=350)
-Startposition(x=300,y=250)
-Startposition(x=700,y=150)
-Startposition(x=700,y=550)
+StartPosition(x=150,y=150)
+StartPosition(x=300,y=450)
+StartPosition(x=500,y=350)
+StartPosition(x=300,y=250)
+StartPosition(x=700,y=150)
+StartPosition(x=700,y=550)
 
 # Walls
 Wall(x=100,y=600,h=50,w=800)
