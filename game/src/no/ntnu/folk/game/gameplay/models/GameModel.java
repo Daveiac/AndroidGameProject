@@ -42,7 +42,12 @@ public class GameModel {
 		for (int i = 0; i < playerCount; i++) {
 			String name = "Player " + i;
 			Vector2 position = new Vector2(75 * (i + 1), 100 + (20 * i));
-			Teams team = i < playerCount / 2 ? Teams.RED : Teams.BLUE;
+			Teams team;
+			if (gameMode.equals("FFA")) { // FIXME Should not use string
+				team = Teams.getTeamFromOrdinal(i);
+			} else {
+				team = i < playerCount / 2 ? Teams.RED : Teams.BLUE;
+			}
 			PlayerModel player = new PlayerModel(name, position, team);
 			playerList.add(player);
 		}
@@ -72,7 +77,7 @@ public class GameModel {
 	/**
 	 * @return
 	 */
-	public Object[] getGameOptions() {
+	public Object[] getGameOptions() { // FIXME Do not use Object[]
 		Object[] options = {playerCount, maxHealth, currentLevel, gameMode};
 		return options;
 	}
