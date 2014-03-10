@@ -9,14 +9,15 @@ import java.util.ArrayList;
 
 import sheep.game.Game;
 
-import no.ntnu.folk.game.views.tokens.Token;
+import no.ntnu.folk.game.views.level.LevelToken;
+import no.ntnu.folk.game.views.level.TokenFactory;
 
-public class levelParser {
+public class LevelParser {
 
 
-	public static ArrayList<Token> parseLevel(String levelName) {
+	public static ArrayList<LevelToken> parseLevel(String levelName) {
 
-		ArrayList<Token> tokens = new ArrayList<Token>();
+		ArrayList<LevelToken> tokens = new ArrayList<LevelToken>();
 
 		String path = "res/levels/" + levelName + ".level";
 		try {
@@ -24,11 +25,12 @@ public class levelParser {
 
 			String line = br.readLine();
 			while (line != null) {
-				if (line.length() != 0) {
+				if (!(line.length() == 0 || line.startsWith("#"))) {
 					tokens.add(parseLine(line));
 				}
 				line = br.readLine();
 			}
+			br.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -36,12 +38,20 @@ public class levelParser {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return tokens;
 	}
 
-	private static Token parseLine(String line) {
+	private static LevelToken parseLine(String line) {
 		// TODO Auto-generated method stub
+		String[] tokenAttributes = line.split("[(),]");
+		String tokenName = tokenAttributes[0];
+		LevelToken t = TokenFactory.createToken(tokenName);
+		
+		for (int i = 1; i < tokenAttributes.length; i++) {
+			String[] attribute = tokenAttributes[i].split("=");
+			String key = attribute[0];
+			String value = attribute[1];
+		}
 		return null;
 	}
 }
