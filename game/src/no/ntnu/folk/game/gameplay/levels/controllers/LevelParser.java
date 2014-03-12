@@ -62,13 +62,24 @@ public class LevelParser {
 		String tokenName = token[0];
 		LevelToken lt = TokenFactory.createToken(tokenName);
 
+		int x = 0;
+		int y = 0;
 		for (int i = 1; i < token.length; i++) {
 			String[] attributes = token[i].split("=");
 			String key = attributes[0];
 			int value = Integer.valueOf(attributes[1]);
 
-			lt.setParameters(key, value);
+			if (key.equals("x")) {
+				x = value;
+			}
+			else if (key.equals("y")) {
+				y = value;
+			}
+			else {
+				lt.setParameters(key, value);
+			}
 		}
+		lt.setPosition(x, y);
 		return lt;
 	}
 }

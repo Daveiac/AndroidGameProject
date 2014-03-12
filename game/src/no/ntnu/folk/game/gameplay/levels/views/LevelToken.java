@@ -1,7 +1,16 @@
 package no.ntnu.folk.game.gameplay.levels.views;
 
-public abstract class LevelToken {
+import sheep.game.Sprite;
+import sheep.graphics.Image;
+
+public abstract class LevelToken extends Sprite {
+
+	protected LevelToken() {
+	}
+	
+	protected LevelToken(Image image) {
+		super(image);
+	}
 
 	public abstract void setParameters(String key, int value);
-
 }
