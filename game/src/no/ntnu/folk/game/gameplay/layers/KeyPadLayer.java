@@ -14,6 +14,8 @@ public class KeyPadLayer extends Layer implements TouchListener {
 	private Button[] buttons;
 	private Button leftKey;
 	private Button rightKey;
+	private Button swapKey;
+	private Button fireKey;
 
 	private GameModel gameModel;
 
@@ -25,6 +27,7 @@ public class KeyPadLayer extends Layer implements TouchListener {
 		buttons = new Button[]{
 				leftKey = new Button(R.drawable.keypadleft, R.drawable.keypadleft, leftKeyX, keyY),
 				rightKey = new Button(R.drawable.keypadright, R.drawable.keypadright, rightKeyX, keyY),
+				
 		};
 	}
 
