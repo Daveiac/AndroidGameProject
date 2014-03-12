@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Spill</string>
+    <!-- Game Types -->
+    <string name="FreeForAll">Fritt For Alle</string>
+    <string name="Teams">Lagspill</string>
+    <!-- Menu Strings -->
+    <string name="PreGameMenu">Start nytt spill</string>
+    <string name="PlayerCount">Antall spillere</string>
+    <string name="SelectMap">Velg kart</string>
+    <string name="MaxHealth">Liv ved start</string>
+    <string name="GameType">Spilltype</string>
+    <string name="StartGame">Start spill</string>
+    <string name="SaveMenu">Lagre spillet</string>
+    <string name="SaveGame">Lagre</string>
+    <string name="LoadMenu">Last inn gammelt spill</string>
+    <string name="LoadGame">Last inn</string>
+    <string name="MainMenu">Tilbake til hovedmenyen</string>
+    <string name="ReturnToGame">Tilbake til spillet</string>
+    <string name="Back">Tilbake</string>
+    <string name="DevMenu">Utviklermeny</string>
+    <string name="ToggleDebug">Slå av/på debugging</string>
+</resources>

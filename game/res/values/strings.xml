@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App Name -->
     <string name="app_name">game</string>
+    <!-- Game Types -->
+    <string name="FreeForAll">Free For All</string>
+    <string name="Teams">Teams</string>
+    <!-- Menu Strings -->
+    <string name="PreGameMenu">Start new game</string>
+    <string name="PlayerCount">Player count</string>
+    <string name="SelectMap">Select map</string>
+    <string name="MaxHealth">Max health</string>
+    <string name="GameType">Game type</string>
+    <string name="StartGame">Start game</string>
+    <string name="SaveMenu">Save menu</string>
+    <string name="SaveGame">Save game</string>
+    <string name="LoadMenu">Load an old game</string>
+    <string name="LoadGame">Load game</string>
+    <string name="MainMenu">Return to main menu</string>
+    <string name="ReturnToGame">Return to game</string>
+    <string name="Back">Back</string>
+    <string name="DevMenu">Developer menu</string>
+    <string name="ToggleDebug">Toggle debug</string>
 </resources>

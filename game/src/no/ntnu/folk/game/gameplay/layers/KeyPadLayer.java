@@ -3,7 +3,7 @@ package no.ntnu.folk.game.gameplay.layers;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import no.ntnu.folk.game.constants.GameplayConstants;
-import no.ntnu.folk.game.constants.ProgramConstants;
+import no.ntnu.folk.game.constants.Globals;
 import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.gameplay.Button;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
@@ -28,11 +28,11 @@ public class KeyPadLayer extends Layer {
 
 	public KeyPadLayer(GameModel gameModel) {
 		this.gameModel = gameModel;
-		float leftKeyX = ProgramConstants.getWindowSize()[0] * 0.25f;
-		float rightKeyX = ProgramConstants.getWindowSize()[0] * 0.75f;
-		float swapKeyX = ProgramConstants.getWindowSize()[0]*0.6f;
-		float fireKeyX = ProgramConstants.getWindowSize()[0]*0.4f;
-		float keyY = ProgramConstants.getWindowSize()[1] * 0.8f;
+		float leftKeyX = Globals.getWindowSize()[0] * 0.25f;
+		float rightKeyX = Globals.getWindowSize()[0] * 0.75f;
+		float swapKeyX = Globals.getWindowSize()[0]*0.6f;
+		float fireKeyX = Globals.getWindowSize()[0]*0.4f;
+		float keyY = Globals.getWindowSize()[1] * 0.8f;
 		aimImage = new Image(R.drawable.aim);
 		buttons = new Button[]{
 				leftKey = new Button(R.drawable.keypadleft, R.drawable.keypadleft, leftKeyX, keyY),

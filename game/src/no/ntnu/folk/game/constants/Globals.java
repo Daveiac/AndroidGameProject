@@ -1,6 +1,8 @@
 package no.ntnu.folk.game.constants;
 
-public class ProgramConstants {
+import android.content.res.Resources;
+
+public class Globals {
 	// Debugging
 	public static boolean debugging = true;
 
@@ -8,15 +10,16 @@ public class ProgramConstants {
 	private static int[] windowSize;
 	private static int buttonWidth;
 	private static int buttonHeight;
+	private static Resources resources;
 
 
 	public static int[] getWindowSize() {
 		return windowSize;
 	}
 	public static void setWindowSize(int[] windowSize) {
-		ProgramConstants.windowSize = windowSize;
-		ProgramConstants.buttonWidth = windowSize[0] / 2;
-		ProgramConstants.buttonHeight = windowSize[1] / 8;
+		Globals.windowSize = windowSize;
+		Globals.buttonWidth = windowSize[0] / 2;
+		Globals.buttonHeight = windowSize[1] / 8;
 	}
 
 	public static int getButtonWidth() {
@@ -33,4 +36,12 @@ public class ProgramConstants {
 		debugging = !debugging;
 	}
 
+
+	public static String getString(int id) {
+		return resources.getString(id);
+	}
+
+	public static void setResources(Resources resources) {
+		Globals.resources = resources;
+	}
 }
