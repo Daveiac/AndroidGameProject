@@ -5,7 +5,6 @@ import android.view.MotionEvent;
 import no.ntnu.folk.game.gameplay.layers.GameLayer;
 import no.ntnu.folk.game.gameplay.layers.KeyPadLayer;
 import no.ntnu.folk.game.gameplay.models.GameModel;
-import no.ntnu.folk.game.menus.menuStates.PauseMenu;
 import sheep.game.State;
 import sheep.game.World;
 
@@ -13,9 +12,8 @@ import static android.graphics.Color.BLACK;
 
 public class GameState extends State {
 	private World gameWorld;
+	private KeyPadLayer keyPadLayer;
 	private GameLayer gameLayer;
-	private KeyPadLayer keyLayer;
-	private GameModel model;
 
 	/**
 	 * Create a new game.
@@ -23,12 +21,11 @@ public class GameState extends State {
 	 * @param model
 	 */
 	public GameState(GameModel model) {
-		this.model = model;
 		gameWorld = new World();
 		gameLayer = new GameLayer(model);
-		keyLayer = new KeyPadLayer(model);
+		keyPadLayer = new KeyPadLayer(model);
 		gameWorld.addLayer(gameLayer);
-		gameWorld.addLayer(keyLayer);
+		gameWorld.addLayer(keyPadLayer);
 	}
 
 	@Override
@@ -46,25 +43,14 @@ public class GameState extends State {
 
 	@Override
 	public boolean onTouchDown(MotionEvent event) {
-		gameLayer.onTouchDown(event);
-		keyLayer.onTouchDown(event);
-		return super.onTouchDown(event);
+		return keyPadLayer.onTouchDown(event);
 	}
 	@Override
 	public boolean onTouchMove(MotionEvent event) {
-		if (event.getPointerCount() == 4) {
-			getGame().pushState(new PauseMenu());
-		} else {
-			gameLayer.onTouchMove(event);
-			keyLayer.onTouchMove(event);
-		}
-		return super.onTouchMove(event);
+		return 	keyPadLayer.onTouchMove(event);
 	}
 	@Override
 	public boolean onTouchUp(MotionEvent event) {
-		gameLayer.onTouchUp(event);
-		keyLayer.onTouchUp(event);
-		return super.onTouchUp(event);
+		return 	keyPadLayer.onTouchUp(event);
 	}
-
 }

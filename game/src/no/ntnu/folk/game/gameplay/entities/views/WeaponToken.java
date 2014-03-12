@@ -26,6 +26,14 @@ public class WeaponToken extends EntityToken {
 
 	// TODO
 
+
+	@Override
+	public String toString() {
+		return "WeaponToken{" +
+				"name='" + entityModel.getName() + '\'' +
+				", projectile='" + ((WeaponModel) entityModel).getProjectileType() + '\'' +
+				'}';
+	}
 	/**
 	 * @return The rotation of the weapon. (Based on where it is pointing.)
 	 */
