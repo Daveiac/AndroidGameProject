@@ -21,7 +21,7 @@ public class LevelParser {
 
 			String line = br.readLine();
 			while (line != null) {
-				if (line.length() != 0 || line.startsWith("#")); {
+				if (line.length() != 0 || !line.startsWith("#")) {
 					String[] token = line.split("[(),]");
 					String tokenName = token[0];
 
