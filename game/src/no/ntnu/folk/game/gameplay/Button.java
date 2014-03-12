@@ -43,7 +43,7 @@ public class Button {
 		this.pressed = isPressed;
 	}
 
-	public boolean contanis(float x, float y) {
+	public boolean contains(float x, float y) {
 		return boundingBox.contains(x, y);
 	}
 }

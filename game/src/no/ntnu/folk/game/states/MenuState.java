@@ -2,7 +2,7 @@ package no.ntnu.folk.game.states;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
-import no.ntnu.folk.game.Constants;
+import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.menus.MenuItem;
 import sheep.game.State;
 import sheep.graphics.Font;
@@ -42,7 +42,7 @@ public abstract class MenuState extends State {
 		if (canvas == null) return;
 		canvas.drawColor(BLACK);
 
-		canvas.drawText(getClass().getSimpleName(), Constants.getWindowSize()[0] / 2, Constants.getWindowSize()[1] / 28, Font.WHITE_SANS_BOLD_20);  // Temp
+		canvas.drawText(getClass().getSimpleName(), ProgramConstants.getWindowSize()[0] / 2, ProgramConstants.getWindowSize()[1] / 28, Font.WHITE_SANS_BOLD_20);  // Temp
 
 		for (MenuItem menuItem : menuItems) {
 			menuItem.draw(canvas);

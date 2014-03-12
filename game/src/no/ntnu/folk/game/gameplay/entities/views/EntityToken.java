@@ -2,7 +2,7 @@ package no.ntnu.folk.game.gameplay.entities.views;
 
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import no.ntnu.folk.game.Constants;
+import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
 import sheep.graphics.Color;
 import sheep.graphics.Image;
@@ -76,7 +76,7 @@ public abstract class EntityToken {
 	 */
 	public void draw(Canvas canvas) {
 		images[currentFrame].draw(canvas, transformation);
-		if (Constants.isDebugging()) {
+		if (ProgramConstants.isDebugging()) {
 			drawDebugInformation(canvas);
 		}
 	}

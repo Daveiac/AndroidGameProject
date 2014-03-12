@@ -19,23 +19,22 @@ public class PlayerModel extends EntityModel {
 	private int health;
 	private ArrayList<WeaponModel> weaponList;
 	private WeaponModel currentWeapon;
+	private float aimPositionX;
+	private float aimPositionY;
 
 	/**
 	 * @param name     Constant name for the player during gameplay, will be used to identify different players
 	 * @param position Position for this entityModel
 	 * @param team     The ID for the team of this player
 	 */
-	public PlayerModel(String name, Vector2 position, Teams team) {
-		super(
-				name,
-				position,
-				50,
-				50
-		);
+	public PlayerModel(String name, Vector2 position, Teams team, int health) {
+		super(name, position, 50, 50);
 		this.TEAM = team;
-		this.health = 100;
+		this.health = health;
 		this.weaponList = Weapons.getDefaultWeapons();
 		this.currentWeapon = weaponList.get(0);
+		aimPositionX = position.getX();
+		aimPositionY = position.getY()+40;
 	}
 
 	/**
@@ -110,4 +109,17 @@ public class PlayerModel extends EntityModel {
 		return this.weaponList;
 	}
 
+	public void setAim(float x, float y){
+		this.aimPositionX = x;
+		this.aimPositionY = y;
+	}
+	
+	public float getAimPositionX(){
+		return aimPositionX;
+	}
+	
+	public float getAimPositionY(){
+		return aimPositionY;
+	}
+	
 }
