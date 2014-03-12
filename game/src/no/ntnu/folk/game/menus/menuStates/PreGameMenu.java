@@ -1,5 +1,6 @@
 package no.ntnu.folk.game.menus.menuStates;
 
+import no.ntnu.folk.game.constants.GameTypes;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import no.ntnu.folk.game.menus.MenuItem;
@@ -38,7 +39,7 @@ public class PreGameMenu extends MenuState {
 				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(GameplayConstants.DEFAULT_PLAYER_COUNT)),
 				// new MenuItem(MenuOptions.SELECT_MAP, position++, Constants.LEVEL_LIST[currentLevel]), TODO Enable this
 				new MenuItem(MenuOptions.HEALTH, position++, Integer.toString(GameplayConstants.DEFAULT_HEALTH)),
-				new MenuItem(MenuOptions.TEAMS, position++, GameplayConstants.GAME_TYPE[0].toString()),
+				new MenuItem(MenuOptions.GAME_TYPE, position++, GameTypes.values()[0].toString()),
 				new MenuItem(MenuOptions.BACK, position++),
 		};
 	}
@@ -50,7 +51,7 @@ public class PreGameMenu extends MenuState {
 	protected void clickMenuItem(MenuItem menuItem) {
 		switch (menuItem.getOption()) {
 			case START_GAME:
-				getGame().pushState(new GameState(new GameModel(playerCount, currentHealth, GameplayConstants.LEVEL_LIST[currentLevel], GameplayConstants.GAME_TYPE[selectedGameType].toString()))); // FIXME TEMP!
+				getGame().pushState(new GameState(new GameModel(playerCount, currentHealth, GameplayConstants.LEVEL_LIST[currentLevel], GameTypes.values()[selectedGameType]))); // FIXME TEMP!
 				break;
 			case PLAYER_COUNT:
 				changePlayerCount();
@@ -64,9 +65,9 @@ public class PreGameMenu extends MenuState {
 				increaseHealth();
 				menuItem.setData(Integer.toString(currentHealth));
 				break;
-			case TEAMS:
+			case GAME_TYPE:
 				selectGameType();
-				menuItem.setData(GameplayConstants.GAME_TYPE[selectedGameType].toString());
+				menuItem.setData(GameTypes.values()[selectedGameType].toString());
 				break;
 			case BACK:
 				getGame().popState();
@@ -80,7 +81,7 @@ public class PreGameMenu extends MenuState {
 	 * Just goes through the different game states defined in Constants
 	 */
 	private void selectGameType() {
-		if (selectedGameType == GameplayConstants.GAME_TYPE.length - 1) selectedGameType = 0;
+		if (selectedGameType == GameTypes.values().length - 1) selectedGameType = 0;
 		else selectedGameType++;
 	}
 

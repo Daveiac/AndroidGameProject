@@ -1,6 +1,7 @@
 package no.ntnu.folk.game.gameplay.models;
 
 import android.os.SystemClock;
+import no.ntnu.folk.game.constants.GameTypes;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import sheep.math.Vector2;
@@ -22,7 +23,7 @@ public class GameModel {
 
 	//Map
 	private String currentLevel;
-	private String gameMode;
+	private GameTypes gameTypes;
 
 	//Game time
 	private long gameTime;
@@ -30,11 +31,11 @@ public class GameModel {
 	private long availablePlayerTime;
 
 
-	public GameModel(int playerCount, int playerHealth, String level, String gameMode) {
+	public GameModel(int playerCount, int playerHealth, String level, GameTypes gameTypes) {
 		this.playerCount = playerCount;
 		this.maxHealth = playerHealth;
 		this.currentLevel = level;
-		this.gameMode = gameMode;
+		this.gameTypes = gameTypes;
 		playerList = new ArrayList<PlayerModel>();
 		currentPlayer = 0;
 		gameTime = 0;
@@ -73,7 +74,7 @@ public class GameModel {
 	 * @return
 	 */
 	public Object[] getGameOptions() {
-		Object[] options = {playerCount, maxHealth, currentLevel, gameMode};
+		Object[] options = {playerCount, maxHealth, currentLevel, gameTypes};
 		return options;
 	}
 

@@ -9,6 +9,4 @@ public class GameplayConstants {
 	public static final int MAX_PLAYERS = 6;
 	public static final int DEFAULT_PLAYER_COUNT = 2;
 	public static String[] LEVEL_LIST = {"1"}; //TODO LevelController.getLevels()
-	// Game types
-	public static final GameTypes[] GAME_TYPE = {GameTypes.FFA, GameTypes.TEAMS};
 }
