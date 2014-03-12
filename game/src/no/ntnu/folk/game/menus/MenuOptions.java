@@ -5,7 +5,7 @@ public enum MenuOptions {
 	PLAYER_COUNT("Player count"),
 	SELECT_MAP("Select map"),
 	HEALTH("Max health"),
-	TEAMS("Team game or FFA"),
+	GAME_TYPE("Game type"),
 	START_GAME("Start game"),
 
 	SAVE_MENU("Save menu"),
