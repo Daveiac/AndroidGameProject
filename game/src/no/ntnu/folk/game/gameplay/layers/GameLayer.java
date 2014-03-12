@@ -15,20 +15,10 @@ import sheep.math.BoundingBox;
 import no.ntnu.folk.game.gameplay.Button;
 
 public class GameLayer extends Layer implements CollisionListener {
-	private Image aimImage = new Image(R.drawable.aim);
 	private GameModel model;
-	private Sprite aim = new Sprite(aimImage);
-	private Button fireKey;
 
 	public GameLayer(GameModel model) {
 		this.model = model;
-		float fireKeyX = Constants.getWindowSize()[0]*0.4f;
-		float keyY = Constants.getWindowSize()[1] * 0.8f;
-		float aimKeyX = Constants.getWindowSize()[0]*5f;
-		float aimKeyY = Constants.getWindowSize()[1]*5f;
-		fireKey = new Button(R.drawable.firekey, R.drawable.firekey, fireKeyX, keyY);
-		aim.setPosition(aimKeyX, aimKeyY);
-//		aim = new Sprite(aimImage);
 		for (PlayerModel player : model.getPlayerList()) {
 			player.addCollisionListener(this);
 		}
@@ -36,9 +26,6 @@ public class GameLayer extends Layer implements CollisionListener {
 
 	@Override
 	public void update(float dt) {
-		if(fireKey.isPressed()){
-			fireWeapon();
-		}
 		for (PlayerModel player : model.getPlayerList()) {
 			player.update(dt);
 		}
@@ -55,36 +42,9 @@ public class GameLayer extends Layer implements CollisionListener {
 		for (ProjectileModel projectile : model.getProjectiles()) {
 			projectile.draw(canvas);
 		}
-		aim.draw(canvas);
-		fireKey.draw(canvas);
 	}
 	
-	public boolean onTouchDown(MotionEvent event){
-		if(fireKey.contanis(event.getX(), event.getY())){
-			fireKey.setPressed(true);
-		}
-		aim.setPosition(event.getX(), event.getY());
-		return true;
-	}
-	
-	public boolean onTouchMove(MotionEvent event){
-		if(fireKey.contanis(event.getX(), event.getY())){
-			fireKey.setPressed(true);
-		}else{
-			fireKey.setPressed(false);
-		}
-		aim.setPosition(event.getX(), event.getY());
-		return true;
-	}
-	
-	public boolean onTouchUp(MotionEvent event){
-		fireKey.setPressed(false);
-		return true;
-	}
 
-	private void fireWeapon() {
-				
-	}
 	
 	/**
 	 * Called when two Sprite collide.

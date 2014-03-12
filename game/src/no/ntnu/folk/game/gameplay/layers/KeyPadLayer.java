@@ -10,6 +10,7 @@ import no.ntnu.folk.game.gameplay.models.GameModel;
 import no.ntnu.folk.game.menus.menuStates.PauseMenu;
 import sheep.game.Game;
 import sheep.game.Layer;
+import sheep.graphics.Image;
 import sheep.math.BoundingBox;
 
 public class KeyPadLayer extends Layer {
@@ -18,7 +19,9 @@ public class KeyPadLayer extends Layer {
 	private Button rightKey;
 	private Button pauseButton;
 	private Button swapKey;
+	private Button fireKey;
 
+	private Image aimImage;
 	private GameModel gameModel;
 
 
@@ -27,12 +30,15 @@ public class KeyPadLayer extends Layer {
 		float leftKeyX = Constants.getWindowSize()[0] * 0.25f;
 		float rightKeyX = Constants.getWindowSize()[0] * 0.75f;
 		float swapKeyX = Constants.getWindowSize()[0]*0.6f;
+		float fireKeyX = Constants.getWindowSize()[0]*0.4f;
 		float keyY = Constants.getWindowSize()[1] * 0.8f;
+		aimImage = new Image(R.drawable.aim);
 		buttons = new Button[]{
 				leftKey = new Button(R.drawable.keypadleft, R.drawable.keypadleft, leftKeyX, keyY),
 				rightKey = new Button(R.drawable.keypadright, R.drawable.keypadright, rightKeyX, keyY),
 				pauseButton = new Button(R.drawable.icon, R.drawable.icon, 32, 32), // TODO add proper pause button
 				swapKey = new Button(R.drawable.swapkey, R.drawable.swapkey, swapKeyX,keyY),
+				fireKey = new Button(R.drawable.firekey, R.drawable.firekey, fireKeyX, keyY),
 		};
 	}
 
@@ -48,6 +54,10 @@ public class KeyPadLayer extends Layer {
 		if (!leftKey.isPressed() && !rightKey.isPressed()) {
 			currentPlayer.setSpeed(0, currentPlayer.getSpeed().getY());
 		}
+		if(fireKey.isPressed()){
+			System.out.println("fire button works");
+			gameModel.fireWeapon();
+		}
 	}
 
 	@Override
@@ -55,6 +65,8 @@ public class KeyPadLayer extends Layer {
 		for (Button button : buttons) {
 			button.draw(canvas);
 		}
+		aimImage.draw(canvas, gameModel.getCurrentPlayer().getAimPositionX(),
+				gameModel.getCurrentPlayer().getAimPositionY());
 	}
 /**
  * If any of buttons are pressed like pauseButton, fire , move or swap weapons, 

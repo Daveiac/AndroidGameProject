@@ -43,20 +43,14 @@ public class GameState extends State {
 
 	@Override
 	public boolean onTouchDown(MotionEvent event) {
-		keyPadLayer.onTouchDown(event);
-		gameLayer.onTouchDown(event);
-		return true;
+		return keyPadLayer.onTouchDown(event);
 	}
 	@Override
 	public boolean onTouchMove(MotionEvent event) {
-		keyPadLayer.onTouchMove(event);
-		gameLayer.onTouchMove(event);
-		return true;
+		return 	keyPadLayer.onTouchMove(event);
 	}
 	@Override
 	public boolean onTouchUp(MotionEvent event) {
-		keyPadLayer.onTouchUp(event);
-		gameLayer.onTouchUp(event);
-		return true;
+		return 	keyPadLayer.onTouchUp(event);
 	}
 }

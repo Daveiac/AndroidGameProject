@@ -137,5 +137,9 @@ public class GameModel {
 	public int getPlayerCount() {
 		return this.playerCount;
 	}
+	public void fireWeapon() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
