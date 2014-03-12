@@ -4,6 +4,7 @@ package no.ntnu.folk.game.gameplay.levels.controllers;
 import no.ntnu.folk.game.gameplay.models.LevelModel;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Level controller. Loads levels .
@@ -12,8 +13,9 @@ import java.io.File;
  */
 public class LevelController {
 
-	private File[] listOfLevels;
+	private static File[] listOfLevels;
 	private LevelModel levelmodel;
+	private static ArrayList<ArrayList<String>> instances;
 
 	/**
 	 * Constructor. Constructs the level controller which loads levels from source folder.
@@ -35,7 +37,7 @@ public class LevelController {
 	 *
 	 * @return levels. List with the names of all levels.
 	 */
-	public String[] getLevels() {
+	public static String[] getLevels() {
 		int numberOfLevels = listOfLevels.length;
 		String[] levels = new String[numberOfLevels];
 		for (int i = 0; i < numberOfLevels; i++) {
