@@ -36,9 +36,9 @@ public class PreGameMenu extends MenuState {
 		menuItems = new MenuItem[]{
 				new MenuItem(MenuOptions.START_GAME, position++),
 				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(Constants.DEFAULT_PLAYER_COUNT)),
-				new MenuItem(MenuOptions.SELECT_MAP, position++, Constants.LEVEL_LIST[currentLevel]),
+				// new MenuItem(MenuOptions.SELECT_MAP, position++, Constants.LEVEL_LIST[currentLevel]), TODO Enable this
 				new MenuItem(MenuOptions.HEALTH, position++, Integer.toString(Constants.DEFAULT_HEALTH)),
-				new MenuItem(MenuOptions.TEAMS, position++, Constants.GAME_TYPE[0]),
+				new MenuItem(MenuOptions.TEAMS, position++, Constants.GAME_TYPE[0].toString()),
 				new MenuItem(MenuOptions.BACK, position++),
 		};
 	}
@@ -50,7 +50,7 @@ public class PreGameMenu extends MenuState {
 	protected void clickMenuItem(MenuItem menuItem) {
 		switch (menuItem.getOption()) {
 			case START_GAME:
-				getGame().pushState(new GameState(new GameModel(playerCount, currentHealth, Constants.LEVEL_LIST[currentLevel], Constants.GAME_TYPE[selectedGameType]))); // FIXME TEMP!
+				getGame().pushState(new GameState(new GameModel(playerCount, currentHealth, Constants.LEVEL_LIST[currentLevel], Constants.GAME_TYPE[selectedGameType].toString()))); // FIXME TEMP!
 				break;
 			case PLAYER_COUNT:
 				changePlayerCount();
@@ -66,7 +66,7 @@ public class PreGameMenu extends MenuState {
 				break;
 			case TEAMS:
 				selectGameType();
-				menuItem.setData(Constants.GAME_TYPE[selectedGameType]);
+				menuItem.setData(Constants.GAME_TYPE[selectedGameType].toString());
 				break;
 			case BACK:
 				getGame().popState();
@@ -96,7 +96,7 @@ public class PreGameMenu extends MenuState {
 	 * Circles throught the available levels
 	 */
 	private void nextLevel() {
-		if (currentLevel == Constants.LEVEL_LIST.length - 1) currentLevel = 0;
+		if (currentLevel == Constants.LEVEL_LIST.length - 1) currentLevel = 0; 
 		else currentLevel++;
 	}
 

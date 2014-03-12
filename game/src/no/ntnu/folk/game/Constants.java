@@ -1,5 +1,7 @@
 package no.ntnu.folk.game;
 
+import no.ntnu.folk.game.gameplay.levels.controllers.LevelController;
+
 public class Constants {
 	public static final float PLAYER_SPEED = 10;
 	// Debugging
@@ -7,8 +9,9 @@ public class Constants {
 	// Game options
 	public static final int DEFAULT_HEALTH = 100;
 	public static final int MAX_HEALTH = 1000;
-	public static String[] LEVEL_LIST = {"1", "2"}; //TODO make level list // FIXME Use enum!
-	public static String[] GAME_TYPE = {"FFA", "TEAM"}; // FIXME Use enum!
+	public static String[] LEVEL_LIST = {"1"}; //TODO LevelController.getLevels() // FIXME Use enum!
+	private static Enum FFA, TEAMS;
+	public static Enum[] GAME_TYPE = {FFA,TEAMS};
 	// Player count
 	public static final int MAX_PLAYERS = 6;
 	public static final int DEFAULT_PLAYER_COUNT = 2;
