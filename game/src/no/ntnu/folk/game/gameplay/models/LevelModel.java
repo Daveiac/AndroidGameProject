@@ -61,4 +61,8 @@ public class LevelModel extends Sprite {
 		// TODO Auto-generated method stub
 		tokens.add(token);
 	}
+
+	public ArrayList<int[]> getStartPositions() {
+		return startPositions;
+	}
 }
