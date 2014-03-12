@@ -1,6 +1,6 @@
 package no.ntnu.folk.game.menus.menuStates;
 
-import no.ntnu.folk.game.Constants;
+import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import no.ntnu.folk.game.menus.MenuItem;
 import no.ntnu.folk.game.menus.MenuOptions;
@@ -27,18 +27,18 @@ public class PreGameMenu extends MenuState {
 	@Override
 	protected void addMenuItems() {
 		// Initialize variables here as this method is called before the class is "made"
-		playerCount = Constants.DEFAULT_PLAYER_COUNT;
+		playerCount = GameplayConstants.DEFAULT_PLAYER_COUNT;
 		currentLevel = 0;
-		currentHealth = Constants.DEFAULT_HEALTH;
+		currentHealth = GameplayConstants.DEFAULT_HEALTH;
 		selectedGameType = 0;
 
 		int position = 0;
 		menuItems = new MenuItem[]{
 				new MenuItem(MenuOptions.START_GAME, position++),
-				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(Constants.DEFAULT_PLAYER_COUNT)),
+				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(GameplayConstants.DEFAULT_PLAYER_COUNT)),
 				// new MenuItem(MenuOptions.SELECT_MAP, position++, Constants.LEVEL_LIST[currentLevel]), TODO Enable this
-				new MenuItem(MenuOptions.HEALTH, position++, Integer.toString(Constants.DEFAULT_HEALTH)),
-				new MenuItem(MenuOptions.TEAMS, position++, Constants.GAME_TYPE[0].toString()),
+				new MenuItem(MenuOptions.HEALTH, position++, Integer.toString(GameplayConstants.DEFAULT_HEALTH)),
+				new MenuItem(MenuOptions.TEAMS, position++, GameplayConstants.GAME_TYPE[0].toString()),
 				new MenuItem(MenuOptions.BACK, position++),
 		};
 	}
@@ -50,7 +50,7 @@ public class PreGameMenu extends MenuState {
 	protected void clickMenuItem(MenuItem menuItem) {
 		switch (menuItem.getOption()) {
 			case START_GAME:
-				getGame().pushState(new GameState(new GameModel(playerCount, currentHealth, Constants.LEVEL_LIST[currentLevel], Constants.GAME_TYPE[selectedGameType].toString()))); // FIXME TEMP!
+				getGame().pushState(new GameState(new GameModel(playerCount, currentHealth, GameplayConstants.LEVEL_LIST[currentLevel], GameplayConstants.GAME_TYPE[selectedGameType].toString()))); // FIXME TEMP!
 				break;
 			case PLAYER_COUNT:
 				changePlayerCount();
@@ -58,7 +58,7 @@ public class PreGameMenu extends MenuState {
 				break;
 			case SELECT_MAP:
 				nextLevel();
-				menuItem.setData(Constants.LEVEL_LIST[currentLevel]);
+				menuItem.setData(GameplayConstants.LEVEL_LIST[currentLevel]);
 				break;
 			case HEALTH:
 				increaseHealth();
@@ -66,7 +66,7 @@ public class PreGameMenu extends MenuState {
 				break;
 			case TEAMS:
 				selectGameType();
-				menuItem.setData(Constants.GAME_TYPE[selectedGameType].toString());
+				menuItem.setData(GameplayConstants.GAME_TYPE[selectedGameType].toString());
 				break;
 			case BACK:
 				getGame().popState();
@@ -80,7 +80,7 @@ public class PreGameMenu extends MenuState {
 	 * Just goes through the different game states defined in Constants
 	 */
 	private void selectGameType() {
-		if (selectedGameType == Constants.GAME_TYPE.length - 1) selectedGameType = 0;
+		if (selectedGameType == GameplayConstants.GAME_TYPE.length - 1) selectedGameType = 0;
 		else selectedGameType++;
 	}
 
@@ -88,7 +88,7 @@ public class PreGameMenu extends MenuState {
 	 * Increase start-health with 100 up to a max given in Constants
 	 */
 	private void increaseHealth() {
-		if (currentHealth == Constants.MAX_HEALTH) currentHealth = 100;
+		if (currentHealth == GameplayConstants.MAX_HEALTH) currentHealth = 100;
 		else currentHealth += 100;
 	}
 
@@ -96,7 +96,7 @@ public class PreGameMenu extends MenuState {
 	 * Circles throught the available levels
 	 */
 	private void nextLevel() {
-		if (currentLevel == Constants.LEVEL_LIST.length - 1) currentLevel = 0; 
+		if (currentLevel == GameplayConstants.LEVEL_LIST.length - 1) currentLevel = 0;
 		else currentLevel++;
 	}
 
@@ -104,7 +104,7 @@ public class PreGameMenu extends MenuState {
 	 * Changes the player count to a max given in Constants
 	 */
 	private void changePlayerCount() {
-		if (playerCount == Constants.MAX_PLAYERS) {
+		if (playerCount == GameplayConstants.MAX_PLAYERS) {
 			playerCount = 2;
 		} else {
 			playerCount++;

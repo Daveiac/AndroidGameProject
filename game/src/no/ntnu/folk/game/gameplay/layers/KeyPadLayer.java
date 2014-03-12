@@ -2,7 +2,8 @@ package no.ntnu.folk.game.gameplay.layers;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
-import no.ntnu.folk.game.Constants;
+import no.ntnu.folk.game.constants.GameplayConstants;
+import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.gameplay.Button;
 import no.ntnu.folk.game.gameplay.models.GameModel;
@@ -19,9 +20,9 @@ public class KeyPadLayer extends Layer implements TouchListener {
 
 	public KeyPadLayer(GameModel gameModel) {
 		this.gameModel = gameModel;
-		float leftKeyX = Constants.getWindowSize()[0] * 0.25f;
-		float rightKeyX = Constants.getWindowSize()[0] * 0.75f;
-		float keyY = Constants.getWindowSize()[1] * 0.8f;
+		float leftKeyX = ProgramConstants.getWindowSize()[0] * 0.25f;
+		float rightKeyX = ProgramConstants.getWindowSize()[0] * 0.75f;
+		float keyY = ProgramConstants.getWindowSize()[1] * 0.8f;
 		buttons = new Button[]{
 				leftKey = new Button(R.drawable.keypadleft, R.drawable.keypadleft, leftKeyX, keyY),
 				rightKey = new Button(R.drawable.keypadright, R.drawable.keypadright, rightKeyX, keyY),
@@ -31,10 +32,10 @@ public class KeyPadLayer extends Layer implements TouchListener {
 	@Override
 	public void update(float dt) {
 		if (leftKey.isPressed()) {
-			gameModel.getCurrentPlayer().setSpeed(-Constants.PLAYER_SPEED, 0);
+			gameModel.getCurrentPlayer().setSpeed(-GameplayConstants.PLAYER_SPEED, 0);
 		}
 		if (rightKey.isPressed()) {
-			gameModel.getCurrentPlayer().setSpeed(Constants.PLAYER_SPEED, 0);
+			gameModel.getCurrentPlayer().setSpeed(GameplayConstants.PLAYER_SPEED, 0);
 		}
 	}
 

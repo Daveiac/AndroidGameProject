@@ -1,7 +1,7 @@
 package no.ntnu.folk.game.menus;
 
 import android.graphics.Canvas;
-import no.ntnu.folk.game.Constants;
+import no.ntnu.folk.game.constants.ProgramConstants;
 import sheep.graphics.Color;
 import sheep.graphics.Font;
 import sheep.math.BoundingBox;
@@ -19,10 +19,10 @@ public class MenuItem {
 	public MenuItem(MenuOptions option, int position, String data) {
 		this.option = option;
 		this.data = data;
-		this.xmin = Constants.getButtonWidth() / 2;
-		this.xmax = Constants.getButtonWidth() / 2 * 3;
-		this.ymin = Constants.getButtonHeight() * (1 + position);
-		this.ymax = Constants.getButtonHeight() * (2 + position);
+		this.xmin = ProgramConstants.getButtonWidth() / 2;
+		this.xmax = ProgramConstants.getButtonWidth() / 2 * 3;
+		this.ymin = ProgramConstants.getButtonHeight() * (1 + position);
+		this.ymax = ProgramConstants.getButtonHeight() * (2 + position);
 		boundingBox = new BoundingBox(xmin, xmax, ymin, ymax);
 	}
 	public MenuItem(MenuOptions option, int position) {
