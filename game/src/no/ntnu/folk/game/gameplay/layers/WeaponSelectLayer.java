@@ -57,7 +57,7 @@ public class WeaponSelectLayer extends Layer {
 
 	public boolean onTouchDown(MotionEvent event) {
 		for (Button button : weaponButtons) {
-			if (button.contanis(event.getX(), event.getY())) {
+			if (button.contains(event.getX(), event.getY())) {
 				button.setPressed(true);
 			}
 		}
@@ -66,7 +66,7 @@ public class WeaponSelectLayer extends Layer {
 
 	public boolean onTouchMove(MotionEvent event) {
 		for (Button button : weaponButtons) {
-			if (button.contanis(event.getX(), event.getY())) {
+			if (button.contains(event.getX(), event.getY())) {
 				button.setPressed(true);
 			} else {
 				button.setPressed(false);
@@ -77,7 +77,7 @@ public class WeaponSelectLayer extends Layer {
 
 	public boolean onTouchUp(MotionEvent event) {
 		for (Button button : weaponButtons) {
-			if (button.contanis(event.getX(), event.getY())) {
+			if (button.contains(event.getX(), event.getY())) {
 				button.setPressed(false);
 			}
 		}

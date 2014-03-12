@@ -75,11 +75,11 @@ public class KeyPadLayer extends Layer {
  * @return true value which does nothing
  */
 	public boolean onTouchDown(MotionEvent event) {
-		if (pauseButton.contanis(event.getX(), event.getY())) {
+		if (pauseButton.contains(event.getX(), event.getY())) {
 			Game.getInstance().pushState(new PauseMenu());
 		}
 		for (Button button : buttons) {
-			if (button.contanis(event.getX(), event.getY())) {
+			if (button.contains(event.getX(), event.getY())) {
 				button.setPressed(true);
 			}
 		}
@@ -88,7 +88,7 @@ public class KeyPadLayer extends Layer {
 
 	public boolean onTouchMove(MotionEvent event) {
 		for (Button button : buttons) {
-			if (button.contanis(event.getX(), event.getY())) {
+			if (button.contains(event.getX(), event.getY())) {
 				button.setPressed(true);
 			} else {
 				button.setPressed(false);
@@ -98,7 +98,7 @@ public class KeyPadLayer extends Layer {
 	}
 	public boolean onTouchUp(MotionEvent event) {
 		for (Button button : buttons) {
-			if (button.contanis(event.getX(), event.getY())) {
+			if (button.contains(event.getX(), event.getY())) {
 				button.setPressed(false);
 			}
 		}
