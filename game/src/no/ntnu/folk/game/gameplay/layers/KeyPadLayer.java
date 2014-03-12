@@ -17,18 +17,22 @@ public class KeyPadLayer extends Layer {
 	private Button leftKey;
 	private Button rightKey;
 	private Button pauseButton;
+	private Button swapKey;
 
 	private GameModel gameModel;
+
 
 	public KeyPadLayer(GameModel gameModel) {
 		this.gameModel = gameModel;
 		float leftKeyX = Constants.getWindowSize()[0] * 0.25f;
 		float rightKeyX = Constants.getWindowSize()[0] * 0.75f;
+		float swapKeyX = Constants.getWindowSize()[0]*0.6f;
 		float keyY = Constants.getWindowSize()[1] * 0.8f;
 		buttons = new Button[]{
 				leftKey = new Button(R.drawable.keypadleft, R.drawable.keypadleft, leftKeyX, keyY),
 				rightKey = new Button(R.drawable.keypadright, R.drawable.keypadright, rightKeyX, keyY),
 				pauseButton = new Button(R.drawable.icon, R.drawable.icon, 32, 32), // TODO add proper pause button
+				swapKey = new Button(R.drawable.swapkey, R.drawable.swapkey, swapKeyX,keyY),
 		};
 	}
 
@@ -52,7 +56,12 @@ public class KeyPadLayer extends Layer {
 			button.draw(canvas);
 		}
 	}
-
+/**
+ * If any of buttons are pressed like pauseButton, fire , move or swap weapons, 
+ * this methods will take care of whats gonna happen
+ * @param event
+ * @return true value which does nothing
+ */
 	public boolean onTouchDown(MotionEvent event) {
 		if (pauseButton.contanis(event.getX(), event.getY())) {
 			Game.getInstance().pushState(new PauseMenu());
@@ -64,6 +73,7 @@ public class KeyPadLayer extends Layer {
 		}
 		return true;
 	}
+
 	public boolean onTouchMove(MotionEvent event) {
 		for (Button button : buttons) {
 			if (button.contanis(event.getX(), event.getY())) {
