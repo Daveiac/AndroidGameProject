@@ -121,5 +121,8 @@ public class PlayerModel extends EntityModel {
 	public float getAimPositionY(){
 		return aimPositionY;
 	}
-	
+
+	public Vector2 getAimVector() {
+		return new Vector2(aimPositionX - getX(), aimPositionY - getY());
+	}
 }

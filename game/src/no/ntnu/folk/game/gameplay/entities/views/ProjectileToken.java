@@ -1,5 +1,6 @@
 package no.ntnu.folk.game.gameplay.entities.views;
 
+import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import sheep.graphics.Image;
 
@@ -18,7 +19,7 @@ public class ProjectileToken extends EntityToken {
 	@Override
 	protected void setImages() {
 		images = new Image[]{
-				// TODO Fill the image array
+				new Image(R.drawable.bullet_medium),
 		};
 	}
 

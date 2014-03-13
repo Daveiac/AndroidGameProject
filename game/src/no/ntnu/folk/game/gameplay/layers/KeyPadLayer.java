@@ -56,7 +56,6 @@ public class KeyPadLayer extends Layer {
 			currentPlayer.setSpeed(0, currentPlayer.getSpeed().getY());
 		}
 		if(fireKey.isPressed()){
-			System.out.println("fire button works");
 			gameModel.fireWeapon();
 		}
 	}
@@ -76,13 +75,18 @@ public class KeyPadLayer extends Layer {
  * @return true value which does nothing
  */
 	public boolean onTouchDown(MotionEvent event) {
+		boolean buttonPressed = false;
 		if (pauseButton.contains(event.getX(), event.getY())) {
 			Game.getInstance().pushState(new PauseMenu());
 		}
 		for (Button button : buttons) {
 			if (button.contains(event.getX(), event.getY())) {
+				buttonPressed = true;
 				button.setPressed(true);
 			}
+		}
+		if (!buttonPressed) {
+			gameModel.getCurrentPlayer().setAim(event.getX(), event.getY());
 		}
 		return true;
 	}
