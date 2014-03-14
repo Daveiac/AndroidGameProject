@@ -127,7 +127,7 @@ public class KeyPadLayer extends Layer {
 		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
 		float aimX = currentPlayer.getAim().getX() + currentPlayer.getX();
 		float aimY = currentPlayer.getAim().getY() + currentPlayer.getY();
-		aimImage.draw(canvas, aimX, aimY);
+		aimImage.draw(canvas, aimX - aimImage.getWidth() / 2, aimY - aimImage.getHeight() / 2);
 	}
 	private void drawButtons(Canvas canvas) {
 		for (Button button : buttons) {
