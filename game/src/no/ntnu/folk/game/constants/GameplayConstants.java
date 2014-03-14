@@ -10,5 +10,4 @@ public class GameplayConstants {
 	// Player count
 	public static final int MAX_PLAYERS = 6;
 	public static final int DEFAULT_PLAYER_COUNT = 2;
-	public static String[] LEVEL_LIST = LevelController.getLevels();
 }
