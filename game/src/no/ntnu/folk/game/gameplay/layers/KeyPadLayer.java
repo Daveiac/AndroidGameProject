@@ -162,7 +162,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		return true;
 	}
 
-	public boolean onTouchDown(float x, float y) {
+	private boolean onTouchDown(float x, float y) {
 		boolean buttonPressed = false;
 		if (pauseButton.contains(x, y)) {
 			gameModel.pauseGame();
@@ -184,23 +184,4 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		return true;
 	}
 
-	public boolean onTouchMove(float x, float y) {
-		for (Button button : buttons) {
-			if (button.contains(x, y)) {
-				button.hold();
-			} else {
-				gameModel.getCurrentPlayer().setAim(x, y);
-			}
-		}
-		return true;
-	}
-
-	public boolean onTouchUp(float x, float y) {
-		for (Button button : buttons) {
-			if (button.contains(x, y)) {
-				button.release();
-			}
-		}
-		return true;
-	}
 }
