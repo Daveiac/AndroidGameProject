@@ -4,15 +4,11 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 import no.ntnu.folk.game.gameplay.layers.GameLayer;
 import no.ntnu.folk.game.gameplay.layers.KeyPadLayer;
-import no.ntnu.folk.game.gameplay.layers.WeaponSelectLayer;
 import no.ntnu.folk.game.gameplay.models.GameModel;
-import sheep.game.Game;
 import sheep.game.State;
 import sheep.game.World;
 
-import static android.graphics.Color.BLACK;
 import static android.graphics.Color.BLUE;
-import static android.graphics.Color.GREEN;
 
 public class GameState extends State {
 	private final KeyPadLayer keyPadLayer;
