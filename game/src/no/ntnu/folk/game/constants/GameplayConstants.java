@@ -1,5 +1,7 @@
 package no.ntnu.folk.game.constants;
 
+import no.ntnu.folk.game.gameplay.levels.controllers.LevelController;
+
 public class GameplayConstants {
 	public static final float PLAYER_SPEED = 10;
 	// Game options
@@ -8,7 +10,6 @@ public class GameplayConstants {
 	// Player count
 	public static final int MAX_PLAYERS = 6;
 	public static final int DEFAULT_PLAYER_COUNT = 2;
-	public static String[] LEVEL_LIST = {"1"}; //TODO LevelController.getLevels()
 	// TurnTime
 	public static final int TURN_TIME = 10; // turn time in seconds
 }
