@@ -12,6 +12,7 @@ public class Button {
 	private Image idleImage;
 	private Image pressedImage;
 
+	private boolean enabled = true;
 	private boolean pressed = false;
 
 	private float x;
@@ -43,10 +44,12 @@ public class Button {
 	 * @param canvas canvas to draw the image on
 	 */
 	public void draw(Canvas canvas) {
-		if (pressed) {
-			idleImage.draw(canvas, x, y);
-		} else {
-			pressedImage.draw(canvas, x, y);
+		if (enabled) {
+			if (pressed) {
+				idleImage.draw(canvas, x, y);
+			} else {
+				pressedImage.draw(canvas, x, y);
+			}
 		}
 	}
 
@@ -54,12 +57,12 @@ public class Button {
 	 * Returns whether or not this button is pressed.
 	 * If canHold == false, pressed will be set to false.
 	 *
-	 * @return true if pressed
+	 * @return true if pressed AND the button is enabled.
 	 */
 	public boolean popPressed() {
 		boolean wasPressed = pressed;
 		pressed = false;
-		return wasPressed;
+		return wasPressed && isEnabled();
 	}
 	/**
 	 * This button was touched
@@ -90,4 +93,18 @@ public class Button {
 	public boolean contains(float x, float y) {
 		return boundingBox.contains(x, y);
 	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void enable() {
+		enabled = true;
+	}
+	public void disable() {
+		enabled = false;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
 }

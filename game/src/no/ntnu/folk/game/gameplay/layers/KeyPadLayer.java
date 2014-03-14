@@ -14,12 +14,13 @@ import no.ntnu.folk.game.menus.menuStates.PauseMenu;
 import sheep.game.Game;
 import sheep.game.Layer;
 import sheep.graphics.Image;
+import sheep.input.Touch;
 import sheep.math.BoundingBox;
 import sheep.math.Vector2;
 
 import static no.ntnu.folk.game.R.drawable.*;
 
-public class KeyPadLayer extends Layer implements View.OnTouchListener {
+public class KeyPadLayer extends Layer {
 	private Button[] buttons;
 	private Button leftKey;
 	private Button rightKey;
@@ -32,17 +33,15 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	private Image aimImage;
 	private GameModel gameModel;
 	private WeaponSelectLayer weaponSelectLayer;
-	private boolean swapKeyIsPressed;
 
 	private SparseArray<PointF> activePointers;
 
-	public KeyPadLayer(GameModel gameModel, View view) {
+	public KeyPadLayer(GameModel gameModel) {
 		this.gameModel = gameModel;
 		weaponSelectLayer = new WeaponSelectLayer(gameModel);
 		aimImage = new Image(aim);
 		createButtons(ProgramConstants.getWindowSize());
 		activePointers = new SparseArray<PointF>();
-		view.setOnTouchListener(this);
 	}
 	private void createButtons(int[] windowSize) {
 		Vector2 leftKeyPos = new Vector2(windowSize[0] * 0.08f, windowSize[1] * 0.90f);
@@ -97,10 +96,11 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 			gameModel.fireWeapon();
 		}
 		if (swapKey.popPressed()) {
-			swapKeyIsPressed = !swapKeyIsPressed;
+			weaponSelectLayer.setActive(true);
 		}
 		if (unpauseButton.popPressed()) {
 			gameModel.pauseGame();
+			unpauseButton.disable();
 		}
 	}
 
@@ -108,9 +108,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	public void draw(Canvas canvas, BoundingBox box) {
 		drawButtons(canvas);
 		drawAim(canvas);
-		if (swapKeyIsPressed) {
-			weaponSelectLayer.draw(canvas, box);
-		}
+		weaponSelectLayer.draw(canvas, box);
 		if (gameModel.isPaused()) {
 			unpauseButton.draw(canvas);
 		}
@@ -127,65 +125,54 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		}
 	}
 
-	@Override
-	public boolean onTouch(View view, MotionEvent event) {
+	public boolean onTouchDown(MotionEvent event) {
 		int pointerIndex = event.getActionIndex();
 		int pointerId = event.getPointerId(pointerIndex);
-		int maskedAction = event.getActionMasked();
-		switch (maskedAction) {
-			// New pointer
-			case MotionEvent.ACTION_DOWN:
-			case MotionEvent.ACTION_POINTER_DOWN:
-				PointF f = new PointF(event.getX(pointerIndex), event.getY(pointerIndex));
-				activePointers.append(pointerId, f);
-				onTouchDown(f.x, f.y);
-				break;
-			// Pointer moved
-			case MotionEvent.ACTION_MOVE:
-				int pointerCount = event.getPointerCount();
-				for (int i = 0; i < pointerCount; i++) {
-					PointF point = activePointers.get(event.getPointerId(i));
-					if (point != null) {
-						point.set(event.getX(i), event.getY(i));
-					}
-				}
-				break;
-			// Pointer lifted (removed)
-			case MotionEvent.ACTION_UP:
-			case MotionEvent.ACTION_POINTER_UP:
-			case MotionEvent.ACTION_CANCEL:
-				for (Button button : buttons) {
-					if (button.contains(activePointers.get(pointerId).x, activePointers.get(pointerId).y)) {
-						button.release();
-					}
-				}
-				activePointers.remove(pointerId);
-				break;
-			default:
-				break;
-		}
-		return true;
-	}
 
-	private boolean onTouchDown(float x, float y) {
+		PointF point = new PointF(event.getX(pointerIndex), event.getY(pointerIndex));
+		activePointers.append(pointerId, point);
+
 		boolean buttonPressed = false;
-		if (pauseButton.contains(x, y)) {
+		if (pauseButton.contains(point.x, point.y)) {
 			gameModel.pauseGame();
+			unpauseButton.enable();
 			Game.getInstance().pushState(new PauseMenu());
 		}
 		for (Button button : buttons) {
-			if (button.contains(x, y)) {
+			if (button.contains(point.x, point.y)) {
 				buttonPressed = true;
 				button.touch();
 			}
 		}
-		if (gameModel.isPaused() && unpauseButton.contains(x, y)) {
+		if (gameModel.isPaused() && unpauseButton.contains(point.x, point.y)) {
 			buttonPressed = true;
 			unpauseButton.touch();
 		}
 		if (!buttonPressed) {
-			gameModel.getCurrentPlayer().setAim(x, y);
+			gameModel.getCurrentPlayer().setAim(point.x, point.y);
 		}
+		return true;
+	}
+
+	public boolean onTouchMove(MotionEvent event) {
+		int pointerCount = event.getPointerCount();
+		for (int i = 0; i < pointerCount; i++) {
+			PointF point = activePointers.get(event.getPointerId(i));
+			if (point != null) {
+				point.set(event.getX(i), event.getY(i));
+			}
+		}
+		return true;
+	}
+	public boolean onTouchUp(MotionEvent event) {
+		int pointerIndex = event.getActionIndex();
+		int pointerId = event.getPointerId(pointerIndex);
+		for (Button button : buttons) {
+			if (button.contains(activePointers.get(pointerId).x, activePointers.get(pointerId).y)) {
+				button.release();
+			}
+		}
+		activePointers.remove(pointerId);
 		return true;
 	}
 
