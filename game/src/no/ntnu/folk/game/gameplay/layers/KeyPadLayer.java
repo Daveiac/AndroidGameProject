@@ -22,6 +22,7 @@ public class KeyPadLayer extends Layer {
 	private Button pauseButton;
 	private Button swapKey;
 	private Button fireKey;
+	private Button unpauseButton;
 
 	private Image aimImage;
 	private GameModel gameModel;
@@ -39,6 +40,8 @@ public class KeyPadLayer extends Layer {
 		float fireKeyX = ProgramConstants.getWindowSize()[0]*0.76f;
 		float keyY = ProgramConstants.getWindowSize()[1] * 0.90f;
 		float upKeyY = ProgramConstants.getWindowSize()[1]* 0.87f;
+		float unPauseX = ProgramConstants.getWindowSize()[0] * 0.50f;
+		float unPauseY = ProgramConstants.getWindowSize()[1] * 0.50f;
 		aimImage = new Image(R.drawable.aim);
 		buttons = new Button[]{
 				leftKey = new Button(R.drawable.keypadleft, R.drawable.keypadleft, leftKeyX, keyY),
@@ -48,6 +51,7 @@ public class KeyPadLayer extends Layer {
 				swapKey = new Button(R.drawable.swapkey, R.drawable.swapkey, swapKeyX,keyY),
 				fireKey = new Button(R.drawable.firekey, R.drawable.firekey, fireKeyX, keyY),
 		};
+		unpauseButton = new Button(R.drawable.unpause, R.drawable.unpause, unPauseX, unPauseY);
 	}
 
 	@Override
@@ -68,6 +72,9 @@ public class KeyPadLayer extends Layer {
 		if(swapKey.isPressed()){
 			swapKeyIsPressed = !swapKeyIsPressed;
 		}
+		if(unpauseButton.isPressed()){
+			gameModel.pauseGame();
+		}
 	}
 
 	@Override
@@ -82,6 +89,9 @@ public class KeyPadLayer extends Layer {
 		if(swapKeyIsPressed){
 			weaponSelectLayer.draw(canvas, box);
 		}
+		if(gameModel.isPaused()){
+			unpauseButton.draw(canvas);
+		}
 	}
 /**
  * If any of buttons are pressed like pauseButton, fire , move or swap weapons,
@@ -92,6 +102,7 @@ public class KeyPadLayer extends Layer {
 	public boolean onTouchDown(MotionEvent event) {
 		boolean buttonPressed = false;
 		if (pauseButton.contains(event.getX(), event.getY())) {
+			gameModel.pauseGame();
 			Game.getInstance().pushState(new PauseMenu());
 		}
 		for (Button button : buttons) {
@@ -99,6 +110,9 @@ public class KeyPadLayer extends Layer {
 				buttonPressed = true;
 				button.setPressed(true);
 			}
+		}
+		if(unpauseButton.contains(event.getX(), event.getY())){
+			unpauseButton.setPressed(true);
 		}
 		if (!buttonPressed) {
 			gameModel.getCurrentPlayer().setAim(event.getX(), event.getY());
@@ -123,6 +137,7 @@ public class KeyPadLayer extends Layer {
 				button.setPressed(false);
 			}
 		}
+		unpauseButton.setPressed(false);
 		return true;
 	}
 
