@@ -109,7 +109,7 @@ public class KeyPadLayer extends Layer {
 			weaponSelection.setActive(true);
 		}
 		if (unpauseButton.popPressed()) {
-			gameModel.pauseGame();
+			gameModel.setPaused(false);
 			unpauseButton.disable();
 		}
 	}
@@ -144,7 +144,7 @@ public class KeyPadLayer extends Layer {
 
 		boolean buttonPressed = false;
 		if (pauseButton.contains(point.x, point.y)) {
-			gameModel.pauseGame();
+			gameModel.setPaused(true);
 			unpauseButton.enable();
 			Game.getInstance().pushState(new PauseMenu());
 		}

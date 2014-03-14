@@ -31,7 +31,7 @@ public class GameLayer extends Layer implements CollisionListener {
 			for (ProjectileModel projectile : model.getProjectiles()) {
 				projectile.update(dt);
 			}
-			model.update();
+			model.update(dt);
 			if (model.playerTimeUp()) {
 				model.nextPlayer();
 			}

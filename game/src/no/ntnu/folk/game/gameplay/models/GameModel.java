@@ -1,6 +1,5 @@
 package no.ntnu.folk.game.gameplay.models;
 
-import android.os.SystemClock;
 import no.ntnu.folk.game.constants.GameTypes;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Projectiles;
@@ -32,16 +31,15 @@ public class GameModel {
 	private GameTypes gameTypes;
 
 	//Game time
-	private long gameTime;
-	private long lastUpdateTime;
-	private long availablePlayerTime;
-	private boolean pauseGame;
+	private float gameTime;
+	private float availablePlayerTime;
+	private boolean paused;
 
 	/**
 	 * @param playerCount  Number of players for the start of this game
 	 * @param playerHealth Health all players starts with
 	 * @param level        Level name
-	 * @param gameTypes     Game type (teams / ffa)
+	 * @param gameTypes    Game type (teams / ffa)
 	 */
 	public GameModel(int playerCount, int playerHealth, String level, GameTypes gameTypes) {
 		initializeFields(playerCount, playerHealth, level, gameTypes);
@@ -53,7 +51,7 @@ public class GameModel {
 	 * @param playerCount  Number of players for the start of this game
 	 * @param playerHealth Health all players starts with
 	 * @param level        Level name
-	 * @param gameTypes     Game type (teams / ffa)
+	 * @param gameTypes    Game type (teams / ffa)
 	 */
 	private void initializeFields(int playerCount, int playerHealth, String level, GameTypes gameTypes) {
 		this.playerCount = playerCount;
@@ -62,11 +60,10 @@ public class GameModel {
 		this.gameTypes = gameTypes;
 		projectiles = new ArrayList<ProjectileModel>();
 		currentPlayer = 0;
-		
+
 		// Init time variables
 		gameTime = 0;
 		availablePlayerTime = GameplayConstants.TURN_TIME;
-		lastUpdateTime = System.currentTimeMillis();
 	}
 	/**
 	 * Create the number of players
@@ -108,13 +105,11 @@ public class GameModel {
 
 	/**
 	 * Update timer
+	 * @param dt time since last update
 	 */
-	public void update() {
-		long time = System.currentTimeMillis();
-		long timeDiff = time - lastUpdateTime;
-		gameTime += timeDiff;
-		lastUpdateTime = time;
-		availablePlayerTime -= timeDiff;
+	public void update(float dt) {
+		gameTime += dt;
+		availablePlayerTime -= dt;
 	}
 
 	/**
@@ -134,31 +129,22 @@ public class GameModel {
 	}
 
 	/**
-	 * @return Game options
-	 */
-	public Object[] getGameOptions() { // FIXME Do not use Object[]
-		Object[] options = {playerCount, maxHealth, currentLevel, gameTypes};
-		return options;
-	}
-
-	/**
 	 * @return True if the time is up for current player
 	 */
 	public boolean playerTimeUp() {
 		return availablePlayerTime <= 0;
 	}
-	
-	public float playerTimeLeft(){
+
+	/**
+	 * @return time left of this turn for the current player
+	 */
+	public float playerTimeLeft() {
 		return this.availablePlayerTime;
 	}
 
 	/**
-	 * @return Number of players when the game started
+	 * Fires the weapon the current player is holding
 	 */
-	public int getPlayerCount() {
-		return this.playerCount;
-	}
-
 	public void fireWeapon() {
 		if (getCurrentPlayer().getCurrentWeapon().isCool()) {
 			Projectiles projectileType = getCurrentPlayer().getCurrentWeapon().getProjectileType();
@@ -169,14 +155,19 @@ public class GameModel {
 			getCurrentPlayer().getCurrentWeapon().startCoolDownTimer();
 		}
 	}
-	
-	public void pauseGame(){
-		if(pauseGame) pauseGame = false;
-		else pauseGame = true;
+
+	/**
+	 * @param paused Set whether or not the game is paused
+	 */
+	public void setPaused(boolean paused) {
+		this.paused = paused;
 	}
-	
-	public boolean isPaused(){
-		return this.pauseGame;
+
+	/**
+	 * @return true if the game is paused
+	 */
+	public boolean isPaused() {
+		return this.paused;
 	}
 
 }
