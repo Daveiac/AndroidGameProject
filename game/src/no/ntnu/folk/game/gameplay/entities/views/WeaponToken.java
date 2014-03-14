@@ -3,6 +3,7 @@ package no.ntnu.folk.game.gameplay.entities.views;
 import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.gameplay.entities.models.WeaponModel;
 import sheep.graphics.Image;
+import sheep.math.Vector2;
 
 public class WeaponToken extends EntityToken {
 	private int rotation = 0; // TODO implement
@@ -39,6 +40,10 @@ public class WeaponToken extends EntityToken {
 	 */
 	@Override
 	protected int getRotation() {
+		Vector2 aim = ((WeaponModel) entityModel).getAim();
+		int rotation = (int) Math.toDegrees(Math.atan(aim.getY() / aim.getX()));
+		if (aim.getX() < 0 && rotation < 180) rotation += 180;
+		if (aim.getX() > 0 && rotation > 180) rotation += 180;
 		return rotation;
 	}
 

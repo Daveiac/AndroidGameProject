@@ -1,7 +1,7 @@
 package no.ntnu.folk.game.gameplay.entities.data;
 
 public enum Projectiles {
-	BULLET(50, 0, 0, 5, 3),
+	BULLET(50, 0, 0, 32, 16),
 	ROCKET(35, 20, 10, 10, 6); // TODO set proper values
 
 	private final int directDamage;

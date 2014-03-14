@@ -9,6 +9,8 @@ import sheep.game.State;
 import sheep.game.World;
 
 import static android.graphics.Color.BLACK;
+import static android.graphics.Color.BLUE;
+import static android.graphics.Color.GREEN;
 
 public class GameState extends State {
 	private World gameWorld;
@@ -36,7 +38,7 @@ public class GameState extends State {
 	@Override
 	public void draw(Canvas canvas) {
 		if (canvas == null) return;
-		canvas.drawColor(BLACK);
+		canvas.drawColor(BLUE);
 
 		gameWorld.draw(canvas);
 	}

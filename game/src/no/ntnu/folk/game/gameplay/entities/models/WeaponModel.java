@@ -8,6 +8,8 @@ import sheep.math.Vector2;
 
 public class WeaponModel extends EntityModel {
 	private final Projectiles projectileType;
+	private int coolDown;
+	private Vector2 aim;
 
 	/**
 	 * Constructing a weaponModel based on a weapon from Weapons
@@ -22,6 +24,7 @@ public class WeaponModel extends EntityModel {
 				weapon.getImageHeight()
 		);
 		projectileType = weapon.getProjectile();
+		aim = new Vector2(0, 0);
 	}
 
 	/**
@@ -30,6 +33,16 @@ public class WeaponModel extends EntityModel {
 	@Override
 	protected EntityToken createToken() {
 		return new WeaponToken(this);
+	}
+	@Override
+	public void update(float dt) {
+		super.update(dt);
+		if (coolDown != 0) {
+			coolDown -= dt;
+			if (coolDown < 0) {
+				coolDown = 0;
+			}
+		}
 	}
 
 	// TODO
@@ -41,4 +54,17 @@ public class WeaponModel extends EntityModel {
 		return projectileType;
 	}
 
+	public void startCoolDownTimer() {
+		coolDown = 100; // FIXME Test value, please ignore... Should be individual for each weapon.
+	}
+	public boolean isCool() {
+		return coolDown == 0;
+	}
+	public void setAim(float x, float y) {
+		aim.set(x, y);
+	}
+	public Vector2 getAim() {
+		return new Vector2(aim.getX(), aim.getY());
+//		return aim; // Using this one instead has an interesting effect!
+	}
 }
