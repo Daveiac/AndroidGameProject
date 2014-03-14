@@ -6,6 +6,7 @@ import no.ntnu.folk.game.gameplay.entities.data.Projectiles;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
+import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import sheep.math.Vector2;
 
 import java.util.ArrayList;
@@ -91,6 +92,12 @@ public class GameModel {
 	 */
 	public ArrayList<ProjectileModel> getProjectiles() {
 		return projectiles;
+	}
+	/**
+	 * @return The list of projectiles in this game
+	 */
+	public ArrayList<LevelToken> getLevelTokens() {
+		return currentLevel.getLevelTokens();
 	}
 
 	/**

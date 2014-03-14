@@ -37,8 +37,8 @@ public class KeyPadLayer extends Layer {
 		float upKeyX = ProgramConstants.getWindowSize()[0] * 0.2f;
 		float swapKeyX = ProgramConstants.getWindowSize()[0]*0.92f;
 		float fireKeyX = ProgramConstants.getWindowSize()[0]*0.76f;
-		float keyY = ProgramConstants.getWindowSize()[1] * 0.92f;
-		float upKeyY = ProgramConstants.getWindowSize()[1]* 0.85f;
+		float keyY = ProgramConstants.getWindowSize()[1] * 0.90f;
+		float upKeyY = ProgramConstants.getWindowSize()[1]* 0.87f;
 		aimImage = new Image(R.drawable.aim);
 		buttons = new Button[]{
 				leftKey = new Button(R.drawable.keypadleft, R.drawable.keypadleft, leftKeyX, keyY),

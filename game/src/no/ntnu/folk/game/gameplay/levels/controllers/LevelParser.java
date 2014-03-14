@@ -9,15 +9,26 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import android.R;
+
+import sheep.game.Game;
 
 public class LevelParser {
 
 	public static void parseLevel(LevelModel lm) {
 
-		String path = "res/levels/" + lm.getLevel() + ".level";
+		int id = Game.getInstance().getResources().getIdentifier("raw/" + lm.getLevel(),"raw", R.class.getPackage().getName());
 
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(path));
+			InputStream is = Game.getInstance().getResources().openRawResource(id);
+			InputStreamReader isr = new InputStreamReader(is);
+			BufferedReader br = new BufferedReader(isr);
+			
+			
+//			BufferedReader br = new BufferedReader(new FileReader(path));
 
 			String line = br.readLine();
 			while (line != null) {

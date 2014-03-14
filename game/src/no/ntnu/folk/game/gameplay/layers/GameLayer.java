@@ -4,6 +4,7 @@ import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
+import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import sheep.collision.CollisionListener;
 import sheep.game.Layer;
@@ -40,12 +41,16 @@ public class GameLayer extends Layer implements CollisionListener {
 		turnTimer-= dt;
 		if(turnTimer <= 0) {
 			turnTimer = GameplayConstants.TURN_TIME;
+			model.getCurrentPlayer().setSpeed(0, 0);
 			model.nextPlayer();
 		}
 	}
 
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
+		for (LevelToken levelToken : model.getLevelTokens()) {
+			levelToken.draw(canvas);
+		}
 		for (PlayerModel player : model.getPlayerList()) {
 			player.draw(canvas);
 		}
