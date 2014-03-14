@@ -2,6 +2,7 @@ package no.ntnu.folk.game.menus.menuStates;
 
 import no.ntnu.folk.game.constants.GameTypes;
 import no.ntnu.folk.game.constants.GameplayConstants;
+import no.ntnu.folk.game.gameplay.levels.controllers.LevelController;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import no.ntnu.folk.game.menus.MenuItem;
 import no.ntnu.folk.game.menus.MenuOptions;
@@ -19,6 +20,7 @@ public class PreGameMenu extends MenuState {
 	private int currentLevel;
 	private int currentHealth;
 	private int selectedGameType;
+	private String[] levels;
 	// private GameModel gameModel; //TODO make a gameModel with the options set
 
 
@@ -32,12 +34,13 @@ public class PreGameMenu extends MenuState {
 		currentLevel = 0;
 		currentHealth = GameplayConstants.DEFAULT_HEALTH;
 		selectedGameType = 0;
+		levels = LevelController.getLevels();
 
 		int position = 0;
 		menuItems = new MenuItem[]{
 				new MenuItem(MenuOptions.START_GAME, position++),
 				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(GameplayConstants.DEFAULT_PLAYER_COUNT)),
-				// new MenuItem(MenuOptions.SELECT_MAP, position++, Constants.LEVEL_LIST[currentLevel]), TODO Enable this
+				new MenuItem(MenuOptions.SELECT_MAP, position++, levels[currentLevel]),
 				new MenuItem(MenuOptions.HEALTH, position++, Integer.toString(GameplayConstants.DEFAULT_HEALTH)),
 				new MenuItem(MenuOptions.GAME_TYPE, position++, GameTypes.values()[0].toString()),
 				new MenuItem(MenuOptions.BACK, position++),
@@ -51,7 +54,7 @@ public class PreGameMenu extends MenuState {
 	protected void clickMenuItem(MenuItem menuItem) {
 		switch (menuItem.getOption()) {
 			case START_GAME:
-				getGame().pushState(new GameState(new GameModel(playerCount, currentHealth, GameplayConstants.LEVEL_LIST[currentLevel], GameTypes.values()[selectedGameType]))); // FIXME TEMP!
+				getGame().pushState(new GameState(new GameModel(playerCount, currentHealth,levels[currentLevel], GameTypes.values()[selectedGameType]))); // FIXME TEMP!
 				break;
 			case PLAYER_COUNT:
 				changePlayerCount();
@@ -59,7 +62,7 @@ public class PreGameMenu extends MenuState {
 				break;
 			case SELECT_MAP:
 				nextLevel();
-				menuItem.setData(GameplayConstants.LEVEL_LIST[currentLevel]);
+				menuItem.setData(levels[currentLevel]);
 				break;
 			case HEALTH:
 				increaseHealth();
@@ -97,7 +100,7 @@ public class PreGameMenu extends MenuState {
 	 * Circles throught the available levels
 	 */
 	private void nextLevel() {
-		if (currentLevel == GameplayConstants.LEVEL_LIST.length - 1) currentLevel = 0;
+		if (currentLevel == levels.length - 1) currentLevel = 0;
 		else currentLevel++;
 	}
 

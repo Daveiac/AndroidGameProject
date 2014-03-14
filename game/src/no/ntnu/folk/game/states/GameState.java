@@ -8,14 +8,11 @@ import no.ntnu.folk.game.gameplay.models.GameModel;
 import sheep.game.State;
 import sheep.game.World;
 
-import static android.graphics.Color.BLACK;
 import static android.graphics.Color.BLUE;
-import static android.graphics.Color.GREEN;
 
 public class GameState extends State {
+	private final KeyPadLayer keyPadLayer;
 	private World gameWorld;
-	private KeyPadLayer keyPadLayer;
-	private GameLayer gameLayer;
 
 	/**
 	 * Create a new game.
@@ -24,9 +21,8 @@ public class GameState extends State {
 	 */
 	public GameState(GameModel model) {
 		gameWorld = new World();
-		gameLayer = new GameLayer(model);
 		keyPadLayer = new KeyPadLayer(model);
-		gameWorld.addLayer(gameLayer);
+		gameWorld.addLayer(new GameLayer(model));
 		gameWorld.addLayer(keyPadLayer);
 	}
 
@@ -49,10 +45,10 @@ public class GameState extends State {
 	}
 	@Override
 	public boolean onTouchMove(MotionEvent event) {
-		return 	keyPadLayer.onTouchMove(event);
+		return keyPadLayer.onTouchMove(event);
 	}
 	@Override
 	public boolean onTouchUp(MotionEvent event) {
-		return 	keyPadLayer.onTouchUp(event);
+		return keyPadLayer.onTouchUp(event);
 	}
 }

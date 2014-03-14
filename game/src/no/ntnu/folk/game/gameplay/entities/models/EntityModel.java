@@ -9,24 +9,21 @@ public abstract class EntityModel extends Sprite {
 	private final EntityToken entityToken;
 
 	private final String name;
-	private float[] imageSize;
 
 	/**
 	 * @param name        Name of the entityToken associated with this entityModel
 	 * @param position    Position of this entityModel
-	 * @param imageWidth  Width of the image for the entityToken associated with this entityModel
-	 * @param imageHeight Height of the image for the entityToken associated with this entityModel
+	 * @param image       Used when creating a token
 	 */
-	protected EntityModel(String name, Vector2 position, float imageWidth, float imageHeight) {
+	protected EntityModel(String name, Vector2 position, int image) {
 		this.name = name;
 		this.setPosition(position);
-		imageSize = new float[]{imageWidth, imageHeight};
-		this.entityToken = createToken();
+		this.entityToken = createToken(image);
 	}
 	/**
 	 * @return Create a entityToken of the correct type
 	 */
-	protected abstract EntityToken createToken();
+	protected abstract EntityToken createToken(int image);
 
 	@Override
 	public void update(float dt) {
@@ -42,19 +39,6 @@ public abstract class EntityModel extends Sprite {
 	 */
 	public String getName() {
 		return name;
-	}
-
-	/**
-	 * @return Image width for the entityToken associated with this entityModel
-	 */
-	public float getImageWidth() {
-		return imageSize[0];
-	}
-	/**
-	 * @return Image height for the entityToken associated with this entityModel
-	 */
-	public float getImageHeight() {
-		return imageSize[1];
 	}
 
 }
