@@ -43,11 +43,11 @@ public class GameModel implements CollisionListener {
 	/**
 	 * @param playerCount  Number of players for the start of this game
 	 * @param playerHealth Health all players starts with
-	 * @param level        Level name
+	 * @param levelName    Level name
 	 * @param gameTypes    Game type (teams / ffa)
 	 */
-	public GameModel(int playerCount, int playerHealth, String level, GameTypes gameTypes) {
-		initializeFields(playerCount, playerHealth, level, gameTypes);
+	public GameModel(int playerCount, int playerHealth, String levelName, GameTypes gameTypes) {
+		initializeFields(playerCount, playerHealth, levelName, gameTypes);
 		createPlayers();
 		kill = new ArrayList<EntityModel>();
 	}
@@ -56,13 +56,13 @@ public class GameModel implements CollisionListener {
 	 *
 	 * @param playerCount  Number of players for the start of this game
 	 * @param playerHealth Health all players starts with
-	 * @param level        Level name
+	 * @param levelName    Level name
 	 * @param gameTypes    Game type (teams / ffa)
 	 */
-	private void initializeFields(int playerCount, int playerHealth, String level, GameTypes gameTypes) {
+	private void initializeFields(int playerCount, int playerHealth, String levelName, GameTypes gameTypes) {
 		this.playerCount = playerCount;
 		this.maxHealth = playerHealth;
-		this.currentLevel = new LevelModel(level);
+		this.currentLevel = new LevelModel(levelName);
 		this.gameTypes = gameTypes;
 		projectiles = new ArrayList<ProjectileModel>();
 		currentPlayer = 0;
