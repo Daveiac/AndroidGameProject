@@ -8,7 +8,6 @@ import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
-import sheep.collision.CollisionLayer;
 import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
 import sheep.math.Vector2;
@@ -199,14 +198,8 @@ public class GameModel implements CollisionListener {
 	 */
 	@Override
 	public void collided(Sprite a, Sprite b) {
-		if (a instanceof PlayerModel) {
-			if (b instanceof ProjectileModel) {
-				projectiles.remove(b);
-				((PlayerModel) a).attacked(((ProjectileModel) b).getDirectDamage());
-			}
-		}
-		if (b instanceof PlayerModel) {
-			if (a instanceof ProjectileModel) {
+		if (a instanceof ProjectileModel) {
+			if (b instanceof PlayerModel) {
 				projectiles.remove(a);
 				((PlayerModel) b).attacked(((ProjectileModel) a).getDirectDamage());
 			}
