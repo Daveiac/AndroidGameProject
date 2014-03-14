@@ -139,6 +139,10 @@ public class GameModel {
 	public boolean playerTimeUp() {
 		return availablePlayerTime <= 0;
 	}
+	
+	public float playerTimeLeft(){
+		return this.availablePlayerTime;
+	}
 
 	/**
 	 * @return Number of players when the game started
