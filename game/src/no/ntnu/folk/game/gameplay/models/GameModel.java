@@ -2,6 +2,7 @@ package no.ntnu.folk.game.gameplay.models;
 
 import android.os.SystemClock;
 import no.ntnu.folk.game.constants.GameTypes;
+import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Projectiles;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
@@ -34,6 +35,7 @@ public class GameModel {
 	private long gameTime;
 	private long lastUpdateTime;
 	private long availablePlayerTime;
+	private boolean pauseGame;
 
 	/**
 	 * @param playerCount  Number of players for the start of this game
@@ -60,7 +62,11 @@ public class GameModel {
 		this.gameTypes = gameTypes;
 		projectiles = new ArrayList<ProjectileModel>();
 		currentPlayer = 0;
+		
+		// Init time variables
 		gameTime = 0;
+		availablePlayerTime = GameplayConstants.TURN_TIME;
+		lastUpdateTime = System.currentTimeMillis();
 	}
 	/**
 	 * Create the number of players
@@ -104,8 +110,8 @@ public class GameModel {
 	 * Update timer
 	 */
 	public void update() {
-		long time = SystemClock.elapsedRealtime();
-		long timeDiff = lastUpdateTime - time;
+		long time = System.currentTimeMillis();
+		long timeDiff = time - lastUpdateTime;
 		gameTime += timeDiff;
 		lastUpdateTime = time;
 		availablePlayerTime -= timeDiff;
@@ -115,6 +121,8 @@ public class GameModel {
 	 * Set currentPlayer to the next player. Set to first player if a the end of the list.
 	 */
 	public void nextPlayer() {
+		getCurrentPlayer().setSpeed(0, 0);
+		availablePlayerTime = GameplayConstants.TURN_TIME;
 		if (currentPlayer == playerCount - 1) currentPlayer = 0;
 		else currentPlayer++;
 	}
@@ -160,6 +168,15 @@ public class GameModel {
 			projectile.setSpeed(getCurrentPlayer().getAim());
 			getCurrentPlayer().getCurrentWeapon().startCoolDownTimer();
 		}
+	}
+	
+	public void pauseGame(){
+		if(pauseGame) pauseGame = false;
+		else pauseGame = true;
+	}
+	
+	public boolean isPaused(){
+		return this.pauseGame;
 	}
 
 }

@@ -92,6 +92,7 @@ public class KeyPadLayer extends Layer {
 	public boolean onTouchDown(MotionEvent event) {
 		boolean buttonPressed = false;
 		if (pauseButton.contains(event.getX(), event.getY())) {
+			gameModel.pauseGame();
 			Game.getInstance().pushState(new PauseMenu());
 		}
 		for (Button button : buttons) {
