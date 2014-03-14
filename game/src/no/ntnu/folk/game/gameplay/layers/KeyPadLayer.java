@@ -2,7 +2,6 @@ package no.ntnu.folk.game.gameplay.layers;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
-import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.Button;
@@ -13,6 +12,9 @@ import sheep.game.Game;
 import sheep.game.Layer;
 import sheep.graphics.Image;
 import sheep.math.BoundingBox;
+import sheep.math.Vector2;
+
+import static no.ntnu.folk.game.R.drawable.*;
 
 public class KeyPadLayer extends Layer {
 	private Button[] buttons;
@@ -33,46 +35,47 @@ public class KeyPadLayer extends Layer {
 	public KeyPadLayer(GameModel gameModel) {
 		weaponSelectLayer = new WeaponSelectLayer(gameModel);
 		this.gameModel = gameModel;
-		float leftKeyX = ProgramConstants.getWindowSize()[0] * 0.08f;
-		float rightKeyX = ProgramConstants.getWindowSize()[0] * 0.32f;
-		float upKeyX = ProgramConstants.getWindowSize()[0] * 0.2f;
-		float swapKeyX = ProgramConstants.getWindowSize()[0] * 0.92f;
-		float fireKeyX = ProgramConstants.getWindowSize()[0] * 0.76f;
-		float keyY = ProgramConstants.getWindowSize()[1] * 0.90f;
-		float upKeyY = ProgramConstants.getWindowSize()[1] * 0.87f;
-		float unPauseX = ProgramConstants.getWindowSize()[0] * 0.50f;
-		float unPauseY = ProgramConstants.getWindowSize()[1] * 0.50f;
-		aimImage = new Image(R.drawable.aim);
+		aimImage = new Image(aim);
+		createButtons(ProgramConstants.getWindowSize());
+	}
+	private void createButtons(int[] windowSize) {
+		Vector2 leftKeyPos = new Vector2(windowSize[0] * 0.08f, windowSize[1] * 0.90f);
+		Vector2 rightKeyPos = new Vector2(windowSize[0] * 0.32f, windowSize[1] * 0.90f);
+		Vector2 upKeyPos = new Vector2(windowSize[0] * 0.2f, windowSize[1] * 0.87f);
+		Vector2 pauseKeyPos = new Vector2(32, 32); // TODO should not use hardcoded coordinates
+		Vector2 swapKeyPos = new Vector2(windowSize[0] * 0.92f, windowSize[1] * 0.90f);
+		Vector2 fireKeyPos = new Vector2(windowSize[0] * 0.76f, windowSize[1] * 0.90f);
+		Vector2 unpauseKeyPos = new Vector2(windowSize[0] * 0.50f, windowSize[1] * 0.50f);
 		buttons = new Button[]{
-				leftKey = new Button(R.drawable.keypadleft, R.drawable.keypadleft, leftKeyX, keyY),
-				rightKey = new Button(R.drawable.keypadright, R.drawable.keypadright, rightKeyX, keyY),
-				upKey = new Button(R.drawable.keypadup, R.drawable.keypadup, upKeyX, upKeyY),
-				pauseButton = new Button(R.drawable.icon, R.drawable.icon, 32, 32), // TODO add proper pause button
-				swapKey = new Button(R.drawable.swapkey, R.drawable.swapkey, swapKeyX, keyY),
-				fireKey = new Button(R.drawable.firekey, R.drawable.firekey, fireKeyX, keyY),
+				leftKey = new Button(keypadleft, keypadleft, leftKeyPos, true),
+				rightKey = new Button(keypadright, keypadright, rightKeyPos, true),
+				upKey = new Button(keypadup, keypadup, upKeyPos, false),
+				pauseButton = new Button(icon, icon, pauseKeyPos, false), // TODO add proper pause button
+				swapKey = new Button(swapkey, swapkey, swapKeyPos, false),
+				fireKey = new Button(firekey, firekey, fireKeyPos, false),
 		};
-		unpauseButton = new Button(R.drawable.unpause, R.drawable.unpause, unPauseX, unPauseY);
+		unpauseButton = new Button(unpause, unpause, unpauseKeyPos, false);
 	}
 
 	@Override
 	public void update(float dt) {
 		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
-		if (leftKey.isPressed()) {
+		if (leftKey.popPressed()) {
 			gameModel.getCurrentPlayer().setSpeed(-GameplayConstants.PLAYER_SPEED, gameModel.getCurrentPlayer().getSpeed().getY());
 		}
-		if (rightKey.isPressed()) {
+		if (rightKey.popPressed()) {
 			gameModel.getCurrentPlayer().setSpeed(GameplayConstants.PLAYER_SPEED, gameModel.getCurrentPlayer().getSpeed().getY());
 		}
-		if (!leftKey.isPressed() && !rightKey.isPressed()) {
+		if (!leftKey.popPressed() && !rightKey.popPressed()) {
 			currentPlayer.setSpeed(0, currentPlayer.getSpeed().getY());
 		}
-		if (fireKey.isPressed()) {
+		if (fireKey.popPressed()) {
 			gameModel.fireWeapon();
 		}
-		if (swapKey.isPressed()) {
+		if (swapKey.popPressed()) {
 			swapKeyIsPressed = !swapKeyIsPressed;
 		}
-		if (unpauseButton.isPressed()) {
+		if (unpauseButton.popPressed()) {
 			gameModel.pauseGame();
 		}
 	}
@@ -116,12 +119,12 @@ public class KeyPadLayer extends Layer {
 		for (Button button : buttons) {
 			if (button.contains(event.getX(), event.getY())) {
 				buttonPressed = true;
-				button.setPressed(true);
+				button.touch();
 			}
 		}
-		if (unpauseButton.contains(event.getX(), event.getY())) {
+		if (gameModel.isPaused() && unpauseButton.contains(event.getX(), event.getY())) {
 			buttonPressed = true;
-			unpauseButton.setPressed(true);
+			unpauseButton.touch();
 		}
 		if (!buttonPressed) {
 			gameModel.getCurrentPlayer().setAim(event.getX(), event.getY());
@@ -132,9 +135,8 @@ public class KeyPadLayer extends Layer {
 	public boolean onTouchMove(MotionEvent event) {
 		for (Button button : buttons) {
 			if (button.contains(event.getX(), event.getY())) {
-				button.setPressed(true);
+				button.hold();
 			} else {
-				button.setPressed(false);
 				gameModel.getCurrentPlayer().setAim(event.getX(), event.getY());
 			}
 		}
@@ -143,10 +145,9 @@ public class KeyPadLayer extends Layer {
 	public boolean onTouchUp(MotionEvent event) {
 		for (Button button : buttons) {
 			if (button.contains(event.getX(), event.getY())) {
-				button.setPressed(false);
+				button.release();
 			}
 		}
-		unpauseButton.setPressed(false);
 		return true;
 	}
 

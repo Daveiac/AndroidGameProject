@@ -2,7 +2,6 @@ package no.ntnu.folk.game.gameplay.layers;
 
 import java.util.ArrayList;
 
-import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.Button;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
@@ -32,14 +31,13 @@ public class WeaponSelectLayer extends Layer {
 
 	@Override
 	public void update(float dt) {
-		if (currentPlayer.getWeaponList() != model.getCurrentPlayer()
-				.getWeaponList()) {
+		PlayerModel modelCurrentPlayer = model.getCurrentPlayer();
+		if (currentPlayer.getWeaponList() != modelCurrentPlayer.getWeaponList()) {
 			makeWeaponButtons();
 		}
 		for (Button wb : weaponButtons) {
-			if (wb.isPressed()) {
-				model.getCurrentPlayer().setCurrentWeapon(
-						weaponButtons.indexOf(wb));
+			if (wb.popPressed()) {
+				modelCurrentPlayer.setCurrentWeapon(weaponButtons.indexOf(wb));
 			}
 		}
 	}
@@ -61,7 +59,7 @@ public class WeaponSelectLayer extends Layer {
 	public boolean onTouchDown(MotionEvent event) {
 		for (Button button : weaponButtons) {
 			if (button.contains(event.getX(), event.getY())) {
-				button.setPressed(true);
+				button.touch();
 			}
 		}
 		return true;
@@ -70,9 +68,7 @@ public class WeaponSelectLayer extends Layer {
 	public boolean onTouchMove(MotionEvent event) {
 		for (Button button : weaponButtons) {
 			if (button.contains(event.getX(), event.getY())) {
-				button.setPressed(true);
-			} else {
-				button.setPressed(false);
+				button.hold();
 			}
 		}
 		return true;
@@ -81,7 +77,7 @@ public class WeaponSelectLayer extends Layer {
 	public boolean onTouchUp(MotionEvent event) {
 		for (Button button : weaponButtons) {
 			if (button.contains(event.getX(), event.getY())) {
-				button.setPressed(false);
+				button.release();
 			}
 		}
 		return true;
