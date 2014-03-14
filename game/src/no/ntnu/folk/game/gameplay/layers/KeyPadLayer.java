@@ -54,10 +54,10 @@ public class KeyPadLayer extends Layer {
 	public void update(float dt) {
 		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
 		if (leftKey.isPressed()) {
-			gameModel.getCurrentPlayer().setSpeed(-GameplayConstants.PLAYER_SPEED, 0); // TODO get x speed
+			gameModel.getCurrentPlayer().setSpeed(-GameplayConstants.PLAYER_SPEED, gameModel.getCurrentPlayer().getSpeed().getY());
 		}
 		if (rightKey.isPressed()) {
-			gameModel.getCurrentPlayer().setSpeed(GameplayConstants.PLAYER_SPEED, 0); // TODO get x speed
+			gameModel.getCurrentPlayer().setSpeed(GameplayConstants.PLAYER_SPEED, gameModel.getCurrentPlayer().getSpeed().getY());
 		}
 		if (!leftKey.isPressed() && !rightKey.isPressed()) {
 			currentPlayer.setSpeed(0, currentPlayer.getSpeed().getY());
@@ -66,11 +66,7 @@ public class KeyPadLayer extends Layer {
 			gameModel.fireWeapon();
 		}
 		if(swapKey.isPressed()){
-			if(!swapKeyIsPressed){
-				swapKeyIsPressed = true;				
-			}else{
-				swapKeyIsPressed = false;
-			}
+			swapKeyIsPressed = !swapKeyIsPressed;
 		}
 	}
 
@@ -84,11 +80,11 @@ public class KeyPadLayer extends Layer {
 		float aimY = currentPlayer.getAim().getY() + currentPlayer.getY();
 		aimImage.draw(canvas, aimX, aimY);
 		if(swapKeyIsPressed){
-			weaponSelectLayer.draw(canvas, box);			
+			weaponSelectLayer.draw(canvas, box);
 		}
 	}
 /**
- * If any of buttons are pressed like pauseButton, fire , move or swap weapons, 
+ * If any of buttons are pressed like pauseButton, fire , move or swap weapons,
  * this methods will take care of whats gonna happen
  * @param event
  * @return true value which does nothing
