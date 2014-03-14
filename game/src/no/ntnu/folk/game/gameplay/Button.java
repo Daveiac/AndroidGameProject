@@ -39,6 +39,7 @@ public class Button {
 
 	/**
 	 * Draw this button.
+	 *
 	 * @param canvas canvas to draw the image on
 	 */
 	public void draw(Canvas canvas) {
@@ -57,9 +58,7 @@ public class Button {
 	 */
 	public boolean popPressed() {
 		boolean wasPressed = pressed;
-		if (!canHold) {
-			pressed = false;
-		}
+		pressed = false;
 		return wasPressed;
 	}
 	/**
