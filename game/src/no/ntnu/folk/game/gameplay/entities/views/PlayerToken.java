@@ -6,6 +6,7 @@ import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import sheep.graphics.Image;
 
 public class PlayerToken extends EntityToken {
+	private float direction;
 
 	/**
 	 * @param model PlayerModel for this token
@@ -13,6 +14,7 @@ public class PlayerToken extends EntityToken {
 	 */
 	public PlayerToken(PlayerModel model, int image) {
 		super(model, image);
+		direction = 1;
 	}
 
 	// TODO
@@ -35,6 +37,17 @@ public class PlayerToken extends EntityToken {
 				"}";
 	}
 
+	@Override
+	protected float getScaleX() {
+		if (entityModel.getSpeed().getX() != 0) {
+			direction = Math.signum(entityModel.getSpeed().getX());
+		}
+		return direction;
+	}
+	@Override
+	protected float getScaleY() {
+		return 1;
+	}
 	/**
 	 * @return 0 as the player does not rotate.
 	 */

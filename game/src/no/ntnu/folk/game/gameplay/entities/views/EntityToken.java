@@ -37,10 +37,13 @@ public abstract class EntityToken {
 	 */
 	private void updateTransformationMatrix() {
 		transformation.setTranslate(-image.getWidth() / 2, -image.getHeight() / 2);   // Use the center of the sprite as center for drawing
-		// TODO scale for mirroring
+		transformation.postScale(getScaleX(), getScaleY());
 		transformation.postRotate(getRotation());
 		transformation.postTranslate(entityModel.getX(), entityModel.getY()); // getX and getY is located in Sprite
 	}
+	protected abstract float getScaleX();
+	protected abstract float getScaleY();
+
 	/**
 	 * Get the rotation of the images for tokens where this apply.
 	 *
