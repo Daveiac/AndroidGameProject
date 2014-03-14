@@ -1,5 +1,6 @@
 package no.ntnu.folk.game.gameplay.entities.models;
 
+import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Projectiles;
 import no.ntnu.folk.game.gameplay.entities.data.Weapons;
 import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
