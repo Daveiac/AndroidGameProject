@@ -25,7 +25,7 @@ public class WeaponModel extends EntityModel {
 		);
 		this.weapon = weapon;
 		projectileType = weapon.getProjectile();
-		aim = new Vector2(0, 0);
+		aim = new Vector2(10, 0);
 	}
 
 	/**
@@ -63,6 +63,9 @@ public class WeaponModel extends EntityModel {
 	}
 	public void setAim(float x, float y) {
 		aim.set(x, y);
+		if (aim.getLength() == 0) {
+			aim.set(10, 0);
+		}
 	}
 	public Vector2 getAim() {
 		return new Vector2(aim.getX(), aim.getY());
