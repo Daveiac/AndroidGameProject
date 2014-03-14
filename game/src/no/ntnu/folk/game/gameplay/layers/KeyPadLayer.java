@@ -18,25 +18,32 @@ public class KeyPadLayer extends Layer {
 	private Button[] buttons;
 	private Button leftKey;
 	private Button rightKey;
+	private Button upKey;
 	private Button pauseButton;
 	private Button swapKey;
 	private Button fireKey;
 
 	private Image aimImage;
 	private GameModel gameModel;
+	private WeaponSelectLayer weaponSelectLayer;
+	private boolean swapKeyIsPressed;
 
 
 	public KeyPadLayer(GameModel gameModel) {
+		weaponSelectLayer = new WeaponSelectLayer(gameModel);
 		this.gameModel = gameModel;
-		float leftKeyX = ProgramConstants.getWindowSize()[0] * 0.25f;
-		float rightKeyX = ProgramConstants.getWindowSize()[0] * 0.75f;
-		float swapKeyX = ProgramConstants.getWindowSize()[0]*0.6f;
-		float fireKeyX = ProgramConstants.getWindowSize()[0]*0.4f;
-		float keyY = ProgramConstants.getWindowSize()[1] * 0.8f;
+		float leftKeyX = ProgramConstants.getWindowSize()[0] * 0.08f;
+		float rightKeyX = ProgramConstants.getWindowSize()[0] * 0.32f;
+		float upKeyX = ProgramConstants.getWindowSize()[0] * 0.2f;
+		float swapKeyX = ProgramConstants.getWindowSize()[0]*0.92f;
+		float fireKeyX = ProgramConstants.getWindowSize()[0]*0.76f;
+		float keyY = ProgramConstants.getWindowSize()[1] * 0.92f;
+		float upKeyY = ProgramConstants.getWindowSize()[1]* 0.85f;
 		aimImage = new Image(R.drawable.aim);
 		buttons = new Button[]{
 				leftKey = new Button(R.drawable.keypadleft, R.drawable.keypadleft, leftKeyX, keyY),
 				rightKey = new Button(R.drawable.keypadright, R.drawable.keypadright, rightKeyX, keyY),
+				upKey = new Button(R.drawable.keypadup, R.drawable.keypadup, upKeyX, upKeyY),
 				pauseButton = new Button(R.drawable.icon, R.drawable.icon, 32, 32), // TODO add proper pause button
 				swapKey = new Button(R.drawable.swapkey, R.drawable.swapkey, swapKeyX,keyY),
 				fireKey = new Button(R.drawable.firekey, R.drawable.firekey, fireKeyX, keyY),
@@ -47,16 +54,23 @@ public class KeyPadLayer extends Layer {
 	public void update(float dt) {
 		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
 		if (leftKey.isPressed()) {
-			gameModel.getCurrentPlayer().setSpeed(-GameplayConstants.PLAYER_SPEED, 0); // TODO get y speed
+			gameModel.getCurrentPlayer().setSpeed(-GameplayConstants.PLAYER_SPEED, 0); // TODO get x speed
 		}
 		if (rightKey.isPressed()) {
-			gameModel.getCurrentPlayer().setSpeed(GameplayConstants.PLAYER_SPEED, 0); // TODO get y speed
+			gameModel.getCurrentPlayer().setSpeed(GameplayConstants.PLAYER_SPEED, 0); // TODO get x speed
 		}
 		if (!leftKey.isPressed() && !rightKey.isPressed()) {
 			currentPlayer.setSpeed(0, currentPlayer.getSpeed().getY());
 		}
 		if(fireKey.isPressed()){
 			gameModel.fireWeapon();
+		}
+		if(swapKey.isPressed()){
+			if(!swapKeyIsPressed){
+				swapKeyIsPressed = true;				
+			}else{
+				swapKeyIsPressed = false;
+			}
 		}
 	}
 
@@ -69,6 +83,9 @@ public class KeyPadLayer extends Layer {
 		float aimX = currentPlayer.getAim().getX() + currentPlayer.getX();
 		float aimY = currentPlayer.getAim().getY() + currentPlayer.getY();
 		aimImage.draw(canvas, aimX, aimY);
+		if(swapKeyIsPressed){
+			weaponSelectLayer.draw(canvas, box);			
+		}
 	}
 /**
  * If any of buttons are pressed like pauseButton, fire , move or swap weapons, 
@@ -99,6 +116,7 @@ public class KeyPadLayer extends Layer {
 				button.setPressed(true);
 			} else {
 				button.setPressed(false);
+				gameModel.getCurrentPlayer().setAim(event.getX(), event.getY());
 			}
 		}
 		return true;
