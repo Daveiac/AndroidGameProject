@@ -1,5 +1,6 @@
 package no.ntnu.folk.game.gameplay.layers;
 
+import android.graphics.Canvas;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
@@ -8,10 +9,8 @@ import no.ntnu.folk.game.gameplay.models.GameModel;
 import sheep.collision.CollisionListener;
 import sheep.game.Layer;
 import sheep.game.Sprite;
+import sheep.graphics.Color;
 import sheep.math.BoundingBox;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 
 public class GameLayer extends Layer implements CollisionListener {
 	private GameModel model;
@@ -50,20 +49,19 @@ public class GameLayer extends Layer implements CollisionListener {
 		for (ProjectileModel projectile : model.getProjectiles()) {
 			projectile.draw(canvas);
 		}
-		Paint p = new Paint();
-		p.setColor(Color.WHITE);
-		canvas.drawText("Time left: " + ((int) model.playerTimeLeft()),
+		canvas.drawText(
+				"Time left: " + ((int) model.playerTimeLeft()),
 				ProgramConstants.getWindowSize()[0] * 0.9f,
-				ProgramConstants.getWindowSize()[1] * 0.1f, p);
+				ProgramConstants.getWindowSize()[1] * 0.1f,
+				Color.WHITE
+		);
 	}
 
 	/**
 	 * Called when two Sprite collide.
-	 * 
-	 * @param a
-	 *            The first Sprite (the sprite being listened to).
-	 * @param b
-	 *            The other Sprite.
+	 *
+	 * @param a The first Sprite (the sprite being listened to).
+	 * @param b The other Sprite.
 	 */
 	@Override
 	public void collided(Sprite a, Sprite b) {
