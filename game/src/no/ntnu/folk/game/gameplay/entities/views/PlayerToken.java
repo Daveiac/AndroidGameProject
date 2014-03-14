@@ -1,9 +1,6 @@
 package no.ntnu.folk.game.gameplay.entities.views;
 
-import android.graphics.Canvas;
-import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
-import sheep.graphics.Image;
 
 public class PlayerToken extends EntityToken {
 	private float direction;
@@ -18,17 +15,6 @@ public class PlayerToken extends EntityToken {
 	}
 
 	// TODO
-
-	@Override
-	protected void drawDebugInformation(Canvas canvas) {
-		canvas.drawText(
-				this.toString(),
-				entityModel.getX() - image.getWidth() / 2,
-				entityModel.getY() - image.getHeight() * 3 / 4,
-				((PlayerModel) entityModel).getTeam().getTagColor()
-		);
-		drawOutline(canvas);
-	}
 
 	@Override
 	public String toString() {
