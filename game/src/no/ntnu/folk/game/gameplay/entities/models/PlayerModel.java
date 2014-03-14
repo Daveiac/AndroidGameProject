@@ -19,8 +19,6 @@ public class PlayerModel extends EntityModel {
 	private int health;
 	private ArrayList<WeaponModel> weaponList;
 	private WeaponModel currentWeapon;
-	private float aimPositionX;
-	private float aimPositionY;
 
 	/**
 	 * @param name     Constant name for the player during gameplay, will be used to identify different players
@@ -33,8 +31,7 @@ public class PlayerModel extends EntityModel {
 		this.health = health;
 		this.weaponList = Weapons.getDefaultWeapons();
 		this.currentWeapon = weaponList.get(0);
-		aimPositionX = position.getX();
-		aimPositionY = position.getY()+40;
+		setAim(position.getX() + 100, position.getY() + 100); // FIXME temporary values for start position
 	}
 
 	/**
@@ -109,20 +106,12 @@ public class PlayerModel extends EntityModel {
 		return this.weaponList;
 	}
 
-	public void setAim(float x, float y){
-		this.aimPositionX = x;
-		this.aimPositionY = y;
+	public void setAim(float x, float y) {
+		currentWeapon.setAim(x - getX(), y - getY());
 	}
 	
-	public float getAimPositionX(){
-		return aimPositionX;
-	}
-	
-	public float getAimPositionY(){
-		return aimPositionY;
+	public Vector2 getAim() {
+		return currentWeapon.getAim();
 	}
 
-	public Vector2 getAimVector() {
-		return new Vector2(aimPositionX - getX(), aimPositionY - getY());
-	}
 }

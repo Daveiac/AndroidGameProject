@@ -146,7 +146,7 @@ public class GameModel {
 			Vector2 playerPosition = new Vector2(getCurrentPlayer().getPosition().getX(), getCurrentPlayer().getPosition().getY());
 			ProjectileModel projectile = new ProjectileModel(projectileType, playerPosition);
 			projectiles.add(projectile);
-			projectile.setSpeed(getCurrentPlayer().getAimVector());
+			projectile.setSpeed(getCurrentPlayer().getAim());
 			getCurrentPlayer().getCurrentWeapon().startCoolDownTimer();
 		}
 	}

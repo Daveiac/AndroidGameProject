@@ -65,8 +65,10 @@ public class KeyPadLayer extends Layer {
 		for (Button button : buttons) {
 			button.draw(canvas);
 		}
-		aimImage.draw(canvas, gameModel.getCurrentPlayer().getAimPositionX(),
-				gameModel.getCurrentPlayer().getAimPositionY());
+		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
+		float aimX = currentPlayer.getAim().getX() + currentPlayer.getX();
+		float aimY = currentPlayer.getAim().getY() + currentPlayer.getY();
+		aimImage.draw(canvas, aimX, aimY);
 	}
 /**
  * If any of buttons are pressed like pauseButton, fire , move or swap weapons, 
