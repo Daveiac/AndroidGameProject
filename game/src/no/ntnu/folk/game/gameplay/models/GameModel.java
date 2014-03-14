@@ -5,6 +5,7 @@ import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Projectiles;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
+import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
@@ -23,6 +24,7 @@ public class GameModel implements CollisionListener {
 	// Entity lists
 	private ArrayList<PlayerModel> playerList;
 	private ArrayList<ProjectileModel> projectiles;
+	private ArrayList<EntityModel> kill;
 
 	// Players
 	private int playerCount;
@@ -47,6 +49,7 @@ public class GameModel implements CollisionListener {
 	public GameModel(int playerCount, int playerHealth, String level, GameTypes gameTypes) {
 		initializeFields(playerCount, playerHealth, level, gameTypes);
 		createPlayers();
+		kill = new ArrayList<EntityModel>();
 	}
 	/**
 	 * Initialize the fields
@@ -130,6 +133,13 @@ public class GameModel implements CollisionListener {
 		if (playerTimeUp()) {
 			nextPlayer();
 		}
+		for (EntityModel entity : kill) {
+			if (entity instanceof ProjectileModel) {
+				projectiles.remove(entity);
+			} else if (entity instanceof PlayerModel) {
+				playerList.remove(entity);
+			}
+		}
 	}
 
 	/**
@@ -200,7 +210,7 @@ public class GameModel implements CollisionListener {
 	public void collided(Sprite a, Sprite b) {
 		if (a instanceof ProjectileModel) {
 			if (b instanceof PlayerModel) {
-				projectiles.remove(a);
+				kill.add((EntityModel) a);
 				((PlayerModel) b).attacked(((ProjectileModel) a).getDirectDamage());
 			}
 		}
