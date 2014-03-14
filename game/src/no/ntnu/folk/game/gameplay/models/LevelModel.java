@@ -30,6 +30,7 @@ public class LevelModel extends Sprite {
 		size = new int[2];
 		startPositions = new ArrayList<int[]>();
 		tokens = new ArrayList<LevelToken>();
+		loadLevel();
 	}
 
 	public String getLevel() {
