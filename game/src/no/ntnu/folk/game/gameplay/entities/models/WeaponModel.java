@@ -1,6 +1,5 @@
 package no.ntnu.folk.game.gameplay.entities.models;
 
-import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Projectiles;
 import no.ntnu.folk.game.gameplay.entities.data.Weapons;
 import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
@@ -21,8 +20,7 @@ public class WeaponModel extends EntityModel {
 		super(
 				weapon.name(),
 				new Vector2(0, 0), // Weapon should follow player
-				weapon.getImageWidth(),
-				weapon.getImageHeight()
+				weapon.getImage()
 		);
 		projectileType = weapon.getProjectile();
 		aim = new Vector2(0, 0);
@@ -32,8 +30,8 @@ public class WeaponModel extends EntityModel {
 	 * @return A new WeaponToken
 	 */
 	@Override
-	protected EntityToken createToken() {
-		return new WeaponToken(this);
+	protected EntityToken createToken(int image) {
+		return new WeaponToken(this, image);
 	}
 	@Override
 	public void update(float dt) {

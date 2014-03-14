@@ -19,8 +19,7 @@ public class ProjectileModel extends EntityModel {
 		super(
 				projectile.name(),
 				position,
-				projectile.getImageWidth(),
-				projectile.getImageHeight()
+				projectile.getImage()
 		);
 		this.directDamage = projectile.getDirectDamage();
 		this.areaDamage = projectile.getAreaDamage();
@@ -31,8 +30,8 @@ public class ProjectileModel extends EntityModel {
 	 * @return A new ProjectileToken
 	 */
 	@Override
-	protected EntityToken createToken() {
-		return new ProjectileToken(this);
+	protected EntityToken createToken(int image) {
+		return new ProjectileToken(this, image);
 	}
 
 	/**

@@ -1,32 +1,18 @@
 package no.ntnu.folk.game.gameplay.entities.views;
 
-import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.gameplay.entities.models.WeaponModel;
-import sheep.graphics.Image;
 import sheep.math.Vector2;
 
 public class WeaponToken extends EntityToken {
-	private int rotation = 0; // TODO implement
-
 	/**
 	 * @param model WeaponModel for this token
+	 * @param image ID for this image
 	 */
-	public WeaponToken(WeaponModel model) {
-		super(model);
-	}
-
-	/**
-	 * Fill the array containing the images for this token
-	 */
-	@Override
-	protected void setImages() {
-		images = new Image[]{
-				new Image(R.drawable.handgun),
-		};
+	public WeaponToken(WeaponModel model, int image) {
+		super(model, image);
 	}
 
 	// TODO
-
 
 	@Override
 	public String toString() {

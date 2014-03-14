@@ -9,31 +9,20 @@ public class PlayerToken extends EntityToken {
 
 	/**
 	 * @param model PlayerModel for this token
+	 * @param image ID for the image
 	 */
-	public PlayerToken(PlayerModel model) {
-		super(model);
-	}
-
-	/**
-	 * Fill the array containing the images for this token
-	 */
-	@Override
-	protected void setImages() {
-		images = new Image[]{
-				new Image(R.drawable.player0),
-//				new Image(R.drawable.player1),
-		};
+	public PlayerToken(PlayerModel model, int image) {
+		super(model, image);
 	}
 
 	// TODO
-
 
 	@Override
 	protected void drawDebugInformation(Canvas canvas) {
 		canvas.drawText(
 				this.toString(),
-				entityModel.getX() - entityModel.getImageHeight() / 2,
-				entityModel.getY() - entityModel.getImageHeight() * 3 / 4,
+				entityModel.getX() - image.getWidth() / 2,
+				entityModel.getY() - image.getHeight() * 3 / 4,
 				((PlayerModel) entityModel).getTeam().getTagColor()
 		);
 		drawOutline(canvas);
