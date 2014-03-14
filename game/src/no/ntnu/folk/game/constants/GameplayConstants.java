@@ -9,4 +9,6 @@ public class GameplayConstants {
 	public static final int MAX_PLAYERS = 6;
 	public static final int DEFAULT_PLAYER_COUNT = 2;
 	public static String[] LEVEL_LIST = {"1"}; //TODO LevelController.getLevels()
+	// TurnTime
+	public static final int TURN_TIME = 10; // turn time in seconds
 }

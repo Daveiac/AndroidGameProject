@@ -1,26 +1,32 @@
 package no.ntnu.folk.game.gameplay.layers;
 
-import android.graphics.Canvas;
-import android.view.MotionEvent;
-import no.ntnu.folk.game.R;
+import no.ntnu.folk.game.constants.GameplayConstants;
+import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import sheep.collision.CollisionListener;
 import sheep.game.Layer;
 import sheep.game.Sprite;
-import sheep.graphics.Image;
 import sheep.math.BoundingBox;
-import no.ntnu.folk.game.gameplay.Button;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 
 public class GameLayer extends Layer implements CollisionListener {
 	private GameModel model;
+	private float turnTimer;
+	private String timeStringConstant = "Time"; //Fix this to language packs?
+	private Paint paint;
 
 	public GameLayer(GameModel model) {
 		this.model = model;
 		for (PlayerModel player : model.getPlayerList()) {
 			player.addCollisionListener(this);
 		}
+		turnTimer = GameplayConstants.TURN_TIME;
+		paint = new Paint();
+		paint.setColor(Color.WHITE);
 	}
 
 	@Override
@@ -30,6 +36,11 @@ public class GameLayer extends Layer implements CollisionListener {
 		}
 		for (ProjectileModel projectile : model.getProjectiles()) {
 			projectile.update(dt);
+		}
+		turnTimer-= dt;
+		if(turnTimer <= 0) {
+			turnTimer = GameplayConstants.TURN_TIME;
+			model.nextPlayer();
 		}
 	}
 
@@ -41,10 +52,13 @@ public class GameLayer extends Layer implements CollisionListener {
 		for (ProjectileModel projectile : model.getProjectiles()) {
 			projectile.draw(canvas);
 		}
+		canvas.drawText(timeStringConstant+": "+((int) turnTimer), ProgramConstants.getWindowSize()[0]*0.9f, ProgramConstants.getWindowSize()[1]*0.1f, paint);
 	}
-	
 
-	
+	public void resetTurnTime() {
+		this.turnTimer = 0;
+	}
+
 	/**
 	 * Called when two Sprite collide.
 	 *
