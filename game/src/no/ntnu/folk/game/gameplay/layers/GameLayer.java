@@ -40,6 +40,7 @@ public class GameLayer extends Layer implements CollisionListener {
 		turnTimer-= dt;
 		if(turnTimer <= 0) {
 			turnTimer = GameplayConstants.TURN_TIME;
+			model.getCurrentPlayer().setSpeed(0, 0);
 			model.nextPlayer();
 		}
 	}
