@@ -1,6 +1,10 @@
 package no.ntnu.folk.game.gameplay.levels.controllers;
 
-import java.io.File;
+import java.lang.reflect.Field;
+
+import android.util.Log;
+
+import no.ntnu.folk.game.R;
 
 /**
  * Level controller. Loads levels .
@@ -9,7 +13,7 @@ import java.io.File;
  */
 public class LevelController {
 
-	private static File[] listOfLevels;
+	private static Field[] listOfLevels;
 
 	/**
 	 * Constructor. Constructs the level controller which loads levels from source folder.
@@ -21,9 +25,15 @@ public class LevelController {
 	/**
 	 * Reads the level files from the levels folder and puts them in a list.
 	 */
-	private void readLevels() {
-		File folder = new File("res/raw");
-		listOfLevels = folder.listFiles();
+	private static void readLevels() {
+	    listOfLevels = R.raw.class.getFields();
+	}
+	
+	public void listRaw(){
+	    Field[] fields=R.raw.class.getFields();
+	    for(int count=0; count < fields.length; count++){
+	        Log.i("Raw Asset: ", fields[count].getName());
+	    }
 	}
 
 	/**
@@ -32,11 +42,12 @@ public class LevelController {
 	 * @return levels. List with the names of all levels.
 	 */
 	public static String[] getLevels() {
-		int numberOfLevels = listOfLevels.length;
-		String[] levels = new String[numberOfLevels];
-		for (int i = 0; i < numberOfLevels; i++) {
-			levels[i] = listOfLevels[i].getName();
-		}
+		readLevels();
+	    int numberOfLevels = listOfLevels.length;
+	    String[] levels = new String[numberOfLevels];
+	    for (int i = 0; i < listOfLevels.length; i++) {
+	    	levels[i] = listOfLevels[i].getName();
+	    }
 		return levels;
 	}
 }
