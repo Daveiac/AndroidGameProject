@@ -32,6 +32,8 @@ public class PlayerModel extends EntityModel {
 		this.weaponList = Weapons.getDefaultWeapons();
 		this.currentWeapon = weaponList.get(0);
 		setAim(position.getX() + 100, position.getY() + 100); // FIXME temporary values for start position
+		addGroup(team.ordinal());
+		addMask(team.ordinal());
 	}
 
 	/**

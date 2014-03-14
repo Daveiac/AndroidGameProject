@@ -14,16 +14,19 @@ public class ProjectileModel extends EntityModel {
 	 * Constructing a projectileModel based on a projectile from Projectiles
 	 *
 	 * @param projectile data for this projectile
+	 * @param player Player that fired this projectile
 	 */
-	public ProjectileModel(Projectiles projectile, Vector2 position) {
+	public ProjectileModel(Projectiles projectile, PlayerModel player) {
 		super(
 				projectile.name(),
-				position,
+				new Vector2(player.getPosition().getX(), player.getPosition().getY()),
 				projectile.getImage()
 		);
 		this.directDamage = projectile.getDirectDamage();
 		this.areaDamage = projectile.getAreaDamage();
 		this.areaDamageRange = projectile.getAreaDamageRange();
+		this.setMask(player.getMask());
+		this.setGroup(player.getGroup());
 	}
 
 	/**

@@ -169,8 +169,7 @@ public class GameModel implements CollisionListener {
 	public void fireWeapon() {
 		if (getCurrentPlayer().getCurrentWeapon().isCool()) {
 			Projectiles projectileType = getCurrentPlayer().getCurrentWeapon().getProjectileType();
-			Vector2 playerPosition = new Vector2(getCurrentPlayer().getPosition().getX(), getCurrentPlayer().getPosition().getY());
-			ProjectileModel projectile = new ProjectileModel(projectileType, playerPosition);
+			ProjectileModel projectile = new ProjectileModel(projectileType, getCurrentPlayer());
 			projectiles.add(projectile);
 			projectile.addCollisionListener(this);
 			projectile.setSpeed(getCurrentPlayer().getAim());
