@@ -2,6 +2,7 @@ package no.ntnu.folk.game.gameplay.models;
 
 import no.ntnu.folk.game.constants.GameTypes;
 import no.ntnu.folk.game.constants.GameplayConstants;
+import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Projectiles;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
@@ -70,9 +71,11 @@ public class GameModel {
 	 */
 	private void createPlayers() {
 		playerList = new ArrayList<PlayerModel>(playerCount);
+		float offset = ProgramConstants.getWindowSize()[0] * 0.5f / playerCount;
+		float xPosition = (offset * (1 + playerCount)) / 2;
 		for (int i = 0; i < playerCount; i++) {
 			String name = "Player " + i;
-			Vector2 position = new Vector2(75 * (i + 1), 100 + (20 * i));
+			Vector2 position = new Vector2(xPosition + (i * offset), ProgramConstants.getWindowSize()[1] / 2);
 			Teams team;
 			if (gameTypes.equals(GameTypes.FFA)) {
 				team = Teams.getTeamFromOrdinal(i);
@@ -105,6 +108,7 @@ public class GameModel {
 
 	/**
 	 * Update timer
+	 *
 	 * @param dt time since last update
 	 */
 	public void update(float dt) {
