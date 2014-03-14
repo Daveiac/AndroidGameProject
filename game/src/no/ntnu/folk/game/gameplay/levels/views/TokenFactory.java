@@ -1,9 +1,5 @@
 package no.ntnu.folk.game.gameplay.levels.views;
 
-import no.ntnu.folk.game.R;
-
-import sheep.graphics.Image;
-
 public class TokenFactory {
 
 	public static LevelToken createToken(String name) {
