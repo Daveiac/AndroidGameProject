@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.util.SparseArray;
 import android.view.MotionEvent;
-import android.view.View;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.Button;
@@ -14,9 +13,10 @@ import no.ntnu.folk.game.menus.menuStates.PauseMenu;
 import sheep.game.Game;
 import sheep.game.Layer;
 import sheep.graphics.Image;
-import sheep.input.Touch;
 import sheep.math.BoundingBox;
 import sheep.math.Vector2;
+
+import java.util.ArrayList;
 
 import static no.ntnu.folk.game.R.drawable.*;
 
@@ -32,15 +32,18 @@ public class KeyPadLayer extends Layer {
 
 	private Image aimImage;
 	private GameModel gameModel;
-	private WeaponSelectLayer weaponSelectLayer;
+
+	private WeaponSelection weaponSelection;
+	private ArrayList<Button> weaponButtons;
 
 	private SparseArray<PointF> activePointers;
 
 	public KeyPadLayer(GameModel gameModel) {
 		this.gameModel = gameModel;
-		weaponSelectLayer = new WeaponSelectLayer(gameModel);
+		weaponSelection = new WeaponSelection(gameModel);
 		aimImage = new Image(aim);
 		createButtons(ProgramConstants.getWindowSize());
+		weaponButtons = weaponSelection.getWeaponButtons();
 		activePointers = new SparseArray<PointF>();
 	}
 	private void createButtons(int[] windowSize) {
@@ -60,6 +63,7 @@ public class KeyPadLayer extends Layer {
 				fireKey = new Button(firekey, firekey, fireKeyPos, false),
 		};
 		unpauseButton = new Button(unpause, unpause, unpauseKeyPos, false);
+		unpauseButton.disable();
 	}
 
 	@Override
@@ -73,6 +77,11 @@ public class KeyPadLayer extends Layer {
 			for (Button button : buttons) {
 				if (button.contains(point.x, point.y)) {
 					button.hold();
+					buttonPressed = true;
+				}
+			}
+			for (Button button : weaponButtons) {
+				if (button.contains(point.x, point.y)) {
 					buttonPressed = true;
 				}
 			}
@@ -96,7 +105,8 @@ public class KeyPadLayer extends Layer {
 			gameModel.fireWeapon();
 		}
 		if (swapKey.popPressed()) {
-			weaponSelectLayer.setActive(true);
+			weaponButtons = weaponSelection.getWeaponButtons();
+			weaponSelection.setActive(true);
 		}
 		if (unpauseButton.popPressed()) {
 			gameModel.pauseGame();
@@ -108,10 +118,10 @@ public class KeyPadLayer extends Layer {
 	public void draw(Canvas canvas, BoundingBox box) {
 		drawButtons(canvas);
 		drawAim(canvas);
-		weaponSelectLayer.draw(canvas, box);
-		if (gameModel.isPaused()) {
-			unpauseButton.draw(canvas);
+		for (Button button : weaponButtons) {
+			button.draw(canvas);
 		}
+		unpauseButton.draw(canvas);
 	}
 	private void drawAim(Canvas canvas) {
 		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
@@ -142,6 +152,13 @@ public class KeyPadLayer extends Layer {
 			if (button.contains(point.x, point.y)) {
 				buttonPressed = true;
 				button.touch();
+			}
+		}
+		for (Button button : weaponButtons) {
+			if (button.contains(point.x, point.y)) {
+				buttonPressed = true;
+				weaponSelection.setWeapon(button);
+				break;
 			}
 		}
 		if (gameModel.isPaused() && unpauseButton.contains(point.x, point.y)) {
