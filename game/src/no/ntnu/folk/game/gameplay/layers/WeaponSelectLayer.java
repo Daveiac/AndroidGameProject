@@ -3,6 +3,7 @@ package no.ntnu.folk.game.gameplay.layers;
 import java.util.ArrayList;
 
 import no.ntnu.folk.game.R;
+import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.Button;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.WeaponModel;
@@ -26,26 +27,28 @@ public class WeaponSelectLayer extends Layer {
 
 	public WeaponSelectLayer(GameModel model) {
 		this.model = model;
+		makeWeaponButtons();
 	}
 
 	@Override
 	public void update(float dt) {
-		if (currentPlayer.getWeaponList() != model.getCurrentPlayer().getWeaponList()) {
+		if (currentPlayer.getWeaponList() != model.getCurrentPlayer()
+				.getWeaponList()) {
 			makeWeaponButtons();
 		}
-		for(Button wb: weaponButtons){
-			if(wb.isPressed()){
-				model.getCurrentPlayer().setCurrentWeapon(weaponButtons.indexOf(wb));
+		for (Button wb : weaponButtons) {
+			if (wb.isPressed()) {
+				model.getCurrentPlayer().setCurrentWeapon(
+						weaponButtons.indexOf(wb));
 			}
 		}
 	}
-	
-	private void makeWeaponButtons(){
+
+	private void makeWeaponButtons() {
+		float weaponlistY = ProgramConstants.getWindowSize()[1] * 0.85f;
 		weaponButtons = new ArrayList<Button>();
 		for (WeaponModel wm : model.getCurrentPlayer().getWeaponList()) {
 			int offset = model.getCurrentPlayer().getWeaponList().indexOf(wm) * 50;
-			weaponButtons.add(new Button(R.drawable.handgun,
-					R.drawable.handgun, offset, 50)); // FIXME This is probably not smart, and the buttons will be added totaly wrong
 		}
 	}
 
