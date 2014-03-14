@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
+import no.ntnu.folk.game.gameplay.entities.views.PlayerToken;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import sheep.collision.CollisionListener;
@@ -12,29 +13,20 @@ import sheep.game.Sprite;
 import sheep.graphics.Color;
 import sheep.math.BoundingBox;
 
-public class GameLayer extends Layer implements CollisionListener {
+public class GameLayer extends Layer {
 	private GameModel model;
 
 	public GameLayer(GameModel model) {
 		this.model = model;
 		for (PlayerModel player : model.getPlayerList()) {
-			player.addCollisionListener(this);
+			player.addCollisionListener(model);
 		}
 	}
 
 	@Override
 	public void update(float dt) {
 		if (!model.isPaused()) {
-			for (PlayerModel player : model.getPlayerList()) {
-				player.update(dt);
-			}
-			for (ProjectileModel projectile : model.getProjectiles()) {
-				projectile.update(dt);
-			}
 			model.update(dt);
-			if (model.playerTimeUp()) {
-				model.nextPlayer();
-			}
 		}
 	}
 
@@ -55,17 +47,6 @@ public class GameLayer extends Layer implements CollisionListener {
 				ProgramConstants.getWindowSize()[1] * 0.1f,
 				Color.WHITE
 		);
-	}
-
-	/**
-	 * Called when two Sprite collide.
-	 *
-	 * @param a The first Sprite (the sprite being listened to).
-	 * @param b The other Sprite.
-	 */
-	@Override
-	public void collided(Sprite a, Sprite b) {
-		// TODO
 	}
 
 }

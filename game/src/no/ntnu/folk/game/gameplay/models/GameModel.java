@@ -8,6 +8,9 @@ import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
+import sheep.collision.CollisionLayer;
+import sheep.collision.CollisionListener;
+import sheep.game.Sprite;
 import sheep.math.Vector2;
 
 import java.util.ArrayList;
@@ -17,7 +20,7 @@ import java.util.ArrayList;
  *
  * @author Rune
  */
-public class GameModel {
+public class GameModel implements CollisionListener {
 	// Entity lists
 	private ArrayList<PlayerModel> playerList;
 	private ArrayList<ProjectileModel> projectiles;
@@ -112,8 +115,22 @@ public class GameModel {
 	 * @param dt time since last update
 	 */
 	public void update(float dt) {
+		for (PlayerModel player : playerList) {
+			player.update(dt);
+		}
+		for (ProjectileModel projectile : projectiles) {
+			projectile.update(dt);
+		}
+		for (ProjectileModel projectile : projectiles) {
+			for (PlayerModel player : playerList) {
+				projectile.collides(player);
+			}
+		}
 		gameTime += dt;
 		availablePlayerTime -= dt;
+		if (playerTimeUp()) {
+			nextPlayer();
+		}
 	}
 
 	/**
@@ -155,6 +172,7 @@ public class GameModel {
 			Vector2 playerPosition = new Vector2(getCurrentPlayer().getPosition().getX(), getCurrentPlayer().getPosition().getY());
 			ProjectileModel projectile = new ProjectileModel(projectileType, playerPosition);
 			projectiles.add(projectile);
+			projectile.addCollisionListener(this);
 			projectile.setSpeed(getCurrentPlayer().getAim());
 			getCurrentPlayer().getCurrentWeapon().startCoolDownTimer();
 		}
@@ -174,4 +192,25 @@ public class GameModel {
 		return this.paused;
 	}
 
+	/**
+	 * Called when two Sprite collide.
+	 *
+	 * @param a The first Sprite (the sprite being listened to).
+	 * @param b The other Sprite.
+	 */
+	@Override
+	public void collided(Sprite a, Sprite b) {
+		if (a instanceof PlayerModel) {
+			if (b instanceof ProjectileModel) {
+				projectiles.remove(b);
+				((PlayerModel) a).attacked(((ProjectileModel) b).getDirectDamage());
+			}
+		}
+		if (b instanceof PlayerModel) {
+			if (a instanceof ProjectileModel) {
+				projectiles.remove(a);
+				((PlayerModel) b).attacked(((ProjectileModel) a).getDirectDamage());
+			}
+		}
+	}
 }

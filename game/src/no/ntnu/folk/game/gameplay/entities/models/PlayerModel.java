@@ -114,4 +114,7 @@ public class PlayerModel extends EntityModel {
 		return currentWeapon.getAim();
 	}
 
+	public void attacked(int damage) {
+		health -= Math.abs(damage);
+	}
 }
