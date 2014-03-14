@@ -26,7 +26,7 @@ public class GameModel {
 	private int currentPlayer;
 
 	//Map
-	private String currentLevel;
+	private LevelModel currentLevel;
 	private GameTypes gameTypes;
 
 	//Game time
@@ -55,7 +55,7 @@ public class GameModel {
 	private void initializeFields(int playerCount, int playerHealth, String level, GameTypes gameTypes) {
 		this.playerCount = playerCount;
 		this.maxHealth = playerHealth;
-		this.currentLevel = level;
+		this.currentLevel = new LevelModel(level);
 		this.gameTypes = gameTypes;
 		projectiles = new ArrayList<ProjectileModel>();
 		currentPlayer = 0;
