@@ -2,8 +2,6 @@ package no.ntnu.folk.game.gameplay.levels.controllers;
 
 import java.lang.reflect.Field;
 
-import android.util.Log;
-
 import no.ntnu.folk.game.R;
 
 /**
@@ -27,13 +25,6 @@ public class LevelController {
 	 */
 	private static void readLevels() {
 	    listOfLevels = R.raw.class.getFields();
-	}
-	
-	public void listRaw(){
-	    Field[] fields=R.raw.class.getFields();
-	    for(int count=0; count < fields.length; count++){
-	        Log.i("Raw Asset: ", fields[count].getName());
-	    }
 	}
 
 	/**

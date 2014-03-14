@@ -44,7 +44,7 @@ public class LevelModel extends Sprite {
 	 */
 	public void loadLevel() {
 		// TODO Auto-generated method stub
-		LevelParser.parseLevel(this);
+//		LevelParser.parseLevel(this);
 	}
 
 	public void setSize(int width, int height) {
@@ -61,6 +61,10 @@ public class LevelModel extends Sprite {
 	public void addToken(LevelToken token) {
 		// TODO Auto-generated method stub
 		tokens.add(token);
+	}
+
+	public ArrayList<LevelToken> getLevelTokens() {
+		return tokens;
 	}
 
 	public ArrayList<int[]> getStartPositions() {
