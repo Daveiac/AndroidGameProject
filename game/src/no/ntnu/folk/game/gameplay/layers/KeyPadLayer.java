@@ -120,6 +120,7 @@ public class KeyPadLayer extends Layer {
 			}
 		}
 		if (unpauseButton.contains(event.getX(), event.getY())) {
+			buttonPressed = true;
 			unpauseButton.setPressed(true);
 		}
 		if (!buttonPressed) {
