@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.util.SparseArray;
 import android.view.MotionEvent;
+import android.view.View;
+import no.ntnu.folk.game.Program;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.Button;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 
 import static no.ntnu.folk.game.R.drawable.*;
 
-public class KeyPadLayer extends Layer {
+public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	private Button[] buttons;
 	private Button leftKey;
 	private Button rightKey;
@@ -45,6 +47,7 @@ public class KeyPadLayer extends Layer {
 		createButtons(ProgramConstants.getWindowSize());
 		weaponButtons = weaponSelection.getWeaponButtons();
 		activePointers = new SparseArray<PointF>();
+		Program.getView().setOnTouchListener(this);
 	}
 	private void createButtons(int[] windowSize) {
 		Vector2 leftKeyPos = new Vector2(windowSize[0] * 0.08f, windowSize[1] * 0.90f);
@@ -69,6 +72,9 @@ public class KeyPadLayer extends Layer {
 	@Override
 	public void update(float dt) {
 		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
+		Program.getView().setOnTouchListener(this); // FIXME
+		// Why I did this: When a state is popped, the OnTouchListener needs to be updated.
+		// Unfortunately I could not find a better way to to do it
 
 		int pointerCount = activePointers.size();
 		for (int i = 0; i < pointerCount; i++) {
@@ -135,7 +141,42 @@ public class KeyPadLayer extends Layer {
 		}
 	}
 
-	public boolean onTouchDown(MotionEvent event) {
+	@Override
+	public boolean onTouch(View view, MotionEvent event) {
+		int pointerIndex = event.getActionIndex();
+		int pointerId = event.getPointerId(pointerIndex);
+		int maskedAction = event.getActionMasked();
+		switch (maskedAction) {
+			case MotionEvent.ACTION_DOWN:
+			case MotionEvent.ACTION_POINTER_DOWN:
+				onTouchDown(event);
+				break;
+			case MotionEvent.ACTION_MOVE:
+				int pointerCount = event.getPointerCount();
+				for (int i = 0; i < pointerCount; i++) {
+					PointF point = activePointers.get(event.getPointerId(i));
+					if (point != null) {
+						point.set(event.getX(i), event.getY(i));
+					}
+				}
+				break;
+			case MotionEvent.ACTION_UP:
+			case MotionEvent.ACTION_POINTER_UP:
+			case MotionEvent.ACTION_CANCEL:
+				for (Button button : buttons) {
+					if (button.contains(activePointers.get(pointerId).x, activePointers.get(pointerId).y)) {
+						button.release();
+					}
+				}
+				activePointers.remove(pointerId);
+				break;
+			default:
+				break;
+		}
+		return false;
+	}
+
+	private boolean onTouchDown(MotionEvent event) {
 		int pointerIndex = event.getActionIndex();
 		int pointerId = event.getPointerId(pointerIndex);
 
@@ -168,28 +209,6 @@ public class KeyPadLayer extends Layer {
 		if (!buttonPressed) {
 			gameModel.getCurrentPlayer().setAim(point.x, point.y);
 		}
-		return true;
-	}
-
-	public boolean onTouchMove(MotionEvent event) {
-		int pointerCount = event.getPointerCount();
-		for (int i = 0; i < pointerCount; i++) {
-			PointF point = activePointers.get(event.getPointerId(i));
-			if (point != null) {
-				point.set(event.getX(i), event.getY(i));
-			}
-		}
-		return true;
-	}
-	public boolean onTouchUp(MotionEvent event) {
-		int pointerIndex = event.getActionIndex();
-		int pointerId = event.getPointerId(pointerIndex);
-		for (Button button : buttons) {
-			if (button.contains(activePointers.get(pointerId).x, activePointers.get(pointerId).y)) {
-				button.release();
-			}
-		}
-		activePointers.remove(pointerId);
 		return true;
 	}
 

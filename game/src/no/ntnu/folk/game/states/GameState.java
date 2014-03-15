@@ -1,7 +1,6 @@
 package no.ntnu.folk.game.states;
 
 import android.graphics.Canvas;
-import android.view.MotionEvent;
 import no.ntnu.folk.game.gameplay.layers.GameLayer;
 import no.ntnu.folk.game.gameplay.layers.KeyPadLayer;
 import no.ntnu.folk.game.gameplay.models.GameModel;
@@ -39,16 +38,4 @@ public class GameState extends State {
 		gameWorld.draw(canvas);
 	}
 
-	@Override
-	public boolean onTouchDown(MotionEvent event) {
-		return keyPadLayer.onTouchDown(event);
-	}
-	@Override
-	public boolean onTouchMove(MotionEvent event) {
-		return keyPadLayer.onTouchMove(event);
-	}
-	@Override
-	public boolean onTouchUp(MotionEvent event) {
-		return keyPadLayer.onTouchUp(event);
-	}
 }
