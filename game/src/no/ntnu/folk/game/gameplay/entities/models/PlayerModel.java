@@ -16,6 +16,7 @@ import java.util.ArrayList;
  */
 public class PlayerModel extends EntityModel {
 	private final Teams TEAM;
+	private final int startHealth;
 	private int health;
 	private ArrayList<WeaponModel> weaponList;
 	private WeaponModel currentWeapon;
@@ -28,6 +29,7 @@ public class PlayerModel extends EntityModel {
 	public PlayerModel(String name, Vector2 position, Teams team, int health) {
 		super(name, position, team.getImage());
 		this.TEAM = team;
+		this.startHealth = health;
 		this.health = health;
 		this.weaponList = Weapons.getDefaultWeapons();
 		this.currentWeapon = weaponList.get(0);
@@ -69,6 +71,13 @@ public class PlayerModel extends EntityModel {
 	 */
 	public Teams getTeam() {
 		return TEAM;
+	}
+
+	/**
+	 * @return Health at the start of the game
+	 */
+	public int getStartHealth() {
+		return startHealth;
 	}
 
 	/**

@@ -31,7 +31,7 @@ public class PlayerToken extends EntityToken {
 		super.draw(canvas);
 		Matrix matrix = new Matrix();
 		matrix.postTranslate(entityModel.getX() - healthBar[0].getWidth() / 2, entityModel.getY() + image.getHeight() / 2);
-		int health = ((PlayerModel) entityModel).getHealth(); // TODO Calculate depending on max health for this game
+		int health = 100 * ((PlayerModel) entityModel).getHealth() / ((PlayerModel) entityModel).getStartHealth();
 		if (health < 10) {
 			healthBar[4].draw(canvas, matrix);
 		} else if (health <= 25) {
