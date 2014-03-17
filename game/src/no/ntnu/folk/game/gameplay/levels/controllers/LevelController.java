@@ -29,9 +29,9 @@ public class LevelController {
 	}
 
 	/**
-	 * Returns the levels as a list of strings from the level list.
+	 * Returns the levels as a list of string[] from the level list.
 	 *
-	 * @return levels. List with the names of all levels.
+	 * @return levels. List with String[], getLevel[i][0] gives level name, getLevel[i][1] gives the INT value of the field in the R-class as a string.
 	 */
 	public static String[][] getLevels() {
 		readLevels();
