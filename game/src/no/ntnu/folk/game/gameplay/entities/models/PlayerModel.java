@@ -16,6 +16,7 @@ import java.util.ArrayList;
  */
 public class PlayerModel extends EntityModel {
 	private final Teams TEAM;
+	private final int startHealth;
 	private int health;
 	private ArrayList<WeaponModel> weaponList;
 	private WeaponModel currentWeapon;
@@ -26,20 +27,23 @@ public class PlayerModel extends EntityModel {
 	 * @param team     The ID for the team of this player
 	 */
 	public PlayerModel(String name, Vector2 position, Teams team, int health) {
-		super(name, position, 50, 50);
+		super(name, position, team.getImage());
 		this.TEAM = team;
+		this.startHealth = health;
 		this.health = health;
 		this.weaponList = Weapons.getDefaultWeapons();
 		this.currentWeapon = weaponList.get(0);
 		setAim(position.getX() + 100, position.getY() + 100); // FIXME temporary values for start position
+		addGroup(team.ordinal());
+		addMask(team.ordinal());
 	}
 
 	/**
 	 * @return A new PlayerToken
 	 */
 	@Override
-	protected EntityToken createToken() {
-		return new PlayerToken(this);
+	protected EntityToken createToken(int image) {
+		return new PlayerToken(this, image);
 	}
 
 	@Override
@@ -67,6 +71,13 @@ public class PlayerModel extends EntityModel {
 	 */
 	public Teams getTeam() {
 		return TEAM;
+	}
+
+	/**
+	 * @return Health at the start of the game
+	 */
+	public int getStartHealth() {
+		return startHealth;
 	}
 
 	/**
@@ -114,4 +125,7 @@ public class PlayerModel extends EntityModel {
 		return currentWeapon.getAim();
 	}
 
+	public void attacked(int damage) {
+		health -= Math.abs(damage);
+	}
 }

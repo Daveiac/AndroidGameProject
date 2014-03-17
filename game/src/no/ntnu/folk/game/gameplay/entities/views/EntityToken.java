@@ -12,24 +12,17 @@ public abstract class EntityToken {
 	protected final EntityModel entityModel;
 
 	// Animation
-	protected Image[] images;
-	protected int currentFrame = 0;
-	protected float animationTick = 0;
-	protected float frameTime = 0.1f;
+	protected Image image;
 	protected Matrix transformation = new Matrix(); // Transformation matrix. Used for drawing the images.
 
 	/**
 	 * @param entityModel The entityModel for this token
 	 */
-	protected EntityToken(EntityModel entityModel) {
+	protected EntityToken(EntityModel entityModel, int image) {
 		this.entityModel = entityModel;
-		entityModel.setShape(entityModel.getImageWidth(), entityModel.getImageHeight());
-		setImages();
+		this.image = new Image(image);
+		entityModel.setShape(this.image.getWidth(), this.image.getHeight());
 	}
-	/**
-	 * Set the image array (containing the animation images)
-	 */
-	protected abstract void setImages();
 
 	/**
 	 * Update entityModel, animation, and transformation
@@ -37,31 +30,20 @@ public abstract class EntityToken {
 	 * @param dt Time since last update
 	 */
 	public void update(float dt) {
-		updateAnimation(dt);
 		updateTransformationMatrix();
-	}
-	/**
-	 * Update the animation for this token.
-	 *
-	 * @param dt Time passed
-	 */
-	private void updateAnimation(float dt) {
-		animationTick += dt;
-		while (animationTick >= frameTime) {
-			animationTick -= frameTime;
-			currentFrame++;
-		}
-		currentFrame %= images.length;
 	}
 	/**
 	 * Update the transformation matrix for this token
 	 */
 	private void updateTransformationMatrix() {
-		transformation.setTranslate(-entityModel.getImageWidth() / 2, -entityModel.getImageHeight() / 2);   // Use the center of the sprite as center for drawing
-		// TODO scale for mirroring
+		transformation.setTranslate(-image.getWidth() / 2, -image.getHeight() / 2);   // Use the center of the sprite as center for drawing
+		transformation.postScale(getScaleX(), getScaleY());
 		transformation.postRotate(getRotation());
 		transformation.postTranslate(entityModel.getX(), entityModel.getY()); // getX and getY is located in Sprite
 	}
+	protected abstract float getScaleX();
+	protected abstract float getScaleY();
+
 	/**
 	 * Get the rotation of the images for tokens where this apply.
 	 *
@@ -75,7 +57,7 @@ public abstract class EntityToken {
 	 * @param canvas The canvas to draw this token on
 	 */
 	public void draw(Canvas canvas) {
-		images[currentFrame].draw(canvas, transformation);
+		image.draw(canvas, transformation);
 		if (ProgramConstants.isDebugging()) {
 			drawDebugInformation(canvas);
 		}
@@ -88,8 +70,8 @@ public abstract class EntityToken {
 	protected void drawDebugInformation(Canvas canvas) {
 		canvas.drawText(
 				this.toString(),
-				entityModel.getX() - entityModel.getImageWidth() / 2,
-				entityModel.getY() - entityModel.getImageHeight() * 3 / 4,
+				entityModel.getX() - image.getWidth() / 2,
+				entityModel.getY() - image.getHeight() * 3 / 4,
 				Color.WHITE
 		);
 		drawOutline(canvas);
@@ -100,10 +82,10 @@ public abstract class EntityToken {
 	 * @param canvas The canvas to draw the outline on
 	 */
 	protected void drawOutline(Canvas canvas) {
-		float xmin = entityModel.getX() - entityModel.getImageWidth() / 2;
-		float xmax = entityModel.getX() + entityModel.getImageWidth() / 2;
-		float ymin = entityModel.getY() - entityModel.getImageHeight() / 2;
-		float ymax = entityModel.getY() + entityModel.getImageHeight() / 2;
+		float xmin = entityModel.getX() - image.getWidth() / 2;
+		float xmax = entityModel.getX() + image.getWidth() / 2;
+		float ymin = entityModel.getY() - image.getHeight() / 2;
+		float ymax = entityModel.getY() + image.getHeight() / 2;
 		canvas.drawLine(xmin, ymin, xmax, ymin, Color.WHITE);
 		canvas.drawLine(xmin, ymax, xmax, ymax, Color.WHITE);
 		canvas.drawLine(xmin, ymin, xmin, ymax, Color.WHITE);

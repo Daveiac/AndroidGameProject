@@ -1,6 +1,5 @@
 package no.ntnu.folk.game.gameplay.entities.models;
 
-import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Projectiles;
 import no.ntnu.folk.game.gameplay.entities.data.Weapons;
 import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
@@ -11,6 +10,7 @@ public class WeaponModel extends EntityModel {
 	private final Projectiles projectileType;
 	private int coolDown;
 	private Vector2 aim;
+	private Weapons weapon;
 
 	/**
 	 * Constructing a weaponModel based on a weapon from Weapons
@@ -21,19 +21,19 @@ public class WeaponModel extends EntityModel {
 		super(
 				weapon.name(),
 				new Vector2(0, 0), // Weapon should follow player
-				weapon.getImageWidth(),
-				weapon.getImageHeight()
+				weapon.getImage()
 		);
+		this.weapon = weapon;
 		projectileType = weapon.getProjectile();
-		aim = new Vector2(0, 0);
+		aim = new Vector2(10, 0);
 	}
 
 	/**
 	 * @return A new WeaponToken
 	 */
 	@Override
-	protected EntityToken createToken() {
-		return new WeaponToken(this);
+	protected EntityToken createToken(int image) {
+		return new WeaponToken(this, image);
 	}
 	@Override
 	public void update(float dt) {
@@ -63,9 +63,15 @@ public class WeaponModel extends EntityModel {
 	}
 	public void setAim(float x, float y) {
 		aim.set(x, y);
+		if (aim.getLength() == 0) {
+			aim.set(10, 0);
+		}
 	}
 	public Vector2 getAim() {
 		return new Vector2(aim.getX(), aim.getY());
 //		return aim; // Using this one instead has an interesting effect!
+	}
+	public Weapons getWeapon() {
+		return weapon;
 	}
 }

@@ -1,12 +1,16 @@
 package no.ntnu.folk.game.gameplay.models;
 
-import android.os.SystemClock;
 import no.ntnu.folk.game.constants.GameTypes;
+import no.ntnu.folk.game.constants.GameplayConstants;
+import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Projectiles;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
+import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
+import sheep.collision.CollisionListener;
+import sheep.game.Sprite;
 import sheep.math.Vector2;
 
 import java.util.ArrayList;
@@ -16,10 +20,11 @@ import java.util.ArrayList;
  *
  * @author Rune
  */
-public class GameModel {
+public class GameModel implements CollisionListener {
 	// Entity lists
 	private ArrayList<PlayerModel> playerList;
 	private ArrayList<ProjectileModel> projectiles;
+	private ArrayList<EntityModel> kill;
 
 	// Players
 	private int playerCount;
@@ -31,45 +36,51 @@ public class GameModel {
 	private GameTypes gameTypes;
 
 	//Game time
-	private long gameTime;
-	private long lastUpdateTime;
-	private long availablePlayerTime;
+	private float gameTime;
+	private float availablePlayerTime;
+	private boolean paused;
 
 	/**
 	 * @param playerCount  Number of players for the start of this game
 	 * @param playerHealth Health all players starts with
-	 * @param level        Level name
-	 * @param gameTypes     Game type (teams / ffa)
+	 * @param levelName    Level name
+	 * @param gameTypes    Game type (teams / ffa)
 	 */
-	public GameModel(int playerCount, int playerHealth, String level, GameTypes gameTypes) {
-		initializeFields(playerCount, playerHealth, level, gameTypes);
+	public GameModel(int playerCount, int playerHealth, String levelName, GameTypes gameTypes) {
+		initializeFields(playerCount, playerHealth, levelName, gameTypes);
 		createPlayers();
+		kill = new ArrayList<EntityModel>();
 	}
 	/**
 	 * Initialize the fields
 	 *
 	 * @param playerCount  Number of players for the start of this game
 	 * @param playerHealth Health all players starts with
-	 * @param level        Level name
-	 * @param gameTypes     Game type (teams / ffa)
+	 * @param levelName    Level name
+	 * @param gameTypes    Game type (teams / ffa)
 	 */
-	private void initializeFields(int playerCount, int playerHealth, String level, GameTypes gameTypes) {
+	private void initializeFields(int playerCount, int playerHealth, String levelName, GameTypes gameTypes) {
 		this.playerCount = playerCount;
 		this.maxHealth = playerHealth;
-		this.currentLevel = new LevelModel(level);
+		this.currentLevel = new LevelModel(levelName);
 		this.gameTypes = gameTypes;
 		projectiles = new ArrayList<ProjectileModel>();
 		currentPlayer = 0;
+
+		// Init time variables
 		gameTime = 0;
+		availablePlayerTime = GameplayConstants.TURN_TIME;
 	}
 	/**
 	 * Create the number of players
 	 */
 	private void createPlayers() {
 		playerList = new ArrayList<PlayerModel>(playerCount);
+		float offset = ProgramConstants.getWindowSize()[0] * 0.5f / playerCount;
+		float xPosition = (offset * (1 + playerCount)) / 2;
 		for (int i = 0; i < playerCount; i++) {
 			String name = "Player " + i;
-			Vector2 position = new Vector2(75 * (i + 1), 100 + (20 * i));
+			Vector2 position = new Vector2(xPosition + (i * offset), ProgramConstants.getWindowSize()[1] / 2);
 			Teams team;
 			if (gameTypes.equals(GameTypes.FFA)) {
 				team = Teams.getTeamFromOrdinal(i);
@@ -102,19 +113,41 @@ public class GameModel {
 
 	/**
 	 * Update timer
+	 *
+	 * @param dt time since last update
 	 */
-	public void update() {
-		long time = SystemClock.elapsedRealtime();
-		long timeDiff = lastUpdateTime - time;
-		gameTime += timeDiff;
-		lastUpdateTime = time;
-		availablePlayerTime -= timeDiff;
+	public void update(float dt) {
+		for (PlayerModel player : playerList) {
+			player.update(dt);
+		}
+		for (ProjectileModel projectile : projectiles) {
+			projectile.update(dt);
+		}
+		for (ProjectileModel projectile : projectiles) {
+			for (PlayerModel player : playerList) {
+				projectile.collides(player);
+			}
+		}
+		gameTime += dt;
+		availablePlayerTime -= dt;
+		if (playerTimeUp()) {
+			nextPlayer();
+		}
+		for (EntityModel entity : kill) {
+			if (entity instanceof ProjectileModel) {
+				projectiles.remove(entity);
+			} else if (entity instanceof PlayerModel) {
+				playerList.remove(entity);
+			}
+		}
 	}
 
 	/**
 	 * Set currentPlayer to the next player. Set to first player if a the end of the list.
 	 */
 	public void nextPlayer() {
+		getCurrentPlayer().setSpeed(0, 0);
+		availablePlayerTime = GameplayConstants.TURN_TIME;
 		if (currentPlayer == playerCount - 1) currentPlayer = 0;
 		else currentPlayer++;
 	}
@@ -126,14 +159,6 @@ public class GameModel {
 	}
 
 	/**
-	 * @return Game options
-	 */
-	public Object[] getGameOptions() { // FIXME Do not use Object[]
-		Object[] options = {playerCount, maxHealth, currentLevel, gameTypes};
-		return options;
-	}
-
-	/**
 	 * @return True if the time is up for current player
 	 */
 	public boolean playerTimeUp() {
@@ -141,21 +166,53 @@ public class GameModel {
 	}
 
 	/**
-	 * @return Number of players when the game started
+	 * @return time left of this turn for the current player
 	 */
-	public int getPlayerCount() {
-		return this.playerCount;
+	public float playerTimeLeft() {
+		return this.availablePlayerTime;
 	}
 
+	/**
+	 * Fires the weapon the current player is holding
+	 */
 	public void fireWeapon() {
 		if (getCurrentPlayer().getCurrentWeapon().isCool()) {
 			Projectiles projectileType = getCurrentPlayer().getCurrentWeapon().getProjectileType();
-			Vector2 playerPosition = new Vector2(getCurrentPlayer().getPosition().getX(), getCurrentPlayer().getPosition().getY());
-			ProjectileModel projectile = new ProjectileModel(projectileType, playerPosition);
+			ProjectileModel projectile = new ProjectileModel(projectileType, getCurrentPlayer());
 			projectiles.add(projectile);
+			projectile.addCollisionListener(this);
 			projectile.setSpeed(getCurrentPlayer().getAim());
 			getCurrentPlayer().getCurrentWeapon().startCoolDownTimer();
 		}
 	}
 
+	/**
+	 * @param paused Set whether or not the game is paused
+	 */
+	public void setPaused(boolean paused) {
+		this.paused = paused;
+	}
+
+	/**
+	 * @return true if the game is paused
+	 */
+	public boolean isPaused() {
+		return this.paused;
+	}
+
+	/**
+	 * Called when two Sprite collide.
+	 *
+	 * @param a The first Sprite (the sprite being listened to).
+	 * @param b The other Sprite.
+	 */
+	@Override
+	public void collided(Sprite a, Sprite b) {
+		if (a instanceof ProjectileModel) {
+			if (b instanceof PlayerModel) {
+				kill.add((EntityModel) a);
+				((PlayerModel) b).attacked(((ProjectileModel) a).getDirectDamage());
+			}
+		}
+	}
 }

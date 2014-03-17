@@ -1,42 +1,48 @@
 package no.ntnu.folk.game.gameplay.entities.views;
 
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import sheep.graphics.Image;
 
 public class PlayerToken extends EntityToken {
+	private Image[] healthBar;
+	private float direction;
 
 	/**
 	 * @param model PlayerModel for this token
+	 * @param image ID for the image
 	 */
-	public PlayerToken(PlayerModel model) {
-		super(model);
-	}
-
-	/**
-	 * Fill the array containing the images for this token
-	 */
-	@Override
-	protected void setImages() {
-		images = new Image[]{
-				new Image(R.drawable.player0),
-//				new Image(R.drawable.player1),
+	public PlayerToken(PlayerModel model, int image) {
+		super(model, image);
+		direction = 1;
+		healthBar = new Image[]{
+				new Image(R.drawable.healtbar100),
+				new Image(R.drawable.healtbar075),
+				new Image(R.drawable.healtbar050),
+				new Image(R.drawable.healtbar025),
+				new Image(R.drawable.healtbar010)
 		};
 	}
 
-	// TODO
-
-
 	@Override
-	protected void drawDebugInformation(Canvas canvas) {
-		canvas.drawText(
-				this.toString(),
-				entityModel.getX() - entityModel.getImageHeight() / 2,
-				entityModel.getY() - entityModel.getImageHeight() * 3 / 4,
-				((PlayerModel) entityModel).getTeam().getTagColor()
-		);
-		drawOutline(canvas);
+	public void draw(Canvas canvas) {
+		super.draw(canvas);
+		Matrix matrix = new Matrix();
+		matrix.postTranslate(entityModel.getX() - healthBar[0].getWidth() / 2, entityModel.getY() + image.getHeight() / 2);
+		int health = 100 * ((PlayerModel) entityModel).getHealth() / ((PlayerModel) entityModel).getStartHealth();
+		if (health < 10) {
+			healthBar[4].draw(canvas, matrix);
+		} else if (health <= 25) {
+			healthBar[3].draw(canvas, matrix);
+		} else if (health <= 50) {
+			healthBar[2].draw(canvas, matrix);
+		} else if (health <= 75) {
+			healthBar[1].draw(canvas, matrix);
+		} else if (health > 75) {
+			healthBar[0].draw(canvas, matrix);
+		}
 	}
 
 	@Override
@@ -46,6 +52,17 @@ public class PlayerToken extends EntityToken {
 				"}";
 	}
 
+	@Override
+	protected float getScaleX() {
+		if (entityModel.getSpeed().getX() != 0) {
+			direction = Math.signum(entityModel.getSpeed().getX());
+		}
+		return direction;
+	}
+	@Override
+	protected float getScaleY() {
+		return 1;
+	}
 	/**
 	 * @return 0 as the player does not rotate.
 	 */

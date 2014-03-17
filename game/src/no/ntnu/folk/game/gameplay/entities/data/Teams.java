@@ -1,24 +1,27 @@
 package no.ntnu.folk.game.gameplay.entities.data;
 
+import no.ntnu.folk.game.R;
 import sheep.graphics.Color;
 
 public enum Teams {
-	BLUE(Color.BLUE),
-	RED(Color.RED),
-	GREEN(Color.GREEN),
-	CYAN(new Color(0, 255, 255)),
-	MAGENTA(new Color(255, 0, 255)),
-	YELLOW(new Color(255, 255, 0)),
+	BLUE(Color.BLUE, R.drawable.player0),
+	RED(Color.RED, R.drawable.player1),
+	GREEN(Color.GREEN, R.drawable.player2),
+	CYAN(new Color(0, 255, 255), R.drawable.player3),
+	MAGENTA(new Color(255, 0, 255), R.drawable.player4),
+	YELLOW(new Color(255, 255, 0), R.drawable.player5),
 //	WHITE(Color.WHITE),
 	;
 
 	private final Color tagColor;
+	private int playerImage;
 
 	/**
 	 * @param tagColor Color of name tag for members of this team
 	 */
-	Teams(Color tagColor) {
+	Teams(Color tagColor, int playerImage) {
 		this.tagColor = tagColor;
+		this.playerImage = playerImage;
 	}
 
 	public static Teams getTeamFromOrdinal(int ordinal) {
@@ -31,5 +34,10 @@ public enum Teams {
 	public Color getTagColor() {
 		return tagColor;
 	}
-
+	/**
+	 * @return Image ID for this team
+	 */
+	public int getImage() {
+		return playerImage;
+	}
 }

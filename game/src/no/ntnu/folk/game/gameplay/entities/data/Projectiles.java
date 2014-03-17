@@ -1,28 +1,27 @@
 package no.ntnu.folk.game.gameplay.entities.data;
 
+import no.ntnu.folk.game.R;
+
 public enum Projectiles {
-	BULLET(50, 0, 0, 32, 16),
-	ROCKET(35, 20, 10, 10, 6); // TODO set proper values
+	BULLET(25, 0, 0, R.drawable.bullet_medium),
+	ROCKET(35, 20, 10, R.drawable.bullet_big);
 
 	private final int directDamage;
 	private final int areaDamage;
 	private final int areaDamageRange;
-	private float imageWidth;
-	private float imageHeight;
+	private final int image;
 
 	/**
 	 * @param directDamage    damage dealt by being hit directly by this projectile
 	 * @param areaDamage      damage dealt to entities within range of where this projectile hits
 	 * @param areaDamageRange range for area damage
-	 * @param imageWidth      Image width for a token of this type
-	 * @param imageHeight     Image height for a token of this type
+	 * @param image           Image ID for this projectile
 	 */
-	Projectiles(int directDamage, int areaDamage, int areaDamageRange, float imageWidth, float imageHeight) {
+	Projectiles(int directDamage, int areaDamage, int areaDamageRange, int image) {
 		this.directDamage = directDamage;
 		this.areaDamage = areaDamage;
 		this.areaDamageRange = areaDamageRange;
-		this.imageWidth = imageWidth;
-		this.imageHeight = imageHeight;
+		this.image = image;
 	}
 
 	/**
@@ -45,15 +44,10 @@ public enum Projectiles {
 	}
 
 	/**
-	 * @return Image width for this projectile
+	 * @return Image id for this projectile
 	 */
-	public float getImageWidth() {
-		return imageWidth;
+	public int getImage() {
+		return image;
 	}
-	/**
-	 * @return Image height for this projectile
-	 */
-	public float getImageHeight() {
-		return imageHeight;
-	}
+
 }

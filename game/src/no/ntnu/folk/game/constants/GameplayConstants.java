@@ -1,7 +1,5 @@
 package no.ntnu.folk.game.constants;
 
-import no.ntnu.folk.game.gameplay.levels.controllers.LevelController;
-
 public class GameplayConstants {
 	public static final float PLAYER_SPEED = 10;
 	// Game options
@@ -12,6 +10,4 @@ public class GameplayConstants {
 	public static final int DEFAULT_PLAYER_COUNT = 2;
 	// TurnTime
 	public static final int TURN_TIME = 10; // turn time in seconds
-	// Projectile speed
-	public static final int BULLET_SPEED = 50; // bullet speed for handgun
 }
