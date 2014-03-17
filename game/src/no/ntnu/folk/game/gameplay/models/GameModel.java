@@ -8,6 +8,7 @@ import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
+import no.ntnu.folk.game.gameplay.entities.views.PlayerToken;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
@@ -124,7 +125,7 @@ public class GameModel implements CollisionListener {
 	}
 
 	/**
-	 * @return The list of projectiles in this game
+	 * @return The list of levelTokens in this game
 	 */
 	public ArrayList<LevelToken> getLevelTokens() {
 		return currentLevel.getLevelTokens();
@@ -137,19 +138,18 @@ public class GameModel implements CollisionListener {
 	 *            time since last update
 	 */
 	public void update(float dt) {
+		for (LevelToken lt: currentLevel.getLevelTokens()){
+			lt.update(dt);
+		}
 		for (PlayerModel player : playerList) {
 			player.update(dt);
 		}
 		for (ProjectileModel projectile : projectiles) {
 			projectile.update(dt);
 		}
-		for (LevelToken lt : currentLevel.getLevelTokens()) {
-			for (PlayerModel player : playerList) {
-				if (player.collides(lt)) {
-					player.setSpeed(player.getSpeed().getX(), 0);
-				} else {
-					player.setSpeed(player.getSpeed().getX(), 20);
-				}
+		for (PlayerModel player : playerList) {
+			for (LevelToken lt : currentLevel.getLevelTokens()) {
+				player.collides(lt);
 			}
 		}
 		for (ProjectileModel projectile : projectiles) {
@@ -251,6 +251,11 @@ public class GameModel implements CollisionListener {
 				kill.add((EntityModel) a);
 				((PlayerModel) b).attacked(((ProjectileModel) a)
 						.getDirectDamage());
+			}
+		}
+		if(a instanceof PlayerModel){
+			if(b instanceof LevelToken){
+				a.setSpeed(a.getSpeed().getX(), 0);
 			}
 		}
 	}
