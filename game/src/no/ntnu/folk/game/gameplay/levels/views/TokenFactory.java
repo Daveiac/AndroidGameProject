@@ -5,11 +5,12 @@ public class TokenFactory {
 	public static LevelToken createToken(String name) {
 		LevelToken token = null;
 
-		if (name.equals("LevelToken")) {
+		if (name.equals("Wall")) {
 			token = new Wall();
-		} else if (name.equals("Structure")) {
+		} 
+//		else if (name.equals("Structure")) {
 //			token = new Structure(new Image(R.drawable.structure));
-		}
+//		}
 		return token;
 	}
 }
