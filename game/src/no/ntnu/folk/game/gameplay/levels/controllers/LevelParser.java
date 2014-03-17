@@ -13,39 +13,42 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import android.content.SyncStatusObserver;
+
 
 import sheep.game.Game;
 
 public class LevelParser {
 
-	public static void parseLevel(LevelModel lm) {
+	public static void parseLevel(LevelModel lvlModel) {
 		try {
-			InputStream inputStream = Game.getInstance().getResources().openRawResource(R.raw.flat);
+			InputStream inputStream = Game.getInstance().getResources().openRawResource(R.raw.test);
 			System.out.println(inputStream);
 			InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 			BufferedReader bufferReader = new BufferedReader(inputStreamReader);
 
 			String line = bufferReader.readLine();
 			while (line != null) {
-				if (line.length() != 0 || !line.startsWith("#")) {
+				if (line.length() != 0 && !line.startsWith("#")) {
 					String[] token = line.split("[(),]");
 					String tokenName = token[0];
+					System.out.println(tokenName);
 
 					// if an instance
 					if (tokenName.equals("Size") || tokenName.equals("StartPosition")) {
 						int x = Integer.parseInt(token[1].substring(2));
 						int y = Integer.parseInt(token[2].substring(2));
 						if (tokenName.equals("Size")) {
-							lm.setSize(x, y);
+							lvlModel.setSize(x, y);
 						}
 						else if(tokenName.equals("StartPosition")) {
-							lm.addStartPosition(x, y);
+							lvlModel.addStartPosition(x, y);
 						}
 					}
 
 					// if a token
 					else {
-						lm.addToken(parseToken(token));
+						lvlModel.addToken(parseToken(token));
 					}
 				}
 				line = bufferReader.readLine();
@@ -66,6 +69,7 @@ public class LevelParser {
 	private static LevelToken parseToken(String[] token) {
 		// TODO Auto-generated method stub
 		String tokenName = token[0];
+		System.out.println(tokenName);
 		LevelToken levelToken = TokenFactory.createToken(tokenName);
 
 		int x = 0;

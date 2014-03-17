@@ -44,7 +44,7 @@ public class LevelModel extends Sprite {
 	 */
 	public void loadLevel() {
 		// TODO Auto-generated method stub
-//		LevelParser.parseLevel(this);
+		LevelParser.parseLevel(this);
 	}
 
 	public void setSize(int width, int height) {
