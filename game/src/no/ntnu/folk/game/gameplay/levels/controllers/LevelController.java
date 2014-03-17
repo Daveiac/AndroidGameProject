@@ -1,6 +1,7 @@
 package no.ntnu.folk.game.gameplay.levels.controllers;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 import no.ntnu.folk.game.R;
 
@@ -24,7 +25,7 @@ public class LevelController {
 	 * Reads the level files from the levels folder and puts them in a list.
 	 */
 	private static void readLevels() {
-	    listOfLevels = R.raw.class.getFields();
+	    listOfLevels = R.raw.class.getDeclaredFields();
 	}
 
 	/**
@@ -32,12 +33,21 @@ public class LevelController {
 	 *
 	 * @return levels. List with the names of all levels.
 	 */
-	public static String[] getLevels() {
+	public static String[][] getLevels() {
 		readLevels();
 	    int numberOfLevels = listOfLevels.length;
-	    String[] levels = new String[numberOfLevels];
+	    String[][] levels = new String[numberOfLevels][2];
 	    for (int i = 0; i < listOfLevels.length; i++) {
-	    	levels[i] = listOfLevels[i].getName();
+	    	levels[i][0] = listOfLevels[i].getName();
+	    	try {
+				levels[i][1] = Integer.toString(listOfLevels[i].getInt(null));
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    }
 		return levels;
 	}
