@@ -1,6 +1,7 @@
 package no.ntnu.folk.game.gameplay.levels.controllers;
 
 
+import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.levels.views.TokenFactory;
 import no.ntnu.folk.game.gameplay.models.LevelModel;
@@ -12,25 +13,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import android.R;
 
 import sheep.game.Game;
 
 public class LevelParser {
 
 	public static void parseLevel(LevelModel lm) {
-
-		int id = Game.getInstance().getResources().getIdentifier("raw/" + lm.getLevel(),"raw", R.class.getPackage().getName());
-
 		try {
-			InputStream is = Game.getInstance().getResources().openRawResource(id);
-			InputStreamReader isr = new InputStreamReader(is);
-			BufferedReader br = new BufferedReader(isr);
-			
-			
-//			BufferedReader br = new BufferedReader(new FileReader(path));
+			InputStream inputStream = Game.getInstance().getResources().openRawResource(R.raw.flat);
+			System.out.println(inputStream);
+			InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+			BufferedReader bufferReader = new BufferedReader(inputStreamReader);
 
-			String line = br.readLine();
+			String line = bufferReader.readLine();
 			while (line != null) {
 				if (line.length() != 0 || !line.startsWith("#")) {
 					String[] token = line.split("[(),]");
@@ -53,11 +48,11 @@ public class LevelParser {
 						lm.addToken(parseToken(token));
 					}
 				}
-				line = br.readLine();
+				line = bufferReader.readLine();
 			}
 
 			// close reader
-			br.close();
+			bufferReader.close();
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -71,7 +66,7 @@ public class LevelParser {
 	private static LevelToken parseToken(String[] token) {
 		// TODO Auto-generated method stub
 		String tokenName = token[0];
-		LevelToken lt = TokenFactory.createToken(tokenName);
+		LevelToken levelToken = TokenFactory.createToken(tokenName);
 
 		int x = 0;
 		int y = 0;
@@ -87,10 +82,10 @@ public class LevelParser {
 				y = value;
 			}
 			else {
-				lt.setParameters(key, value);
+				levelToken.setParameters(key, value);
 			}
 		}
-		lt.setPosition(x, y);
-		return lt;
+		levelToken.setPosition(x, y);
+		return levelToken;
 	}
 }
