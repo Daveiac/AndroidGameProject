@@ -78,9 +78,10 @@ public class GameModel implements CollisionListener {
 		playerList = new ArrayList<PlayerModel>(playerCount);
 		float offset = ProgramConstants.getWindowSize()[0] * 0.5f / playerCount;
 		float xPosition = (offset * (1 + playerCount)) / 2;
+		ArrayList<int[]> startPos = currentLevel.getStartPositions();
 		for (int i = 0; i < playerCount; i++) {
 			String name = "Player " + i;
-			Vector2 position = new Vector2(xPosition + (i * offset), ProgramConstants.getWindowSize()[1] / 2);
+			Vector2 position = new Vector2(startPos.get(i)[0], startPos.get(i)[1]);
 			Teams team;
 			if (gameTypes.equals(GameTypes.FFA)) {
 				team = Teams.getTeamFromOrdinal(i);
