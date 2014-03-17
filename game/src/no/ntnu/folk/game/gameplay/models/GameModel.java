@@ -14,6 +14,7 @@ import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
 import sheep.math.Vector2;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -46,14 +47,14 @@ public class GameModel implements CollisionListener {
 	 *            Number of players for the start of this game
 	 * @param playerHealth
 	 *            Health all players starts with
-	 * @param levelName
+	 * @param i
 	 *            Level name
 	 * @param gameTypes
 	 *            Game type (teams / ffa)
 	 */
-	public GameModel(int playerCount, int playerHealth, String levelName,
+	public GameModel(int playerCount, int playerHealth, int i,
 			GameTypes gameTypes) {
-		initializeFields(playerCount, playerHealth, levelName, gameTypes);
+		initializeFields(playerCount, playerHealth, i, gameTypes);
 		createPlayers();
 		kill = new ArrayList<EntityModel>();
 	}
@@ -65,16 +66,16 @@ public class GameModel implements CollisionListener {
 	 *            Number of players for the start of this game
 	 * @param playerHealth
 	 *            Health all players starts with
-	 * @param levelName
+	 * @param i
 	 *            Level name
 	 * @param gameTypes
 	 *            Game type (teams / ffa)
 	 */
 	private void initializeFields(int playerCount, int playerHealth,
-			String levelName, GameTypes gameTypes) {
+			int i, GameTypes gameTypes) {
 		this.playerCount = playerCount;
 		this.maxHealth = playerHealth;
-		this.currentLevel = new LevelModel(levelName);
+		this.currentLevel = new LevelModel(i);
 		this.gameTypes = gameTypes;
 		projectiles = new ArrayList<ProjectileModel>();
 		currentPlayer = 0;

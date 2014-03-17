@@ -4,6 +4,7 @@ import no.ntnu.folk.game.gameplay.levels.controllers.LevelParser;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import sheep.game.Sprite;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 public class LevelModel extends Sprite {
 	// TODO
 
-	private final String level;
+	private final int level;
 	private int[] size;
 	private ArrayList<int[]> startPositions;
 	private ArrayList<LevelToken> tokens;
@@ -25,15 +26,15 @@ public class LevelModel extends Sprite {
 	 *
 	 * @param levelName Level name
 	 */
-	public LevelModel(String levelName) {
-		this.level = levelName;
+	public LevelModel(int i) {
+		this.level = i;
 		size = new int[2];
 		startPositions = new ArrayList<int[]>();
 		tokens = new ArrayList<LevelToken>();
 		loadLevel();
 	}
 
-	public String getLevel() {
+	public int getLevel() {
 		return level;
 	}
 

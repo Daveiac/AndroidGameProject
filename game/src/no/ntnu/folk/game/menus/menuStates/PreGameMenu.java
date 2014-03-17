@@ -1,5 +1,7 @@
 package no.ntnu.folk.game.menus.menuStates;
 
+import java.lang.reflect.Field;
+
 import no.ntnu.folk.game.constants.GameTypes;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.levels.controllers.LevelController;
@@ -20,7 +22,7 @@ public class PreGameMenu extends MenuState {
 	private int currentLevel;
 	private int currentHealth;
 	private int selectedGameType;
-	private String[] levels;
+	private String[][] levels;
 	// private GameModel gameModel; //TODO make a gameModel with the options set
 
 
@@ -40,7 +42,7 @@ public class PreGameMenu extends MenuState {
 		menuItems = new MenuItem[]{
 				new MenuItem(MenuOptions.START_GAME, position++),
 				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(GameplayConstants.DEFAULT_PLAYER_COUNT)),
-				new MenuItem(MenuOptions.SELECT_MAP, position++, levels[currentLevel]),
+				new MenuItem(MenuOptions.SELECT_MAP, position++, levels[currentLevel][0]),
 				new MenuItem(MenuOptions.HEALTH, position++, Integer.toString(GameplayConstants.DEFAULT_HEALTH)),
 				new MenuItem(MenuOptions.GAME_TYPE, position++, GameTypes.values()[0].toString()),
 				new MenuItem(MenuOptions.BACK, position++),
@@ -54,7 +56,7 @@ public class PreGameMenu extends MenuState {
 	protected void clickMenuItem(MenuItem menuItem) {
 		switch (menuItem.getOption()) {
 			case START_GAME:
-				getGame().pushState(new GameState(new GameModel(playerCount, currentHealth,levels[currentLevel], GameTypes.values()[selectedGameType]))); // FIXME TEMP!
+				getGame().pushState(new GameState(new GameModel(playerCount, currentHealth,Integer.parseInt(levels[currentLevel][1]), GameTypes.values()[selectedGameType]))); // FIXME TEMP!
 				break;
 			case PLAYER_COUNT:
 				changePlayerCount();
@@ -62,7 +64,7 @@ public class PreGameMenu extends MenuState {
 				break;
 			case SELECT_MAP:
 				nextLevel();
-				menuItem.setData(levels[currentLevel]);
+				menuItem.setData(levels[currentLevel][0]);
 				break;
 			case HEALTH:
 				increaseHealth();
