@@ -8,7 +8,7 @@ public class TokenFactory {
 		if (name.equals("Wall")) {
 			token = new Wall();
 		} 
-//		else if (name.equals("Structure")) {
+//		else if (name.equals("Structure")) { //TODO add sturcture if we wanted that
 //			token = new Structure(new Image(R.drawable.structure));
 //		}
 		return token;

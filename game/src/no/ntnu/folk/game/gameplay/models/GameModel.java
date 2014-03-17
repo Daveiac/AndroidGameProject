@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 /**
  * Class used to keep track of the game-state as the game evolves.
- *
+ * 
  * @author Rune
  */
 public class GameModel implements CollisionListener {
@@ -31,35 +31,46 @@ public class GameModel implements CollisionListener {
 	private int maxHealth;
 	private int currentPlayer;
 
-	//Map
+	// Map
 	private LevelModel currentLevel;
 	private GameTypes gameTypes;
 
-	//Game time
+	// Game time
 	private float gameTime;
 	private float availablePlayerTime;
 	private boolean paused;
 
 	/**
-	 * @param playerCount  Number of players for the start of this game
-	 * @param playerHealth Health all players starts with
-	 * @param levelName    Level name
-	 * @param gameTypes    Game type (teams / ffa)
+	 * @param playerCount
+	 *            Number of players for the start of this game
+	 * @param playerHealth
+	 *            Health all players starts with
+	 * @param levelName
+	 *            Level name
+	 * @param gameTypes
+	 *            Game type (teams / ffa)
 	 */
-	public GameModel(int playerCount, int playerHealth, String levelName, GameTypes gameTypes) {
+	public GameModel(int playerCount, int playerHealth, String levelName,
+			GameTypes gameTypes) {
 		initializeFields(playerCount, playerHealth, levelName, gameTypes);
 		createPlayers();
 		kill = new ArrayList<EntityModel>();
 	}
+
 	/**
 	 * Initialize the fields
-	 *
-	 * @param playerCount  Number of players for the start of this game
-	 * @param playerHealth Health all players starts with
-	 * @param levelName    Level name
-	 * @param gameTypes    Game type (teams / ffa)
+	 * 
+	 * @param playerCount
+	 *            Number of players for the start of this game
+	 * @param playerHealth
+	 *            Health all players starts with
+	 * @param levelName
+	 *            Level name
+	 * @param gameTypes
+	 *            Game type (teams / ffa)
 	 */
-	private void initializeFields(int playerCount, int playerHealth, String levelName, GameTypes gameTypes) {
+	private void initializeFields(int playerCount, int playerHealth,
+			String levelName, GameTypes gameTypes) {
 		this.playerCount = playerCount;
 		this.maxHealth = playerHealth;
 		this.currentLevel = new LevelModel(levelName);
@@ -70,25 +81,30 @@ public class GameModel implements CollisionListener {
 		// Init time variables
 		gameTime = 0;
 		availablePlayerTime = GameplayConstants.TURN_TIME;
+		
+		for(LevelToken lt: currentLevel.getLevelTokens()){
+			lt.addCollisionListener(this);
+		}
 	}
+
 	/**
 	 * Create the number of players
 	 */
 	private void createPlayers() {
 		playerList = new ArrayList<PlayerModel>(playerCount);
-		float offset = ProgramConstants.getWindowSize()[0] * 0.5f / playerCount;
-		float xPosition = (offset * (1 + playerCount)) / 2;
 		ArrayList<int[]> startPos = currentLevel.getStartPositions();
 		for (int i = 0; i < playerCount; i++) {
 			String name = "Player " + i;
-			Vector2 position = new Vector2(startPos.get(i)[0], startPos.get(i)[1]);
+			Vector2 position = new Vector2(startPos.get(i)[0],
+					startPos.get(i)[1]);
 			Teams team;
 			if (gameTypes.equals(GameTypes.FFA)) {
 				team = Teams.getTeamFromOrdinal(i);
 			} else {
 				team = i < playerCount / 2 ? Teams.RED : Teams.BLUE;
 			}
-			PlayerModel player = new PlayerModel(name, position, team, maxHealth);
+			PlayerModel player = new PlayerModel(name, position, team,
+					maxHealth);
 			playerList.add(player);
 		}
 	}
@@ -99,12 +115,14 @@ public class GameModel implements CollisionListener {
 	public ArrayList<PlayerModel> getPlayerList() {
 		return this.playerList;
 	}
+
 	/**
 	 * @return The list of projectiles in this game
 	 */
 	public ArrayList<ProjectileModel> getProjectiles() {
 		return projectiles;
 	}
+
 	/**
 	 * @return The list of projectiles in this game
 	 */
@@ -114,8 +132,9 @@ public class GameModel implements CollisionListener {
 
 	/**
 	 * Update timer
-	 *
-	 * @param dt time since last update
+	 * 
+	 * @param dt
+	 *            time since last update
 	 */
 	public void update(float dt) {
 		for (PlayerModel player : playerList) {
@@ -123,6 +142,15 @@ public class GameModel implements CollisionListener {
 		}
 		for (ProjectileModel projectile : projectiles) {
 			projectile.update(dt);
+		}
+		for (LevelToken lt : currentLevel.getLevelTokens()) {
+			for (PlayerModel player : playerList) {
+				if (player.collides(lt)) {
+					player.setSpeed(player.getSpeed().getX(), 0);
+				} else {
+					player.setSpeed(player.getSpeed().getX(), 20);
+				}
+			}
 		}
 		for (ProjectileModel projectile : projectiles) {
 			for (PlayerModel player : playerList) {
@@ -144,14 +172,18 @@ public class GameModel implements CollisionListener {
 	}
 
 	/**
-	 * Set currentPlayer to the next player. Set to first player if a the end of the list.
+	 * Set currentPlayer to the next player. Set to first player if a the end of
+	 * the list.
 	 */
 	public void nextPlayer() {
 		getCurrentPlayer().setSpeed(0, 0);
 		availablePlayerTime = GameplayConstants.TURN_TIME;
-		if (currentPlayer == playerCount - 1) currentPlayer = 0;
-		else currentPlayer++;
+		if (currentPlayer == playerCount - 1)
+			currentPlayer = 0;
+		else
+			currentPlayer++;
 	}
+
 	/**
 	 * @return Current player
 	 */
@@ -178,8 +210,10 @@ public class GameModel implements CollisionListener {
 	 */
 	public void fireWeapon() {
 		if (getCurrentPlayer().getCurrentWeapon().isCool()) {
-			Projectiles projectileType = getCurrentPlayer().getCurrentWeapon().getProjectileType();
-			ProjectileModel projectile = new ProjectileModel(projectileType, getCurrentPlayer());
+			Projectiles projectileType = getCurrentPlayer().getCurrentWeapon()
+					.getProjectileType();
+			ProjectileModel projectile = new ProjectileModel(projectileType,
+					getCurrentPlayer());
 			projectiles.add(projectile);
 			projectile.addCollisionListener(this);
 			projectile.setSpeed(getCurrentPlayer().getAim());
@@ -188,7 +222,8 @@ public class GameModel implements CollisionListener {
 	}
 
 	/**
-	 * @param paused Set whether or not the game is paused
+	 * @param paused
+	 *            Set whether or not the game is paused
 	 */
 	public void setPaused(boolean paused) {
 		this.paused = paused;
@@ -203,16 +238,19 @@ public class GameModel implements CollisionListener {
 
 	/**
 	 * Called when two Sprite collide.
-	 *
-	 * @param a The first Sprite (the sprite being listened to).
-	 * @param b The other Sprite.
+	 * 
+	 * @param a
+	 *            The first Sprite (the sprite being listened to).
+	 * @param b
+	 *            The other Sprite.
 	 */
 	@Override
 	public void collided(Sprite a, Sprite b) {
 		if (a instanceof ProjectileModel) {
 			if (b instanceof PlayerModel) {
 				kill.add((EntityModel) a);
-				((PlayerModel) b).attacked(((ProjectileModel) a).getDirectDamage());
+				((PlayerModel) b).attacked(((ProjectileModel) a)
+						.getDirectDamage());
 			}
 		}
 	}

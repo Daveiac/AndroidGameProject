@@ -23,7 +23,6 @@ public class LevelParser {
 	public static void parseLevel(LevelModel lvlModel) {
 		try {
 			InputStream inputStream = Game.getInstance().getResources().openRawResource(R.raw.flat);
-			System.out.println(inputStream);
 			InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 			BufferedReader bufferReader = new BufferedReader(inputStreamReader);
 
@@ -32,7 +31,6 @@ public class LevelParser {
 				if (line.length() != 0 && !line.startsWith("#")) {
 					String[] token = line.split("[(),]");
 					String tokenName = token[0];
-					System.out.println(tokenName);
 
 					// if an instance
 					if (tokenName.equals("Size") || tokenName.equals("StartPosition")) {
@@ -69,7 +67,6 @@ public class LevelParser {
 	private static LevelToken parseToken(String[] token) {
 		// TODO Auto-generated method stub
 		String tokenName = token[0];
-		System.out.println(tokenName);
 		LevelToken levelToken = TokenFactory.createToken(tokenName);
 
 		int x = 0;
