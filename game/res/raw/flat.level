@@ -6,8 +6,8 @@
 Size(x=1000,y=800)
 
 # Starting positions
-StartPosition(x=150,y=150)
-StartPosition(x=150,y=850)
+StartPosition(x=150,y=800)
+StartPosition(x=850,y=800)
 
 # Walls
-Wall(x=100,y=600,h=50,w=800)
+Wall(x=100,y=850,h=50,w=1000)
