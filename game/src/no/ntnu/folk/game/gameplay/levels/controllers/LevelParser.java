@@ -22,7 +22,7 @@ public class LevelParser {
 
 	public static void parseLevel(LevelModel lvlModel) {
 		try {
-			InputStream inputStream = Game.getInstance().getResources().openRawResource(R.raw.test);
+			InputStream inputStream = Game.getInstance().getResources().openRawResource(R.raw.flat);
 			System.out.println(inputStream);
 			InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 			BufferedReader bufferReader = new BufferedReader(inputStreamReader);
