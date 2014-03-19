@@ -8,7 +8,7 @@ import sheep.math.Vector2;
 
 public class WeaponModel extends EntityModel {
 	private final Projectiles projectileType;
-	private int coolDown;
+	private boolean notOnCoolDown;
 	private Vector2 aim;
 	private Weapons weapon;
 
@@ -26,6 +26,7 @@ public class WeaponModel extends EntityModel {
 		this.weapon = weapon;
 		projectileType = weapon.getProjectile();
 		aim = new Vector2(10, 0);
+		notOnCoolDown = true;
 	}
 
 	/**
@@ -38,12 +39,6 @@ public class WeaponModel extends EntityModel {
 	@Override
 	public void update(float dt) {
 		super.update(dt);
-		if (coolDown != 0) {
-			coolDown -= dt;
-			if (coolDown < 0) {
-				coolDown = 0;
-			}
-		}
 	}
 
 	// TODO
@@ -54,12 +49,13 @@ public class WeaponModel extends EntityModel {
 	public Projectiles getProjectileType() {
 		return projectileType;
 	}
-
-	public void startCoolDownTimer() {
-		coolDown = 100; // FIXME Test value, please ignore... Should be individual for each weapon.
+	
+	public void setCool(boolean coolDown){
+		this.notOnCoolDown = coolDown;
 	}
+	
 	public boolean isCool() {
-		return coolDown == 0;
+		return notOnCoolDown;
 	}
 	public void setAim(float x, float y) {
 		aim.set(x, y);

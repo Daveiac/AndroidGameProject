@@ -221,7 +221,7 @@ public class GameModel implements CollisionListener {
 			projectiles.add(projectile);
 			projectile.addCollisionListener(this);
 			projectile.setSpeed(getCurrentPlayer().getAim());
-			getCurrentPlayer().getCurrentWeapon().startCoolDownTimer();
+			getCurrentPlayer().getCurrentWeapon().setCool(true);
 		}
 	}
 
