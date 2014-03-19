@@ -1,22 +1,12 @@
 package no.ntnu.folk.game.gameplay.levels.controllers;
 
 
-import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.levels.views.TokenFactory;
 import no.ntnu.folk.game.gameplay.models.LevelModel;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import android.content.SyncStatusObserver;
-
-
 import sheep.game.Game;
+
+import java.io.*;
 
 public class LevelParser {
 
@@ -38,8 +28,7 @@ public class LevelParser {
 						int y = Integer.parseInt(token[2].substring(2));
 						if (tokenName.equals("Size")) {
 							lvlModel.setSize(x, y);
-						}
-						else if(tokenName.equals("StartPosition")) {
+						} else if (tokenName.equals("StartPosition")) {
 							lvlModel.addStartPosition(x, y);
 						}
 					}
@@ -78,11 +67,9 @@ public class LevelParser {
 
 			if (key.equals("x")) {
 				x = value;
-			}
-			else if (key.equals("y")) {
+			} else if (key.equals("y")) {
 				y = value;
-			}
-			else {
+			} else {
 				levelToken.setParameters(key, value);
 			}
 		}

@@ -4,7 +4,6 @@ import no.ntnu.folk.game.gameplay.levels.controllers.LevelParser;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import sheep.game.Sprite;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**

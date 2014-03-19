@@ -53,8 +53,8 @@ public enum Projectiles {
 	public int getImage() {
 		return image;
 	}
-	
-	public int getExplosionImage(){
+
+	public int getExplosionImage() {
 		return explosionImage;
 	}
 

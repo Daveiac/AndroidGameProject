@@ -49,11 +49,11 @@ public class WeaponModel extends EntityModel {
 	public Projectiles getProjectileType() {
 		return projectileType;
 	}
-	
-	public void setCool(boolean coolDown){
+
+	public void setCool(boolean coolDown) {
 		this.notOnCoolDown = coolDown;
 	}
-	
+
 	public boolean isCool() {
 		return notOnCoolDown;
 	}

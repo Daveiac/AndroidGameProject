@@ -41,7 +41,7 @@ public class PlayerModel extends EntityModel {
 		setAim(position.getX() + 100, position.getY() + 100); // FIXME temporary values for start position
 		addGroup(team.ordinal());
 		addMask(team.ordinal());
-		setAcceleration(0,GameplayConstants.ACCELERATION);
+		setAcceleration(0, GameplayConstants.ACCELERATION);
 		isDead = false;
 		tombStone = new Image(R.drawable.tombstone);
 	}
@@ -56,15 +56,15 @@ public class PlayerModel extends EntityModel {
 
 	@Override
 	public void update(float dt) {
-		if(!isDead){
+		if (!isDead) {
 			super.update(dt);
 			currentWeapon.setPosition(getPosition());
-			currentWeapon.update(dt);			
+			currentWeapon.update(dt);
 		}
 	}
 	@Override
 	public void draw(Canvas canvas) {
-		if(!isDead){
+		if (!isDead) {
 			super.draw(canvas);
 			currentWeapon.draw(canvas);
 		} else {
@@ -134,7 +134,7 @@ public class PlayerModel extends EntityModel {
 	public void setAim(float x, float y) {
 		currentWeapon.setAim(x - getX(), y - getY());
 	}
-	
+
 	public Vector2 getAim() {
 		return currentWeapon.getAim();
 	}
@@ -145,11 +145,11 @@ public class PlayerModel extends EntityModel {
 	/**
 	 * set people to tombstone
 	 */
-	public void setToDead(){
+	public void setToDead() {
 		isDead = true;
 	}
-	
-	public boolean getStatusIsDead(){
+
+	public boolean getStatusIsDead() {
 		return isDead;
 	}
 }

@@ -1,7 +1,7 @@
 package no.ntnu.folk.game.gameplay.levels.views;
 
-import sheep.graphics.Image;
 import android.graphics.Canvas;
+import sheep.graphics.Image;
 
 public class Structure extends LevelToken {
 

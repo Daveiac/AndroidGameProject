@@ -1,7 +1,5 @@
 package no.ntnu.folk.game.menus.menuStates;
 
-import java.lang.reflect.Field;
-
 import no.ntnu.folk.game.constants.GameTypes;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.levels.controllers.LevelController;
@@ -56,7 +54,7 @@ public class PreGameMenu extends MenuState {
 	protected void clickMenuItem(MenuItem menuItem) {
 		switch (menuItem.getOption()) {
 			case START_GAME:
-				getGame().pushState(new GameState(new GameModel(playerCount, currentHealth,Integer.parseInt(levels[currentLevel][1]), GameTypes.values()[selectedGameType]))); // FIXME TEMP!
+				getGame().pushState(new GameState(new GameModel(playerCount, currentHealth, Integer.parseInt(levels[currentLevel][1]), GameTypes.values()[selectedGameType]))); // FIXME TEMP!
 				break;
 			case PLAYER_COUNT:
 				changePlayerCount();

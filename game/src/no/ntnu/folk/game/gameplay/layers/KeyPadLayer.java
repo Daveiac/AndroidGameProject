@@ -66,7 +66,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				pauseButton = new Button(icon, icon, pauseKeyPos, false), // TODO add proper pause button
 				swapKey = new Button(swapkey, swapkey, swapKeyPos, false),
 				fireKey = new Button(firekey, firekey, fireKeyPos, false),
-				endKey = new Button(endturn,endturn , endKeyPos, false),
+				endKey = new Button(endturn, endturn, endKeyPos, false),
 		};
 		unpauseButton = new Button(unpause, unpause, unpauseKeyPos, false);
 		unpauseButton.disable();
@@ -117,7 +117,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 			weaponButtons = weaponSelection.getWeaponButtons();
 			weaponSelection.setActive(true);
 		}
-		if(endKey.popPressed()){
+		if (endKey.popPressed()) {
 			gameModel.setGameTime(1);
 		}
 		if (unpauseButton.popPressed()) {

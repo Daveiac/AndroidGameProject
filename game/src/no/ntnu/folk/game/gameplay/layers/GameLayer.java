@@ -4,12 +4,9 @@ import android.graphics.Canvas;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
-import no.ntnu.folk.game.gameplay.entities.views.PlayerToken;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.models.GameModel;
-import sheep.collision.CollisionListener;
 import sheep.game.Layer;
-import sheep.game.Sprite;
 import sheep.graphics.Color;
 import sheep.math.BoundingBox;
 
