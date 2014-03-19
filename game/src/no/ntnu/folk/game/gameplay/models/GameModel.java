@@ -270,4 +270,8 @@ public class GameModel implements CollisionListener {
 			p.setToDead();
 		}
 	}
+	
+	public void setGameTime(int time){
+		this.availablePlayerTime = time;
+	}
 }

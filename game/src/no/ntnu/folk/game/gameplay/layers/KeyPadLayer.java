@@ -30,6 +30,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	private Button pauseButton;
 	private Button swapKey;
 	private Button fireKey;
+	private Button endKey;
 	private Button unpauseButton;
 
 	private Image aimImage;
@@ -56,6 +57,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		Vector2 pauseKeyPos = new Vector2(32, 32); // TODO should not use hardcoded coordinates
 		Vector2 swapKeyPos = new Vector2(windowSize[0] * 0.92f, windowSize[1] * 0.90f);
 		Vector2 fireKeyPos = new Vector2(windowSize[0] * 0.76f, windowSize[1] * 0.90f);
+		Vector2 endKeyPos = new Vector2(windowSize[0] * 0.60f, windowSize[1] * 0.90f);
 		Vector2 unpauseKeyPos = new Vector2(windowSize[0] * 0.50f, windowSize[1] * 0.50f);
 		buttons = new Button[]{
 				leftKey = new Button(keypadleft, keypadleft, leftKeyPos, true),
@@ -64,6 +66,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				pauseButton = new Button(icon, icon, pauseKeyPos, false), // TODO add proper pause button
 				swapKey = new Button(swapkey, swapkey, swapKeyPos, false),
 				fireKey = new Button(firekey, firekey, fireKeyPos, false),
+				endKey = new Button(endturn,endturn , endKeyPos, false),
 		};
 		unpauseButton = new Button(unpause, unpause, unpauseKeyPos, false);
 		unpauseButton.disable();
@@ -113,6 +116,9 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		if (swapKey.popPressed()) {
 			weaponButtons = weaponSelection.getWeaponButtons();
 			weaponSelection.setActive(true);
+		}
+		if(endKey.popPressed()){
+			gameModel.setGameTime(1);
 		}
 		if (unpauseButton.popPressed()) {
 			gameModel.setPaused(false);
