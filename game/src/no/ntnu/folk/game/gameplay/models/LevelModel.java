@@ -1,10 +1,10 @@
 package no.ntnu.folk.game.gameplay.models;
 
+import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.levels.controllers.LevelParser;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import sheep.game.Sprite;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -14,25 +14,45 @@ import java.util.ArrayList;
  * @author b2
  */
 public class LevelModel extends Sprite {
-	// TODO
 
 	private final int level;
-	private int[] size;
+	private int[] gridSize;
 	private ArrayList<int[]> startPositions;
 	private ArrayList<LevelToken> tokens;
+    private int[][] grid;
 
 	/**
 	 * Constructor. Constructs the LevelModel by giving the name of the requested level.
 	 *
-	 * @param levelName Level name
+	 * @param i int valeu for the level in R.raw
 	 */
 	public LevelModel(int i) {
 		this.level = i;
-		size = new int[2];
+		gridSize = new int[2];
 		startPositions = new ArrayList<int[]>();
 		tokens = new ArrayList<LevelToken>();
 		loadLevel();
-	}
+        grid = makeGrid();
+    }
+
+    private int[][] makeGrid(){
+        int x = gridSize[0];
+        int y = gridSize[1];
+        grid = new int[x][y];
+        for (int i = 0; i<grid.length;i++){
+            for (int j = 0; j<grid[i].length;j++){
+                grid[i][j] = 0;
+            }
+        }
+        for(LevelToken lt: getLevelTokens()){
+            for (int i = (int)lt.getX(); i < lt.getX()+lt.getParameters()[0]; i++) {
+                for (int j = (int)lt.getY(); j < lt.getY()+lt.getParameters()[1]; j++) {
+                    grid[i][j] = 1;
+                }
+            }
+        }
+        return grid;
+    }
 
 	public int getLevel() {
 		return level;
@@ -41,17 +61,14 @@ public class LevelModel extends Sprite {
 	/**
 	 * Loads the specific level given by the parameter levelName and sets it as the current level model.
 	 *
-	 * @param levelName Name of the requested level.
 	 */
 	public void loadLevel() {
-		// TODO Auto-generated method stub
 		LevelParser.parseLevel(this);
 	}
 
 	public void setSize(int width, int height) {
-		// TODO Auto-generated method stub
-		size[0] = width;
-		size[1] = height;
+		gridSize[0] = width;
+		gridSize[1] = height;
 	}
 
 	public void addStartPosition(int x, int y) {
@@ -60,7 +77,6 @@ public class LevelModel extends Sprite {
 	}
 
 	public void addToken(LevelToken token) {
-		// TODO Auto-generated method stub
 		tokens.add(token);
 	}
 
@@ -71,4 +87,8 @@ public class LevelModel extends Sprite {
 	public ArrayList<int[]> getStartPositions() {
 		return startPositions;
 	}
+
+    public int[][] getGrid(){
+        return this.grid;
+    }
 }

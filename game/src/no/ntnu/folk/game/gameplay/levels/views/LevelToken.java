@@ -13,4 +13,6 @@ public abstract class LevelToken extends Sprite {
 	}
 
 	public abstract void setParameters(String key, int value);
+
+    public abstract  int[] getParameters();
 }

@@ -3,11 +3,11 @@
 # This is a test level
 
 # Level size
-Size(x=1000,y=800)
+Size(x=20,y=20)
 
 # Starting positions
-StartPosition(x=150,y=750)
-StartPosition(x=850,y=750)
+StartPosition(x=3,y=17)
+StartPosition(x=15,y=17)
 
 # Walls
-Wall(x=100,y=850,h=50,w=1000)
+Wall(x=1,y=18,h=1,w=20)
