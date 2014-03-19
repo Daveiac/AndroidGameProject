@@ -7,6 +7,7 @@ import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.data.Weapons;
 import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
 import no.ntnu.folk.game.gameplay.entities.views.PlayerToken;
+import sheep.graphics.Image;
 import sheep.math.Vector2;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class PlayerModel extends EntityModel {
 	private ArrayList<WeaponModel> weaponList;
 	private WeaponModel currentWeapon;
 	private boolean isDead;
+	private Image tombStone;
 
 	/**
 	 * @param name     Constant name for the player during gameplay, will be used to identify different players
@@ -41,6 +43,7 @@ public class PlayerModel extends EntityModel {
 		addMask(team.ordinal());
 		setAcceleration(0,GameplayConstants.ACCELERATION);
 		isDead = false;
+		tombStone = new Image(R.drawable.tombstone);
 	}
 
 	/**
@@ -64,6 +67,9 @@ public class PlayerModel extends EntityModel {
 		if(!isDead){
 			super.draw(canvas);
 			currentWeapon.draw(canvas);
+		}
+		if(isDead){
+			tombStone.draw(canvas, this.getX(), this.getY());
 		}
 	}
 
