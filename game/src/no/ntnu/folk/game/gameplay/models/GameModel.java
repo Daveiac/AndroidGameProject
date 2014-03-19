@@ -1,6 +1,5 @@
 package no.ntnu.folk.game.gameplay.models;
 
-import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameTypes;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Projectiles;
@@ -14,8 +13,6 @@ import sheep.game.Sprite;
 import sheep.math.Vector2;
 
 import java.util.ArrayList;
-
-import android.widget.ImageView;
 
 /**
  * Class used to keep track of the game-state as the game evolves.
@@ -139,36 +136,41 @@ public class GameModel implements CollisionListener {
 	 *            time since last update
 	 */
 	public void update(float dt) {
-		for (LevelToken lt : currentLevel.getLevelTokens()) {
-			lt.update(dt);
-		}
-		for (PlayerModel player : playerList) {
-			player.update(dt);
-		}
-		for (ProjectileModel projectile : projectiles) {
-			projectile.update(dt);
-		}
-		for (PlayerModel player : playerList) {
+		if (!gameIsOver(playerList)) {
 			for (LevelToken lt : currentLevel.getLevelTokens()) {
-				player.collides(lt);
+				lt.update(dt);
 			}
-		}
-		for (ProjectileModel projectile : projectiles) {
 			for (PlayerModel player : playerList) {
-				projectile.collides(player);
+				player.update(dt);
+			}
+			for (ProjectileModel projectile : projectiles) {
+				projectile.update(dt);
+			}
+			for (PlayerModel player : playerList) {
+				for (LevelToken lt : currentLevel.getLevelTokens()) {
+					player.collides(lt);
+				}
+			}
+			for (ProjectileModel projectile : projectiles) {
+				for (PlayerModel player : playerList) {
+					projectile.collides(player);
+				}
+			}
+			gameTime += dt;
+			availablePlayerTime -= dt;
+			if (playerTimeUp()) {
+				nextPlayer();
+			}
+			for (EntityModel entity : kill) {
+				if (entity instanceof ProjectileModel) {
+					projectiles.remove(entity);
+				} else if (entity instanceof PlayerModel) {
+					playerList.remove(entity);
+				}
 			}
 		}
-		gameTime += dt;
-		availablePlayerTime -= dt;
-		if (playerTimeUp()) {
-			nextPlayer();
-		}
-		for (EntityModel entity : kill) {
-			if (entity instanceof ProjectileModel) {
-				projectiles.remove(entity);
-			} else if (entity instanceof PlayerModel) {
-				playerList.remove(entity);
-			}
+		if (gameIsOver(playerList)) {
+			// TODO end the game here
 		}
 	}
 
@@ -183,7 +185,7 @@ public class GameModel implements CollisionListener {
 			currentPlayer = 0;
 		else
 			currentPlayer++;
-		if(getCurrentPlayer().getStatusIsDead()){
+		if (getCurrentPlayer().getStatusIsDead()) {
 			nextPlayer();
 		}
 	}
@@ -255,7 +257,7 @@ public class GameModel implements CollisionListener {
 				kill.add((EntityModel) a);
 				((PlayerModel) b).attacked(((ProjectileModel) a)
 						.getDirectDamage());
-				isDead((PlayerModel)b);
+				isDead((PlayerModel) b);
 			}
 		}
 		if (a instanceof PlayerModel) {
@@ -270,8 +272,33 @@ public class GameModel implements CollisionListener {
 			p.setToDead();
 		}
 	}
-	
-	public void setGameTime(int time){
+
+	public void setGameTime(int time) {
 		this.availablePlayerTime = time;
+	}
+
+	public boolean gameIsOver(ArrayList<PlayerModel> playerList) {
+		int numberOfPlayerLeft = 0;
+		Enum team = playerList.get(0).getTeam();
+		switch (gameTypes) {
+		case FFA:
+			for (PlayerModel p : playerList) {
+				if (!p.getStatusIsDead()) {
+					numberOfPlayerLeft++;
+				}
+			}
+			if (numberOfPlayerLeft <= 1) {
+				return true;
+			} else
+				return false;
+		case TEAMS:
+			for (PlayerModel p : playerList) {
+				if (team != p.getTeam()) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 }
