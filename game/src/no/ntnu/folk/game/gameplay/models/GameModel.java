@@ -1,21 +1,21 @@
 package no.ntnu.folk.game.gameplay.models;
 
+import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameTypes;
 import no.ntnu.folk.game.constants.GameplayConstants;
-import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Projectiles;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
-import no.ntnu.folk.game.gameplay.entities.views.PlayerToken;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
 import sheep.math.Vector2;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
+
+import android.widget.ImageView;
 
 /**
  * Class used to keep track of the game-state as the game evolves.
@@ -71,8 +71,8 @@ public class GameModel implements CollisionListener {
 	 * @param gameTypes
 	 *            Game type (teams / ffa)
 	 */
-	private void initializeFields(int playerCount, int playerHealth,
-			int i, GameTypes gameTypes) {
+	private void initializeFields(int playerCount, int playerHealth, int i,
+			GameTypes gameTypes) {
 		this.playerCount = playerCount;
 		this.maxHealth = playerHealth;
 		this.currentLevel = new LevelModel(i);
@@ -83,8 +83,8 @@ public class GameModel implements CollisionListener {
 		// Init time variables
 		gameTime = 0;
 		availablePlayerTime = GameplayConstants.TURN_TIME;
-		
-		for(LevelToken lt: currentLevel.getLevelTokens()){
+
+		for (LevelToken lt : currentLevel.getLevelTokens()) {
 			lt.addCollisionListener(this);
 		}
 	}
@@ -139,7 +139,7 @@ public class GameModel implements CollisionListener {
 	 *            time since last update
 	 */
 	public void update(float dt) {
-		for (LevelToken lt: currentLevel.getLevelTokens()){
+		for (LevelToken lt : currentLevel.getLevelTokens()) {
 			lt.update(dt);
 		}
 		for (PlayerModel player : playerList) {
@@ -183,6 +183,9 @@ public class GameModel implements CollisionListener {
 			currentPlayer = 0;
 		else
 			currentPlayer++;
+		if(getCurrentPlayer().getStatusIsDead()){
+			nextPlayer();
+		}
 	}
 
 	/**
@@ -252,12 +255,19 @@ public class GameModel implements CollisionListener {
 				kill.add((EntityModel) a);
 				((PlayerModel) b).attacked(((ProjectileModel) a)
 						.getDirectDamage());
+				isDead((PlayerModel)b);
 			}
 		}
-		if(a instanceof PlayerModel){
-			if(b instanceof LevelToken){
+		if (a instanceof PlayerModel) {
+			if (b instanceof LevelToken) {
 				a.setSpeed(a.getSpeed().getX(), 0);
 			}
+		}
+	}
+
+	private void isDead(PlayerModel p) {
+		if (p.getHealth() <= 0) {
+			p.setToDead();
 		}
 	}
 }

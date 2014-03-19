@@ -1,6 +1,7 @@
 package no.ntnu.folk.game.gameplay.entities.models;
 
 import android.graphics.Canvas;
+import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.data.Weapons;
@@ -16,11 +17,12 @@ import java.util.ArrayList;
  * @author Rune
  */
 public class PlayerModel extends EntityModel {
-	private final Teams TEAM;
+	private Teams TEAM;
 	private final int startHealth;
 	private int health;
 	private ArrayList<WeaponModel> weaponList;
 	private WeaponModel currentWeapon;
+	private boolean isDead;
 
 	/**
 	 * @param name     Constant name for the player during gameplay, will be used to identify different players
@@ -38,6 +40,7 @@ public class PlayerModel extends EntityModel {
 		addGroup(team.ordinal());
 		addMask(team.ordinal());
 		setAcceleration(0,GameplayConstants.ACCELERATION);
+		isDead = false;
 	}
 
 	/**
@@ -50,14 +53,18 @@ public class PlayerModel extends EntityModel {
 
 	@Override
 	public void update(float dt) {
-		super.update(dt);
-		currentWeapon.setPosition(getPosition());
-		currentWeapon.update(dt);
+		if(!isDead){
+			super.update(dt);
+			currentWeapon.setPosition(getPosition());
+			currentWeapon.update(dt);			
+		}
 	}
 	@Override
 	public void draw(Canvas canvas) {
-		super.draw(canvas);
-		currentWeapon.draw(canvas);
+		if(!isDead){
+			super.draw(canvas);
+			currentWeapon.draw(canvas);
+		}
 	}
 
 	/**
@@ -129,5 +136,15 @@ public class PlayerModel extends EntityModel {
 
 	public void attacked(int damage) {
 		health -= Math.abs(damage);
+	}
+	/**
+	 * set people to tombstone
+	 */
+	public void setToDead(){
+		isDead = true;
+	}
+	
+	public boolean getStatusIsDead(){
+		return isDead;
 	}
 }
