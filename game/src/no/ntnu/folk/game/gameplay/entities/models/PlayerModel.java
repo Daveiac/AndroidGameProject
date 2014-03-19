@@ -67,8 +67,7 @@ public class PlayerModel extends EntityModel {
 		if(!isDead){
 			super.draw(canvas);
 			currentWeapon.draw(canvas);
-		}
-		if(isDead){
+		} else {
 			tombStone.draw(canvas, this.getX(), this.getY());
 		}
 	}
