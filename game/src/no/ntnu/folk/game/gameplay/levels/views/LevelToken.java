@@ -11,8 +11,4 @@ public abstract class LevelToken extends Sprite {
 	protected LevelToken(Image image) {
 		super(image);
 	}
-
-	public abstract void setParameters(String key, int value);
-
-    public abstract  int[] getParameters();
 }

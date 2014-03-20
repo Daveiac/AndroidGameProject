@@ -8,7 +8,7 @@ public class ProgramConstants {
 	private static int[] windowSize;
 	private static int buttonWidth;
 	private static int buttonHeight;
-    public static final int gridSize = 50;
+    public static final int gridSize = 16;
 
 
 	public static int[] getWindowSize() {

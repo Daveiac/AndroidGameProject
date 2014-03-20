@@ -84,9 +84,10 @@ public class GameModel implements CollisionListener {
 		gameTime = 0;
 		availablePlayerTime = GameplayConstants.TURN_TIME;
 		
-		for(LevelToken lt: currentLevel.getLevelTokens()){
-			lt.addCollisionListener(this);
-		}
+		//TODO Fix collision with grid
+//		for(LevelToken lt: currentLevel.getLevelTokens()){
+//			lt.addCollisionListener(this);
+//		}
 	}
 
 	/**
@@ -139,20 +140,18 @@ public class GameModel implements CollisionListener {
 	 *            time since last update
 	 */
 	public void update(float dt) {
-		for (LevelToken lt: currentLevel.getLevelTokens()){
-			lt.update(dt);
-		}
 		for (PlayerModel player : playerList) {
 			player.update(dt);
 		}
 		for (ProjectileModel projectile : projectiles) {
 			projectile.update(dt);
 		}
-		for (PlayerModel player : playerList) {
-			for (LevelToken lt : currentLevel.getLevelTokens()) {
-				player.collides(lt);
-			}
-		}
+		//TODO fix collision with grid
+//		for (PlayerModel player : playerList) {
+//			for (LevelToken lt : currentLevel.getLevelTokens()) {
+//				player.collides(lt);
+//			}
+//		}
 		for (ProjectileModel projectile : projectiles) {
 			for (PlayerModel player : playerList) {
 				projectile.collides(player);
