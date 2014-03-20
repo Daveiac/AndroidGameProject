@@ -2,6 +2,7 @@ package no.ntnu.folk.game.gameplay.models;
 
 import java.util.ArrayList;
 
+import no.ntnu.folk.game.gameplay.levels.controllers.LevelController;
 import no.ntnu.folk.game.gameplay.levels.controllers.LevelParser;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 
@@ -22,26 +23,18 @@ public class LevelModel {
 	/**
 	 * Constructor. Constructs the LevelModel by giving the name of the requested level.
 	 *
-	 * @param i int valeu for the level in R.raw
+	 * @param levelId int valeu for the level in R.raw
 	 */
-	public LevelModel(int i) {
-		this.levelId = i;
+	public LevelModel(int levelId) {
+		this.levelId = Integer.parseInt(LevelController.getLevels()[levelId][1]);
 		gridSize = new int[2];
 		startPositions = new ArrayList<int[]>();
 		levelTokens = new ArrayList<LevelToken>();
-		loadLevel();
+		LevelParser.parseLevel(this);
     }
 
 	public int getLevel() {
 		return levelId;
-	}
-
-	/**
-	 * Loads the specific level given by the parameter levelName and sets it as the current level model.
-	 *
-	 */
-	public void loadLevel() {
-		LevelParser.parseLevel(this);
 	}
 
 	public void setSize(int width, int height) {
