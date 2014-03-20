@@ -25,14 +25,15 @@ public class PreGameMenu extends MenuState {
 	@Override
 	protected void addMenuItems() {
 		gameModel = new GameModel();
-		currentLevel = 0;
 		levels = LevelController.getLevels();
+		currentLevel = 0;
+		gameModel.setLevel(0, levels[currentLevel][0]);
 
 		int position = 0;
 		menuItems = new MenuItem[]{
 				new MenuItem(MenuOptions.START_GAME, position++),
 				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(gameModel.getPlayerCount())),
-				new MenuItem(MenuOptions.SELECT_MAP, position++, levels[currentLevel][0]), // TODO use gameModel
+				new MenuItem(MenuOptions.SELECT_MAP, position++, gameModel.getLevelName()),
 				new MenuItem(MenuOptions.HEALTH, position++, Integer.toString(gameModel.getStartHealth())),
 				new MenuItem(MenuOptions.GAME_TYPE, position++, gameModel.getGameType().toString()),
 				new MenuItem(MenuOptions.BACK, position++)
@@ -96,9 +97,10 @@ public class PreGameMenu extends MenuState {
 	/**
 	 * Circles through the available levels
 	 */
-	private void nextLevel() { // TODO!
+	private void nextLevel() {
 		if (currentLevel == levels.length - 1) currentLevel = 0;
 		else currentLevel++;
+		gameModel.setLevel(currentLevel, levels[currentLevel][0]);
 	}
 
 	/**

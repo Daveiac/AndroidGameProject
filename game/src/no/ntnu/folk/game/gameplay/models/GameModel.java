@@ -36,6 +36,7 @@ public class GameModel implements CollisionListener {
 	// Map
 	private LevelModel currentLevel;
 	private GameTypes gameType;
+	private String levelName;
 
 	// Game time
 	private float gameTime;
@@ -163,6 +164,7 @@ public class GameModel implements CollisionListener {
 				if ((players.indexOf(oldPlayers.get(++i)) != -1)) break;
 			}
 			currentPlayer = players.get(i);
+			currentPlayer.getCurrentWeapon().setCold(true);
 		}
 	}
 
@@ -180,6 +182,7 @@ public class GameModel implements CollisionListener {
 			playerNumber++;
 		}
 		currentPlayer = players.get(playerNumber);
+		currentPlayer.getCurrentWeapon().setCold(true);
 	}
 
 	/**
@@ -207,13 +210,13 @@ public class GameModel implements CollisionListener {
 	 * Fires the weapon the current player is holding
 	 */
 	public void fireWeapon() {
-		if (getCurrentPlayer().getCurrentWeapon().isCool()) {
+		if (getCurrentPlayer().getCurrentWeapon().isCold()) {
 			Projectiles projectileType = getCurrentPlayer().getCurrentWeapon().getProjectileType();
 			ProjectileModel projectile = new ProjectileModel(projectileType, getCurrentPlayer());
 			projectiles.add(projectile);
 			projectile.addCollisionListener(this);
 			projectile.setSpeed(getCurrentPlayer().getAim());
-			getCurrentPlayer().getCurrentWeapon().setCool(true);
+			getCurrentPlayer().getCurrentWeapon().setCold(false);
 		}
 	}
 	/**
@@ -302,5 +305,12 @@ public class GameModel implements CollisionListener {
 
 	public ArrayList<TombStoneModel> getTombStones() {
 		return tombStones;
+	}
+	public void setLevel(int level, String levelName) {
+		this.levelName = levelName;
+		currentLevel = new LevelModel(level);
+	}
+	public String getLevelName() {
+		return levelName;
 	}
 }

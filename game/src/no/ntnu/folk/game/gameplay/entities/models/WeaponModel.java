@@ -8,7 +8,7 @@ import sheep.math.Vector2;
 
 public class WeaponModel extends EntityModel {
 	private final Projectiles projectileType;
-	private boolean notOnCoolDown;
+	private boolean cold;
 	private Vector2 aim;
 	private Weapons weapon;
 
@@ -26,7 +26,7 @@ public class WeaponModel extends EntityModel {
 		this.weapon = weapon;
 		projectileType = weapon.getProjectile();
 		aim = new Vector2(10, 0);
-		notOnCoolDown = true;
+		cold = true;
 	}
 
 	/**
@@ -50,13 +50,13 @@ public class WeaponModel extends EntityModel {
 		return projectileType;
 	}
 
-	public void setCool(boolean coolDown) {
-		this.notOnCoolDown = coolDown;
+	public void setCold(boolean cold) {
+		this.cold = cold;
+	}
+	public boolean isCold() {
+		return cold;
 	}
 
-	public boolean isCool() {
-		return notOnCoolDown;
-	}
 	public void setAim(float x, float y) {
 		aim.set(x, y);
 		if (aim.getLength() == 0) {
