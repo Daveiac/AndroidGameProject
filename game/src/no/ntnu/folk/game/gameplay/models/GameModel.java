@@ -309,6 +309,7 @@ public class GameModel implements CollisionListener {
 	public void setLevel(int level, String levelName) {
 		this.levelName = levelName;
 		currentLevel = new LevelModel(level);
+		createPlayers();
 	}
 	public String getLevelName() {
 		return levelName;
