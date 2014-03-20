@@ -201,7 +201,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 			}
 		}
 		for (Button button : weaponButtons) {
-			if (button.contains(point.x, point.y)) {
+			if (button.contains(point.x, point.y) && button.isEnabled()) {
 				weaponSelection.setWeapon(button);
 				break;
 			}
