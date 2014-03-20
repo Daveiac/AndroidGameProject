@@ -9,7 +9,6 @@ import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import no.ntnu.folk.game.gameplay.entities.models.TombStoneModel;
-import no.ntnu.folk.game.gameplay.levels.controllers.LevelController;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
@@ -160,7 +159,8 @@ public class GameModel implements CollisionListener {
 		}
 		int i = oldPlayers.indexOf(currentPlayer);
 		if (players.indexOf(currentPlayer) == -1) {
-			while (players.indexOf(oldPlayers.get(++i)) == -1) {
+			while (true) {
+				if ((players.indexOf(oldPlayers.get(++i)) != -1)) break;
 			}
 			currentPlayer = players.get(i);
 		}

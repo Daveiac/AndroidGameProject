@@ -45,10 +45,8 @@ public class LevelController {
 			try {
 				levels[i][1] = Integer.toString(listOfLevels[i].getInt(null));
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

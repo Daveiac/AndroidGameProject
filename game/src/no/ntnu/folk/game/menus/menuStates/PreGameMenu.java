@@ -17,7 +17,6 @@ import no.ntnu.folk.game.states.MenuState;
 public class PreGameMenu extends MenuState {
 	private String[][] levels;
 	private GameModel gameModel;
-	private String[] levelNames;
 	private int currentLevel;
 
 	/**
@@ -26,7 +25,6 @@ public class PreGameMenu extends MenuState {
 	@Override
 	protected void addMenuItems() {
 		gameModel = new GameModel();
-		levelNames = LevelController.getLevels()[0];
 		currentLevel = 0;
 		levels = LevelController.getLevels();
 
@@ -48,7 +46,7 @@ public class PreGameMenu extends MenuState {
 	protected void clickMenuItem(MenuItem menuItem) {
 		switch (menuItem.getOption()) {
 			case START_GAME:
-				getGame().pushState(new GameState(gameModel)); // FIXME TEMP!
+				getGame().pushState(new GameState(gameModel));
 				break;
 			case PLAYER_COUNT:
 				changePlayerCount();

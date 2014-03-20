@@ -42,6 +42,7 @@ public abstract class EntityToken {
 		transformation.postTranslate(entityModel.getX(), entityModel.getY()); // getX and getY is located in Sprite
 	}
 	protected abstract float getScaleX();
+
 	protected abstract float getScaleY();
 
 	/**
