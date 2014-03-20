@@ -190,7 +190,6 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		PointF point = new PointF(event.getX(pointerIndex), event.getY(pointerIndex));
 		activePointers.append(pointerId, point);
 
-		boolean buttonPressed = false;
 		if (pauseButton.contains(point.x, point.y)) {
 			gameModel.setPaused(true);
 			unpauseButton.enable();
@@ -198,26 +197,17 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		}
 		for (Button button : buttons) {
 			if (button.contains(point.x, point.y)) {
-				buttonPressed = true;
 				button.touch();
 			}
 		}
 		for (Button button : weaponButtons) {
 			if (button.contains(point.x, point.y)) {
-				buttonPressed = true;
 				weaponSelection.setWeapon(button);
 				break;
 			}
 		}
 		if (gameModel.isPaused() && unpauseButton.contains(point.x, point.y)) {
-			buttonPressed = true;
 			unpauseButton.touch();
-		}
-		if (!buttonPressed) {
-			PlayerModel currentPlayer = gameModel.getCurrentPlayer();
-			int[] windowSize = ProgramConstants.getWindowSize();
-			currentPlayer.setAim(point.x + currentPlayer.getX() - windowSize[0], point.y + currentPlayer.getY() - windowSize[1]);
-//			-model.getCurrentPlayer().getX() + windowSize[0] / 2, -model.getCurrentPlayer().getY() + windowSize[1] / 2
 		}
 		return true;
 	}
