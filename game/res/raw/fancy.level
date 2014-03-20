@@ -2,13 +2,13 @@
 #Legend: w=wall, s=spawn, " "=air
 #Size:{width}x{height}
 Size:30x10
-wwwwwww          s    wwwwwwww
-wwwww           www   wwwwwwww
-w s                   wwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+w                         wwww
+w  s         s           wwwww
 wwwww       www           wwww
-www               s www   wwww
-www             wwww   wwww
-w         s                www
+www    s          s www   wwww
+wwwwwwwww       wwww   wwwwwww
+www                        www
 ww       www    www          w
 w    s                  s    w
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwww
