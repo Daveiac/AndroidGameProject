@@ -137,8 +137,8 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	}
 	private void drawAim(Canvas canvas) {
 		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
-		float aimX = currentPlayer.getAim().getX() + currentPlayer.getX();
-		float aimY = currentPlayer.getAim().getY() + currentPlayer.getY();
+		float aimX = currentPlayer.getAim().getX();
+		float aimY = currentPlayer.getAim().getY();
 		aimImage.draw(canvas, aimX - aimImage.getWidth() / 2, aimY - aimImage.getHeight() / 2);
 	}
 	private void drawButtons(Canvas canvas) {

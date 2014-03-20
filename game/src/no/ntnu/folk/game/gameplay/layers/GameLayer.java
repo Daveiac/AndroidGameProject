@@ -1,6 +1,7 @@
 package no.ntnu.folk.game.gameplay.layers;
 
 import android.graphics.Canvas;
+import no.ntnu.folk.game.Program;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
@@ -30,6 +31,10 @@ public class GameLayer extends Layer {
 
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
+		canvas.save();
+		int[] windowSize = ProgramConstants.getWindowSize();
+		canvas.translate(-model.getCurrentPlayer().getX() + windowSize[0] / 2, -model.getCurrentPlayer().getY() + windowSize[1] / 2);
+
 		for (LevelToken levelToken : model.getLevelTokens()) {
 			levelToken.draw(canvas);
 		}
@@ -42,10 +47,13 @@ public class GameLayer extends Layer {
 		for (ProjectileModel projectile : model.getProjectiles()) {
 			projectile.draw(canvas);
 		}
+
+		canvas.restore();
+
 		canvas.drawText(
 				"Time left: " + ((int) model.playerTimeLeft()),
-				ProgramConstants.getWindowSize()[0] * 0.9f,
-				ProgramConstants.getWindowSize()[1] * 0.1f,
+				windowSize[0] * 0.9f,
+				windowSize[1] * 0.1f,
 				Color.WHITE
 		);
 	}
