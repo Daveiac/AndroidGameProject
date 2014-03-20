@@ -1,7 +1,6 @@
 package no.ntnu.folk.game.gameplay.layers;
 
 import android.graphics.Canvas;
-import no.ntnu.folk.game.Program;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
@@ -24,9 +23,7 @@ public class GameLayer extends Layer {
 
 	@Override
 	public void update(float dt) {
-		if (!model.isPaused()) {
-			model.update(dt);
-		}
+		// Do nothing
 	}
 
 	@Override

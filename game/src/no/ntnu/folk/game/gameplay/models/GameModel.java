@@ -1,17 +1,14 @@
 package no.ntnu.folk.game.gameplay.models;
 
-import no.ntnu.folk.game.Program;
 import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameTypes;
 import no.ntnu.folk.game.constants.GameplayConstants;
-import no.ntnu.folk.game.gameplay.entities.data.Projectiles;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import no.ntnu.folk.game.gameplay.entities.models.TombStoneModel;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
-import no.ntnu.folk.game.menus.menuStates.EndGameMenu;
 import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
 import sheep.math.Vector2;
@@ -107,66 +104,6 @@ public class GameModel implements CollisionListener {
 	}
 
 	/**
-	 * Update timer
-	 *
-	 * @param dt time since last update
-	 */
-	public void update(float dt) {
-		updateModels(dt);
-		checkCollisions();
-		gameTime += dt;
-		availablePlayerTime -= dt;
-		if (playerTimeUp() || players.indexOf(currentPlayer) == -1) {
-			nextPlayer();
-		}
-		killEntities();
-		if (isGameOver(players)) {
-			Program.getGame().pushState(new EndGameMenu(gameTime));
-		}
-	}
-	private void updateModels(float dt) {
-		for (PlayerModel player : players) {
-			player.update(dt);
-		}
-		for (ProjectileModel projectile : projectiles) {
-			projectile.update(dt);
-		}
-		for (TombStoneModel tombStone : tombStones) {
-			tombStone.update(dt);
-		}
-	}
-	private void checkCollisions() {
-		for (PlayerModel player : players) {
-			for (LevelToken lt : currentLevel.getLevelTokens()) {
-				player.collides(lt);
-			}
-		}
-		for (ProjectileModel projectile : projectiles) {
-			for (PlayerModel player : players) {
-				projectile.collides(player);
-			}
-		}
-	}
-	private void killEntities() {
-		ArrayList<PlayerModel> oldPlayers = players;
-		for (EntityModel entity : kill) {
-			if (entity instanceof ProjectileModel) {
-				projectiles.remove(entity);
-			} else if (entity instanceof PlayerModel) {
-				players.remove(entity);
-			}
-		}
-		int i = oldPlayers.indexOf(currentPlayer);
-		if (players.indexOf(currentPlayer) == -1) {
-			while (true) {
-				if ((players.indexOf(oldPlayers.get(++i)) != -1)) break;
-			}
-			currentPlayer = players.get(i);
-			currentPlayer.getCurrentWeapon().setCold(true);
-		}
-	}
-
-	/**
 	 * Set currentPlayer to the next player. Set to first player if a the end of
 	 * the list.
 	 */
@@ -189,33 +126,20 @@ public class GameModel implements CollisionListener {
 	public PlayerModel getCurrentPlayer() {
 		return currentPlayer;
 	}
-
+	public void setCurrentPlayer(PlayerModel currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
 	/**
 	 * @return True if the time is up for current player
 	 */
 	public boolean playerTimeUp() {
 		return availablePlayerTime <= 0;
 	}
-
 	/**
 	 * @return time left of this turn for the current player
 	 */
 	public float playerTimeLeft() {
 		return this.availablePlayerTime;
-	}
-
-	/**
-	 * Fires the weapon the current player is holding
-	 */
-	public void fireWeapon() {
-		if (getCurrentPlayer().getCurrentWeapon().isCold()) {
-			Projectiles projectileType = getCurrentPlayer().getCurrentWeapon().getProjectileType();
-			ProjectileModel projectile = new ProjectileModel(projectileType, getCurrentPlayer());
-			projectiles.add(projectile);
-			projectile.addCollisionListener(this);
-			projectile.setSpeed(getCurrentPlayer().getAim());
-			getCurrentPlayer().getCurrentWeapon().setCold(false);
-		}
 	}
 	/**
 	 * @return true if the game is paused
@@ -256,11 +180,6 @@ public class GameModel implements CollisionListener {
 			tombStones.add(new TombStoneModel(player.getName(), player.getPosition(), R.drawable.tombstone));
 		}
 	}
-
-	public void setGameTime(int time) {
-		this.availablePlayerTime = time;
-	}
-
 	public boolean isGameOver(ArrayList<PlayerModel> playerList) {
 		Teams team = playerList.get(0).getTeam();
 		switch (gameType) {
@@ -310,5 +229,23 @@ public class GameModel implements CollisionListener {
 	}
 	public String getLevelName() {
 		return levelName;
+	}
+	public void incrementTime(float dt) {
+		gameTime += dt;
+	}
+	public void decrementAvailablePlayerTime(float dt) {
+		availablePlayerTime -= dt;
+	}
+	public float getGameTime() {
+		return gameTime;
+	}
+	public void setGameTime(int time) {
+		this.availablePlayerTime = time;
+	}
+	public LevelModel getCurrentLevel() {
+		return currentLevel;
+	}
+	public ArrayList<EntityModel> getKill() {
+		return kill;
 	}
 }

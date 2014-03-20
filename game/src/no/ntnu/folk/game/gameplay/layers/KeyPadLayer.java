@@ -12,6 +12,7 @@ import no.ntnu.folk.game.gameplay.Button;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import no.ntnu.folk.game.menus.menuStates.PauseMenu;
+import no.ntnu.folk.game.states.GameState;
 import sheep.game.Game;
 import sheep.game.Layer;
 import sheep.graphics.Image;
@@ -34,6 +35,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	private Button unpauseButton;
 
 	private Image aimImage;
+	private GameState gameState;
 	private GameModel gameModel;
 
 	private WeaponSelection weaponSelection;
@@ -41,7 +43,8 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 
 	private SparseArray<PointF> activePointers;
 
-	public KeyPadLayer(GameModel gameModel) {
+	public KeyPadLayer(GameState gameState, GameModel gameModel) {
+		this.gameState = gameState;
 		this.gameModel = gameModel;
 		weaponSelection = new WeaponSelection(gameModel);
 		aimImage = new Image(aim);
@@ -112,7 +115,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 			currentPlayer.setSpeed(0, currentPlayer.getSpeed().getY());
 		}
 		if (fireKey.popPressed()) {
-			gameModel.fireWeapon();
+			gameState.fireWeapon();
 		}
 		if (swapKey.popPressed()) {
 			weaponButtons = weaponSelection.getWeaponButtons();
