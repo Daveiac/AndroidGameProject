@@ -11,9 +11,9 @@ public abstract class EntityModel extends Sprite {
 	private final String name;
 
 	/**
-	 * @param name        Name of the entityToken associated with this entityModel
-	 * @param position    Position of this entityModel
-	 * @param image       Used when creating a token
+	 * @param name     Name of the entityToken associated with this entityModel
+	 * @param position Position of this entityModel
+	 * @param image    Used when creating a token
 	 */
 	protected EntityModel(String name, Vector2 position, int image) {
 		this.name = name;

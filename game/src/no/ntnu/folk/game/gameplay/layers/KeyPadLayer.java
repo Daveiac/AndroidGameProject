@@ -12,6 +12,7 @@ import no.ntnu.folk.game.gameplay.Button;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import no.ntnu.folk.game.menus.menuStates.PauseMenu;
+import no.ntnu.folk.game.states.GameState;
 import sheep.game.Game;
 import sheep.game.Layer;
 import sheep.graphics.Image;
@@ -30,9 +31,11 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	private Button pauseButton;
 	private Button swapKey;
 	private Button fireKey;
+	private Button endKey;
 	private Button unpauseButton;
 
 	private Image aimImage;
+	private GameState gameState;
 	private GameModel gameModel;
 
 	private WeaponSelection weaponSelection;
@@ -40,7 +43,8 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 
 	private SparseArray<PointF> activePointers;
 
-	public KeyPadLayer(GameModel gameModel) {
+	public KeyPadLayer(GameState gameState, GameModel gameModel) {
+		this.gameState = gameState;
 		this.gameModel = gameModel;
 		weaponSelection = new WeaponSelection(gameModel);
 		aimImage = new Image(aim);
@@ -56,6 +60,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		Vector2 pauseKeyPos = new Vector2(32, 32); // TODO should not use hardcoded coordinates
 		Vector2 swapKeyPos = new Vector2(windowSize[0] * 0.92f, windowSize[1] * 0.90f);
 		Vector2 fireKeyPos = new Vector2(windowSize[0] * 0.76f, windowSize[1] * 0.90f);
+		Vector2 endKeyPos = new Vector2(windowSize[0] * 0.60f, windowSize[1] * 0.90f);
 		Vector2 unpauseKeyPos = new Vector2(windowSize[0] * 0.50f, windowSize[1] * 0.50f);
 		buttons = new Button[]{
 				leftKey = new Button(keypadleft, keypadleft, leftKeyPos, true),
@@ -64,6 +69,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				pauseButton = new Button(icon, icon, pauseKeyPos, false), // TODO add proper pause button
 				swapKey = new Button(swapkey, swapkey, swapKeyPos, false),
 				fireKey = new Button(firekey, firekey, fireKeyPos, false),
+				endKey = new Button(endturn, endturn, endKeyPos, false),
 		};
 		unpauseButton = new Button(unpause, unpause, unpauseKeyPos, false);
 		unpauseButton.disable();
@@ -92,7 +98,8 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				}
 			}
 			if (!buttonPressed) {
-				gameModel.getCurrentPlayer().setAim(point.x, point.y);
+				int[] windowSize = ProgramConstants.getWindowSize();
+				currentPlayer.setAim(point.x + currentPlayer.getX() - windowSize[0] / 2, point.y + currentPlayer.getY() - windowSize[1] / 2);
 			}
 		}
 
@@ -108,11 +115,14 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 			currentPlayer.setSpeed(0, currentPlayer.getSpeed().getY());
 		}
 		if (fireKey.popPressed()) {
-			gameModel.fireWeapon();
+			gameState.fireWeapon();
 		}
 		if (swapKey.popPressed()) {
 			weaponButtons = weaponSelection.getWeaponButtons();
 			weaponSelection.setActive(true);
+		}
+		if (endKey.popPressed()) {
+			gameModel.setGameTime(0);
 		}
 		if (unpauseButton.popPressed()) {
 			gameModel.setPaused(false);
@@ -131,8 +141,8 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	}
 	private void drawAim(Canvas canvas) {
 		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
-		float aimX = currentPlayer.getAim().getX() + currentPlayer.getX();
-		float aimY = currentPlayer.getAim().getY() + currentPlayer.getY();
+		float aimX = currentPlayer.getAim().getX() + ProgramConstants.getWindowSize()[0] / 2;
+		float aimY = currentPlayer.getAim().getY() + ProgramConstants.getWindowSize()[1] / 2;
 		aimImage.draw(canvas, aimX - aimImage.getWidth() / 2, aimY - aimImage.getHeight() / 2);
 	}
 	private void drawButtons(Canvas canvas) {
@@ -183,7 +193,6 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		PointF point = new PointF(event.getX(pointerIndex), event.getY(pointerIndex));
 		activePointers.append(pointerId, point);
 
-		boolean buttonPressed = false;
 		if (pauseButton.contains(point.x, point.y)) {
 			gameModel.setPaused(true);
 			unpauseButton.enable();
@@ -191,23 +200,17 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		}
 		for (Button button : buttons) {
 			if (button.contains(point.x, point.y)) {
-				buttonPressed = true;
 				button.touch();
 			}
 		}
 		for (Button button : weaponButtons) {
-			if (button.contains(point.x, point.y)) {
-				buttonPressed = true;
+			if (button.contains(point.x, point.y) && button.isEnabled()) {
 				weaponSelection.setWeapon(button);
 				break;
 			}
 		}
 		if (gameModel.isPaused() && unpauseButton.contains(point.x, point.y)) {
-			buttonPressed = true;
 			unpauseButton.touch();
-		}
-		if (!buttonPressed) {
-			gameModel.getCurrentPlayer().setAim(point.x, point.y);
 		}
 		return true;
 	}

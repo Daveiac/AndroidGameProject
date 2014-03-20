@@ -1,11 +1,11 @@
 package no.ntnu.folk.game.gameplay.models;
 
+import java.util.ArrayList;
+
+import no.ntnu.folk.game.constants.GameplayConstants;
+import no.ntnu.folk.game.gameplay.levels.controllers.LevelController;
 import no.ntnu.folk.game.gameplay.levels.controllers.LevelParser;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
-import sheep.game.Sprite;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 
 /**
  * Model of a single level. It is created with its name as a unique ID.
@@ -13,62 +13,50 @@ import java.util.ArrayList;
  *
  * @author b2
  */
-public class LevelModel extends Sprite {
-	// TODO
+public class LevelModel {
 
-	private final int level;
-	private int[] size;
+	private final int levelId;
+	private int[] gridSize;
 	private ArrayList<int[]> startPositions;
-	private ArrayList<LevelToken> tokens;
+	private LevelToken[][] grid;
+	private ArrayList<LevelToken> levelTokens;
 
 	/**
 	 * Constructor. Constructs the LevelModel by giving the name of the requested level.
 	 *
-	 * @param levelName Level name
+	 * @param levelId int valeu for the level in R.raw
 	 */
-	public LevelModel(int i) {
-		this.level = i;
-		size = new int[2];
+	public LevelModel(int levelId) {
+		this.levelId = Integer.parseInt(LevelController.getLevels()[levelId][1]);
+		gridSize = new int[2];
 		startPositions = new ArrayList<int[]>();
-		tokens = new ArrayList<LevelToken>();
-		loadLevel();
-	}
+		levelTokens = new ArrayList<LevelToken>();
+		LevelParser.parseLevel(this);
+    }
 
 	public int getLevel() {
-		return level;
-	}
-
-	/**
-	 * Loads the specific level given by the parameter levelName and sets it as the current level model.
-	 *
-	 * @param levelName Name of the requested level.
-	 */
-	public void loadLevel() {
-		// TODO Auto-generated method stub
-		LevelParser.parseLevel(this);
+		return levelId;
 	}
 
 	public void setSize(int width, int height) {
-		// TODO Auto-generated method stub
-		size[0] = width;
-		size[1] = height;
+		gridSize[0] = width;
+		gridSize[1] = height;
 	}
 
 	public void addStartPosition(int x, int y) {
-		int[] startPosition = {x, y};
+		int[] startPosition = {x * GameplayConstants.GRID_SIZE, y * GameplayConstants.GRID_SIZE};
 		startPositions.add(startPosition);
-	}
-
-	public void addToken(LevelToken token) {
-		// TODO Auto-generated method stub
-		tokens.add(token);
-	}
-
-	public ArrayList<LevelToken> getLevelTokens() {
-		return tokens;
 	}
 
 	public ArrayList<int[]> getStartPositions() {
 		return startPositions;
 	}
+
+    public LevelToken[][] getGrid(){
+        return this.grid;
+    }
+    
+    public ArrayList<LevelToken> getLevelTokens() {
+    	return levelTokens;
+    }
 }

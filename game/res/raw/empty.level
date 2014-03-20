@@ -1,0 +1,14 @@
+#This is a test level with characters
+#Legend: w=wall, s=spawn, " "=air
+#Size:{width}x{height}
+Size:30x10
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+w                            w
+w                            w
+w                            w
+w                            w
+w                            w
+w                            w
+w                            w
+w s  s  s           s  s  s  w
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww

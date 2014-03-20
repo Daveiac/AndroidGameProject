@@ -1,48 +1,45 @@
 package no.ntnu.folk.game.gameplay.levels.views;
 
+import no.ntnu.folk.game.constants.GameplayConstants;
+import sheep.graphics.Color;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 
 /**
  * Used to make level tokens
- *
+ * 
  * @author b2
  */
 public class Wall extends LevelToken {
-	private int height;
-	private int width;
+	private int gridX;
+	private int gridY;
+	private float height;
+	private float width;
+	private float x;
+	private float y;
 
-	protected Wall() {
+	public Wall(int gridX, int gridY) {
 		super();
-		// TODO Auto-generated constructor stub
+		this.gridX = gridX;
+		this.gridY = gridY;
+		float gridSize = GameplayConstants.GRID_SIZE;
+		x = this.gridX * gridSize;
+		y = this.gridY * gridSize;
+		width = x + gridSize;
+		height = y + gridSize;
 	}
 
-	@Override
-	public void setParameters(String key, int value) {
-		switch (key.charAt(0)) {
-		case 'h':
-			this.height = value;
-			break;
-		case 'w':
-			this.width = value;
-			break;
-		}
-	}
-	
 	@Override
 	public void draw(Canvas canvas) {
-		
 		super.draw(canvas);
-		
-		Paint p = new Paint();
-		
-		// Shadow
-		p.setColor(Color.BLACK);
-		canvas.drawRect(getX()+1, getY()+1, getX()+width+1, getY()+height+1, p);
-		
-		// Wall
-		p.setColor(Color.rgb(0, 102, 0));
-		canvas.drawRect(getX(), getY(), getX()+width, getY()+height, p);
+		drawShadow(canvas);
+		drawWall(canvas);
+	}
+
+	private void drawShadow(Canvas canvas) {
+		canvas.drawRect(x + 1, y + 1, width + 1, height + 1, Color.BLACK);
+	}
+
+	private void drawWall(Canvas canvas) {
+		canvas.drawRect(x, y, width, height, Color.GREEN);
 	}
 }

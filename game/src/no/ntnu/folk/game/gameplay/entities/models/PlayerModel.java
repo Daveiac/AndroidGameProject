@@ -1,11 +1,13 @@
 package no.ntnu.folk.game.gameplay.entities.models;
 
 import android.graphics.Canvas;
+import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.data.Weapons;
 import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
 import no.ntnu.folk.game.gameplay.entities.views.PlayerToken;
+import sheep.graphics.Image;
 import sheep.math.Vector2;
 
 import java.util.ArrayList;
@@ -16,11 +18,12 @@ import java.util.ArrayList;
  * @author Rune
  */
 public class PlayerModel extends EntityModel {
-	private final Teams TEAM;
+	private Teams TEAM;
 	private final int startHealth;
 	private int health;
 	private ArrayList<WeaponModel> weaponList;
 	private WeaponModel currentWeapon;
+	private Image tombStone;
 
 	/**
 	 * @param name     Constant name for the player during gameplay, will be used to identify different players
@@ -37,7 +40,8 @@ public class PlayerModel extends EntityModel {
 		setAim(position.getX() + 100, position.getY() + 100); // FIXME temporary values for start position
 		addGroup(team.ordinal());
 		addMask(team.ordinal());
-		setAcceleration(0,GameplayConstants.ACCELERATION);
+		setAcceleration(0, GameplayConstants.ACCELERATION);
+		tombStone = new Image(R.drawable.tombstone);
 	}
 
 	/**
@@ -122,7 +126,7 @@ public class PlayerModel extends EntityModel {
 	public void setAim(float x, float y) {
 		currentWeapon.setAim(x - getX(), y - getY());
 	}
-	
+
 	public Vector2 getAim() {
 		return currentWeapon.getAim();
 	}
@@ -130,4 +134,5 @@ public class PlayerModel extends EntityModel {
 	public void attacked(int damage) {
 		health -= Math.abs(damage);
 	}
+
 }

@@ -15,7 +15,7 @@ public class ProjectileModel extends EntityModel {
 	 * Constructing a projectileModel based on a projectile from Projectiles
 	 *
 	 * @param projectile data for this projectile
-	 * @param player Player that fired this projectile
+	 * @param player     Player that fired this projectile
 	 */
 	public ProjectileModel(Projectiles projectile, PlayerModel player) {
 		super(
@@ -58,10 +58,9 @@ public class ProjectileModel extends EntityModel {
 		return areaDamageRange;
 	}
 	/**
-	 * 
 	 * @return a image for explosion
 	 */
-	public int getExplosion(){
+	public int getExplosion() {
 		return explosionImage;
 	}
 }
