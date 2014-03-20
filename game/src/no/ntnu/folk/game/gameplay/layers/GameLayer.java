@@ -33,14 +33,14 @@ public class GameLayer extends Layer {
 		for (LevelToken levelToken : model.getLevelTokens()) {
 			levelToken.draw(canvas);
 		}
+		for (TombStoneModel tombStone : model.getTombStones()) {
+			tombStone.draw(canvas);
+		}
 		for (PlayerModel player : model.getPlayers()) {
 			player.draw(canvas);
 		}
 		for (ProjectileModel projectile : model.getProjectiles()) {
 			projectile.draw(canvas);
-		}
-		for (TombStoneModel tombStone : model.getTombStones()) {
-			tombStone.draw(canvas);
 		}
 		canvas.drawText(
 				"Time left: " + ((int) model.playerTimeLeft()),
