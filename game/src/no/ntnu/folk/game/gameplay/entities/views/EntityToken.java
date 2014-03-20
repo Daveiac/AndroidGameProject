@@ -4,6 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
+import sheep.collision.Polygon;
+import sheep.collision.Rectangle;
+import sheep.collision.Shape;
 import sheep.graphics.Color;
 import sheep.graphics.Image;
 
@@ -21,7 +24,15 @@ public abstract class EntityToken {
 	protected EntityToken(EntityModel entityModel, int image) {
 		this.entityModel = entityModel;
 		this.image = new Image(image);
-		entityModel.setShape(this.image.getWidth(), this.image.getHeight());
+		float width = this.image.getWidth();
+		float height = this.image.getHeight();
+		Shape r = new Polygon(new float[]{
+				-width / 2, -height / 2,
+				width / 2, -height / 2,
+				width / 2, height / 2,
+				-width / 2, height / 2
+		});
+		entityModel.setShape(r);
 	}
 
 	/**
@@ -42,6 +53,7 @@ public abstract class EntityToken {
 		transformation.postTranslate(entityModel.getX(), entityModel.getY()); // getX and getY is located in Sprite
 	}
 	protected abstract float getScaleX();
+
 	protected abstract float getScaleY();
 
 	/**

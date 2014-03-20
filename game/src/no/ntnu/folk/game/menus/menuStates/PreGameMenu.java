@@ -1,7 +1,5 @@
 package no.ntnu.folk.game.menus.menuStates;
 
-import java.lang.reflect.Field;
-
 import no.ntnu.folk.game.constants.GameTypes;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.levels.controllers.LevelController;
@@ -17,35 +15,28 @@ import no.ntnu.folk.game.states.MenuState;
  * @author Rune
  */
 public class PreGameMenu extends MenuState {
-	//OPTIONS
-	private int playerCount;
-	private int currentLevel;
-	private int currentHealth;
-	private int selectedGameType;
 	private String[][] levels;
-	// private GameModel gameModel; //TODO make a gameModel with the options set
-
+	private GameModel gameModel;
+	private int currentLevel;
 
 	/**
 	 * Make all the buttons to the menu
 	 */
 	@Override
 	protected void addMenuItems() {
-		// Initialize variables here as this method is called before the class is "made"
-		playerCount = GameplayConstants.DEFAULT_PLAYER_COUNT;
-		currentLevel = 0;
-		currentHealth = GameplayConstants.DEFAULT_HEALTH;
-		selectedGameType = 0;
+		gameModel = new GameModel();
 		levels = LevelController.getLevels();
+		currentLevel = 0;
+		gameModel.setLevel(0, levels[currentLevel][0]);
 
 		int position = 0;
 		menuItems = new MenuItem[]{
 				new MenuItem(MenuOptions.START_GAME, position++),
-				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(GameplayConstants.DEFAULT_PLAYER_COUNT)),
-				new MenuItem(MenuOptions.SELECT_MAP, position++, levels[currentLevel][0]),
-				new MenuItem(MenuOptions.HEALTH, position++, Integer.toString(GameplayConstants.DEFAULT_HEALTH)),
-				new MenuItem(MenuOptions.GAME_TYPE, position++, GameTypes.values()[0].toString()),
-				new MenuItem(MenuOptions.BACK, position++),
+				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(gameModel.getPlayerCount())),
+				new MenuItem(MenuOptions.SELECT_MAP, position++, gameModel.getLevelName()),
+				new MenuItem(MenuOptions.HEALTH, position++, Integer.toString(gameModel.getStartHealth())),
+				new MenuItem(MenuOptions.GAME_TYPE, position++, gameModel.getGameType().toString()),
+				new MenuItem(MenuOptions.BACK, position++)
 		};
 	}
 
@@ -56,11 +47,11 @@ public class PreGameMenu extends MenuState {
 	protected void clickMenuItem(MenuItem menuItem) {
 		switch (menuItem.getOption()) {
 			case START_GAME:
-				getGame().pushState(new GameState(new GameModel(playerCount, currentHealth,Integer.parseInt(levels[currentLevel][1]), GameTypes.values()[selectedGameType]))); // FIXME TEMP!
+				getGame().pushState(new GameState(gameModel));
 				break;
 			case PLAYER_COUNT:
 				changePlayerCount();
-				menuItem.setData(Integer.toString(playerCount));
+				menuItem.setData(Integer.toString(gameModel.getPlayerCount()));
 				break;
 			case SELECT_MAP:
 				nextLevel();
@@ -68,11 +59,11 @@ public class PreGameMenu extends MenuState {
 				break;
 			case HEALTH:
 				increaseHealth();
-				menuItem.setData(Integer.toString(currentHealth));
+				menuItem.setData(Integer.toString(gameModel.getStartHealth()));
 				break;
 			case GAME_TYPE:
 				selectGameType();
-				menuItem.setData(GameTypes.values()[selectedGameType].toString());
+				menuItem.setData(gameModel.getGameType().toString());
 				break;
 			case BACK:
 				getGame().popState();
@@ -86,34 +77,40 @@ public class PreGameMenu extends MenuState {
 	 * Just goes through the different game states defined in Constants
 	 */
 	private void selectGameType() {
-		if (selectedGameType == GameTypes.values().length - 1) selectedGameType = 0;
-		else selectedGameType++;
+		int current = gameModel.getGameType().ordinal();
+		if (current == GameTypes.values().length - 1) current = 0;
+		else current++;
+		gameModel.setGameType(GameTypes.values()[current]);
 	}
 
 	/**
 	 * Increase start-health with 100 up to a max given in Constants
 	 */
 	private void increaseHealth() {
-		if (currentHealth == GameplayConstants.MAX_HEALTH) currentHealth = 100;
-		else currentHealth += 100;
+		if (gameModel.getStartHealth() == GameplayConstants.MAX_HEALTH) {
+			gameModel.setStartHealth(GameplayConstants.MIN_HEALTH);
+		} else {
+			gameModel.setStartHealth(gameModel.getStartHealth() + 100);
+		}
 	}
 
 	/**
-	 * Circles throught the available levels
+	 * Circles through the available levels
 	 */
 	private void nextLevel() {
 		if (currentLevel == levels.length - 1) currentLevel = 0;
 		else currentLevel++;
+		gameModel.setLevel(currentLevel, levels[currentLevel][0]);
 	}
 
 	/**
 	 * Changes the player count to a max given in Constants
 	 */
 	private void changePlayerCount() {
-		if (playerCount == GameplayConstants.MAX_PLAYERS) {
-			playerCount = 2;
+		if (gameModel.getPlayerCount() == GameplayConstants.MAX_PLAYERS) {
+			gameModel.setPlayerCount(2);
 		} else {
-			playerCount++;
+			gameModel.setPlayerCount(gameModel.getPlayerCount() + 1);
 		}
 	}
 

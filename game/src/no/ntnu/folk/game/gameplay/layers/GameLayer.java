@@ -4,12 +4,10 @@ import android.graphics.Canvas;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
-import no.ntnu.folk.game.gameplay.entities.views.PlayerToken;
+import no.ntnu.folk.game.gameplay.entities.models.TombStoneModel;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.models.GameModel;
-import sheep.collision.CollisionListener;
 import sheep.game.Layer;
-import sheep.game.Sprite;
 import sheep.graphics.Color;
 import sheep.math.BoundingBox;
 
@@ -18,7 +16,7 @@ public class GameLayer extends Layer {
 
 	public GameLayer(GameModel model) {
 		this.model = model;
-		for (PlayerModel player : model.getPlayerList()) {
+		for (PlayerModel player : model.getPlayers()) {
 			player.addCollisionListener(model);
 		}
 	}
@@ -35,7 +33,10 @@ public class GameLayer extends Layer {
 		for (LevelToken levelToken : model.getLevelTokens()) {
 			levelToken.draw(canvas);
 		}
-		for (PlayerModel player : model.getPlayerList()) {
+		for (TombStoneModel tombStone : model.getTombStones()) {
+			tombStone.draw(canvas);
+		}
+		for (PlayerModel player : model.getPlayers()) {
 			player.draw(canvas);
 		}
 		for (ProjectileModel projectile : model.getProjectiles()) {

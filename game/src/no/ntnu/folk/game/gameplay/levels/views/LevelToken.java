@@ -7,7 +7,7 @@ public abstract class LevelToken extends Sprite {
 
 	protected LevelToken() {
 	}
-	
+
 	protected LevelToken(Image image) {
 		super(image);
 	}

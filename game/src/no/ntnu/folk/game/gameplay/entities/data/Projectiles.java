@@ -3,7 +3,8 @@ package no.ntnu.folk.game.gameplay.entities.data;
 import no.ntnu.folk.game.R;
 
 public enum Projectiles {
-	BULLET(25, 0, 0, R.drawable.bullet_medium, R.drawable.explosion),
+	HANDGUNBULLET(15, 0, 0, R.drawable.bullet_small, R.drawable.explosion),
+	RIFLEBULLET(25, 0, 0, R.drawable.bullet_medium, R.drawable.explosion),
 	ROCKET(35, 20, 10, R.drawable.bullet_big, R.drawable.explosion);
 
 	private final int directDamage;
@@ -52,8 +53,8 @@ public enum Projectiles {
 	public int getImage() {
 		return image;
 	}
-	
-	public int getExplosionImage(){
+
+	public int getExplosionImage() {
 		return explosionImage;
 	}
 
