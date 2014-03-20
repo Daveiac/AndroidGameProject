@@ -1,5 +1,6 @@
 package no.ntnu.folk.game.gameplay.models;
 
+import no.ntnu.folk.game.Program;
 import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameTypes;
 import no.ntnu.folk.game.constants.GameplayConstants;
@@ -10,6 +11,7 @@ import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import no.ntnu.folk.game.gameplay.entities.models.TombStoneModel;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
+import no.ntnu.folk.game.menus.menuStates.EndGameMenu;
 import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
 import sheep.math.Vector2;
@@ -122,8 +124,7 @@ public class GameModel implements CollisionListener {
 		}
 		killEntities();
 		if (isGameOver(players)) {
-//			System.out.println("GAME OVER");
-			// TODO end the game here
+			Program.getGame().pushState(new EndGameMenu(gameTime));
 		}
 	}
 	private void updateModels(float dt) {
@@ -264,11 +265,10 @@ public class GameModel implements CollisionListener {
 	}
 
 	public boolean isGameOver(ArrayList<PlayerModel> playerList) {
-		int numberOfPlayerLeft = 0;
 		Teams team = playerList.get(0).getTeam();
 		switch (gameType) {
 			case FFA:
-				return numberOfPlayerLeft <= 1;
+				return players.size() <= 1;
 			case TEAMS:
 				for (PlayerModel p : playerList) {
 					if (!team.equals(p.getTeam())) {

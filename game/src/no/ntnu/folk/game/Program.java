@@ -11,6 +11,7 @@ import sheep.game.Game;
 
 public class Program extends Activity {
 	private static View view;
+	private static Game game;
 
 	public static View getView() {
 		return view;
@@ -25,10 +26,14 @@ public class Program extends Activity {
 		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 		ProgramConstants.setWindowSize(new int[]{displayMetrics.widthPixels, displayMetrics.heightPixels});
 
-		Game game = new Game(this, null);
+		game = new Game(this, null);
 		view = game.getRootView();
 		game.pushState(new MainMenu());
 		setContentView(game);
+	}
+
+	public static Game getGame() {
+		return game;
 	}
 
 }
