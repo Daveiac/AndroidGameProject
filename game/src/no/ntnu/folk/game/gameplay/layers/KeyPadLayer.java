@@ -118,7 +118,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 			weaponSelection.setActive(true);
 		}
 		if (endKey.popPressed()) {
-			gameModel.setGameTime(1);
+			gameModel.setGameTime(0);
 		}
 		if (unpauseButton.popPressed()) {
 			gameModel.setPaused(false);
