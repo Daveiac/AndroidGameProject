@@ -23,7 +23,6 @@ public class PlayerModel extends EntityModel {
 	private int health;
 	private ArrayList<WeaponModel> weaponList;
 	private WeaponModel currentWeapon;
-	private boolean isDead;
 	private Image tombStone;
 
 	/**
@@ -42,7 +41,6 @@ public class PlayerModel extends EntityModel {
 		addGroup(team.ordinal());
 		addMask(team.ordinal());
 		setAcceleration(0, GameplayConstants.ACCELERATION);
-		isDead = false;
 		tombStone = new Image(R.drawable.tombstone);
 	}
 
@@ -56,20 +54,14 @@ public class PlayerModel extends EntityModel {
 
 	@Override
 	public void update(float dt) {
-		if (!isDead) {
-			super.update(dt);
-			currentWeapon.setPosition(getPosition());
-			currentWeapon.update(dt);
-		}
+		super.update(dt);
+		currentWeapon.setPosition(getPosition());
+		currentWeapon.update(dt);
 	}
 	@Override
 	public void draw(Canvas canvas) {
-		if (!isDead) {
-			super.draw(canvas);
-			currentWeapon.draw(canvas);
-		} else {
-			tombStone.draw(canvas, this.getX(), this.getY());
-		}
+		super.draw(canvas);
+		currentWeapon.draw(canvas);
 	}
 
 	/**
@@ -142,14 +134,5 @@ public class PlayerModel extends EntityModel {
 	public void attacked(int damage) {
 		health -= Math.abs(damage);
 	}
-	/**
-	 * set people to tombstone
-	 */
-	public void setToDead() {
-		isDead = true;
-	}
 
-	public boolean getStatusIsDead() {
-		return isDead;
-	}
 }

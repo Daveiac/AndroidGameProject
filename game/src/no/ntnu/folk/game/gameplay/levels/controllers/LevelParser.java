@@ -12,7 +12,7 @@ public class LevelParser {
 
 	public static void parseLevel(LevelModel lvlModel) {
 		try {
-			InputStream inputStream = Game.getInstance().getResources().openRawResource(lvlModel.getLevel());
+			InputStream inputStream = Game.getInstance().getResources().openRawResource(lvlModel.getId());
 			InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 			BufferedReader bufferReader = new BufferedReader(inputStreamReader);
 
@@ -45,16 +45,13 @@ public class LevelParser {
 			bufferReader.close();
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	private static LevelToken parseToken(String[] token) {
-		// TODO Auto-generated method stub
 		String tokenName = token[0];
 		LevelToken levelToken = TokenFactory.createToken(tokenName);
 

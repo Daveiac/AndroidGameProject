@@ -1,5 +1,6 @@
 package no.ntnu.folk.game.gameplay.models;
 
+import no.ntnu.folk.game.gameplay.levels.controllers.LevelController;
 import no.ntnu.folk.game.gameplay.levels.controllers.LevelParser;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import sheep.game.Sprite;
@@ -8,47 +9,41 @@ import java.util.ArrayList;
 
 /**
  * Model of a single level. It is created with its name as a unique ID.
- * This object contains the level tokens necessary to model the whole level.
+ * This object contains the levelTokens necessary to model the whole level.
  *
  * @author b2
  */
 public class LevelModel extends Sprite {
-	// TODO
-
-	private final int level;
+	private final int id;
 	private int[] size;
 	private ArrayList<int[]> startPositions;
-	private ArrayList<LevelToken> tokens;
+	private ArrayList<LevelToken> levelTokens;
 
 	/**
 	 * Constructor. Constructs the LevelModel by giving the name of the requested level.
 	 *
-	 * @param levelName Level name
+	 * @param levelId Level id
 	 */
-	public LevelModel(int i) {
-		this.level = i;
+	public LevelModel(int levelId) {
+		this.id = Integer.parseInt(LevelController.getLevels()[levelId][1]);
 		size = new int[2];
 		startPositions = new ArrayList<int[]>();
-		tokens = new ArrayList<LevelToken>();
+		levelTokens = new ArrayList<LevelToken>();
 		loadLevel();
 	}
 
-	public int getLevel() {
-		return level;
+	public int getId() {
+		return id;
 	}
 
 	/**
 	 * Loads the specific level given by the parameter levelName and sets it as the current level model.
-	 *
-	 * @param levelName Name of the requested level.
 	 */
 	public void loadLevel() {
-		// TODO Auto-generated method stub
 		LevelParser.parseLevel(this);
 	}
 
 	public void setSize(int width, int height) {
-		// TODO Auto-generated method stub
 		size[0] = width;
 		size[1] = height;
 	}
@@ -59,15 +54,15 @@ public class LevelModel extends Sprite {
 	}
 
 	public void addToken(LevelToken token) {
-		// TODO Auto-generated method stub
-		tokens.add(token);
+		levelTokens.add(token);
 	}
 
 	public ArrayList<LevelToken> getLevelTokens() {
-		return tokens;
+		return levelTokens;
 	}
 
 	public ArrayList<int[]> getStartPositions() {
 		return startPositions;
 	}
+
 }

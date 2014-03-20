@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
+import no.ntnu.folk.game.gameplay.entities.models.TombStoneModel;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import sheep.game.Layer;
@@ -15,7 +16,7 @@ public class GameLayer extends Layer {
 
 	public GameLayer(GameModel model) {
 		this.model = model;
-		for (PlayerModel player : model.getPlayerList()) {
+		for (PlayerModel player : model.getPlayers()) {
 			player.addCollisionListener(model);
 		}
 	}
@@ -32,11 +33,14 @@ public class GameLayer extends Layer {
 		for (LevelToken levelToken : model.getLevelTokens()) {
 			levelToken.draw(canvas);
 		}
-		for (PlayerModel player : model.getPlayerList()) {
+		for (PlayerModel player : model.getPlayers()) {
 			player.draw(canvas);
 		}
 		for (ProjectileModel projectile : model.getProjectiles()) {
 			projectile.draw(canvas);
+		}
+		for (TombStoneModel tombStone : model.getTombStones()) {
+			tombStone.draw(canvas);
 		}
 		canvas.drawText(
 				"Time left: " + ((int) model.playerTimeLeft()),

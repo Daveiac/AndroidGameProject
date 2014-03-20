@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 public class LevelController {
 
 	private static Field[] listOfLevels;
+	private static String[][] levels;
 
 	/**
 	 * Constructor. Constructs the level controller which loads levels from source folder.
@@ -33,6 +34,9 @@ public class LevelController {
 	 * @return levels. List with the names of all levels.
 	 */
 	public static String[][] getLevels() {
+		if (levels != null) {
+			return levels;
+		}
 		readLevels();
 		int numberOfLevels = listOfLevels.length;
 		String[][] levels = new String[numberOfLevels][2];
@@ -48,6 +52,7 @@ public class LevelController {
 				e.printStackTrace();
 			}
 		}
+		LevelController.levels = levels;
 		return levels;
 	}
 }
