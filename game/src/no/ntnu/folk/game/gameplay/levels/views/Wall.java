@@ -1,7 +1,7 @@
 package no.ntnu.folk.game.gameplay.levels.views;
 
+import no.ntnu.folk.game.constants.GameplayConstants;
 import sheep.graphics.Color;
-import no.ntnu.folk.game.constants.ProgramConstants;
 import android.graphics.Canvas;
 
 /**
@@ -21,7 +21,7 @@ public class Wall extends LevelToken {
 		super();
 		this.gridX = gridX;
 		this.gridY = gridY;
-		float gridSize = ProgramConstants.gridSize;
+		float gridSize = GameplayConstants.GRID_SIZE;
 		x = this.gridX * gridSize;
 		y = this.gridY * gridSize;
 		width = x + gridSize;

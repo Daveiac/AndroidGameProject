@@ -2,6 +2,7 @@ package no.ntnu.folk.game.gameplay.models;
 
 import java.util.ArrayList;
 
+import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.levels.controllers.LevelController;
 import no.ntnu.folk.game.gameplay.levels.controllers.LevelParser;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
@@ -43,7 +44,7 @@ public class LevelModel {
 	}
 
 	public void addStartPosition(int x, int y) {
-		int[] startPosition = {x, y};
+		int[] startPosition = {x * GameplayConstants.GRID_SIZE, y * GameplayConstants.GRID_SIZE};
 		startPositions.add(startPosition);
 	}
 
