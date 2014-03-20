@@ -95,7 +95,8 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				}
 			}
 			if (!buttonPressed) {
-				gameModel.getCurrentPlayer().setAim(point.x, point.y);
+				int[] windowSize = ProgramConstants.getWindowSize();
+				currentPlayer.setAim(point.x + currentPlayer.getX() - windowSize[0] / 2, point.y + currentPlayer.getY() - windowSize[1] / 2);
 			}
 		}
 
@@ -137,8 +138,8 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	}
 	private void drawAim(Canvas canvas) {
 		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
-		float aimX = currentPlayer.getAim().getX();
-		float aimY = currentPlayer.getAim().getY();
+		float aimX = currentPlayer.getAim().getX() + ProgramConstants.getWindowSize()[0] / 2;
+		float aimY = currentPlayer.getAim().getY() + ProgramConstants.getWindowSize()[1] / 2;
 		aimImage.draw(canvas, aimX - aimImage.getWidth() / 2, aimY - aimImage.getHeight() / 2);
 	}
 	private void drawButtons(Canvas canvas) {
@@ -213,7 +214,10 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 			unpauseButton.touch();
 		}
 		if (!buttonPressed) {
-			gameModel.getCurrentPlayer().setAim(point.x, point.y);
+			PlayerModel currentPlayer = gameModel.getCurrentPlayer();
+			int[] windowSize = ProgramConstants.getWindowSize();
+			currentPlayer.setAim(point.x + currentPlayer.getX() - windowSize[0], point.y + currentPlayer.getY() - windowSize[1]);
+//			-model.getCurrentPlayer().getX() + windowSize[0] / 2, -model.getCurrentPlayer().getY() + windowSize[1] / 2
 		}
 		return true;
 	}
