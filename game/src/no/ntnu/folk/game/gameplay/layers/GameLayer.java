@@ -92,28 +92,29 @@ public class GameLayer extends Layer {
 		}
 		ArrayList<Direction> directions = new ArrayList<Direction>();
 		//left wall
-		for (int i = (int)(y-offY+5)/gridSize; i < (int)(y+offY-5)/gridSize+1; i++) {
+		int offset = 5;
+		for (int i = (int)(y-offY+ offset)/gridSize; i < (int)(y+offY- offset)/gridSize+1; i++) {
 			if(grid[i][(int)(x-offX)/gridSize] != null && i > 0) {
 				directions.add(Direction.LEFT);
 				System.out.println("Player collides with: LEFT");
 			}
 		}
 		//right wall
-		for (int i = (int)(y-offY+5)/gridSize; i < (int)(y+offY-5)/gridSize+1; i++) {
+		for (int i = (int)(y-offY+ offset)/gridSize; i < (int)(y+offY- offset)/gridSize+1; i++) {
 			if(grid[i][(int)(x+offX)/gridSize] != null && i > 0) {
 				System.out.println("Player collides with: RIGHT");
 				directions.add(Direction.RIGHT);
 			}
 		}
 		//floor
-		for (int i = (int)(x-offX+5)/gridSize; i < (int)(x+offX-5)/gridSize+1; i++) {
+		for (int i = (int)(x-offX+ offset)/gridSize; i < (int)(x+offX- offset)/gridSize+1; i++) {
 			if(grid[(int)(y+offY)/gridSize][i] != null && i > 0) {
 				System.out.println("Player collides with: DOWN");
 				directions.add(Direction.DOWN);
 			}
 		}
 		//ceiling
-		for (int i = (int)(x-offX+5)/gridSize; i < (int)(x+offX-5)/gridSize+1; i++) {
+		for (int i = (int)(x-offX+ offset)/gridSize; i < (int)(x+offX- offset)/gridSize+1; i++) {
 			if(grid[(int)(y-offY)/gridSize][i] != null && i > 0) {
 				System.out.println("Player collides with: UP");
 				directions.add(Direction.UP);
