@@ -20,7 +20,7 @@ public enum MenuOptions {
 
 	DEV_MENU("Developer menu"),
 	TOGGLE_DEBUG("Toggle debug"),
-	LEVEL_EDITOR("Level editor");
+	;
 
 	private final String label;
 
