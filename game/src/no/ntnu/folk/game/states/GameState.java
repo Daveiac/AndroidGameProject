@@ -136,7 +136,7 @@ public class GameState extends State {
 			
 			
 			projectile.setSpeed(aim.getMultiplied(ratio));
-			projectile.setAcceleration(0, 25);
+			projectile.setAcceleration(0, 50);
 			model.getCurrentPlayer().getCurrentWeapon().setCold(false);
 		}
 	}
