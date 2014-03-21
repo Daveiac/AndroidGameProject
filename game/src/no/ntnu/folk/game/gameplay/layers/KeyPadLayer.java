@@ -1,6 +1,8 @@
 package no.ntnu.folk.game.gameplay.layers;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PointF;
 import android.util.SparseArray;
 import android.view.MotionEvent;
@@ -41,6 +43,8 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	private WeaponSelection weaponSelection;
 	private ArrayList<Button> weaponButtons;
 
+    private float buttonOverlayHeight;
+
 	private SparseArray<PointF> activePointers;
 
 	public KeyPadLayer(GameState gameState, GameModel gameModel) {
@@ -67,8 +71,8 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				rightKey = new Button(keypadright, keypadright, rightKeyPos, true),
 				upKey = new Button(keypadup, keypadup, upKeyPos, false),
 				pauseButton = new Button(icon, icon, pauseKeyPos, false), // TODO add proper pause button
-				swapKey = new Button(swapkey, swapkey, swapKeyPos, false),
-				fireKey = new Button(firekey, firekey, fireKeyPos, false),
+				swapKey = new Button(swapbutton, swapbutton, swapKeyPos, false),
+				fireKey = new Button(shootbutton, shootbutton, fireKeyPos, false),
 				endKey = new Button(endturn, endturn, endKeyPos, false),
 		};
 		unpauseButton = new Button(unpause, unpause, unpauseKeyPos, false);
@@ -98,9 +102,11 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				}
 			}
 			if (!buttonPressed) {
-				int[] windowSize = ProgramConstants.getWindowSize();
-				currentPlayer.setAim(point.x + currentPlayer.getX() - windowSize[0] / 2, point.y + currentPlayer.getY() - windowSize[1] / 2);
-			}
+                if (point.y < buttonOverlayHeight) {
+                    int[] windowSize = ProgramConstants.getWindowSize();
+                    currentPlayer.setAim(point.x + currentPlayer.getX() - windowSize[0] / 2, point.y + currentPlayer.getY() - windowSize[1] / 2);
+                }
+            }
 		}
 
 		boolean leftKeyPressed;
@@ -132,6 +138,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
+        drawOverlay(canvas);
 		drawButtons(canvas);
 		drawAim(canvas);
 		for (Button button : weaponButtons) {
@@ -139,10 +146,25 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		}
 		unpauseButton.draw(canvas);
 	}
+
+    private void drawOverlay(Canvas canvas){
+        int ws[] = ProgramConstants.getWindowSize();
+        buttonOverlayHeight = ws[1]*0.8f;
+        float buttonOverlayLeft = 0;
+        float buttonOverlayBot = ws[1];
+        float buttonOverlayRight = ws[0];
+        Paint p = new Paint();
+        p.setColor(Color.BLACK);
+        canvas.drawRect(buttonOverlayLeft,buttonOverlayHeight,buttonOverlayRight,buttonOverlayBot, p);
+    }
+
 	private void drawAim(Canvas canvas) {
 		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
 		float aimX = currentPlayer.getAim().getX() + ProgramConstants.getWindowSize()[0] / 2;
 		float aimY = currentPlayer.getAim().getY() + ProgramConstants.getWindowSize()[1] / 2;
+        if(aimY > buttonOverlayHeight){
+            aimY = buttonOverlayHeight;
+        }
 		aimImage.draw(canvas, aimX - aimImage.getWidth() / 2, aimY - aimImage.getHeight() / 2);
 	}
 	private void drawButtons(Canvas canvas) {
