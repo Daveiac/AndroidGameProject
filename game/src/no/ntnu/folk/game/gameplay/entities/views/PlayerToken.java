@@ -2,15 +2,14 @@ package no.ntnu.folk.game.gameplay.entities.views;
 
 import java.util.Arrays;
 
+import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
+import sheep.graphics.Color;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import no.ntnu.folk.game.R;
-import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
-import sheep.graphics.Image;
 
 public class PlayerToken extends EntityToken {
-	private Image[] healthBar;
 	private float direction;
+	private float healthbarFrame = 5;
 
 	/**
 	 * @param model PlayerModel for this token
@@ -19,43 +18,20 @@ public class PlayerToken extends EntityToken {
 	public PlayerToken(PlayerModel model, int image) {
 		super(model, image);
 		direction = 1;
-		healthBar = new Image[]{
-				new Image(R.drawable.heathbartest),
-				new Image(R.drawable.heathbartest95),
-				new Image(R.drawable.heathbartest90),
-				new Image(R.drawable.heathbartest85),
-				new Image(R.drawable.heathbartest80),
-				new Image(R.drawable.heathbartest75),
-				new Image(R.drawable.heathbartest70),
-				new Image(R.drawable.heathbartest65),
-				new Image(R.drawable.heathbartest60),
-				new Image(R.drawable.heathbartest55),
-				new Image(R.drawable.heathbartest50),
-				new Image(R.drawable.heathbartest45),
-				new Image(R.drawable.heathbartest40),
-				new Image(R.drawable.heathbartest35),
-				new Image(R.drawable.heathbartest30),
-				new Image(R.drawable.heathbartest25),
-				new Image(R.drawable.heathbartest20),
-				new Image(R.drawable.heathbartest15),
-				new Image(R.drawable.heathbartest10),
-				new Image(R.drawable.heathbartest5),
-		};
 	}
 
 	@Override
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
 		Matrix matrix = new Matrix();
-		matrix.postTranslate(entityModel.getX() - healthBar[0].getWidth() / 2, entityModel.getY() - image.getHeight());
-		int health = 100 * ((PlayerModel) entityModel).getHealth() / ((PlayerModel) entityModel).getStartHealth();
-		int count = 100;
-		for (int i = 0; i < healthBar.length; i++){
-			if (health == count){
-				healthBar[i].draw(canvas, matrix);
-			}
-			count -= 5;
-		}
+		float x = entityModel.getX();
+		float height = image.getHeight();
+		float width = image.getWidth() /  2;
+		float y = entityModel.getY();
+		matrix.postTranslate(x, y - height);
+		float health = ((PlayerModel) entityModel).getHealth() * 1.0f / ((PlayerModel) entityModel).getStartHealth();
+		canvas.drawRect(x - width - healthbarFrame , y - height + healthbarFrame, x + width + healthbarFrame, y - height*(1.25f) - healthbarFrame, Color.BLACK);
+		canvas.drawRect(x - width, y - height, (x - width) + width*health*2, y - height*(1.25f), Color.RED);
 	}
 
 	@Override
