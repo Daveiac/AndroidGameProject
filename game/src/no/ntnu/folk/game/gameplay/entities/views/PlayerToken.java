@@ -18,11 +18,26 @@ public class PlayerToken extends EntityToken {
 		super(model, image);
 		direction = 1;
 		healthBar = new Image[]{
-				new Image(R.drawable.healtbar100),
-				new Image(R.drawable.healtbar075),
-				new Image(R.drawable.healtbar050),
-				new Image(R.drawable.healtbar025),
-				new Image(R.drawable.healtbar010)
+				new Image(R.drawable.heathbartest),
+				new Image(R.drawable.heathbartest95),
+				new Image(R.drawable.heathbartest90),
+				new Image(R.drawable.heathbartest85),
+				new Image(R.drawable.heathbartest80),
+				new Image(R.drawable.heathbartest75),
+				new Image(R.drawable.heathbartest70),
+				new Image(R.drawable.heathbartest65),
+				new Image(R.drawable.heathbartest60),
+				new Image(R.drawable.heathbartest55),
+				new Image(R.drawable.heathbartest50),
+				new Image(R.drawable.heathbartest45),
+				new Image(R.drawable.heathbartest40),
+				new Image(R.drawable.heathbartest35),
+				new Image(R.drawable.heathbartest30),
+				new Image(R.drawable.heathbartest25),
+				new Image(R.drawable.heathbartest20),
+				new Image(R.drawable.heathbartest15),
+				new Image(R.drawable.heathbartest10),
+				new Image(R.drawable.heathbartest5),
 		};
 	}
 
@@ -30,18 +45,14 @@ public class PlayerToken extends EntityToken {
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
 		Matrix matrix = new Matrix();
-		matrix.postTranslate(entityModel.getX() - healthBar[0].getWidth() / 2, entityModel.getY() + image.getHeight() / 2);
+		matrix.postTranslate(entityModel.getX() - healthBar[0].getWidth() / 2, entityModel.getY() - image.getHeight());
 		int health = 100 * ((PlayerModel) entityModel).getHealth() / ((PlayerModel) entityModel).getStartHealth();
-		if (health < 10) {
-			healthBar[4].draw(canvas, matrix);
-		} else if (health <= 25) {
-			healthBar[3].draw(canvas, matrix);
-		} else if (health <= 50) {
-			healthBar[2].draw(canvas, matrix);
-		} else if (health <= 75) {
-			healthBar[1].draw(canvas, matrix);
-		} else if (health > 75) {
-			healthBar[0].draw(canvas, matrix);
+		int count = 100;
+		for (int i = 0; i < healthBar.length; i++){
+			if (health == count){
+				healthBar[i].draw(canvas, matrix);
+			}
+			count -= 5;
 		}
 	}
 
