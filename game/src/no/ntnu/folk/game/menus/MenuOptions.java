@@ -19,6 +19,7 @@ public enum MenuOptions {
 	BACK("Back"),
 
 	DEV_MENU("Developer menu"),
+	UNLIMITED_FIRE("Unlimited fire"),
 	TOGGLE_DEBUG("Toggle debug"),
 	;
 

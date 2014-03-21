@@ -12,6 +12,7 @@ public class DevMenu extends MenuState {
 		int position = 0;
 		menuItems = new MenuItem[]{
 				new MenuItem(MenuOptions.TOGGLE_DEBUG, position++, Boolean.toString(ProgramConstants.isDebugging())),
+				new MenuItem(MenuOptions.UNLIMITED_FIRE, position++, Boolean.toString(ProgramConstants.isUnlimitedFire())),
 				new MenuItem(MenuOptions.BACK, position++),
 		};
 	}
@@ -21,6 +22,10 @@ public class DevMenu extends MenuState {
 			case TOGGLE_DEBUG:
 				ProgramConstants.toggleDebugging();
 				menuItem.setData(Boolean.toString(ProgramConstants.isDebugging()));
+				break;
+			case UNLIMITED_FIRE:
+				ProgramConstants.toggleUnlimitedFire();
+				menuItem.setData(Boolean.toString(ProgramConstants.isUnlimitedFire()));
 				break;
 			case BACK:
 				getGame().popState();

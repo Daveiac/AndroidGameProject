@@ -84,7 +84,7 @@ public abstract class EntityToken {
 		canvas.drawText(
 				this.toString(),
 				entityModel.getX() - image.getWidth() / 2,
-				entityModel.getY() - image.getHeight() * 3 / 4,
+				entityModel.getY() + image.getHeight(),
 				Color.WHITE
 		);
 		drawOutline(canvas);
