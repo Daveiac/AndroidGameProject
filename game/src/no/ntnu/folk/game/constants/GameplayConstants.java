@@ -15,4 +15,5 @@ public class GameplayConstants {
     public static  final int MIN_TURN_TIMER = 20;
 	// Size of the grid
 	public static final int GRID_SIZE = 50;
+	public static final float GRAVITY = 30;
 }

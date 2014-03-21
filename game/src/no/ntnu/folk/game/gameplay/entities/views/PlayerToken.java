@@ -1,5 +1,7 @@
 package no.ntnu.folk.game.gameplay.entities.views;
 
+import java.util.Arrays;
+
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import no.ntnu.folk.game.R;
@@ -60,6 +62,7 @@ public class PlayerToken extends EntityToken {
 	public String toString() {
 		return "PlayerToken{name='" + entityModel.getName() + '\'' +
 				", health=" + ((PlayerModel) entityModel).getHealth() +
+				", coll: " + Arrays.toString(entityModel.getCollision().toArray()) +
 				"}";
 	}
 

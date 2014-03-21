@@ -31,6 +31,13 @@ public class GameLayer extends Layer {
 		PlayerModel player = model.getCurrentPlayer();
 		ArrayList<Direction> playerCollision = collidesWithWall(player);
 		player.setCollision(playerCollision);
+		if(playerCollision.contains(Direction.DOWN)) {
+			player.setAcceleration(0, 0);
+			player.setSpeed(player.getSpeed().getX(), 0);
+		} else {
+			player.setAcceleration(0, GameplayConstants.GRAVITY);
+			
+		}
 	}
 
 	@Override
@@ -95,28 +102,28 @@ public class GameLayer extends Layer {
 		for (int i = (int)(y-offY+5)/gridSize; i < (int)(y+offY-5)/gridSize+1; i++) {
 			if(grid[i][(int)(x-offX)/gridSize] != null && i > 0) {
 				directions.add(Direction.LEFT);
-				System.out.println("Player collides with: LEFT");
+				break;
 			}
 		}
 		//right wall
 		for (int i = (int)(y-offY+5)/gridSize; i < (int)(y+offY-5)/gridSize+1; i++) {
 			if(grid[i][(int)(x+offX)/gridSize] != null && i > 0) {
-				System.out.println("Player collides with: RIGHT");
 				directions.add(Direction.RIGHT);
+				break;
 			}
 		}
 		//floor
 		for (int i = (int)(x-offX+5)/gridSize; i < (int)(x+offX-5)/gridSize+1; i++) {
 			if(grid[(int)(y+offY)/gridSize][i] != null && i > 0) {
-				System.out.println("Player collides with: DOWN");
 				directions.add(Direction.DOWN);
+				break;
 			}
 		}
 		//ceiling
 		for (int i = (int)(x-offX+5)/gridSize; i < (int)(x+offX-5)/gridSize+1; i++) {
 			if(grid[(int)(y-offY)/gridSize][i] != null && i > 0) {
-				System.out.println("Player collides with: UP");
 				directions.add(Direction.UP);
+				break;
 			}
 		}
 		return directions;

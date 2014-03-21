@@ -24,6 +24,7 @@ public abstract class EntityModel extends Sprite {
 		this.name = name;
 		this.setPosition(position);
 		this.entityToken = createToken(image);
+		this.collision = new ArrayList<Direction>();
 	}
 	/**
 	 * @return Create a entityToken of the correct type
