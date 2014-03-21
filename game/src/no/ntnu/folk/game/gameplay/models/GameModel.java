@@ -41,6 +41,7 @@ public class GameModel implements CollisionListener {
 	private float gameTime;
 	private float availablePlayerTime;
 	private boolean paused;
+    private int turnTimer;
 
 	/**
 	 * Create a new GameModel and initialize fields.
@@ -50,6 +51,7 @@ public class GameModel implements CollisionListener {
 		this.startHealth = GameplayConstants.DEFAULT_HEALTH;
 		this.currentLevel = new LevelModel(0);
 		this.gameType = GameTypes.FFA;
+        this.turnTimer = GameplayConstants.MIN_TURN_TIMER;
 		createPlayers();
 		currentPlayer = players.get(0);
 		tombStones = new ArrayList<TombStoneModel>();
@@ -58,7 +60,7 @@ public class GameModel implements CollisionListener {
 
 		// Init time variables
 		gameTime = 0;
-		availablePlayerTime = GameplayConstants.TURN_TIME;
+		availablePlayerTime = turnTimer;
 	}
 
 	/**
@@ -108,7 +110,7 @@ public class GameModel implements CollisionListener {
 	 */
 	public void nextPlayer() {
 		getCurrentPlayer().setSpeed(0, 0);
-		availablePlayerTime = GameplayConstants.TURN_TIME;
+		availablePlayerTime = turnTimer;
 		int playerNumber = players.indexOf(currentPlayer);
 		if (playerNumber == players.size() - 1) {
 			playerNumber = 0;
@@ -264,4 +266,11 @@ public class GameModel implements CollisionListener {
 	public ArrayList<EntityModel> getKill() {
 		return kill;
 	}
+
+    public int getTurnTimer(){
+        return this.turnTimer;
+    }
+    public void setTurnTimer(int newTimer){
+        this.turnTimer = newTimer;
+    }
 }
