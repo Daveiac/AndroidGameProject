@@ -6,8 +6,6 @@ import java.lang.reflect.Field;
 
 /**
  * Level controller. Loads levels .
- *
- * @author b2
  */
 public class LevelController {
 
