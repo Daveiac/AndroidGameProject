@@ -1,10 +1,10 @@
 package no.ntnu.folk.game.gameplay.entities.views;
 
-import android.graphics.Canvas;
-import android.graphics.Matrix;
 import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import sheep.graphics.Image;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 
 public class PlayerToken extends EntityToken {
 	private Image[] healthBar;
