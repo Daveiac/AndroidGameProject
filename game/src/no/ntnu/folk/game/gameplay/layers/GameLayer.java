@@ -28,7 +28,9 @@ public class GameLayer extends Layer {
 
 	@Override
 	public void update(float dt) {
-		playerCollision(collidesWithWall(model.getCurrentPlayer()));
+		PlayerModel player = model.getCurrentPlayer();
+		ArrayList<Direction> playerCollision = collidesWithWall(player);
+		player.setCollision(playerCollision);
 	}
 
 	@Override
@@ -76,37 +78,14 @@ public class GameLayer extends Layer {
 		}
 	}
 
-	private void playerCollision(ArrayList<Direction> playerCollides) {
-		for (Direction direction : playerCollides) {
-			System.out.println("Player collides with: "+direction);
-			switch (direction) {
-			case LEFT:
-				//TODO what to do when collides
-				break;
-			case RIGHT:
-				//TODO what to do when collides
-				
-				break;
-			case UP:
-				//TODO what to do when collides
-				
-				break;
-			case DOWN:
-				//TODO what to do when collides
-				
-				break;
-			}
-		}
-	}
-
 	private ArrayList<Direction> collidesWithWall(EntityModel entity) {
 		int gridSize = GameplayConstants.GRID_SIZE;
 		float x = entity.getX();
 		float y = entity.getY();
 		float offX = -entity.getOffset().getX();
 		float offY = -entity.getOffset().getY();
-		int[] topLeft = {(int)(x-offX)/gridSize, (int)(y-offY)/gridSize};
-		int[] topRight = {(int)(x+offX)/gridSize, (int)(y-offY)/gridSize};
+		int[] topLeft = {(int)(x-offX)/gridSize, (int)(y-offY+5)/gridSize};
+		int[] topRight = {(int)(x+offX)/gridSize, (int)(y-offY+5)/gridSize};
 		int[] bottomLeft = {(int)(x-offX)/gridSize, (int)(y+offY)/gridSize};
 		int[] bottomRight = {(int)(x+offX)/gridSize, (int)(y+offY)/gridSize};
 		LevelToken[][] grid = model.getCurrentLevel().getGrid();
@@ -117,25 +96,29 @@ public class GameLayer extends Layer {
 		ArrayList<Direction> directions = new ArrayList<Direction>();
 		//left wall
 		for (int i = topLeft[1]; i < bottomLeft[1]+1; i++) {
-			if(grid[i][topLeft[0]] != null) {
+			if(grid[i][topLeft[0]] != null && i > 0) {
 				directions.add(Direction.LEFT);
+				System.out.println("Player collides with: LEFT");
 			}
 		}
 		//right wall
 		for (int i = topRight[1]; i < bottomRight[1]+1; i++) {
-			if(grid[i][topRight[0]] != null) {
+			if(grid[i][topRight[0]] != null && i > 0) {
+				System.out.println("Player collides with: RIGHT");
 				directions.add(Direction.RIGHT);
 			}
 		}
 		//floor
 		for (int i = bottomLeft[1]; i < bottomRight[1]+1; i++) {
-			if(grid[bottomLeft[1]][i] != null) {
+			if(grid[bottomLeft[1]][i] != null && i > 0) {
+				System.out.println("Player collides with: DOWN");
 				directions.add(Direction.DOWN);
 			}
 		}
 		//ceiling
 		for (int i = topLeft[1]; i < topRight[1]+1; i++) {
-			if(grid[topLeft[1]][i] != null) {
+			if(grid[topLeft[1]][i] != null && i > 0) {
+				System.out.println("Player collides with: UP");
 				directions.add(Direction.UP);
 			}
 		}

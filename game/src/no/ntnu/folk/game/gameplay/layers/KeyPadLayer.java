@@ -12,6 +12,7 @@ import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.Button;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
+import no.ntnu.folk.game.gameplay.levels.Direction;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import no.ntnu.folk.game.menus.menuStates.PauseMenu;
 import no.ntnu.folk.game.states.GameState;
@@ -111,10 +112,10 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 
 		boolean leftKeyPressed;
 		boolean rightKeyPressed;
-		if (leftKeyPressed = leftKey.popPressed()) {
+		if (leftKeyPressed = leftKey.popPressed() && !currentPlayer.getCollision().contains(Direction.LEFT)) {
 			currentPlayer.setSpeed(-GameplayConstants.PLAYER_SPEED, currentPlayer.getSpeed().getY());
 		}
-		if (rightKeyPressed = rightKey.popPressed()) {
+		if (rightKeyPressed = rightKey.popPressed() && !currentPlayer.getCollision().contains(Direction.RIGHT)) {
 			currentPlayer.setSpeed(GameplayConstants.PLAYER_SPEED, currentPlayer.getSpeed().getY());
 		}
 		if (!leftKeyPressed && !rightKeyPressed || leftKeyPressed && rightKeyPressed) { // If none, or both, keys are pressed

@@ -1,7 +1,10 @@
 package no.ntnu.folk.game.gameplay.entities.models;
 
+import java.util.ArrayList;
+
 import android.graphics.Canvas;
 import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
+import no.ntnu.folk.game.gameplay.levels.Direction;
 import sheep.game.Sprite;
 import sheep.math.Vector2;
 
@@ -9,6 +12,8 @@ public abstract class EntityModel extends Sprite {
 	private final EntityToken entityToken;
 
 	private final String name;
+
+	private ArrayList<Direction> collision;
 
 	/**
 	 * @param name     Name of the entityToken associated with this entityModel
@@ -39,6 +44,13 @@ public abstract class EntityModel extends Sprite {
 	 */
 	public String getName() {
 		return name;
+	}
+
+	public void setCollision(ArrayList<Direction> collidesWithWall) {
+		this.collision = collidesWithWall;
+	}
+	public ArrayList<Direction> getCollision() {
+		return collision;
 	}
 
 }
