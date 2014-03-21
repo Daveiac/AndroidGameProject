@@ -8,7 +8,8 @@ import java.util.ArrayList;
 public enum Weapons {
 	HANDGUN(Projectiles.HANDGUN_BULLET, R.drawable.handgun),
 	ROCKET_LAUNCHER(Projectiles.ROCKET, R.drawable.rocketlancher),
-	RIFLE(Projectiles.RIFLE_BULLET, R.drawable.rifle);
+	RIFLE(Projectiles.RIFLE_BULLET, R.drawable.rifle),
+	TURTLEGUN(Projectiles.TURTLE, R.drawable.turtlegun);
 
 	private final Projectiles projectile;
 	private final int image;
@@ -17,6 +18,7 @@ public enum Weapons {
 			HANDGUN,
 			ROCKET_LAUNCHER,
 			RIFLE,
+			TURTLEGUN
 	};
 
 	/**
