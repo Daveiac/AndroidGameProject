@@ -65,6 +65,7 @@ public class PreGameMenu extends MenuState {
             case TURN_TIMER:
                 increaseTurnTimer();
                 menuItem.setData((Integer.toString(gameModel.getTurnTimer())));
+                break;
 			case GAME_TYPE:
 				selectGameType();
 				menuItem.setData(gameModel.getGameType().toString());
