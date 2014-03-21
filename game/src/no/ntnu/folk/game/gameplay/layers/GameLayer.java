@@ -71,7 +71,7 @@ public class GameLayer extends Layer {
 			projectile.draw(canvas);
 		}
 	}
-	
+
 	private boolean collidesWithWall() {
 		PlayerModel player = this.model.getCurrentPlayer();
 		int gridSize = GameplayConstants.GRID_SIZE;
@@ -88,35 +88,48 @@ public class GameLayer extends Layer {
 			System.out.println("grid is null");
 			return false;
 		}
+		boolean collided = false;
 		//left wall
 		for (int i = topLeft[1]; i < bottomLeft[1]+1; i++) {
 			if(grid[i][topLeft[0]] != null) {
-				System.out.println("player hitting left wall\n");
-				return true;
+				collidedLeft(player);
+				collided = true;
 			}
 		}
 		//right wall
 		for (int i = topRight[1]; i < bottomRight[1]+1; i++) {
 			if(grid[i][topRight[0]] != null) {
-				System.out.println("player hittingc right wall\n");
-				return true;
+				collidedRight(player);
+				collided = true;
 			}
 		}
 		//floor
 		for (int i = bottomLeft[1]; i < bottomRight[1]+1; i++) {
 			if(grid[bottomLeft[1]][i] != null) {
-				System.out.println("player hitting floor\n");
-				return true;
+				collidedFloor(player);
+				collided = true;
 			}
 		}
 		//ceiling
 		for (int i = topLeft[1]; i < topRight[1]+1; i++) {
 			if(grid[topLeft[1]][i] != null) {
-				System.out.println("player hitting ceiling\n");
-				return true;
+				collidedCeiling(player);
+				collided = true;
 			}
 		}
-		return false;
+		return collided;
+	}
+	private void collidedLeft(PlayerModel player) {
+		System.out.println("player hitting left wall\n");
+	}
+	private void collidedRight(PlayerModel player) {
+		System.out.println("player hitting right wall\n");
+	}
+	private void collidedFloor(PlayerModel player) {
+		System.out.println("player hitting floor\n");
+	}
+	private void collidedCeiling(PlayerModel player) {
+		System.out.println("player hitting ceiling\n");
 	}
 
 }
