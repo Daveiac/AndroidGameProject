@@ -1,10 +1,14 @@
 package no.ntnu.folk.game.gameplay.layers;
 
+import java.util.ArrayList;
+
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
+import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import no.ntnu.folk.game.gameplay.entities.models.TombStoneModel;
+import no.ntnu.folk.game.gameplay.levels.Direction;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import sheep.game.Layer;
@@ -24,7 +28,7 @@ public class GameLayer extends Layer {
 
 	@Override
 	public void update(float dt) {
-		collidesWithWall();
+		playerCollision(collidesWithWall(model.getCurrentPlayer()));
 	}
 
 	@Override
@@ -72,13 +76,35 @@ public class GameLayer extends Layer {
 		}
 	}
 
-	private boolean collidesWithWall() {
-		PlayerModel player = this.model.getCurrentPlayer();
+	private void playerCollision(ArrayList<Direction> playerCollides) {
+		for (Direction direction : playerCollides) {
+			System.out.println("Player collides with: "+direction);
+			switch (direction) {
+			case LEFT:
+				//TODO what to do when collides
+				break;
+			case RIGHT:
+				//TODO what to do when collides
+				
+				break;
+			case UP:
+				//TODO what to do when collides
+				
+				break;
+			case DOWN:
+				//TODO what to do when collides
+				
+				break;
+			}
+		}
+	}
+
+	private ArrayList<Direction> collidesWithWall(EntityModel entity) {
 		int gridSize = GameplayConstants.GRID_SIZE;
-		float x = player.getX();
-		float y = player.getY();
-		float offX = -player.getOffset().getX();
-		float offY = -player.getOffset().getY();
+		float x = entity.getX();
+		float y = entity.getY();
+		float offX = -entity.getOffset().getX();
+		float offY = -entity.getOffset().getY();
 		int[] topLeft = {(int)(x-offX)/gridSize, (int)(y-offY)/gridSize};
 		int[] topRight = {(int)(x+offX)/gridSize, (int)(y-offY)/gridSize};
 		int[] bottomLeft = {(int)(x-offX)/gridSize, (int)(y+offY)/gridSize};
@@ -86,50 +112,33 @@ public class GameLayer extends Layer {
 		LevelToken[][] grid = model.getCurrentLevel().getGrid();
 		if(grid == null) {
 			System.out.println("grid is null");
-			return false;
+			return null;
 		}
-		boolean collided = false;
+		ArrayList<Direction> directions = new ArrayList<Direction>();
 		//left wall
 		for (int i = topLeft[1]; i < bottomLeft[1]+1; i++) {
 			if(grid[i][topLeft[0]] != null) {
-				collidedLeft(player);
-				collided = true;
+				directions.add(Direction.LEFT);
 			}
 		}
 		//right wall
 		for (int i = topRight[1]; i < bottomRight[1]+1; i++) {
 			if(grid[i][topRight[0]] != null) {
-				collidedRight(player);
-				collided = true;
+				directions.add(Direction.RIGHT);
 			}
 		}
 		//floor
 		for (int i = bottomLeft[1]; i < bottomRight[1]+1; i++) {
 			if(grid[bottomLeft[1]][i] != null) {
-				collidedFloor(player);
-				collided = true;
+				directions.add(Direction.DOWN);
 			}
 		}
 		//ceiling
 		for (int i = topLeft[1]; i < topRight[1]+1; i++) {
 			if(grid[topLeft[1]][i] != null) {
-				collidedCeiling(player);
-				collided = true;
+				directions.add(Direction.UP);
 			}
 		}
-		return collided;
+		return directions;
 	}
-	private void collidedLeft(PlayerModel player) {
-		System.out.println("player hitting left wall\n");
-	}
-	private void collidedRight(PlayerModel player) {
-		System.out.println("player hitting right wall\n");
-	}
-	private void collidedFloor(PlayerModel player) {
-		System.out.println("player hitting floor\n");
-	}
-	private void collidedCeiling(PlayerModel player) {
-		System.out.println("player hitting ceiling\n");
-	}
-
 }
