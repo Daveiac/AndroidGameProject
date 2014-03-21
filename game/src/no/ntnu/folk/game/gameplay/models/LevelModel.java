@@ -56,7 +56,12 @@ public class LevelModel {
         return this.grid;
     }
     
+    public void setGrid(LevelToken[][] grid) {
+    	this.grid = grid;
+    }
+
     public ArrayList<LevelToken> getLevelTokens() {
     	return levelTokens;
     }
+
 }

@@ -41,15 +41,17 @@ public class GameModel implements CollisionListener {
 	private float gameTime;
 	private float availablePlayerTime;
 	private boolean paused;
+    private int turnTimer;
 
 	/**
-	 *
+	 * Create a new GameModel and initialize fields.
 	 */
 	public GameModel() {
 		this.playerCount = GameplayConstants.DEFAULT_PLAYER_COUNT;
 		this.startHealth = GameplayConstants.DEFAULT_HEALTH;
 		this.currentLevel = new LevelModel(0);
 		this.gameType = GameTypes.FFA;
+        this.turnTimer = GameplayConstants.MIN_TURN_TIMER;
 		createPlayers();
 		currentPlayer = players.get(0);
 		tombStones = new ArrayList<TombStoneModel>();
@@ -58,12 +60,11 @@ public class GameModel implements CollisionListener {
 
 		// Init time variables
 		gameTime = 0;
-		availablePlayerTime = GameplayConstants.TURN_TIME;
-
+		availablePlayerTime = turnTimer;
 	}
 
 	/**
-	 * Create the number of players
+	 * Create players for this game.
 	 */
 	private void createPlayers() {
 		players = new ArrayList<PlayerModel>(playerCount);
@@ -109,7 +110,7 @@ public class GameModel implements CollisionListener {
 	 */
 	public void nextPlayer() {
 		getCurrentPlayer().setSpeed(0, 0);
-		availablePlayerTime = GameplayConstants.TURN_TIME;
+		availablePlayerTime = turnTimer;
 		int playerNumber = players.indexOf(currentPlayer);
 		if (playerNumber == players.size() - 1) {
 			playerNumber = 0;
@@ -153,6 +154,7 @@ public class GameModel implements CollisionListener {
 	public void setPaused(boolean paused) {
 		this.paused = paused;
 	}
+
 	/**
 	 * Called when two Sprite collide.
 	 *
@@ -173,6 +175,12 @@ public class GameModel implements CollisionListener {
 			}
 		}
 	}
+	/**
+	 * Attack a with a projectile. If the player dies, add it to the kill list and make a new tomb stone.
+	 *
+	 * @param player     Player that was attacked
+	 * @param projectile Projectile used to attack
+	 */
 	private void attack(PlayerModel player, ProjectileModel projectile) {
 		player.attacked(projectile.getDirectDamage());
 		if (player.getHealth() <= 0) {
@@ -180,6 +188,13 @@ public class GameModel implements CollisionListener {
 			tombStones.add(new TombStoneModel(player.getName(), player.getPosition(), R.drawable.tombstone));
 		}
 	}
+
+	/**
+	 * Check whether the game has ended.
+	 *
+	 * @param playerList List of players left in the game
+	 * @return true if the game is over
+	 */
 	public boolean isGameOver(ArrayList<PlayerModel> playerList) {
 		Teams team = playerList.get(0).getTeam();
 		switch (gameType) {
@@ -245,7 +260,17 @@ public class GameModel implements CollisionListener {
 	public LevelModel getCurrentLevel() {
 		return currentLevel;
 	}
+	/**
+	 * @return A list of entities that will be killed.
+	 */
 	public ArrayList<EntityModel> getKill() {
 		return kill;
 	}
+
+    public int getTurnTimer(){
+        return this.turnTimer;
+    }
+    public void setTurnTimer(int newTimer){
+        this.turnTimer = newTimer;
+    }
 }

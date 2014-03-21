@@ -36,12 +36,11 @@ public class WeaponModel extends EntityModel {
 	protected EntityToken createToken(int image) {
 		return new WeaponToken(this, image);
 	}
+
 	@Override
 	public void update(float dt) {
 		super.update(dt);
 	}
-
-	// TODO
 
 	/**
 	 * @return The type of projectiles this weapon fires
@@ -50,11 +49,11 @@ public class WeaponModel extends EntityModel {
 		return projectileType;
 	}
 
-	public void setCold(boolean cold) {
-		this.cold = cold;
-	}
 	public boolean isCold() {
 		return cold;
+	}
+	public void setCold(boolean cold) {
+		this.cold = cold;
 	}
 
 	public void setAim(float x, float y) {
@@ -67,7 +66,9 @@ public class WeaponModel extends EntityModel {
 		return new Vector2(aim.getX(), aim.getY());
 //		return aim; // Using this one instead has an interesting effect!
 	}
+
 	public Weapons getWeapon() {
 		return weapon;
 	}
+
 }

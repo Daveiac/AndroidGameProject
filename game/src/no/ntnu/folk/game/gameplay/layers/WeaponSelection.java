@@ -20,12 +20,18 @@ public class WeaponSelection {
 	private ArrayList<Button> weaponButtons;
 	private ArrayList<WeaponModel> weaponList;
 
+	/**
+	 * @param model Game model. Used to get the current player.
+	 */
 	public WeaponSelection(GameModel model) {
 		this.model = model;
 		weaponList = new ArrayList<WeaponModel>();
 		makeWeaponButtons();
 	}
 
+	/**
+	 * Make the buttons used for selecting weapons.
+	 */
 	private void makeWeaponButtons() {
 		float weaponListX = ProgramConstants.getWindowSize()[0] * 0.92f;
 		float weaponListY = ProgramConstants.getWindowSize()[1] * 0.75f;
@@ -38,12 +44,21 @@ public class WeaponSelection {
 		}
 	}
 
+	/**
+	 * Set whether or not the menu is active.
+	 * Calls setEnabled for each button.
+	 *
+	 * @param active true to enable, false to disable
+	 */
 	public void setActive(boolean active) {
 		for (Button wb : weaponButtons) {
 			wb.setEnabled(active);
 		}
 	}
 
+	/**
+	 * @return The buttons used for selecting weapons
+	 */
 	public ArrayList<Button> getWeaponButtons() {
 		PlayerModel currentPlayer = model.getCurrentPlayer();
 		if (!currentPlayer.getWeaponList().equals(weaponList)) {
@@ -53,9 +68,15 @@ public class WeaponSelection {
 		return weaponButtons;
 	}
 
+	/**
+	 * Select weapon for the current player.
+	 *
+	 * @param button The button that was pressed. Contains data about the selected weapon.
+	 */
 	public void setWeapon(Button button) {
 		int index = weaponButtons.indexOf(button);
 		model.getCurrentPlayer().setCurrentWeapon(index);
 		setActive(false);
 	}
+
 }

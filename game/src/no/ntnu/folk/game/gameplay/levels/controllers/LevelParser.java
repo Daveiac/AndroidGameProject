@@ -26,6 +26,7 @@ public class LevelParser {
 					int[] size = {Integer.parseInt(sizeString[0]), Integer.parseInt(sizeString[1])};
 					lvlModel.setSize(size[0], size[1]);
 					grid = new LevelToken[size[1]][size[0]];
+					lvlModel.setGrid(grid);
 				} else if (line.length() != 0 && !line.startsWith("#")) {
 					y++;
 					for (int x = 0; x < line.length(); x++) {

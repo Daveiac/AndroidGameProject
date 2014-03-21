@@ -35,6 +35,7 @@ public class PreGameMenu extends MenuState {
 				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(gameModel.getPlayerCount())),
 				new MenuItem(MenuOptions.SELECT_MAP, position++, gameModel.getLevelName()),
 				new MenuItem(MenuOptions.HEALTH, position++, Integer.toString(gameModel.getStartHealth())),
+                new MenuItem(MenuOptions.TURN_TIMER,position++, Integer.toString(gameModel.getTurnTimer())),
 				new MenuItem(MenuOptions.GAME_TYPE, position++, gameModel.getGameType().toString()),
 				new MenuItem(MenuOptions.BACK, position++)
 		};
@@ -61,6 +62,10 @@ public class PreGameMenu extends MenuState {
 				increaseHealth();
 				menuItem.setData(Integer.toString(gameModel.getStartHealth()));
 				break;
+            case TURN_TIMER:
+                increaseTurnTimer();
+                menuItem.setData((Integer.toString(gameModel.getTurnTimer())));
+                break;
 			case GAME_TYPE:
 				selectGameType();
 				menuItem.setData(gameModel.getGameType().toString());
@@ -93,6 +98,15 @@ public class PreGameMenu extends MenuState {
 			gameModel.setStartHealth(gameModel.getStartHealth() + 100);
 		}
 	}
+
+    private void increaseTurnTimer(){
+        if(gameModel.getTurnTimer() == GameplayConstants.MAX_TURN_TIMER){
+            gameModel.setTurnTimer(GameplayConstants.MIN_TURN_TIMER);
+        }
+        else{
+            gameModel.setTurnTimer(gameModel.getTurnTimer() + 10);
+        }
+    }
 
 	/**
 	 * Circles through the available levels

@@ -6,9 +6,9 @@ import no.ntnu.folk.game.gameplay.entities.models.WeaponModel;
 import java.util.ArrayList;
 
 public enum Weapons {
-	HANDGUN(Projectiles.HANDGUNBULLET, R.drawable.handgun),
+	HANDGUN(Projectiles.HANDGUN_BULLET, R.drawable.handgun),
 	ROCKET_LAUNCHER(Projectiles.ROCKET, R.drawable.rocketlancher),
-	RIFLE(Projectiles.RIFLEBULLET, R.drawable.rifle);
+	RIFLE(Projectiles.RIFLE_BULLET, R.drawable.rifle);
 
 	private final Projectiles projectile;
 	private final int image;
