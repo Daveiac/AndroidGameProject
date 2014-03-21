@@ -33,6 +33,7 @@ public abstract class EntityToken {
 				-width / 2, height / 2
 		});
 		entityModel.setShape(r);
+		entityModel.setOffset(-width/2, -height/2);
 	}
 
 	/**
@@ -47,7 +48,7 @@ public abstract class EntityToken {
 	 * Update the transformation matrix for this token
 	 */
 	private void updateTransformationMatrix() {
-		transformation.setTranslate(-image.getWidth() / 2, -image.getHeight() / 2);   // Use the center of the sprite as center for drawing
+		transformation.setTranslate(entityModel.getOffset().getX(), entityModel.getOffset().getY());   // Use the center of the sprite as center for drawing
 		transformation.postScale(getScaleX(), getScaleY());
 		transformation.postRotate(getRotation());
 		transformation.postTranslate(entityModel.getX(), entityModel.getY()); // getX and getY is located in Sprite
@@ -111,4 +112,7 @@ public abstract class EntityToken {
 				'}';
 	}
 
+	public EntityModel getEntityModel() {
+		return entityModel;
+	}
 }
