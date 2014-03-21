@@ -28,15 +28,20 @@ public class GameLayer extends Layer {
 
 	@Override
 	public void update(float dt) {
-		PlayerModel player = model.getCurrentPlayer();
-		ArrayList<Direction> playerCollision = collidesWithWall(player);
-		player.setCollision(playerCollision);
-		if(playerCollision.contains(Direction.DOWN)) {
-			player.setAcceleration(0, 0);
-			player.setSpeed(player.getSpeed().getX(), 0);
-		} else {
-			player.setAcceleration(0, GameplayConstants.GRAVITY);
-			
+		for (PlayerModel player : model.getPlayers()) {
+			ArrayList<Direction> playerCollision = collidesWithWall(player);
+			player.setCollision(playerCollision);
+			if(playerCollision.contains(Direction.DOWN)) {
+				player.setAcceleration(0, 0);
+				player.setSpeed(player.getSpeed().getX(), 0);
+			} else {
+				player.setAcceleration(0, GameplayConstants.GRAVITY);
+			}
+		}
+		for (ProjectileModel projectile : model.getProjectiles()) {
+			if (!collidesWithWall(projectile).isEmpty()) {
+				model.getKill().add(projectile);
+			}
 		}
 	}
 
