@@ -19,8 +19,9 @@ public enum MenuOptions {
 	BACK("Back"),
 
 	DEV_MENU("Developer menu"),
+	UNLIMITED_FIRE("Unlimited fire"),
 	TOGGLE_DEBUG("Toggle debug"),
-	LEVEL_EDITOR("Level editor");
+	;
 
 	private final String label;
 

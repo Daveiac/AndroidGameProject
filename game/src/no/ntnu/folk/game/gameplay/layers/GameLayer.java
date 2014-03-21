@@ -96,8 +96,8 @@ public class GameLayer extends Layer {
 		int gridSize = GameplayConstants.GRID_SIZE;
 		float x = entity.getX();
 		float y = entity.getY();
-		float offX = -entity.getOffset().getX();
-		float offY = -entity.getOffset().getY();
+		float offX = entity.getOffset().getX();
+		float offY = entity.getOffset().getY();
 
 		LevelToken[][] grid = model.getCurrentLevel().getGrid();
 		if(grid == null) {

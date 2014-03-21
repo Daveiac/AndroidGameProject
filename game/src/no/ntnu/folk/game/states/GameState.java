@@ -2,6 +2,7 @@ package no.ntnu.folk.game.states;
 
 import android.graphics.Canvas;
 import no.ntnu.folk.game.Program;
+import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Projectiles;
 import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
@@ -116,7 +117,7 @@ public class GameState extends State {
 	 * Fires the weapon the current player is holding
 	 */
 	public void fireWeapon() {
-		if (model.getCurrentPlayer().getCurrentWeapon().isCold()) {
+		if (model.getCurrentPlayer().getCurrentWeapon().isCold() || ProgramConstants.isUnlimitedFire()) {
 			Projectiles projectileType = model.getCurrentPlayer().getCurrentWeapon().getProjectileType();
 			ProjectileModel projectile = new ProjectileModel(projectileType, model.getCurrentPlayer());
 			model.getProjectiles().add(projectile);
