@@ -99,28 +99,29 @@ public class GameLayer extends Layer {
 		}
 		ArrayList<Direction> directions = new ArrayList<Direction>();
 		//left wall
-		for (int i = (int)(y-offY+5)/gridSize; i < (int)(y+offY-5)/gridSize+1; i++) {
+		int offset = 5;
+		for (int i = (int)(y-offY+ offset)/gridSize; i < (int)(y+offY- offset)/gridSize+1; i++) {
 			if(grid[i][(int)(x-offX)/gridSize] != null && i > 0) {
 				directions.add(Direction.LEFT);
 				break;
 			}
 		}
 		//right wall
-		for (int i = (int)(y-offY+5)/gridSize; i < (int)(y+offY-5)/gridSize+1; i++) {
+		for (int i = (int)(y-offY+ offset)/gridSize; i < (int)(y+offY- offset)/gridSize+1; i++) {
 			if(grid[i][(int)(x+offX)/gridSize] != null && i > 0) {
 				directions.add(Direction.RIGHT);
 				break;
 			}
 		}
 		//floor
-		for (int i = (int)(x-offX+5)/gridSize; i < (int)(x+offX-5)/gridSize+1; i++) {
+		for (int i = (int)(x-offX+ offset)/gridSize; i < (int)(x+offX- offset)/gridSize+1; i++) {
 			if(grid[(int)(y+offY)/gridSize][i] != null && i > 0) {
 				directions.add(Direction.DOWN);
 				break;
 			}
 		}
 		//ceiling
-		for (int i = (int)(x-offX+5)/gridSize; i < (int)(x+offX-5)/gridSize+1; i++) {
+		for (int i = (int)(x-offX+ offset)/gridSize; i < (int)(x+offX- offset)/gridSize+1; i++) {
 			if(grid[(int)(y-offY)/gridSize][i] != null && i > 0) {
 				directions.add(Direction.UP);
 				break;
