@@ -12,5 +12,6 @@ public class GameplayConstants {
 	public static final int DEFAULT_PLAYER_COUNT = 2;
 	// TurnTime
 	public static final int TURN_TIME = 60; // turn time in seconds
+	// Size of the grid
 	public static final int GRID_SIZE = 50;
 }
