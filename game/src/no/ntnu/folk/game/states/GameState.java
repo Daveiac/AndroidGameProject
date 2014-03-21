@@ -14,6 +14,7 @@ import no.ntnu.folk.game.gameplay.models.GameModel;
 import no.ntnu.folk.game.menus.menuStates.EndGameMenu;
 import sheep.game.State;
 import sheep.game.World;
+import sheep.math.Vector2;
 
 import java.util.ArrayList;
 
@@ -120,7 +121,22 @@ public class GameState extends State {
 			ProjectileModel projectile = new ProjectileModel(projectileType, model.getCurrentPlayer());
 			model.getProjectiles().add(projectile);
 			projectile.addCollisionListener(model);
-			projectile.setSpeed(model.getCurrentPlayer().getAim());
+			
+			
+			
+			Vector2 aim = model.getCurrentPlayer().getAim();
+			double v_aim = Math.sqrt(Math.pow(aim.getX(), 2) + Math.pow(aim.getY(), 2));
+			
+			double v = model.getCurrentPlayer().getCurrentWeapon().getProjectileType().getMuzzleVelocity();
+			
+			float ratio = (float) (v / v_aim);
+			
+			
+			
+			
+			
+			projectile.setSpeed(aim.getMultiplied(ratio));
+			projectile.setAcceleration(0, 25);
 			model.getCurrentPlayer().getCurrentWeapon().setCold(false);
 		}
 	}
