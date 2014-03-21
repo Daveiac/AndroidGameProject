@@ -121,6 +121,9 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		if (!leftKeyPressed && !rightKeyPressed || leftKeyPressed && rightKeyPressed) { // If none, or both, keys are pressed
 			currentPlayer.setSpeed(0, currentPlayer.getSpeed().getY());
 		}
+		if (upKey.popPressed() && currentPlayer.getCollision().contains(Direction.DOWN)) {
+			currentPlayer.setSpeed(currentPlayer.getSpeed().getX(), -GameplayConstants.JUMP_FORCE);
+		}
 		if (fireKey.popPressed()) {
 			gameState.fireWeapon();
 		}
