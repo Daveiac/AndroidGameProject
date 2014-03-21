@@ -9,6 +9,7 @@ import sheep.graphics.Image;
 public class PlayerToken extends EntityToken {
 	private Image[] healthBar;
 	private float direction;
+	private Matrix healthBarMatrix;
 
 	/**
 	 * @param model PlayerModel for this token
@@ -24,24 +25,25 @@ public class PlayerToken extends EntityToken {
 				new Image(R.drawable.healtbar025),
 				new Image(R.drawable.healtbar010)
 		};
+		healthBarMatrix = new Matrix();
 	}
 
 	@Override
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
-		Matrix matrix = new Matrix();
-		matrix.postTranslate(entityModel.getX() - healthBar[0].getWidth() / 2, entityModel.getY() + image.getHeight() / 2);
-		int health = 100 * ((PlayerModel) entityModel).getHealth() / ((PlayerModel) entityModel).getStartHealth();
+		PlayerModel player = (PlayerModel) entityModel;
+		healthBarMatrix.setTranslate(player.getX() - healthBar[0].getWidth() / 2, player.getY() + image.getHeight() / 2);
+		int health = 100 * player.getHealth() / player.getStartHealth();
 		if (health < 10) {
-			healthBar[4].draw(canvas, matrix);
+			healthBar[4].draw(canvas, healthBarMatrix);
 		} else if (health <= 25) {
-			healthBar[3].draw(canvas, matrix);
+			healthBar[3].draw(canvas, healthBarMatrix);
 		} else if (health <= 50) {
-			healthBar[2].draw(canvas, matrix);
+			healthBar[2].draw(canvas, healthBarMatrix);
 		} else if (health <= 75) {
-			healthBar[1].draw(canvas, matrix);
+			healthBar[1].draw(canvas, healthBarMatrix);
 		} else if (health > 75) {
-			healthBar[0].draw(canvas, matrix);
+			healthBar[0].draw(canvas, healthBarMatrix);
 		}
 	}
 

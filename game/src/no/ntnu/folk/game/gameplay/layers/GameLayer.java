@@ -32,18 +32,8 @@ public class GameLayer extends Layer {
 		int[] windowSize = ProgramConstants.getWindowSize();
 		canvas.translate(-model.getCurrentPlayer().getX() + windowSize[0] / 2, -model.getCurrentPlayer().getY() + windowSize[1] / 2);
 
-		for (LevelToken levelToken : model.getLevelTokens()) {
-			levelToken.draw(canvas);
-		}
-		for (TombStoneModel tombStone : model.getTombStones()) {
-			tombStone.draw(canvas);
-		}
-		for (PlayerModel player : model.getPlayers()) {
-			player.draw(canvas);
-		}
-		for (ProjectileModel projectile : model.getProjectiles()) {
-			projectile.draw(canvas);
-		}
+		drawLevel(canvas);
+		drawEntities(canvas);
 
 		canvas.restore();
 
@@ -53,6 +43,32 @@ public class GameLayer extends Layer {
 				windowSize[1] * 0.1f,
 				Color.WHITE
 		);
+	}
+	/**
+	 * Draws the level.
+	 *
+	 * @param canvas The canvas the level is drawn on.
+	 */
+	private void drawLevel(Canvas canvas) {
+		for (LevelToken levelToken : model.getLevelTokens()) {
+			levelToken.draw(canvas);
+		}
+	}
+	/**
+	 * Draws entities.
+	 *
+	 * @param canvas The canvas the entities are drawn on.
+	 */
+	private void drawEntities(Canvas canvas) {
+		for (TombStoneModel tombStone : model.getTombStones()) {
+			tombStone.draw(canvas);
+		}
+		for (PlayerModel player : model.getPlayers()) {
+			player.draw(canvas);
+		}
+		for (ProjectileModel projectile : model.getProjectiles()) {
+			projectile.draw(canvas);
+		}
 	}
 
 }

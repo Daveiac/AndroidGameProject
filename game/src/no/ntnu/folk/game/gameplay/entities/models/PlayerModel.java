@@ -123,14 +123,26 @@ public class PlayerModel extends EntityModel {
 		return this.weaponList;
 	}
 
+	/**
+	 * Sets the aim for the player's weapon.
+	 *
+	 * @param x coordinate of touch input
+	 * @param y coordinate of touch input
+	 */
 	public void setAim(float x, float y) {
 		currentWeapon.setAim(x - getX(), y - getY());
 	}
 
+	/**
+	 * @return Vector for the direction of the aim.
+	 */
 	public Vector2 getAim() {
 		return currentWeapon.getAim();
 	}
 
+	/**
+	 * @param damage The amount subtracted from the player's health.
+	 */
 	public void attacked(int damage) {
 		health -= Math.abs(damage);
 	}

@@ -82,8 +82,10 @@ public class GameState extends State {
 			}
 		}
 	}
+	/**
+	 * Removes killed entities
+	 */
 	private void killEntities() {
-		ArrayList<PlayerModel> oldPlayers = model.getPlayers();
 		for (EntityModel entity : model.getKill()) {
 			if (entity instanceof ProjectileModel) {
 				model.getProjectiles().remove(entity);
@@ -91,6 +93,14 @@ public class GameState extends State {
 				model.getPlayers().remove(entity);
 			}
 		}
+		model.getKill().clear();
+		findNextPlayer();
+	}
+	/**
+	 * Set current player to the next player if the current player dies.
+	 */
+	private void findNextPlayer() {
+		ArrayList<PlayerModel> oldPlayers = model.getPlayers();
 		int i = oldPlayers.indexOf(model.getCurrentPlayer());
 		if (model.getPlayers().indexOf(model.getCurrentPlayer()) == -1) {
 			while (true) {
