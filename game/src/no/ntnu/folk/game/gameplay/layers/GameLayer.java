@@ -18,12 +18,14 @@ import android.graphics.Canvas;
 
 public class GameLayer extends Layer {
 	private GameModel model;
+	private float offset;
 
 	public GameLayer(GameModel model) {
 		this.model = model;
 		for (PlayerModel player : model.getPlayers()) {
 			player.addCollisionListener(model);
 		}
+		offset = GameplayConstants.GRID_SIZE/4;
 	}
 
 	@Override
@@ -99,7 +101,6 @@ public class GameLayer extends Layer {
 		}
 		ArrayList<Direction> directions = new ArrayList<Direction>();
 		//left wall
-		int offset = 5;
 		for (int i = (int)(y-offY+ offset)/gridSize; i < (int)(y+offY- offset)/gridSize+1; i++) {
 			if(grid[i][(int)(x-offX)/gridSize] != null && i > 0) {
 				directions.add(Direction.LEFT);
