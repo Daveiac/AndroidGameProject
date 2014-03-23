@@ -33,54 +33,12 @@ public class GameLayer extends Layer {
 		for (PlayerModel player : model.getPlayers()) {
 			ArrayList<Direction> playerCollision = collidesWithWall(player);
 			player.setCollision(playerCollision);
-			checkPlayerCollsision(player, playerCollision);
+			correctPosition(player, playerCollision);
 		}
 		for (ProjectileModel projectile : model.getProjectiles()) {
 			if (!collidesWithWall(projectile).isEmpty()) {
 				model.getKill().add(projectile);
 			}
-		}
-	}
-
-	private void checkPlayerCollsision(PlayerModel player,
-			ArrayList<Direction> playerCollision) {
-		boolean down = false;
-		float offX = player.getOffset().getX();
-		float offY = player.getOffset().getY();
-		int gridSize = GameplayConstants.GRID_SIZE;
-		float x;
-		float y;
-		for (Direction direction : playerCollision) {
-			switch (direction) {
-			case LEFT:
-				float leftX = player.getX() - offX;
-				x = ((int)(leftX / gridSize) + 1)*gridSize + offX - 1;
-				player.setPosition(x, player.getY());
-				break;
-			case RIGHT:
-				float rightX = player.getX() + offX;
-				x = ((int)(rightX / gridSize))*gridSize - offX + 1;
-				player.setPosition(x, player.getY());
-				break;
-			case UP:
-				float upY = player.getY() - offY;
-				y = ((int)(upY / gridSize) + 1)*gridSize + offY;
-				player.setPosition(player.getX(), y);
-				player.setSpeed(player.getSpeed().getX(), 0);
-				break;
-			case DOWN:
-				float downY = player.getY() + offY;
-				y = ((int)(downY / gridSize))*gridSize - offY + 1;
-				player.setPosition(player.getX(), y);
-				player.setAcceleration(player.getAcceleration().getX(), 0);
-				player.setSpeed(player.getSpeed().getX(), 0);
-				break;
-			default:
-				break;
-			}
-		}
-		if(!down) {
-			player.setAcceleration(player.getAcceleration().getX(), GameplayConstants.GRAVITY);
 		}
 	}
 
@@ -126,6 +84,43 @@ public class GameLayer extends Layer {
 		}
 		for (ProjectileModel projectile : model.getProjectiles()) {
 			projectile.draw(canvas);
+		}
+	}
+
+	private void correctPosition(EntityModel entity, ArrayList<Direction> collision) {
+		boolean down = false;
+		float offX = entity.getOffset().getX();
+		float offY = entity.getOffset().getY();
+		int gridSize = GameplayConstants.GRID_SIZE;
+		float x, y;
+		for (Direction direction : collision) {
+			switch (direction) {
+			case LEFT:
+				x = ((int)((entity.getX() - offX) / gridSize) + 1) * gridSize + offX - 1;
+				entity.setPosition(x, entity.getY());
+				break;
+			case RIGHT:
+				x = ((int)((entity.getX() + offX) / gridSize)) * gridSize - offX + 1;
+				entity.setPosition(x, entity.getY());
+				break;
+			case UP:
+				y = ((int)((entity.getY() - offY) / gridSize) + 1) * gridSize + offY;
+				entity.setPosition(entity.getX(), y);
+				entity.setSpeed(entity.getSpeed().getX(), 0);
+				break;
+			case DOWN:
+				down = true;
+				y = ((int)((entity.getY() + offY) / gridSize)) * gridSize - offY + 1;
+				entity.setPosition(entity.getX(), y);
+				entity.setAcceleration(entity.getAcceleration().getX(), 0);
+				entity.setSpeed(entity.getSpeed().getX(), 0);
+				break;
+			default:
+				break;
+			}
+		}
+		if(!down) {
+			entity.setAcceleration(entity.getAcceleration().getX(), GameplayConstants.GRAVITY);
 		}
 	}
 
