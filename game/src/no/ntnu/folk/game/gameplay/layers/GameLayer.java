@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 public class GameLayer extends Layer {
 	private GameModel model;
-	private float offset;
 	private ArrayList<Integer[]> lastingImageArrayList;
 
 	public GameLayer(GameModel model) {
@@ -29,7 +28,6 @@ public class GameLayer extends Layer {
 		for (PlayerModel player : model.getPlayers()) {
 			player.addCollisionListener(model);
 		}
-		offset = GameplayConstants.GRID_SIZE / 4;
 	}
 
 	@Override
@@ -171,6 +169,7 @@ public class GameLayer extends Layer {
 
 	private ArrayList<Direction> collidesWithWall(EntityModel entity) {
 		int gridSize = GameplayConstants.GRID_SIZE;
+		float offset = ((entity instanceof PlayerModel) ? (GameplayConstants.GRID_SIZE / 4) : 0);
 		float x = entity.getX();
 		float y = entity.getY();
 		float offX = entity.getOffset().getX();
