@@ -26,6 +26,7 @@ public class GameModel implements CollisionListener {
 	private ArrayList<ProjectileModel> projectiles;
 	private ArrayList<TombStoneModel> tombStones;
 	private ArrayList<EntityModel> kill;
+    private ArrayList<ProjectileModel> explosions;
 
 	// Players
 	private int playerCount;
@@ -57,6 +58,7 @@ public class GameModel implements CollisionListener {
 		tombStones = new ArrayList<TombStoneModel>();
 		kill = new ArrayList<EntityModel>();
 		projectiles = new ArrayList<ProjectileModel>();
+        explosions = new ArrayList<ProjectileModel>();
 
 		// Init time variables
 		gameTime = 0;
@@ -165,9 +167,11 @@ public class GameModel implements CollisionListener {
 	public void collided(Sprite a, Sprite b) {
 		if (a instanceof ProjectileModel) {
 			if (b instanceof PlayerModel) {
+                addExplosion((ProjectileModel)a);
 				kill.add((EntityModel) a);
 				attack((PlayerModel) b, (ProjectileModel) a);
 			}
+
 		}
 		if (a instanceof PlayerModel) {
 			if (b instanceof LevelToken) {
@@ -272,5 +276,13 @@ public class GameModel implements CollisionListener {
     }
     public void setTurnTimer(int newTimer){
         this.turnTimer = newTimer;
+    }
+    public void addExplosion(ProjectileModel model){
+        if(model.getExplosion() != -1){
+            explosions.add(model);
+        }
+    }
+    public ArrayList<ProjectileModel> getExplosions(){
+        return this.explosions;
     }
 }

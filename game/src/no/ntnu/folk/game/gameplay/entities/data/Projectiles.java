@@ -3,10 +3,10 @@ package no.ntnu.folk.game.gameplay.entities.data;
 import no.ntnu.folk.game.R;
 
 public enum Projectiles {
-	HANDGUN_BULLET(400, 15, 0, 0, R.drawable.bullet_small, R.drawable.explosion),
-	RIFLE_BULLET(500, 25, 0, 0, R.drawable.bullet_medium, R.drawable.explosion),
-	ROCKET(300, 35, 20, 10, R.drawable.bullet_big, R.drawable.explosion),
-	TURTLE(200, 50, 20, 10, R.drawable.turtle, R.drawable.explosion);
+	HANDGUN_BULLET(400, 15, 0, 0, R.drawable.bullet_small, -1),
+	RIFLE_BULLET(500, 25, 0, 0, R.drawable.bullet_medium, -1),
+	ROCKET(300, 35, 20, 100, R.drawable.bullet_big, R.drawable.explosion),
+	TURTLE(200, 50, 20, 100, R.drawable.turtle, R.drawable.explosion);
 
 	private final int muzzleVelocity;
 	private final int directDamage;

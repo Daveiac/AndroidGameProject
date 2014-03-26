@@ -2,6 +2,9 @@ package no.ntnu.folk.game.gameplay.layers;
 
 import java.util.ArrayList;
 
+import android.graphics.Matrix;
+import android.graphics.Picture;
+import android.graphics.Rect;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
@@ -13,15 +16,18 @@ import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import sheep.game.Layer;
 import sheep.graphics.Color;
+import sheep.graphics.Image;
 import sheep.math.BoundingBox;
 import android.graphics.Canvas;
 
 public class GameLayer extends Layer {
 	private GameModel model;
 	private float offset;
+    private ArrayList<Integer[]> lastingImageArrayList;
 
 	public GameLayer(GameModel model) {
 		this.model = model;
+        lastingImageArrayList = new ArrayList<Integer[]>();
 		for (PlayerModel player : model.getPlayers()) {
 			player.addCollisionListener(model);
 		}
@@ -34,9 +40,24 @@ public class GameLayer extends Layer {
 			ArrayList<Direction> playerCollision = collidesWithWall(player);
 			player.setCollision(playerCollision);
 			correctPosition(player, playerCollision);
+            if(!this.model.getExplosions().isEmpty()){
+                for(ProjectileModel pm : this.model.getExplosions()){
+                    float exploLeft = pm.getPosition().getX()-pm.getAreaDamageRange();
+                    float exploTop = pm.getPosition().getY()-pm.getAreaDamageRange();
+                    float exploRight = pm.getPosition().getX()+pm.getAreaDamageRange();
+                    float exploBottom = pm.getPosition().getY()+pm.getAreaDamageRange();
+                    BoundingBox aoeDamage = new BoundingBox(new Rect((int)exploLeft,(int)exploTop,(int)exploRight,(int)exploBottom));
+                    if(aoeDamage.contains(player.getX(),player.getY())){
+                        player.attacked(pm.getAreaDamage());
+                    }
+            }
+
+            }
 		}
+        model.getExplosions().clear();
 		for (ProjectileModel projectile : model.getProjectiles()) {
 			if (!collidesWithWall(projectile).isEmpty()) {
+                model.addExplosion(projectile);
 				model.getKill().add(projectile);
 			}
 		}
@@ -50,6 +71,7 @@ public class GameLayer extends Layer {
 
 		drawLevel(canvas);
 		drawEntities(canvas);
+        drawLastingImages(canvas);
 
 		canvas.restore();
 
@@ -60,6 +82,18 @@ public class GameLayer extends Layer {
 				Color.WHITE
 		);
 	}
+
+    public void drawLastingImages(Canvas canvas){
+        for (Integer[] o : lastingImageArrayList){
+            Image i = new Image(o[0]);
+            i.draw(canvas,o[1],o[2]);
+            o[3]--;
+            if(o[3] < 0){
+                lastingImageArrayList.remove(o);
+            }
+        }
+    }
+
 	/**
 	 * Draws the level.
 	 *
@@ -85,6 +119,20 @@ public class GameLayer extends Layer {
 		for (ProjectileModel projectile : model.getProjectiles()) {
 			projectile.draw(canvas);
 		}
+        if(!this.model.getExplosions().isEmpty()){
+        for(ProjectileModel model : this.model.getExplosions()) {
+            Image i = new Image(model.getExplosion());
+            float x = model.getX() - i.getWidth()/2;
+            float y = model.getY() - i.getHeight()/2;
+            Integer[] o = new Integer[4];
+            o[0] = model.getExplosion();
+            o[1] = (int)x;
+            o[2] = (int)y;
+            o[3] = 5;
+            lastingImageArrayList.add(o);
+            i.draw(canvas,x,y);
+        }
+        }
 	}
 
 	private void correctPosition(EntityModel entity, ArrayList<Direction> collision) {

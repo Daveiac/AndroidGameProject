@@ -115,4 +115,7 @@ public abstract class EntityToken {
 	public EntityModel getEntityModel() {
 		return entityModel;
 	}
+    public Matrix getTransformation(){
+        return this.transformation;
+    }
 }
