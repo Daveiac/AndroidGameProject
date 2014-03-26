@@ -2,6 +2,8 @@ package no.ntnu.folk.game.gameplay.layers;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import no.ntnu.folk.game.Program;
+import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
@@ -67,18 +69,51 @@ public class GameLayer extends Layer {
 		drawLevel(canvas);
 		drawEntities(canvas);
 		drawLastingImages(canvas);
+        drawTimer(canvas);
 
-		canvas.restore();
+        canvas.restore();
+    }
 
-		canvas.drawText(
-				"Time left: " + ((int) model.playerTimeLeft()),
-				windowSize[0] * 0.9f,
-				windowSize[1] * 0.1f,
-				Color.WHITE
-		);
-	}
+    private void drawTimer(Canvas canvas){
+        int timeLeft = (int)model.playerTimeLeft();
+        if (timeLeft > 6){
+            canvas.drawText(
+                    ""+timeLeft,
+                    model.getCurrentPlayer().getX(),
+                    model.getCurrentPlayer().getY() - ProgramConstants.getWindowSize()[0] * 0.1f,
+                    Color.WHITE
+            );
+        }
+        if(timeLeft < 6){
+            Image i;
+            float x = model.getCurrentPlayer().getX();
+            float y = model.getCurrentPlayer().getY() - ProgramConstants.getWindowSize()[0] * 0.1f;
+            switch (timeLeft){
+                case 5:
+                    i = new Image(R.drawable.five);
+                    i.draw(canvas, x - i.getWidth()/2, y);
+                    break;
+                case 4:
+                    i = new Image(R.drawable.four);
+                    i.draw(canvas, x - i.getWidth()/2, y);
+                    break;
+                case 3:
+                    i = new Image(R.drawable.three);
+                    i.draw(canvas, x - i.getWidth()/2, y);
+                    break;
+                case 2:
+                    i = new Image(R.drawable.two);
+                    i.draw(canvas, x - i.getWidth()/2, y);
+                    break;
+                case 1:
+                    i = new Image(R.drawable.one);
+                    i.draw(canvas, x - i.getWidth()/2, y);
+                    break;
+            }
+        }
+    }
 
-	public void drawLastingImages(Canvas canvas) {
+	private void drawLastingImages(Canvas canvas) {
 		for (Integer[] o : lastingImageArrayList) {
 			Image i = new Image(o[0]);
 			i.draw(canvas, o[1], o[2]);
@@ -123,7 +158,7 @@ public class GameLayer extends Layer {
 				o[0] = model.getExplosion();
 				o[1] = (int) x;
 				o[2] = (int) y;
-				o[3] = 5;
+				o[3] = GameplayConstants.EXPLOSION_LENGTH;
 				lastingImageArrayList.add(o);
 				i.draw(canvas, x, y);
 			}

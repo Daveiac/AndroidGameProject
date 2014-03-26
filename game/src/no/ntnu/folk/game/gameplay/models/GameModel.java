@@ -43,7 +43,6 @@ public class GameModel implements CollisionListener {
 	private float availablePlayerTime;
 	private boolean paused;
 	private int turnTimer;
-
 	/**
 	 * Create a new GameModel and initialize fields.
 	 */
