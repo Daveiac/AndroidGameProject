@@ -44,7 +44,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	private WeaponSelection weaponSelection;
 	private ArrayList<Button> weaponButtons;
 
-    private float buttonOverlayHeight;
+	private float buttonOverlayHeight;
 
 	private SparseArray<PointF> activePointers;
 
@@ -103,11 +103,11 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				}
 			}
 			if (!buttonPressed) {
-                if (point.y < buttonOverlayHeight) {
-                    int[] windowSize = ProgramConstants.getWindowSize();
-                    currentPlayer.setAim(point.x + currentPlayer.getX() - windowSize[0] / 2, point.y + currentPlayer.getY() - windowSize[1] / 2);
-                }
-            }
+				if (point.y < buttonOverlayHeight) {
+					int[] windowSize = ProgramConstants.getWindowSize();
+					currentPlayer.setAim(point.x + currentPlayer.getX() - windowSize[0] / 2, point.y + currentPlayer.getY() - windowSize[1] / 2);
+				}
+			}
 		}
 
 		boolean leftKeyPressed;
@@ -142,7 +142,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
-        drawOverlay(canvas);
+		drawOverlay(canvas);
 		drawButtons(canvas);
 		drawAim(canvas);
 		for (Button button : weaponButtons) {
@@ -151,24 +151,24 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		unpauseButton.draw(canvas);
 	}
 
-    private void drawOverlay(Canvas canvas){
-        int ws[] = ProgramConstants.getWindowSize();
-        buttonOverlayHeight = ws[1]*0.8f;
-        float buttonOverlayLeft = 0;
-        float buttonOverlayBot = ws[1];
-        float buttonOverlayRight = ws[0];
-        Paint p = new Paint();
-        p.setColor(Color.BLACK);
-        canvas.drawRect(buttonOverlayLeft,buttonOverlayHeight,buttonOverlayRight,buttonOverlayBot, p);
-    }
+	private void drawOverlay(Canvas canvas) {
+		int ws[] = ProgramConstants.getWindowSize();
+		buttonOverlayHeight = ws[1] * 0.8f;
+		float buttonOverlayLeft = 0;
+		float buttonOverlayBot = ws[1];
+		float buttonOverlayRight = ws[0];
+		Paint p = new Paint();
+		p.setColor(Color.BLACK);
+		canvas.drawRect(buttonOverlayLeft, buttonOverlayHeight, buttonOverlayRight, buttonOverlayBot, p);
+	}
 
 	private void drawAim(Canvas canvas) {
 		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
 		float aimX = currentPlayer.getAim().getX() + ProgramConstants.getWindowSize()[0] / 2;
 		float aimY = currentPlayer.getAim().getY() + ProgramConstants.getWindowSize()[1] / 2;
-        if(aimY > buttonOverlayHeight){
-            aimY = buttonOverlayHeight;
-        }
+		if (aimY > buttonOverlayHeight) {
+			aimY = buttonOverlayHeight;
+		}
 		aimImage.draw(canvas, aimX - aimImage.getWidth() / 2, aimY - aimImage.getHeight() / 2);
 	}
 	private void drawButtons(Canvas canvas) {

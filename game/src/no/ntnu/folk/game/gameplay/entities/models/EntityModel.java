@@ -1,12 +1,12 @@
 package no.ntnu.folk.game.gameplay.entities.models;
 
-import java.util.ArrayList;
-
 import android.graphics.Canvas;
 import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
 import no.ntnu.folk.game.gameplay.levels.Direction;
 import sheep.game.Sprite;
 import sheep.math.Vector2;
+
+import java.util.ArrayList;
 
 public abstract class EntityModel extends Sprite {
 	private final EntityToken entityToken;

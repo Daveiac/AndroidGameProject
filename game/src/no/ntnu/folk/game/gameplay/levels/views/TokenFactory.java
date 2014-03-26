@@ -1,7 +1,7 @@
 package no.ntnu.folk.game.gameplay.levels.views;
 
 public class TokenFactory {
-	
+
 	@Deprecated
 	public static LevelToken createToken(String name) {
 		LevelToken token = null;

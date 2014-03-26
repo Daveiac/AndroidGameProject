@@ -7,7 +7,7 @@ public enum MenuOptions {
 	HEALTH("Max health"),
 	GAME_TYPE("Game type"),
 	START_GAME("Start game"),
-    TURN_TIMER("Turn timer"),
+	TURN_TIMER("Turn timer"),
 
 	SAVE_MENU("Save menu"),
 	SAVE_GAME("Save game"),

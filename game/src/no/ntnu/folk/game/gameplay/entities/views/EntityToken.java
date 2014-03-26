@@ -5,7 +5,6 @@ import android.graphics.Matrix;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
 import sheep.collision.Polygon;
-import sheep.collision.Rectangle;
 import sheep.collision.Shape;
 import sheep.graphics.Color;
 import sheep.graphics.Image;
@@ -33,7 +32,7 @@ public abstract class EntityToken {
 				-width / 2, height / 2
 		});
 		entityModel.setShape(r);
-		entityModel.setOffset(width/2, height/2);
+		entityModel.setOffset(width / 2, height / 2);
 	}
 
 	/**
@@ -115,7 +114,7 @@ public abstract class EntityToken {
 	public EntityModel getEntityModel() {
 		return entityModel;
 	}
-    public Matrix getTransformation(){
-        return this.transformation;
-    }
+	public Matrix getTransformation() {
+		return this.transformation;
+	}
 }

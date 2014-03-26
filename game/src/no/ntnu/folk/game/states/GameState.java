@@ -122,20 +122,16 @@ public class GameState extends State {
 			ProjectileModel projectile = new ProjectileModel(projectileType, model.getCurrentPlayer());
 			model.getProjectiles().add(projectile);
 			projectile.addCollisionListener(model);
-			
-			
-			
+
+
 			Vector2 aim = model.getCurrentPlayer().getAim();
 			double v_aim = Math.sqrt(Math.pow(aim.getX(), 2) + Math.pow(aim.getY(), 2));
-			
+
 			double v = model.getCurrentPlayer().getCurrentWeapon().getProjectileType().getMuzzleVelocity();
-			
+
 			float ratio = (float) (v / v_aim);
-			
-			
-			
-			
-			
+
+
 			projectile.setSpeed(aim.getMultiplied(ratio));
 			projectile.setAcceleration(0, 50);
 			model.getCurrentPlayer().getCurrentWeapon().setCold(false);

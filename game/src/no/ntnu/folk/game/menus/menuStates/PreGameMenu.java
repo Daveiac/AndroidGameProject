@@ -35,7 +35,7 @@ public class PreGameMenu extends MenuState {
 				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(gameModel.getPlayerCount()) + "players"),
 				new MenuItem(MenuOptions.SELECT_MAP, position++, gameModel.getLevelName()),
 				new MenuItem(MenuOptions.HEALTH, position++, Integer.toString(gameModel.getStartHealth()) + "HP"),
-                new MenuItem(MenuOptions.TURN_TIMER,position++, Integer.toString(gameModel.getTurnTimer()) + "seconds"),
+				new MenuItem(MenuOptions.TURN_TIMER, position++, Integer.toString(gameModel.getTurnTimer()) + "seconds"),
 				new MenuItem(MenuOptions.GAME_TYPE, position++, gameModel.getGameType().toString()),
 				new MenuItem(MenuOptions.BACK, position++)
 		};
@@ -62,10 +62,10 @@ public class PreGameMenu extends MenuState {
 				increaseHealth();
 				menuItem.setData(Integer.toString(gameModel.getStartHealth()) + "HP");
 				break;
-            case TURN_TIMER:
-                increaseTurnTimer();
-                menuItem.setData((Integer.toString(gameModel.getTurnTimer()) + "seconds"));
-                break;
+			case TURN_TIMER:
+				increaseTurnTimer();
+				menuItem.setData((Integer.toString(gameModel.getTurnTimer()) + "seconds"));
+				break;
 			case GAME_TYPE:
 				selectGameType();
 				menuItem.setData(gameModel.getGameType().toString());
@@ -99,14 +99,13 @@ public class PreGameMenu extends MenuState {
 		}
 	}
 
-    private void increaseTurnTimer(){
-        if(gameModel.getTurnTimer() == GameplayConstants.MAX_TURN_TIMER){
-            gameModel.setTurnTimer(GameplayConstants.MIN_TURN_TIMER);
-        }
-        else{
-            gameModel.setTurnTimer(gameModel.getTurnTimer() + 5);
-        }
-    }
+	private void increaseTurnTimer() {
+		if (gameModel.getTurnTimer() == GameplayConstants.MAX_TURN_TIMER) {
+			gameModel.setTurnTimer(GameplayConstants.MIN_TURN_TIMER);
+		} else {
+			gameModel.setTurnTimer(gameModel.getTurnTimer() + 5);
+		}
+	}
 
 	/**
 	 * Circles through the available levels

@@ -1,11 +1,11 @@
 package no.ntnu.folk.game.gameplay.models;
 
-import java.util.ArrayList;
-
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.levels.controllers.LevelController;
 import no.ntnu.folk.game.gameplay.levels.controllers.LevelParser;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
+
+import java.util.ArrayList;
 
 /**
  * Model of a single level. It is created with its name as a unique ID.
@@ -32,7 +32,7 @@ public class LevelModel {
 		startPositions = new ArrayList<int[]>();
 		levelTokens = new ArrayList<LevelToken>();
 		LevelParser.parseLevel(this);
-    }
+	}
 
 	public int getLevel() {
 		return levelId;
@@ -52,16 +52,16 @@ public class LevelModel {
 		return startPositions;
 	}
 
-    public LevelToken[][] getGrid(){
-        return this.grid;
-    }
-    
-    public void setGrid(LevelToken[][] grid) {
-    	this.grid = grid;
-    }
+	public LevelToken[][] getGrid() {
+		return this.grid;
+	}
 
-    public ArrayList<LevelToken> getLevelTokens() {
-    	return levelTokens;
-    }
+	public void setGrid(LevelToken[][] grid) {
+		this.grid = grid;
+	}
+
+	public ArrayList<LevelToken> getLevelTokens() {
+		return levelTokens;
+	}
 
 }

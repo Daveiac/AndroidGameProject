@@ -1,7 +1,6 @@
 package no.ntnu.folk.game.gameplay.entities.models;
 
-import java.util.ArrayList;
-
+import android.graphics.Canvas;
 import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
@@ -10,7 +9,8 @@ import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
 import no.ntnu.folk.game.gameplay.entities.views.PlayerToken;
 import sheep.graphics.Image;
 import sheep.math.Vector2;
-import android.graphics.Canvas;
+
+import java.util.ArrayList;
 
 /**
  * EntityModel for the player in the game. Use this as a entityModel to PlayerTokens.

@@ -1,11 +1,11 @@
 package no.ntnu.folk.game.gameplay.entities.views;
 
-import java.util.Arrays;
-
-import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
-import sheep.graphics.Color;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
+import sheep.graphics.Color;
+
+import java.util.Arrays;
 
 public class PlayerToken extends EntityToken {
 	private float direction;
@@ -26,12 +26,12 @@ public class PlayerToken extends EntityToken {
 		Matrix matrix = new Matrix();
 		float x = entityModel.getX();
 		float height = image.getHeight();
-		float width = image.getWidth() /  2;
+		float width = image.getWidth() / 2;
 		float y = entityModel.getY();
 		matrix.postTranslate(x, y - height);
 		float health = ((PlayerModel) entityModel).getHealth() * 1.0f / ((PlayerModel) entityModel).getStartHealth();
-		canvas.drawRect(x - width - healthbarFrame , y - height + healthbarFrame, x + width + healthbarFrame, y - height*(1.25f) - healthbarFrame, Color.BLACK);
-		canvas.drawRect(x - width, y - height, (x - width) + width*health*2, y - height*(1.25f), Color.RED);
+		canvas.drawRect(x - width - healthbarFrame, y - height + healthbarFrame, x + width + healthbarFrame, y - height * (1.25f) - healthbarFrame, Color.BLACK);
+		canvas.drawRect(x - width, y - height, (x - width) + width * health * 2, y - height * (1.25f), Color.RED);
 	}
 
 	@Override
