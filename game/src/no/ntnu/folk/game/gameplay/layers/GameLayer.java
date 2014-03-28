@@ -15,6 +15,7 @@ import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import sheep.game.Layer;
 import sheep.graphics.Color;
+import sheep.graphics.Font;
 import sheep.graphics.Image;
 import sheep.math.BoundingBox;
 
@@ -85,31 +86,9 @@ public class GameLayer extends Layer {
             );
         }
         if(timeLeft < 6){
-            Image i;
             float x = model.getCurrentPlayer().getX();
             float y = model.getCurrentPlayer().getY() - ProgramConstants.getWindowSize()[0] * 0.1f;
-            switch (timeLeft){
-                case 5:
-                    i = new Image(R.drawable.five);
-                    i.draw(canvas, x - i.getWidth()/2, y);
-                    break;
-                case 4:
-                    i = new Image(R.drawable.four);
-                    i.draw(canvas, x - i.getWidth()/2, y);
-                    break;
-                case 3:
-                    i = new Image(R.drawable.three);
-                    i.draw(canvas, x - i.getWidth()/2, y);
-                    break;
-                case 2:
-                    i = new Image(R.drawable.two);
-                    i.draw(canvas, x - i.getWidth()/2, y);
-                    break;
-                case 1:
-                    i = new Image(R.drawable.one);
-                    i.draw(canvas, x - i.getWidth()/2, y);
-                    break;
-            }
+            canvas.drawText(""+timeLeft, x, y, Font.WHITE_SANS_BOLD_20);
         }
     }
 
