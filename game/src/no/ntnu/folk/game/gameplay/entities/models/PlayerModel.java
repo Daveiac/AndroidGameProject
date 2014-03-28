@@ -97,13 +97,6 @@ public class PlayerModel extends EntityModel {
 	}
 
 	/**
-	 * @param health Set health to this player
-	 */
-	public void setHealth(int health) {
-		this.health = health;
-	}
-
-	/**
 	 * @return The weapon that is currently active for this player
 	 */
 	public WeaponModel getCurrentWeapon() {
