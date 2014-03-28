@@ -118,24 +118,35 @@ public class GameState extends State {
 	 */
 	public void fireWeapon() {
 		if (model.getCurrentPlayer().getCurrentWeapon().isCold() || ProgramConstants.isUnlimitedFire()) {
-			Projectiles projectileType = model.getCurrentPlayer().getCurrentWeapon().getProjectileType();
-			ProjectileModel projectile = new ProjectileModel(projectileType, model.getCurrentPlayer());
+			ProjectileModel projectile = makeProjectile();
 			model.getProjectiles().add(projectile);
 			projectile.addCollisionListener(model);
 
+			Vector2 aim = setAimMagnitude();
 
-			Vector2 aim = model.getCurrentPlayer().getAim();
-			double v_aim = Math.sqrt(Math.pow(aim.getX(), 2) + Math.pow(aim.getY(), 2));
-
-			double v = model.getCurrentPlayer().getCurrentWeapon().getProjectileType().getMuzzleVelocity();
-
-			float ratio = (float) (v / v_aim);
-
-
-			projectile.setSpeed(aim.getMultiplied(ratio));
+			projectile.setSpeed(aim);
 			projectile.setAcceleration(0, 50);
 			model.getCurrentPlayer().getCurrentWeapon().setCold(false);
 		}
+	}
+
+	/**
+	 * @return A new projectile based on current player
+	 */
+	private ProjectileModel makeProjectile() {
+		Projectiles projectileType = model.getCurrentPlayer().getCurrentWeapon().getProjectileType();
+		return new ProjectileModel(projectileType, model.getCurrentPlayer());
+	}
+
+	/**
+	 * @return Aim vector with correct magnitude
+	 */
+	private Vector2 setAimMagnitude() {
+		Vector2 aim = model.getCurrentPlayer().getAim();
+		double v_aim = Math.sqrt(Math.pow(aim.getX(), 2) + Math.pow(aim.getY(), 2));
+		double v = model.getCurrentPlayer().getCurrentWeapon().getProjectileType().getMuzzleVelocity();
+		float ratio = (float) (v / v_aim);
+		return aim.getMultiplied(ratio);
 	}
 
 }
