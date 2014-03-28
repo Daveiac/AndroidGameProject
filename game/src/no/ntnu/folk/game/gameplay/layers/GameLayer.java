@@ -48,6 +48,10 @@ public class GameLayer extends Layer {
 					BoundingBox aoeDamage = new BoundingBox(new Rect((int) exploLeft, (int) exploTop, (int) exploRight, (int) exploBottom));
 					if (aoeDamage.contains(player.getX()-player.getOffset().getX(), player.getY()-player.getOffset().getY())) {
 						player.attacked(pm.getAreaDamage());
+						if (player.getHealth() <= 0) {
+							model.getKill().add(player);
+							model.getTombStones().add(new TombStoneModel(player.getName(), player.getPosition(), R.drawable.tombstone));
+						}
 					}
 				}
 			}
@@ -96,14 +100,16 @@ public class GameLayer extends Layer {
     }
 
 	private void drawLastingImages(Canvas canvas) {
+        ArrayList<Integer[]> remove = new ArrayList<Integer[]>();
 		for (Integer[] o : lastingImageArrayList) {
 			Image i = new Image(o[0]);
 			i.draw(canvas, o[1], o[2]);
 			o[3]--;
 			if (o[3] < 0) {
-				lastingImageArrayList.remove(o);
+				remove.add(o);
 			}
 		}
+        lastingImageArrayList.removeAll(remove);
 	}
 
 	/**
