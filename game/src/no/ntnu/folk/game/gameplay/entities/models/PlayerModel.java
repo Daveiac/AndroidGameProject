@@ -1,13 +1,11 @@
 package no.ntnu.folk.game.gameplay.entities.models;
 
 import android.graphics.Canvas;
-import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
 import no.ntnu.folk.game.gameplay.entities.data.Weapons;
 import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
 import no.ntnu.folk.game.gameplay.entities.views.PlayerToken;
-import sheep.graphics.Image;
 import sheep.math.Vector2;
 
 import java.util.ArrayList;
@@ -23,7 +21,9 @@ public class PlayerModel extends EntityModel {
 	private int health;
 	private ArrayList<WeaponModel> weaponList;
 	private WeaponModel currentWeapon;
-	private Image tombStone;
+
+	private boolean cold;
+	private boolean firedWeapon;
 
 	/**
 	 * @param name     Constant name for the player during gameplay, will be used to identify different players
@@ -41,7 +41,8 @@ public class PlayerModel extends EntityModel {
 		addGroup(team.ordinal());
 		addMask(team.ordinal());
 		setAcceleration(0, GameplayConstants.ACCELERATION);
-		tombStone = new Image(R.drawable.tombstone);
+		cold = true;
+		firedWeapon = false;
 	}
 
 	/**
@@ -65,14 +66,6 @@ public class PlayerModel extends EntityModel {
 	}
 
 	/**
-	 * @param weapon The weapon you want to add to the list of weapons for this player
-	 */
-	public void addToWeaponList(WeaponModel weapon) {
-		if (!weaponList.contains(weapon)) {
-			weaponList.add(weapon);
-		}
-	}
-	/**
 	 * @return player team
 	 */
 	public Teams getTeam() {
@@ -91,13 +84,6 @@ public class PlayerModel extends EntityModel {
 	 */
 	public int getHealth() {
 		return health;
-	}
-
-	/**
-	 * @param health Set health to this player
-	 */
-	public void setHealth(int health) {
-		this.health = health;
 	}
 
 	/**
@@ -130,7 +116,7 @@ public class PlayerModel extends EntityModel {
 	 * @param y coordinate of touch input
 	 */
 	public void setAim(float x, float y) {
-		currentWeapon.setAim(x - getX(), y - getY());
+		currentWeapon.setAim(x, y);
 	}
 
 	/**
@@ -147,4 +133,18 @@ public class PlayerModel extends EntityModel {
 		health -= Math.abs(damage);
 	}
 
+	public boolean isCold() {
+		return cold;
+	}
+	public void setCold(boolean cold) {
+		this.cold = cold;
+	}
+
+	public boolean isFiredWeapon() {
+		return firedWeapon;
+	}
+
+	public void setFiredWeapon(boolean firedWeapon) {
+		this.firedWeapon = firedWeapon;
+	}
 }

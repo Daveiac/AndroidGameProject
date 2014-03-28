@@ -1,6 +1,5 @@
 package no.ntnu.folk.game.gameplay.models;
 
-import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameTypes;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
@@ -9,8 +8,6 @@ import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import no.ntnu.folk.game.gameplay.entities.models.TombStoneModel;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
-import sheep.collision.CollisionListener;
-import sheep.game.Sprite;
 import sheep.math.Vector2;
 
 import java.util.ArrayList;
@@ -20,12 +17,13 @@ import java.util.ArrayList;
  *
  * @author Rune
  */
-public class GameModel implements CollisionListener {
+public class GameModel {
 	// Entity lists
 	private ArrayList<PlayerModel> players;
 	private ArrayList<ProjectileModel> projectiles;
 	private ArrayList<TombStoneModel> tombStones;
 	private ArrayList<EntityModel> kill;
+	private ArrayList<ProjectileModel> explosions;
 
 	// Players
 	private int playerCount;
@@ -41,8 +39,9 @@ public class GameModel implements CollisionListener {
 	private float gameTime;
 	private float availablePlayerTime;
 	private boolean paused;
-    private int turnTimer;
+	private int turnTimer;
 
+	private String winnerText;
 	/**
 	 * Create a new GameModel and initialize fields.
 	 */
@@ -51,12 +50,13 @@ public class GameModel implements CollisionListener {
 		this.startHealth = GameplayConstants.DEFAULT_HEALTH;
 		this.currentLevel = new LevelModel(0);
 		this.gameType = GameTypes.FFA;
-        this.turnTimer = GameplayConstants.MIN_TURN_TIMER;
+		this.turnTimer = GameplayConstants.MIN_TURN_TIMER;
 		createPlayers();
 		currentPlayer = players.get(0);
 		tombStones = new ArrayList<TombStoneModel>();
 		kill = new ArrayList<EntityModel>();
 		projectiles = new ArrayList<ProjectileModel>();
+		explosions = new ArrayList<ProjectileModel>();
 
 		// Init time variables
 		gameTime = 0;
@@ -118,7 +118,7 @@ public class GameModel implements CollisionListener {
 			playerNumber++;
 		}
 		currentPlayer = players.get(playerNumber);
-		currentPlayer.getCurrentWeapon().setCold(true);
+		currentPlayer.setCold(true);
 	}
 
 	/**
@@ -156,60 +156,43 @@ public class GameModel implements CollisionListener {
 	}
 
 	/**
-	 * Called when two Sprite collide.
-	 *
-	 * @param a The first Sprite (the sprite being listened to).
-	 * @param b The other Sprite.
-	 */
-	@Override
-	public void collided(Sprite a, Sprite b) {
-		if (a instanceof ProjectileModel) {
-			if (b instanceof PlayerModel) {
-				kill.add((EntityModel) a);
-				attack((PlayerModel) b, (ProjectileModel) a);
-			}
-		}
-		if (a instanceof PlayerModel) {
-			if (b instanceof LevelToken) {
-				a.setSpeed(a.getSpeed().getX(), 0);
-			}
-		}
-	}
-	/**
-	 * Attack a with a projectile. If the player dies, add it to the kill list and make a new tomb stone.
-	 *
-	 * @param player     Player that was attacked
-	 * @param projectile Projectile used to attack
-	 */
-	private void attack(PlayerModel player, ProjectileModel projectile) {
-		player.attacked(projectile.getDirectDamage());
-		if (player.getHealth() <= 0) {
-			kill.add(player);
-			tombStones.add(new TombStoneModel(player.getName(), player.getPosition(), R.drawable.tombstone));
-		}
-	}
-
-	/**
 	 * Check whether the game has ended.
 	 *
-	 * @param playerList List of players left in the game
 	 * @return true if the game is over
 	 */
-	public boolean isGameOver(ArrayList<PlayerModel> playerList) {
-		Teams team = playerList.get(0).getTeam();
+	public boolean isGameOver() {
+		if (players.isEmpty()) {
+			winnerText = "All players are dead, game was a draw";
+			return true;
+		}
+		Teams team = players.get(0).getTeam();
+		boolean isOver = false;
 		switch (gameType) {
 			case FFA:
-				return players.size() <= 1;
+				isOver = players.size() <= 1;
+				break;
 			case TEAMS:
-				for (PlayerModel p : playerList) {
+				boolean sameTeams = true;
+				for (PlayerModel p : players) {
 					if (!team.equals(p.getTeam())) {
-						return false;
+						sameTeams = false;
 					}
 				}
-				return true;
+				if (sameTeams) {
+					isOver = true;
+				}
+				break;
 			default:
-				return false;
+				isOver = false;
 		}
+		if (isOver) {
+			if (gameType == GameTypes.FFA) {
+				winnerText = "Winner is : " + players.get(0).getName();
+			} else {
+				winnerText = "Winner is team: " + team.toString();
+			}
+		}
+		return isOver;
 	}
 
 	public int getPlayerCount() {
@@ -267,10 +250,21 @@ public class GameModel implements CollisionListener {
 		return kill;
 	}
 
-    public int getTurnTimer(){
-        return this.turnTimer;
-    }
-    public void setTurnTimer(int newTimer){
-        this.turnTimer = newTimer;
-    }
+	public int getTurnTimer() {
+		return this.turnTimer;
+	}
+	public void setTurnTimer(int newTimer) {
+		this.turnTimer = newTimer;
+	}
+	public void addExplosion(ProjectileModel model) {
+		if (model.getExplosion() != -1) {
+			explosions.add(model);
+		}
+	}
+	public ArrayList<ProjectileModel> getExplosions() {
+		return this.explosions;
+	}
+	public String getWinnerText() {
+		return this.winnerText;
+	}
 }

@@ -2,7 +2,9 @@ package no.ntnu.folk.game.constants;
 
 public class ProgramConstants {
 	// Debugging
-	public static boolean debugging = true;
+	public static boolean debugging = false;
+	private static boolean unlimitedFire = false;
+	private static boolean debugWalls = false;
 
 	// Window size
 	private static int[] windowSize;
@@ -33,4 +35,17 @@ public class ProgramConstants {
 		debugging = !debugging;
 	}
 
+	public static boolean isUnlimitedFire() {
+		return unlimitedFire;
+	}
+	public static void toggleUnlimitedFire() {
+		unlimitedFire = !unlimitedFire;
+	}
+	
+	public static boolean isDebugWalls() {
+		return debugWalls;
+	}
+	public static void toggleDebugWalls() {
+		debugWalls = !debugWalls;
+	}
 }

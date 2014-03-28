@@ -1,17 +1,23 @@
 package no.ntnu.folk.game.gameplay.layers;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PointF;
-import android.util.SparseArray;
-import android.view.MotionEvent;
-import android.view.View;
+import static no.ntnu.folk.game.R.drawable.aim;
+import static no.ntnu.folk.game.R.drawable.endturn;
+import static no.ntnu.folk.game.R.drawable.icon;
+import static no.ntnu.folk.game.R.drawable.keypadleft;
+import static no.ntnu.folk.game.R.drawable.keypadright;
+import static no.ntnu.folk.game.R.drawable.keypadup;
+import static no.ntnu.folk.game.R.drawable.shootbutton;
+import static no.ntnu.folk.game.R.drawable.swapbutton;
+import static no.ntnu.folk.game.R.drawable.pausegame;
+
+import java.util.ArrayList;
+
 import no.ntnu.folk.game.Program;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.Button;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
+import no.ntnu.folk.game.gameplay.levels.Direction;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import no.ntnu.folk.game.menus.menuStates.PauseMenu;
 import no.ntnu.folk.game.states.GameState;
@@ -20,21 +26,23 @@ import sheep.game.Layer;
 import sheep.graphics.Image;
 import sheep.math.BoundingBox;
 import sheep.math.Vector2;
-
-import java.util.ArrayList;
-
-import static no.ntnu.folk.game.R.drawable.*;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PointF;
+import android.util.SparseArray;
+import android.view.MotionEvent;
+import android.view.View;
 
 public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	private Button[] buttons;
 	private Button leftKey;
 	private Button rightKey;
 	private Button upKey;
-	private Button pauseButton;
 	private Button swapKey;
 	private Button fireKey;
 	private Button endKey;
-	private Button unpauseButton;
+	private Button pauseKey;
 
 	private Image aimImage;
 	private GameState gameState;
@@ -43,7 +51,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	private WeaponSelection weaponSelection;
 	private ArrayList<Button> weaponButtons;
 
-    private float buttonOverlayHeight;
+	private float buttonOverlayHeight;
 
 	private SparseArray<PointF> activePointers;
 
@@ -61,22 +69,19 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		Vector2 leftKeyPos = new Vector2(windowSize[0] * 0.08f, windowSize[1] * 0.90f);
 		Vector2 rightKeyPos = new Vector2(windowSize[0] * 0.32f, windowSize[1] * 0.90f);
 		Vector2 upKeyPos = new Vector2(windowSize[0] * 0.2f, windowSize[1] * 0.87f);
-		Vector2 pauseKeyPos = new Vector2(32, 32); // TODO should not use hardcoded coordinates
+		Vector2 pauseKeyPos = new Vector2(windowSize[0] * 0.50f, windowSize[1] * 0.90f);
 		Vector2 swapKeyPos = new Vector2(windowSize[0] * 0.92f, windowSize[1] * 0.90f);
 		Vector2 fireKeyPos = new Vector2(windowSize[0] * 0.76f, windowSize[1] * 0.90f);
 		Vector2 endKeyPos = new Vector2(windowSize[0] * 0.60f, windowSize[1] * 0.90f);
-		Vector2 unpauseKeyPos = new Vector2(windowSize[0] * 0.50f, windowSize[1] * 0.50f);
 		buttons = new Button[]{
 				leftKey = new Button(keypadleft, keypadleft, leftKeyPos, true),
-				rightKey = new Button(keypadright, keypadright, rightKeyPos, true),
-				upKey = new Button(keypadup, keypadup, upKeyPos, false),
-				pauseButton = new Button(icon, icon, pauseKeyPos, false), // TODO add proper pause button
-				swapKey = new Button(swapbutton, swapbutton, swapKeyPos, false),
-				fireKey = new Button(shootbutton, shootbutton, fireKeyPos, false),
-				endKey = new Button(endturn, endturn, endKeyPos, false),
+						rightKey = new Button(keypadright, keypadright, rightKeyPos, true),
+						upKey = new Button(keypadup, keypadup, upKeyPos, false),
+						swapKey = new Button(swapbutton, swapbutton, swapKeyPos, false),
+						fireKey = new Button(shootbutton, shootbutton, fireKeyPos, false),
+						endKey = new Button(endturn, endturn, endKeyPos, false),
+						pauseKey = new Button(pausegame, pausegame, pauseKeyPos, false),
 		};
-		unpauseButton = new Button(unpause, unpause, unpauseKeyPos, false);
-		unpauseButton.disable();
 	}
 
 	@Override
@@ -102,69 +107,79 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				}
 			}
 			if (!buttonPressed) {
-                if (point.y < buttonOverlayHeight) {
-                    int[] windowSize = ProgramConstants.getWindowSize();
-                    currentPlayer.setAim(point.x + currentPlayer.getX() - windowSize[0] / 2, point.y + currentPlayer.getY() - windowSize[1] / 2);
-                }
-            }
+				if (point.y < buttonOverlayHeight) {
+					int[] windowSize = ProgramConstants.getWindowSize();
+					currentPlayer.setAim(point.x - windowSize[0] / 2.0f, point.y - windowSize[1] / 2.0f);
+				}
+			}
 		}
 
 		boolean leftKeyPressed;
 		boolean rightKeyPressed;
-		if (leftKeyPressed = leftKey.popPressed()) {
+		if (leftKeyPressed = leftKey.popPressed() && !currentPlayer.getCollision().contains(Direction.LEFT)) {
 			currentPlayer.setSpeed(-GameplayConstants.PLAYER_SPEED, currentPlayer.getSpeed().getY());
+			currentPlayer.setAim(-Math.abs(currentPlayer.getAim().getX()), currentPlayer.getAim().getY());
 		}
-		if (rightKeyPressed = rightKey.popPressed()) {
+		if (rightKeyPressed = rightKey.popPressed() && !currentPlayer.getCollision().contains(Direction.RIGHT)) {
 			currentPlayer.setSpeed(GameplayConstants.PLAYER_SPEED, currentPlayer.getSpeed().getY());
+			currentPlayer.setAim(Math.abs(currentPlayer.getAim().getX()), currentPlayer.getAim().getY());
 		}
 		if (!leftKeyPressed && !rightKeyPressed || leftKeyPressed && rightKeyPressed) { // If none, or both, keys are pressed
 			currentPlayer.setSpeed(0, currentPlayer.getSpeed().getY());
+		}
+		if (upKey.popPressed() && currentPlayer.getCollision().contains(Direction.DOWN)) {
+			currentPlayer.setSpeed(currentPlayer.getSpeed().getX(), -GameplayConstants.JUMP_FORCE);
 		}
 		if (fireKey.popPressed()) {
 			gameState.fireWeapon();
 		}
 		if (swapKey.popPressed()) {
-			weaponButtons = weaponSelection.getWeaponButtons();
-			weaponSelection.setActive(true);
+			if (weaponSelection.isActive()) {
+				weaponSelection.setActive(false);
+			} else {
+				weaponButtons = weaponSelection.getWeaponButtons();
+				weaponSelection.setActive(true);
+			}
 		}
 		if (endKey.popPressed()) {
-			gameModel.setGameTime(0);
+			if (gameModel.getCurrentPlayer().isFiredWeapon() == false) {
+				gameModel.setGameTime(0);
+			}
 		}
-		if (unpauseButton.popPressed()) {
-			gameModel.setPaused(false);
-			unpauseButton.disable();
+		if (pauseKey.popPressed()) {
+			gameModel.setPaused(true);
+			Game.getInstance().pushState(new PauseMenu());
 		}
 	}
 
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
-        drawOverlay(canvas);
+		drawOverlay(canvas);
 		drawButtons(canvas);
 		drawAim(canvas);
 		for (Button button : weaponButtons) {
 			button.draw(canvas);
 		}
-		unpauseButton.draw(canvas);
 	}
 
-    private void drawOverlay(Canvas canvas){
-        int ws[] = ProgramConstants.getWindowSize();
-        buttonOverlayHeight = ws[1]*0.8f;
-        float buttonOverlayLeft = 0;
-        float buttonOverlayBot = ws[1];
-        float buttonOverlayRight = ws[0];
-        Paint p = new Paint();
-        p.setColor(Color.BLACK);
-        canvas.drawRect(buttonOverlayLeft,buttonOverlayHeight,buttonOverlayRight,buttonOverlayBot, p);
-    }
+	private void drawOverlay(Canvas canvas) {
+		int ws[] = ProgramConstants.getWindowSize();
+		buttonOverlayHeight = ws[1] * 0.8f;
+		float buttonOverlayLeft = 0;
+		float buttonOverlayBot = ws[1];
+		float buttonOverlayRight = ws[0];
+		Paint p = new Paint();
+		p.setColor(Color.BLACK);
+		canvas.drawRect(buttonOverlayLeft, buttonOverlayHeight, buttonOverlayRight, buttonOverlayBot, p);
+	}
 
 	private void drawAim(Canvas canvas) {
 		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
 		float aimX = currentPlayer.getAim().getX() + ProgramConstants.getWindowSize()[0] / 2;
 		float aimY = currentPlayer.getAim().getY() + ProgramConstants.getWindowSize()[1] / 2;
-        if(aimY > buttonOverlayHeight){
-            aimY = buttonOverlayHeight;
-        }
+		if (aimY > buttonOverlayHeight) {
+			aimY = buttonOverlayHeight;
+		}
 		aimImage.draw(canvas, aimX - aimImage.getWidth() / 2, aimY - aimImage.getHeight() / 2);
 	}
 	private void drawButtons(Canvas canvas) {
@@ -179,31 +194,31 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		int pointerId = event.getPointerId(pointerIndex);
 		int maskedAction = event.getActionMasked();
 		switch (maskedAction) {
-			case MotionEvent.ACTION_DOWN:
-			case MotionEvent.ACTION_POINTER_DOWN:
-				onTouchDown(event);
-				break;
-			case MotionEvent.ACTION_MOVE:
-				int pointerCount = event.getPointerCount();
-				for (int i = 0; i < pointerCount; i++) {
-					PointF point = activePointers.get(event.getPointerId(i));
-					if (point != null) {
-						point.set(event.getX(i), event.getY(i));
-					}
+		case MotionEvent.ACTION_DOWN:
+		case MotionEvent.ACTION_POINTER_DOWN:
+			onTouchDown(event);
+			break;
+		case MotionEvent.ACTION_MOVE:
+			int pointerCount = event.getPointerCount();
+			for (int i = 0; i < pointerCount; i++) {
+				PointF point = activePointers.get(event.getPointerId(i));
+				if (point != null) {
+					point.set(event.getX(i), event.getY(i));
 				}
-				break;
-			case MotionEvent.ACTION_UP:
-			case MotionEvent.ACTION_POINTER_UP:
-			case MotionEvent.ACTION_CANCEL:
-				for (Button button : buttons) {
-					if (button.contains(activePointers.get(pointerId).x, activePointers.get(pointerId).y)) {
-						button.release();
-					}
+			}
+			break;
+		case MotionEvent.ACTION_UP:
+		case MotionEvent.ACTION_POINTER_UP:
+		case MotionEvent.ACTION_CANCEL:
+			for (Button button : buttons) {
+				if (button.contains(activePointers.get(pointerId).x, activePointers.get(pointerId).y)) {
+					button.release();
 				}
-				activePointers.remove(pointerId);
-				break;
-			default:
-				break;
+			}
+			activePointers.remove(pointerId);
+			break;
+		default:
+			break;
 		}
 		return false;
 	}
@@ -215,11 +230,6 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		PointF point = new PointF(event.getX(pointerIndex), event.getY(pointerIndex));
 		activePointers.append(pointerId, point);
 
-		if (pauseButton.contains(point.x, point.y)) {
-			gameModel.setPaused(true);
-			unpauseButton.enable();
-			Game.getInstance().pushState(new PauseMenu());
-		}
 		for (Button button : buttons) {
 			if (button.contains(point.x, point.y)) {
 				button.touch();
@@ -230,9 +240,6 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				weaponSelection.setWeapon(button);
 				break;
 			}
-		}
-		if (gameModel.isPaused() && unpauseButton.contains(point.x, point.y)) {
-			unpauseButton.touch();
 		}
 		return true;
 	}

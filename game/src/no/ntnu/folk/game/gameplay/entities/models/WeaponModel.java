@@ -49,13 +49,6 @@ public class WeaponModel extends EntityModel {
 		return projectileType;
 	}
 
-	public boolean isCold() {
-		return cold;
-	}
-	public void setCold(boolean cold) {
-		this.cold = cold;
-	}
-
 	public void setAim(float x, float y) {
 		aim.set(x, y);
 		if (aim.getLength() == 0) {

@@ -5,7 +5,6 @@ import android.graphics.Matrix;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
 import sheep.collision.Polygon;
-import sheep.collision.Rectangle;
 import sheep.collision.Shape;
 import sheep.graphics.Color;
 import sheep.graphics.Image;
@@ -33,7 +32,7 @@ public abstract class EntityToken {
 				-width / 2, height / 2
 		});
 		entityModel.setShape(r);
-		entityModel.setOffset(-width/2, -height/2);
+		entityModel.setOffset(width / 2, height / 2);
 	}
 
 	/**
@@ -48,7 +47,7 @@ public abstract class EntityToken {
 	 * Update the transformation matrix for this token
 	 */
 	private void updateTransformationMatrix() {
-		transformation.setTranslate(entityModel.getOffset().getX(), entityModel.getOffset().getY());   // Use the center of the sprite as center for drawing
+		transformation.setTranslate(-entityModel.getOffset().getX(), -entityModel.getOffset().getY());   // Use the center of the sprite as center for drawing
 		transformation.postScale(getScaleX(), getScaleY());
 		transformation.postRotate(getRotation());
 		transformation.postTranslate(entityModel.getX(), entityModel.getY()); // getX and getY is located in Sprite
@@ -84,7 +83,7 @@ public abstract class EntityToken {
 		canvas.drawText(
 				this.toString(),
 				entityModel.getX() - image.getWidth() / 2,
-				entityModel.getY() - image.getHeight() * 3 / 4,
+				entityModel.getY() + image.getHeight(),
 				Color.WHITE
 		);
 		drawOutline(canvas);
@@ -114,5 +113,8 @@ public abstract class EntityToken {
 
 	public EntityModel getEntityModel() {
 		return entityModel;
+	}
+	public Matrix getTransformation() {
+		return this.transformation;
 	}
 }

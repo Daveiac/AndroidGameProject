@@ -1,8 +1,11 @@
 package no.ntnu.folk.game.gameplay.levels.views;
 
 import android.graphics.Canvas;
+import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameplayConstants;
+import no.ntnu.folk.game.constants.ProgramConstants;
 import sheep.graphics.Color;
+import sheep.graphics.Image;
 
 /**
  * Used to make level tokens
@@ -14,14 +17,15 @@ public class Wall extends LevelToken {
 	private float width;
 	private float x;
 	private float y;
-
+	private static Image image = new Image(R.drawable.wall);
+	
 	public Wall(int gridX, int gridY) {
 		super();
 		float gridSize = GameplayConstants.GRID_SIZE;
 		x = gridX * gridSize;
 		y = gridY * gridSize;
-		width = x + gridSize;
-		height = y + gridSize;
+		width = x + gridSize + 1;
+		height = y + gridSize + 1;
 	}
 
 	@Override
@@ -46,6 +50,10 @@ public class Wall extends LevelToken {
 	 * @param canvas Where to draw the wall
 	 */
 	public void drawWall(Canvas canvas) {
-		canvas.drawRect(x, y, width, height, Color.GREEN);
+		if(ProgramConstants.isDebugWalls()) {
+			canvas.drawRect(x, y, width, height, Color.GREEN);
+		} else {
+			image.draw(canvas, x, y);
+		}
 	}
 }

@@ -13,7 +13,6 @@ public class MainMenu extends MenuState {
 		int position = 0;
 		menuItems = new MenuItem[]{
 				new MenuItem(MenuOptions.PRE_GAME_MENU, position++),
-				new MenuItem(MenuOptions.LOAD_MENU, position++),
 				new MenuItem(MenuOptions.DEV_MENU, position++),
 		};
 	}
@@ -22,9 +21,6 @@ public class MainMenu extends MenuState {
 		switch (menuItem.getOption()) {
 			case PRE_GAME_MENU:
 				getGame().pushState(new PreGameMenu());
-				break;
-			case LOAD_MENU:
-				getGame().pushState(new LoadMenu());
 				break;
 			case DEV_MENU:
 				getGame().pushState(new DevMenu());
