@@ -24,6 +24,7 @@ import static android.graphics.Color.BLUE;
 public class GameState extends State {
 	private World gameWorld;
 	private GameModel model;
+	private GameLayer gameLayer;
 
 	/**
 	 * Create a new game.
@@ -33,7 +34,8 @@ public class GameState extends State {
 	public GameState(GameModel model) {
 		this.model = model;
 		gameWorld = new World();
-		gameWorld.addLayer(new GameLayer(model));
+		gameLayer = new GameLayer(model);
+		gameWorld.addLayer(gameLayer);
 		gameWorld.addLayer(new KeyPadLayer(this, model));
 	}
 
@@ -116,7 +118,7 @@ public class GameState extends State {
 		if (model.getCurrentPlayer().getCurrentWeapon().isCold() || ProgramConstants.isUnlimitedFire()) {
 			ProjectileModel projectile = makeProjectile();
 			model.getProjectiles().add(projectile);
-			projectile.addCollisionListener(model);
+			projectile.addCollisionListener(gameLayer);
 
 			Vector2 aim = setAimMagnitude();
 

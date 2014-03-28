@@ -9,11 +9,6 @@ public enum MenuOptions {
 	START_GAME("Start game"),
 	TURN_TIMER("Turn timer"),
 
-	SAVE_MENU("Save menu"),
-	SAVE_GAME("Save game"),
-	LOAD_MENU("Load an old game"),
-	LOAD_GAME("Load game"),
-
 	MAIN_MENU("Return to main menu"),
 	RETURN_TO_GAME("Return to game"),
 	BACK("Back"),
