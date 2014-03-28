@@ -1,6 +1,7 @@
 package no.ntnu.folk.game.gameplay.levels.controllers;
 
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
+import no.ntnu.folk.game.gameplay.levels.views.TokenFactory;
 import no.ntnu.folk.game.gameplay.levels.views.Wall;
 import no.ntnu.folk.game.gameplay.models.LevelModel;
 import sheep.game.Game;
@@ -31,7 +32,7 @@ public class LevelParser {
 					y++;
 					for (int x = 0; x < line.length(); x++) {
 						if (line.charAt(x) == 'w') {
-							Wall wall = new Wall(x, y);
+							Wall wall = (Wall) TokenFactory.createToken("Wall", x, y);
 							grid[y][x] = wall;
 							lvlModel.getLevelTokens().add(wall);
 						} else if (line.charAt(x) == 's') {
