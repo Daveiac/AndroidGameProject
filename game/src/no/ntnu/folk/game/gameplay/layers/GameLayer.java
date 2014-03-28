@@ -2,6 +2,7 @@ package no.ntnu.folk.game.gameplay.layers;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import no.ntnu.folk.game.Program;
 import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameplayConstants;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 public class GameLayer extends Layer {
 	private GameModel model;
 	private ArrayList<Integer[]> lastingImageArrayList;
+	private Font headTimerFont;
 
 	public GameLayer(GameModel model) {
 		this.model = model;
@@ -31,6 +33,7 @@ public class GameLayer extends Layer {
 		for (PlayerModel player : model.getPlayers()) {
 			player.addCollisionListener(model);
 		}
+		this.headTimerFont = new Font(255, 255, 255, 50.0f, Typeface.SANS_SERIF, Typeface.NORMAL);
 	}
 
 	@Override
@@ -86,7 +89,7 @@ public class GameLayer extends Layer {
     	if(timeLeft <= GameplayConstants.HEAD_TIMER_START) {
     		float x = model.getCurrentPlayer().getX();
     		float y = model.getCurrentPlayer().getY() - ProgramConstants.getWindowSize()[0] * 0.1f;
-    		canvas.drawText(""+timeLeft, x, y, Font.WHITE_SANS_BOLD_20);
+    		canvas.drawText(""+timeLeft, x, y, headTimerFont);
     	}
 	}
 
