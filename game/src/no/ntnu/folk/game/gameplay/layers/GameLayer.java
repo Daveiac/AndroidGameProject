@@ -114,14 +114,16 @@ public class GameLayer extends Layer {
     }
 
 	private void drawLastingImages(Canvas canvas) {
+        ArrayList<Integer[]> remove = new ArrayList<Integer[]>();
 		for (Integer[] o : lastingImageArrayList) {
 			Image i = new Image(o[0]);
 			i.draw(canvas, o[1], o[2]);
 			o[3]--;
 			if (o[3] < 0) {
-				lastingImageArrayList.remove(o);
+				remove.add(o);
 			}
 		}
+        lastingImageArrayList.removeAll(remove);
 	}
 
 	/**
