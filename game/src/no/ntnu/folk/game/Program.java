@@ -55,12 +55,4 @@ public class Program extends Activity {
 		setContentView(game);
 	}
 
-	@Override
-	public void finish() {
-		super.finish();
-		if (isFinishing()) {
-			System.exit(0);
-		}
-	}
-
 }
