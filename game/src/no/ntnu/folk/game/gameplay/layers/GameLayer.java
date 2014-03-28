@@ -45,7 +45,7 @@ public class GameLayer extends Layer {
 					float exploRight = pm.getPosition().getX() + pm.getAreaDamageRange();
 					float exploBottom = pm.getPosition().getY() + pm.getAreaDamageRange();
 					BoundingBox aoeDamage = new BoundingBox(new Rect((int) exploLeft, (int) exploTop, (int) exploRight, (int) exploBottom));
-					if (aoeDamage.contains(player.getX(), player.getY())) {
+					if (aoeDamage.contains(player.getX()-player.getOffset().getX(), player.getY()-player.getOffset().getY())) {
 						player.attacked(pm.getAreaDamage());
 					}
 				}
@@ -76,7 +76,7 @@ public class GameLayer extends Layer {
 
     private void drawTimer(Canvas canvas){
         int timeLeft = (int)model.playerTimeLeft();
-        if (timeLeft > 6){
+        if (timeLeft > 6) {
             canvas.drawText(
                     ""+timeLeft,
                     model.getCurrentPlayer().getX(),
