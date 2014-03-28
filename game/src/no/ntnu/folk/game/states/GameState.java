@@ -44,7 +44,6 @@ public class GameState extends State {
 		super.update(dt);
 		gameWorld.update(dt);
 		updateModels(dt);
-		checkCollisions();
 		model.incrementTime(dt);
 		model.decrementAvailablePlayerTime(dt);
 		if (model.playerTimeUp() || model.getPlayers().indexOf(model.getCurrentPlayer()) == -1) {
@@ -74,13 +73,7 @@ public class GameState extends State {
 			tombStone.update(dt);
 		}
 	}
-	private void checkCollisions() {
-		for (ProjectileModel projectile : model.getProjectiles()) {
-			for (PlayerModel player : model.getPlayers()) {
-				projectile.collides(player);
-			}
-		}
-	}
+
 	/**
 	 * Removes killed entities
 	 */

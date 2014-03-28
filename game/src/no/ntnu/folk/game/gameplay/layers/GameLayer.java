@@ -62,13 +62,8 @@ public class GameLayer extends Layer implements CollisionListener {
 			}
 		}
 		model.getExplosions().clear();
-		for (ProjectileModel projectile : model.getProjectiles()) {
-			if (!collidesWithWall(projectile).isEmpty()) {
-				model.addExplosion(projectile);
-				model.getKill().add(projectile);
-			}
+		checkProjectileCollisions();
 		}
-	}
 
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
@@ -262,6 +257,19 @@ public class GameLayer extends Layer implements CollisionListener {
 		if (player.getHealth() <= 0) {
 			model.getKill().add(player);
 			model.getTombStones().add(new TombStoneModel(player.getName(), player.getPosition(), R.drawable.tombstone));
+		}
+	}
+	private void checkProjectileCollisions() {
+		for (ProjectileModel projectile : model.getProjectiles()) {
+			if (!collidesWithWall(projectile).isEmpty()) {
+				model.addExplosion(projectile);
+				model.getKill().add(projectile);
+			}
+			else{
+				for(PlayerModel player : model.getPlayers()){
+					projectile.collides(player);
+				}
+			}
 		}
 	}
 }
