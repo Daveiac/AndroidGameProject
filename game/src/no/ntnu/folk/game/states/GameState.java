@@ -50,8 +50,8 @@ public class GameState extends State {
 			model.nextPlayer();
 		}
 		killEntities();
-		if (model.isGameOver(model.getPlayers())) {
-			Program.getGame().pushState(new EndGameMenu(model.getGameTime()));
+		if (model.isGameOver()) {
+			Program.getGame().pushState(new EndGameMenu(model.getGameTime(), model.getWinnerText()));
 		}
 	}
 	@Override
