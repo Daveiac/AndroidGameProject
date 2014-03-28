@@ -14,7 +14,9 @@ import no.ntnu.folk.game.gameplay.entities.models.TombStoneModel;
 import no.ntnu.folk.game.gameplay.levels.Direction;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.models.GameModel;
+import sheep.collision.CollisionListener;
 import sheep.game.Layer;
+import sheep.game.Sprite;
 import sheep.graphics.Color;
 import sheep.graphics.Font;
 import sheep.graphics.Image;
@@ -22,7 +24,7 @@ import sheep.math.BoundingBox;
 
 import java.util.ArrayList;
 
-public class GameLayer extends Layer {
+public class GameLayer extends Layer implements CollisionListener {
 	private GameModel model;
 	private ArrayList<Integer[]> lastingImageArrayList;
 	private Font headTimerFont;
@@ -31,7 +33,7 @@ public class GameLayer extends Layer {
 		this.model = model;
 		lastingImageArrayList = new ArrayList<Integer[]>();
 		for (PlayerModel player : model.getPlayers()) {
-			player.addCollisionListener(model);
+			player.addCollisionListener(this);
 		}
 		this.headTimerFont = new Font(255, 255, 255, 50.0f, Typeface.SANS_SERIF, Typeface.NORMAL);
 	}
@@ -236,5 +238,35 @@ public class GameLayer extends Layer {
 			}
 		}
 		return directions;
+	}
+
+	@Override
+	public void collided(Sprite a, Sprite b) {
+		if (a instanceof ProjectileModel) {
+			if (b instanceof PlayerModel) {
+				model.addExplosion((ProjectileModel) a);
+				model.getKill().add((EntityModel) a);
+				attack((PlayerModel) b, (ProjectileModel) a);
+			}
+
+		}
+		if (a instanceof PlayerModel) {
+			if (b instanceof LevelToken) {
+				a.setSpeed(a.getSpeed().getX(), 0);
+			}
+		}
+	}
+	/**
+	 * Attack a with a projectile. If the player dies, add it to the kill list and make a new tomb stone.
+	 *
+	 * @param player     Player that was attacked
+	 * @param projectile Projectile used to attack
+	 */
+	private void attack(PlayerModel player, ProjectileModel projectile) {
+		player.attacked(projectile.getDirectDamage());
+		if (player.getHealth() <= 0) {
+			model.getKill().add(player);
+			model.getTombStones().add(new TombStoneModel(player.getName(), player.getPosition(), R.drawable.tombstone));
+		}
 	}
 }
