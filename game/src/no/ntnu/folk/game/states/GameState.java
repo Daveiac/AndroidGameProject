@@ -53,7 +53,9 @@ public class GameState extends State {
 		if (model.isGameOver()) {
 			Program.getGame().pushState(new EndGameMenu(model.getGameTime(), model.getWinnerText()));
 		}
-		findNextPlayer();
+		else {
+			findNextPlayer();
+		}
 	}
 	@Override
 	public void draw(Canvas canvas) {
