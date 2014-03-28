@@ -3,7 +3,6 @@ package no.ntnu.folk.game.gameplay.layers;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import no.ntnu.folk.game.Program;
 import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
@@ -247,7 +246,7 @@ public class GameLayer extends Layer implements CollisionListener {
 			if (b instanceof PlayerModel) {
 				model.addExplosion((ProjectileModel) a);
 				model.getKill().add((EntityModel) a);
-				attack((PlayerModel) b, (ProjectileModel) a);
+				hitBy((PlayerModel) b, (ProjectileModel) a);
 			}
 
 		}
@@ -256,9 +255,9 @@ public class GameLayer extends Layer implements CollisionListener {
 	 * Attack a with a projectile. If the player dies, add it to the kill list and make a new tomb stone.
 	 *
 	 * @param player     Player that was attacked
-	 * @param projectile Projectile used to attack
+	 * @param projectile Projectile used to hitBy
 	 */
-	private void attack(PlayerModel player, ProjectileModel projectile) {
+	private void hitBy(PlayerModel player, ProjectileModel projectile) {
 		player.attacked(projectile.getDirectDamage());
 		if (player.getHealth() <= 0) {
 			model.getKill().add(player);
