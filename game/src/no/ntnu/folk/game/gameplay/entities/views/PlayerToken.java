@@ -41,7 +41,13 @@ public class PlayerToken extends EntityToken {
 		healthBarMatrix.setTranslate(x, y - height);
 		float health = ((PlayerModel) entityModel).getHealth() * 1.0f / ((PlayerModel) entityModel).getStartHealth();
 		canvas.drawRect(x - width - healthBarFrame, y - height + healthBarFrame, x + width + healthBarFrame, y - height * (1.25f) - healthBarFrame, Color.BLACK);
-		canvas.drawRect(x - width, y - height, (x - width) + width * health * 2, y - height * (1.25f), Color.RED);
+		canvas.drawRect(x - width, y - height, (x - width) + width * health * 2, y - height * (1.25f), getPaint(health));
+	}
+	private Color getPaint(float health) {
+		int red = health < 0.5f ? 255 : (int) (255 - 2 * health * 255);
+		int green = health > 0.5f ? 255 : (int) (2 * health * 255);
+		int blue = 0;
+		return new Color(red, green, blue);
 	}
 
 	@Override
