@@ -13,6 +13,7 @@ import no.ntnu.folk.game.gameplay.entities.models.TombStoneModel;
 import no.ntnu.folk.game.gameplay.levels.Direction;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.models.GameModel;
+import no.ntnu.folk.game.gameplay.models.LevelModel;
 import sheep.collision.CollisionListener;
 import sheep.game.Layer;
 import sheep.game.Sprite;
@@ -50,6 +51,7 @@ public class GameLayer extends Layer implements CollisionListener {
 
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
+		LevelModel.getBackground().draw(canvas, 0, 0); // Background image
 		canvas.save();
 		int[] windowSize = ProgramConstants.getWindowSize();
 		if (model.getProjectiles().isEmpty()) {
@@ -64,7 +66,7 @@ public class GameLayer extends Layer implements CollisionListener {
 		drawHeadTimer(canvas);
 
 		canvas.restore();
-
+		
 		drawTimer(canvas);
 
 	}

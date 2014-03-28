@@ -1,11 +1,14 @@
 package no.ntnu.folk.game.gameplay.models;
 
+import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.levels.controllers.LevelController;
 import no.ntnu.folk.game.gameplay.levels.controllers.LevelParser;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 
 import java.util.ArrayList;
+
+import sheep.graphics.Image;
 
 /**
  * Model of a single level. It is created with its name as a unique ID.
@@ -15,6 +18,7 @@ import java.util.ArrayList;
  */
 public class LevelModel {
 
+	private static final Image image = new Image(R.drawable.background);
 	private final int levelId;
 	private int[] gridSize;
 	private ArrayList<int[]> startPositions;
@@ -62,6 +66,10 @@ public class LevelModel {
 
 	public ArrayList<LevelToken> getLevelTokens() {
 		return levelTokens;
+	}
+
+	public static Image getBackground() {
+		return image;
 	}
 
 }
