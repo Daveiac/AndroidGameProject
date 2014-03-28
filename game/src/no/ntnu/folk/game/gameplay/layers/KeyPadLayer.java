@@ -230,10 +230,6 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		PointF point = new PointF(event.getX(pointerIndex), event.getY(pointerIndex));
 		activePointers.append(pointerId, point);
 
-		if (pauseKey.contains(point.x, point.y)) {
-			gameModel.setPaused(true);
-			Game.getInstance().pushState(new PauseMenu());
-		}
 		for (Button button : buttons) {
 			if (button.contains(point.x, point.y)) {
 				button.touch();
