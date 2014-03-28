@@ -105,7 +105,7 @@ public class GameState extends State {
 				if ((model.getPlayers().indexOf(oldPlayers.get(++i)) != -1)) break;
 			}
 			model.setCurrentPlayer(model.getPlayers().get(i));
-			model.getCurrentPlayer().getCurrentWeapon().setCold(true);
+			model.getCurrentPlayer().setCold(true);
 		}
 	}
 
@@ -113,7 +113,7 @@ public class GameState extends State {
 	 * Fires the weapon the current player is holding
 	 */
 	public void fireWeapon() {
-		if (model.getCurrentPlayer().getCurrentWeapon().isCold() || ProgramConstants.isUnlimitedFire()) {
+		if (model.getCurrentPlayer().isCold() || ProgramConstants.isUnlimitedFire()) {
 			Projectiles projectileType = model.getCurrentPlayer().getCurrentWeapon().getProjectileType();
 			ProjectileModel projectile = new ProjectileModel(projectileType, model.getCurrentPlayer());
 			model.getProjectiles().add(projectile);
@@ -130,7 +130,7 @@ public class GameState extends State {
 
 			projectile.setSpeed(aim.getMultiplied(ratio));
 			projectile.setAcceleration(0, 50);
-			model.getCurrentPlayer().getCurrentWeapon().setCold(false);
+			model.getCurrentPlayer().setCold(false);
 		}
 	}
 

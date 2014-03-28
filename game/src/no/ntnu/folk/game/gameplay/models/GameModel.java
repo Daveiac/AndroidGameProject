@@ -119,7 +119,7 @@ public class GameModel implements CollisionListener {
 			playerNumber++;
 		}
 		currentPlayer = players.get(playerNumber);
-		currentPlayer.getCurrentWeapon().setCold(true);
+		currentPlayer.setCold(true);
 	}
 
 	/**
@@ -179,7 +179,7 @@ public class GameModel implements CollisionListener {
 		}
 	}
 	/**
-	 * Attack a with a projectile. If the player dies, add it to the kill list and make a new tomb stone.
+	 * Attack with a projectile. If the player dies, add it to the kill list and make a new tomb stone.
 	 *
 	 * @param player     Player that was attacked
 	 * @param projectile Projectile used to attack

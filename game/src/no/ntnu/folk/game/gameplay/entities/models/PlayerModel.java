@@ -24,6 +24,8 @@ public class PlayerModel extends EntityModel {
 	private ArrayList<WeaponModel> weaponList;
 	private WeaponModel currentWeapon;
 	private Image tombStone;
+	
+	private boolean cold;
 
 	/**
 	 * @param name     Constant name for the player during gameplay, will be used to identify different players
@@ -42,6 +44,7 @@ public class PlayerModel extends EntityModel {
 		addMask(team.ordinal());
 		setAcceleration(0, GameplayConstants.ACCELERATION);
 		tombStone = new Image(R.drawable.tombstone);
+		cold = true;
 	}
 
 	/**
@@ -145,6 +148,13 @@ public class PlayerModel extends EntityModel {
 	 */
 	public void attacked(int damage) {
 		health -= Math.abs(damage);
+	}
+
+	public boolean isCold() {
+		return cold;
+	}
+	public void setCold(boolean cold) {
+		this.cold = cold;
 	}
 
 }
