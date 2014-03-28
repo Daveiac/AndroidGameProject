@@ -10,7 +10,6 @@ import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import no.ntnu.folk.game.gameplay.entities.models.TombStoneModel;
 import no.ntnu.folk.game.gameplay.layers.GameLayer;
 import no.ntnu.folk.game.gameplay.layers.KeyPadLayer;
-import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import no.ntnu.folk.game.menus.menuStates.EndGameMenu;
 import sheep.game.State;
@@ -52,8 +51,7 @@ public class GameState extends State {
 		killEntities();
 		if (model.isGameOver()) {
 			Program.getGame().pushState(new EndGameMenu(model.getGameTime(), model.getWinnerText()));
-		}
-		else {
+		} else {
 			findNextPlayer();
 		}
 	}
