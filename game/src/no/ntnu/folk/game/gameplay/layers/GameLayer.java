@@ -15,6 +15,7 @@ import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import sheep.game.Layer;
 import sheep.graphics.Color;
+import sheep.graphics.Font;
 import sheep.graphics.Image;
 import sheep.math.BoundingBox;
 
@@ -45,8 +46,12 @@ public class GameLayer extends Layer {
 					float exploRight = pm.getPosition().getX() + pm.getAreaDamageRange();
 					float exploBottom = pm.getPosition().getY() + pm.getAreaDamageRange();
 					BoundingBox aoeDamage = new BoundingBox(new Rect((int) exploLeft, (int) exploTop, (int) exploRight, (int) exploBottom));
-					if (aoeDamage.contains(player.getX(), player.getY())) {
+					if (aoeDamage.contains(player.getX()-player.getOffset().getX(), player.getY()-player.getOffset().getY())) {
 						player.attacked(pm.getAreaDamage());
+						if (player.getHealth() <= 0) {
+							model.getKill().add(player);
+							model.getTombStones().add(new TombStoneModel(player.getName(), player.getPosition(), R.drawable.tombstone));
+						}
 					}
 				}
 			}
@@ -69,59 +74,42 @@ public class GameLayer extends Layer {
 		drawLevel(canvas);
 		drawEntities(canvas);
 		drawLastingImages(canvas);
-        drawTimer(canvas);
+		drawHeadTimer(canvas);
+		canvas.restore();
+        
+		drawTimer(canvas);
 
-        canvas.restore();
     }
 
-    private void drawTimer(Canvas canvas){
-        int timeLeft = (int)model.playerTimeLeft();
-        if (timeLeft > 6){
-            canvas.drawText(
-                    ""+timeLeft,
-                    model.getCurrentPlayer().getX(),
-                    model.getCurrentPlayer().getY() - ProgramConstants.getWindowSize()[0] * 0.1f,
-                    Color.WHITE
-            );
-        }
-        if(timeLeft < 6){
-            Image i;
-            float x = model.getCurrentPlayer().getX();
-            float y = model.getCurrentPlayer().getY() - ProgramConstants.getWindowSize()[0] * 0.1f;
-            switch (timeLeft){
-                case 5:
-                    i = new Image(R.drawable.five);
-                    i.draw(canvas, x - i.getWidth()/2, y);
-                    break;
-                case 4:
-                    i = new Image(R.drawable.four);
-                    i.draw(canvas, x - i.getWidth()/2, y);
-                    break;
-                case 3:
-                    i = new Image(R.drawable.three);
-                    i.draw(canvas, x - i.getWidth()/2, y);
-                    break;
-                case 2:
-                    i = new Image(R.drawable.two);
-                    i.draw(canvas, x - i.getWidth()/2, y);
-                    break;
-                case 1:
-                    i = new Image(R.drawable.one);
-                    i.draw(canvas, x - i.getWidth()/2, y);
-                    break;
-            }
-        }
+    private void drawHeadTimer(Canvas canvas) {
+    	int timeLeft = (int) model.playerTimeLeft();
+    	if(timeLeft <= GameplayConstants.HEAD_TIMER_START) {
+    		float x = model.getCurrentPlayer().getX();
+    		float y = model.getCurrentPlayer().getY() - ProgramConstants.getWindowSize()[0] * 0.1f;
+    		canvas.drawText(""+timeLeft, x, y, Font.WHITE_SANS_BOLD_20);
+    	}
+	}
+
+	private void drawTimer(Canvas canvas){
+		canvas.drawText(
+				"Time left: " + ((int) model.playerTimeLeft()),
+				ProgramConstants.getWindowSize()[0] * 0.9f,
+				ProgramConstants.getWindowSize()[0] * 0.1f,
+				Color.WHITE
+				);
     }
 
 	private void drawLastingImages(Canvas canvas) {
+        ArrayList<Integer[]> remove = new ArrayList<Integer[]>();
 		for (Integer[] o : lastingImageArrayList) {
 			Image i = new Image(o[0]);
 			i.draw(canvas, o[1], o[2]);
 			o[3]--;
 			if (o[3] < 0) {
-				lastingImageArrayList.remove(o);
+				remove.add(o);
 			}
 		}
+        lastingImageArrayList.removeAll(remove);
 	}
 
 	/**

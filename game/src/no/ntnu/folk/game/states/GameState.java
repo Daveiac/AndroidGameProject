@@ -73,11 +73,6 @@ public class GameState extends State {
 		}
 	}
 	private void checkCollisions() {
-		for (PlayerModel player : model.getPlayers()) {
-			for (LevelToken lt : model.getCurrentLevel().getLevelTokens()) {
-				player.collides(lt);
-			}
-		}
 		for (ProjectileModel projectile : model.getProjectiles()) {
 			for (PlayerModel player : model.getPlayers()) {
 				projectile.collides(player);
@@ -101,6 +96,7 @@ public class GameState extends State {
 	/**
 	 * Set current player to the next player if the current player dies.
 	 */
+
 	private void findNextPlayer() {
 		ArrayList<PlayerModel> oldPlayers = model.getPlayers();
 		int i = oldPlayers.indexOf(model.getCurrentPlayer());
