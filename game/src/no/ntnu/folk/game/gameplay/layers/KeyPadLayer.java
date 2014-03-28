@@ -1,12 +1,16 @@
 package no.ntnu.folk.game.gameplay.layers;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PointF;
-import android.util.SparseArray;
-import android.view.MotionEvent;
-import android.view.View;
+import static no.ntnu.folk.game.R.drawable.aim;
+import static no.ntnu.folk.game.R.drawable.endturn;
+import static no.ntnu.folk.game.R.drawable.icon;
+import static no.ntnu.folk.game.R.drawable.keypadleft;
+import static no.ntnu.folk.game.R.drawable.keypadright;
+import static no.ntnu.folk.game.R.drawable.keypadup;
+import static no.ntnu.folk.game.R.drawable.shootbutton;
+import static no.ntnu.folk.game.R.drawable.swapbutton;
+
+import java.util.ArrayList;
+
 import no.ntnu.folk.game.Program;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
@@ -21,10 +25,13 @@ import sheep.game.Layer;
 import sheep.graphics.Image;
 import sheep.math.BoundingBox;
 import sheep.math.Vector2;
-
-import java.util.ArrayList;
-
-import static no.ntnu.folk.game.R.drawable.*;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PointF;
+import android.util.SparseArray;
+import android.view.MotionEvent;
+import android.view.View;
 
 public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	private Button[] buttons;
@@ -101,7 +108,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 			if (!buttonPressed) {
 				if (point.y < buttonOverlayHeight) {
 					int[] windowSize = ProgramConstants.getWindowSize();
-					currentPlayer.setAim(point.x + currentPlayer.getX() - windowSize[0] / 2, point.y + currentPlayer.getY() - windowSize[1] / 2);
+					currentPlayer.setAim(point.x - windowSize[0] / 2.0f, point.y - windowSize[1] / 2.0f);
 				}
 			}
 		}
@@ -110,9 +117,11 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		boolean rightKeyPressed;
 		if (leftKeyPressed = leftKey.popPressed() && !currentPlayer.getCollision().contains(Direction.LEFT)) {
 			currentPlayer.setSpeed(-GameplayConstants.PLAYER_SPEED, currentPlayer.getSpeed().getY());
+			currentPlayer.setAim(-Math.abs(currentPlayer.getAim().getX()), currentPlayer.getAim().getY());
 		}
 		if (rightKeyPressed = rightKey.popPressed() && !currentPlayer.getCollision().contains(Direction.RIGHT)) {
 			currentPlayer.setSpeed(GameplayConstants.PLAYER_SPEED, currentPlayer.getSpeed().getY());
+			currentPlayer.setAim(Math.abs(currentPlayer.getAim().getX()), currentPlayer.getAim().getY());
 		}
 		if (!leftKeyPressed && !rightKeyPressed || leftKeyPressed && rightKeyPressed) { // If none, or both, keys are pressed
 			currentPlayer.setSpeed(0, currentPlayer.getSpeed().getY());

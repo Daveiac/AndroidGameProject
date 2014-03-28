@@ -114,7 +114,7 @@ public class PlayerModel extends EntityModel {
 	 * @param y coordinate of touch input
 	 */
 	public void setAim(float x, float y) {
-		currentWeapon.setAim(x - getX(), y - getY());
+		currentWeapon.setAim(x, y);
 	}
 
 	/**
