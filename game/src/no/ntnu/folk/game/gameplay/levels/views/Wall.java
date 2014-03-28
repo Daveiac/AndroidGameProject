@@ -20,8 +20,8 @@ public class Wall extends LevelToken {
 		float gridSize = GameplayConstants.GRID_SIZE;
 		x = gridX * gridSize;
 		y = gridY * gridSize;
-		width = x + gridSize;
-		height = y + gridSize;
+		width = x + gridSize + 1;
+		height = y + gridSize + 1;
 	}
 
 	@Override
