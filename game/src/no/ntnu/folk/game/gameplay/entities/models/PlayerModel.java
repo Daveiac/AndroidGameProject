@@ -23,7 +23,6 @@ public class PlayerModel extends EntityModel {
 	private int health;
 	private ArrayList<WeaponModel> weaponList;
 	private WeaponModel currentWeapon;
-	private Image tombStone;
 	
 	private boolean cold;
 
@@ -43,7 +42,6 @@ public class PlayerModel extends EntityModel {
 		addGroup(team.ordinal());
 		addMask(team.ordinal());
 		setAcceleration(0, GameplayConstants.ACCELERATION);
-		tombStone = new Image(R.drawable.tombstone);
 		cold = true;
 	}
 
@@ -67,14 +65,6 @@ public class PlayerModel extends EntityModel {
 		currentWeapon.draw(canvas);
 	}
 
-	/**
-	 * @param weapon The weapon you want to add to the list of weapons for this player
-	 */
-	public void addToWeaponList(WeaponModel weapon) {
-		if (!weaponList.contains(weapon)) {
-			weaponList.add(weapon);
-		}
-	}
 	/**
 	 * @return player team
 	 */

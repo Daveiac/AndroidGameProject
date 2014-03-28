@@ -39,31 +39,10 @@ public class GameLayer extends Layer implements CollisionListener {
 
 	@Override
 	public void update(float dt) {
-		for (PlayerModel player : model.getPlayers()) {
-			ArrayList<Direction> playerCollision = collidesWithWall(player);
-			player.setCollision(playerCollision);
-			correctPosition(player, playerCollision);
-			// Checks if a player is harmed by an explosion
-			if (!this.model.getExplosions().isEmpty()) {
-				for (ProjectileModel pm : this.model.getExplosions()) {
-					float exploLeft = pm.getPosition().getX() - pm.getAreaDamageRange();
-					float exploTop = pm.getPosition().getY() - pm.getAreaDamageRange();
-					float exploRight = pm.getPosition().getX() + pm.getAreaDamageRange();
-					float exploBottom = pm.getPosition().getY() + pm.getAreaDamageRange();
-					BoundingBox aoeDamage = new BoundingBox(new Rect((int) exploLeft, (int) exploTop, (int) exploRight, (int) exploBottom));
-					if (aoeDamage.contains(player.getX()-player.getOffset().getX(), player.getY()-player.getOffset().getY())) {
-						player.attacked(pm.getAreaDamage());
-						if (player.getHealth() <= 0) {
-							model.getKill().add(player);
-							model.getTombStones().add(new TombStoneModel(player.getName(), player.getPosition(), R.drawable.tombstone));
-						}
-					}
-				}
-			}
-		}
-		model.getExplosions().clear();
 		checkProjectileCollisions();
-		}
+		checkExplosionCollisions();
+		checkPlayerCollisions();
+	}
 
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
@@ -75,6 +54,7 @@ public class GameLayer extends Layer implements CollisionListener {
 		drawEntities(canvas);
 		drawLastingImages(canvas);
 		drawHeadTimer(canvas);
+
 		canvas.restore();
         
 		drawTimer(canvas);
@@ -137,19 +117,22 @@ public class GameLayer extends Layer implements CollisionListener {
 		for (ProjectileModel projectile : model.getProjectiles()) {
 			projectile.draw(canvas);
 		}
-		if (!this.model.getExplosions().isEmpty()) {
-			for (ProjectileModel model : this.model.getExplosions()) {
-				Image i = new Image(model.getExplosion());
-				float x = model.getX() - i.getWidth() / 2;
-				float y = model.getY() - i.getHeight() / 2;
+		if (!model.getExplosions().isEmpty()) {
+			for (ProjectileModel projectile : model.getExplosions()) {
+				Image i = new Image(projectile.getExplosion());
+				float x = projectile.getX() - i.getWidth() / 2;
+				float y = projectile.getY() - i.getHeight() / 2;
+				i.draw(canvas, x, y);
+
+				//Make the explosion last several frames.
 				Integer[] o = new Integer[4];
-				o[0] = model.getExplosion();
+				o[0] = projectile.getExplosion();
 				o[1] = (int) x;
 				o[2] = (int) y;
 				o[3] = GameplayConstants.EXPLOSION_LENGTH;
 				lastingImageArrayList.add(o);
-				i.draw(canvas, x, y);
 			}
+			model.getExplosions().clear();
 		}
 	}
 
@@ -243,7 +226,6 @@ public class GameLayer extends Layer implements CollisionListener {
 				model.getKill().add((EntityModel) a);
 				hitBy((PlayerModel) b, (ProjectileModel) a);
 			}
-
 		}
 	}
 	/**
@@ -262,7 +244,9 @@ public class GameLayer extends Layer implements CollisionListener {
 	private void checkProjectileCollisions() {
 		for (ProjectileModel projectile : model.getProjectiles()) {
 			if (!collidesWithWall(projectile).isEmpty()) {
-				model.addExplosion(projectile);
+				if (!model.getExplosions().contains(projectile)){
+					model.addExplosion(projectile);
+				}
 				model.getKill().add(projectile);
 			}
 			else{
@@ -270,6 +254,35 @@ public class GameLayer extends Layer implements CollisionListener {
 					projectile.collides(player);
 				}
 			}
+		}
+	}
+
+	private void checkExplosionCollisions() {
+		if (!this.model.getExplosions().isEmpty()) {
+			for (ProjectileModel pm : this.model.getExplosions()) {
+				float exploLeft = pm.getPosition().getX() - pm.getAreaDamageRange();
+				float exploTop = pm.getPosition().getY() - pm.getAreaDamageRange();
+				float exploRight = pm.getPosition().getX() + pm.getAreaDamageRange();
+				float exploBottom = pm.getPosition().getY() + pm.getAreaDamageRange();
+				BoundingBox aoeDamage = new BoundingBox(new Rect((int) exploLeft, (int) exploTop, (int) exploRight, (int) exploBottom));
+				for (PlayerModel player : model.getPlayers()) {
+					if (aoeDamage.contains(player.getX()-player.getOffset().getX(), player.getY()-player.getOffset().getY())) {
+						player.attacked(pm.getAreaDamage());
+						if (player.getHealth() <= 0) {
+							model.getKill().add(player);
+							model.getTombStones().add(new TombStoneModel(player.getName(), player.getPosition(), R.drawable.tombstone));
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private void checkPlayerCollisions() {
+		for (PlayerModel player : model.getPlayers()) {
+			ArrayList<Direction> playerCollision = collidesWithWall(player);
+			player.setCollision(playerCollision);
+			correctPosition(player, playerCollision);
 		}
 	}
 }
