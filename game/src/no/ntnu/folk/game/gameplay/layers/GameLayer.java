@@ -70,26 +70,29 @@ public class GameLayer extends Layer {
 		drawLevel(canvas);
 		drawEntities(canvas);
 		drawLastingImages(canvas);
-        drawTimer(canvas);
+		drawHeadTimer(canvas);
+		canvas.restore();
+        
+		drawTimer(canvas);
 
-        canvas.restore();
     }
 
-    private void drawTimer(Canvas canvas){
-        int timeLeft = (int)model.playerTimeLeft();
-        if (timeLeft > 6) {
-            canvas.drawText(
-                    ""+timeLeft,
-                    model.getCurrentPlayer().getX(),
-                    model.getCurrentPlayer().getY() - ProgramConstants.getWindowSize()[0] * 0.1f,
-                    Color.WHITE
-            );
-        }
-        if(timeLeft < 6){
-            float x = model.getCurrentPlayer().getX();
-            float y = model.getCurrentPlayer().getY() - ProgramConstants.getWindowSize()[0] * 0.1f;
-            canvas.drawText(""+timeLeft, x, y, Font.WHITE_SANS_BOLD_20);
-        }
+    private void drawHeadTimer(Canvas canvas) {
+    	int timeLeft = (int) model.playerTimeLeft();
+    	if(timeLeft <= GameplayConstants.HEAD_TIMER_START) {
+    		float x = model.getCurrentPlayer().getX();
+    		float y = model.getCurrentPlayer().getY() - ProgramConstants.getWindowSize()[0] * 0.1f;
+    		canvas.drawText(""+timeLeft, x, y, Font.WHITE_SANS_BOLD_20);
+    	}
+	}
+
+	private void drawTimer(Canvas canvas){
+		canvas.drawText(
+				"Time left: " + ((int) model.playerTimeLeft()),
+				ProgramConstants.getWindowSize()[0] * 0.9f,
+				ProgramConstants.getWindowSize()[0] * 0.1f,
+				Color.WHITE
+				);
     }
 
 	private void drawLastingImages(Canvas canvas) {
