@@ -51,7 +51,7 @@ public class GameLayer extends Layer implements CollisionListener {
 
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
-		LevelModel.getBackground().draw(canvas, 0, 0); // Background image
+		drawBackground(canvas);
 		canvas.save();
 		int[] windowSize = ProgramConstants.getWindowSize();
 		if (model.getProjectiles().isEmpty()) {
@@ -69,6 +69,12 @@ public class GameLayer extends Layer implements CollisionListener {
 		
 		drawTimer(canvas);
 
+	}
+
+	private void drawBackground(Canvas canvas) {
+		if(!ProgramConstants.isDebugWalls()) {
+			LevelModel.getBackground().draw(canvas, 0, 0); // Background image
+		}
 	}
 
 	private void drawHeadTimer(Canvas canvas) {
