@@ -19,6 +19,7 @@ public class WeaponSelection {
 	private GameModel model;
 	private ArrayList<Button> weaponButtons;
 	private ArrayList<WeaponModel> weaponList;
+	private boolean isActive;
 
 	/**
 	 * @param model Game model. Used to get the current player.
@@ -51,6 +52,7 @@ public class WeaponSelection {
 	 * @param active true to enable, false to disable
 	 */
 	public void setActive(boolean active) {
+		this.isActive = active;
 		for (Button wb : weaponButtons) {
 			wb.setEnabled(active);
 		}
@@ -77,6 +79,10 @@ public class WeaponSelection {
 		int index = weaponButtons.indexOf(button);
 		model.getCurrentPlayer().setCurrentWeapon(index);
 		setActive(false);
+	}
+
+	public boolean isActive() {
+		return this.isActive;
 	}
 
 }
