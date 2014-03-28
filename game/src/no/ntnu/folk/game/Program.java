@@ -3,6 +3,7 @@ package no.ntnu.folk.game;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.ActionMode;
 import android.view.View;
 import android.view.Window;
 import no.ntnu.folk.game.constants.ProgramConstants;
@@ -34,6 +35,14 @@ public class Program extends Activity {
 
 	public static Game getGame() {
 		return game;
+	}
+
+	@Override
+	public void finish() {
+		super.finish();
+		if (isFinishing()) {
+			System.exit(0);
+		}
 	}
 
 }
