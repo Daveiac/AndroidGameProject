@@ -43,6 +43,8 @@ public class GameModel{
 	private float availablePlayerTime;
 	private boolean paused;
 	private int turnTimer;
+
+	private String winnerText;
 	/**
 	 * Create a new GameModel and initialize fields.
 	 */
@@ -159,24 +161,42 @@ public class GameModel{
 	/**
 	 * Check whether the game has ended.
 	 *
-	 * @param playerList List of players left in the game
 	 * @return true if the game is over
 	 */
-	public boolean isGameOver(ArrayList<PlayerModel> playerList) {
-		Teams team = playerList.get(0).getTeam();
+	public boolean isGameOver() {
+		if (players.isEmpty()) {
+			winnerText = "All players are dead, game was a draw";
+			return true;
+		}
+		Teams team = players.get(0).getTeam();
+		boolean isOver = false;
 		switch (gameType) {
 			case FFA:
-				return players.size() <= 1;
+				isOver = players.size() <= 1;
+				break;
 			case TEAMS:
-				for (PlayerModel p : playerList) {
+				boolean sameTeams = true;
+				for (PlayerModel p : players) {
 					if (!team.equals(p.getTeam())) {
-						return false;
+						sameTeams = false;
 					}
 				}
-				return true;
+				if(sameTeams){
+					isOver = true;
+				}
+				break;
 			default:
-				return false;
+				isOver = false;
 		}
+		if (isOver) {
+			if (gameType == GameTypes.FFA) {
+				winnerText = "Winner is : " + players.get(0).getName();
+			}
+			else {
+				winnerText = "Winner is team: " + team.toString();
+			}
+		}
+		return isOver;
 	}
 
 	public int getPlayerCount() {
@@ -247,5 +267,8 @@ public class GameModel{
 	}
 	public ArrayList<ProjectileModel> getExplosions() {
 		return this.explosions;
+	}
+	public String getWinnerText() {
+		return this.winnerText;
 	}
 }
