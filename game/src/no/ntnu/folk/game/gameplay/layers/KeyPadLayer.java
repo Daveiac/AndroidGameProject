@@ -8,6 +8,7 @@ import static no.ntnu.folk.game.R.drawable.keypadright;
 import static no.ntnu.folk.game.R.drawable.keypadup;
 import static no.ntnu.folk.game.R.drawable.shootbutton;
 import static no.ntnu.folk.game.R.drawable.swapbutton;
+import static no.ntnu.folk.game.R.drawable.pausegame;
 
 import java.util.ArrayList;
 
@@ -38,10 +39,10 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	private Button leftKey;
 	private Button rightKey;
 	private Button upKey;
-	private Button pauseButton;
 	private Button swapKey;
 	private Button fireKey;
 	private Button endKey;
+	private Button pauseKey;
 
 	private Image aimImage;
 	private GameState gameState;
@@ -68,18 +69,18 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		Vector2 leftKeyPos = new Vector2(windowSize[0] * 0.08f, windowSize[1] * 0.90f);
 		Vector2 rightKeyPos = new Vector2(windowSize[0] * 0.32f, windowSize[1] * 0.90f);
 		Vector2 upKeyPos = new Vector2(windowSize[0] * 0.2f, windowSize[1] * 0.87f);
-		Vector2 pauseKeyPos = new Vector2(32, 32); // TODO should not use hardcoded coordinates
+		Vector2 pauseKeyPos = new Vector2(windowSize[0] * 0.50f, windowSize[1] * 0.90f);
 		Vector2 swapKeyPos = new Vector2(windowSize[0] * 0.92f, windowSize[1] * 0.90f);
 		Vector2 fireKeyPos = new Vector2(windowSize[0] * 0.76f, windowSize[1] * 0.90f);
 		Vector2 endKeyPos = new Vector2(windowSize[0] * 0.60f, windowSize[1] * 0.90f);
 		buttons = new Button[]{
 				leftKey = new Button(keypadleft, keypadleft, leftKeyPos, true),
-				rightKey = new Button(keypadright, keypadright, rightKeyPos, true),
-				upKey = new Button(keypadup, keypadup, upKeyPos, false),
-				pauseButton = new Button(icon, icon, pauseKeyPos, false), // TODO add proper pause button
-				swapKey = new Button(swapbutton, swapbutton, swapKeyPos, false),
-				fireKey = new Button(shootbutton, shootbutton, fireKeyPos, false),
-				endKey = new Button(endturn, endturn, endKeyPos, false),
+						rightKey = new Button(keypadright, keypadright, rightKeyPos, true),
+						upKey = new Button(keypadup, keypadup, upKeyPos, false),
+						swapKey = new Button(swapbutton, swapbutton, swapKeyPos, false),
+						fireKey = new Button(shootbutton, shootbutton, fireKeyPos, false),
+						endKey = new Button(endturn, endturn, endKeyPos, false),
+						pauseKey = new Button(pausegame, pausegame, pauseKeyPos, false),
 		};
 	}
 
@@ -145,6 +146,10 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				gameModel.setGameTime(0);
 			}
 		}
+		if (pauseKey.popPressed()) {
+			gameModel.setPaused(true);
+			Game.getInstance().pushState(new PauseMenu());
+		}
 	}
 
 	@Override
@@ -189,31 +194,31 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		int pointerId = event.getPointerId(pointerIndex);
 		int maskedAction = event.getActionMasked();
 		switch (maskedAction) {
-			case MotionEvent.ACTION_DOWN:
-			case MotionEvent.ACTION_POINTER_DOWN:
-				onTouchDown(event);
-				break;
-			case MotionEvent.ACTION_MOVE:
-				int pointerCount = event.getPointerCount();
-				for (int i = 0; i < pointerCount; i++) {
-					PointF point = activePointers.get(event.getPointerId(i));
-					if (point != null) {
-						point.set(event.getX(i), event.getY(i));
-					}
+		case MotionEvent.ACTION_DOWN:
+		case MotionEvent.ACTION_POINTER_DOWN:
+			onTouchDown(event);
+			break;
+		case MotionEvent.ACTION_MOVE:
+			int pointerCount = event.getPointerCount();
+			for (int i = 0; i < pointerCount; i++) {
+				PointF point = activePointers.get(event.getPointerId(i));
+				if (point != null) {
+					point.set(event.getX(i), event.getY(i));
 				}
-				break;
-			case MotionEvent.ACTION_UP:
-			case MotionEvent.ACTION_POINTER_UP:
-			case MotionEvent.ACTION_CANCEL:
-				for (Button button : buttons) {
-					if (button.contains(activePointers.get(pointerId).x, activePointers.get(pointerId).y)) {
-						button.release();
-					}
+			}
+			break;
+		case MotionEvent.ACTION_UP:
+		case MotionEvent.ACTION_POINTER_UP:
+		case MotionEvent.ACTION_CANCEL:
+			for (Button button : buttons) {
+				if (button.contains(activePointers.get(pointerId).x, activePointers.get(pointerId).y)) {
+					button.release();
 				}
-				activePointers.remove(pointerId);
-				break;
-			default:
-				break;
+			}
+			activePointers.remove(pointerId);
+			break;
+		default:
+			break;
 		}
 		return false;
 	}
@@ -225,7 +230,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		PointF point = new PointF(event.getX(pointerIndex), event.getY(pointerIndex));
 		activePointers.append(pointerId, point);
 
-		if (pauseButton.contains(point.x, point.y)) {
+		if (pauseKey.contains(point.x, point.y)) {
 			gameModel.setPaused(true);
 			Game.getInstance().pushState(new PauseMenu());
 		}
