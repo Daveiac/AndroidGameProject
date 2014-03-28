@@ -164,6 +164,10 @@ public class GameModel{
 	 * @return true if the game is over
 	 */
 	public boolean isGameOver() {
+		if (players.isEmpty()) {
+			winnerText = "All players are dead, game was a draw";
+			return true;
+		}
 		Teams team = players.get(0).getTeam();
 		boolean isOver = false;
 		switch (gameType) {
