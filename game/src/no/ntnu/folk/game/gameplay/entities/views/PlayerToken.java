@@ -8,8 +8,10 @@ import sheep.graphics.Color;
 import java.util.Arrays;
 
 public class PlayerToken extends EntityToken {
+	private static final float healthBarFrame = 5;
+
 	private float direction;
-	private float healthbarFrame = 5;
+	private Matrix healthBarMatrix;
 
 	/**
 	 * @param model PlayerModel for this token
@@ -17,20 +19,28 @@ public class PlayerToken extends EntityToken {
 	 */
 	public PlayerToken(PlayerModel model, int image) {
 		super(model, image);
-		direction = 1;
+		this.healthBarMatrix = new Matrix();
+		this.direction = 1;
 	}
 
 	@Override
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
-		Matrix matrix = new Matrix();
+		drawHealthBar(canvas);
+	}
+	/**
+	 * Draws a health bar above the player
+	 *
+	 * @param canvas The canvas the health bar is drawn on
+	 */
+	private void drawHealthBar(Canvas canvas) {
 		float x = entityModel.getX();
+		float y = entityModel.getY();
 		float height = image.getHeight();
 		float width = image.getWidth() / 2;
-		float y = entityModel.getY();
-		matrix.postTranslate(x, y - height);
+		healthBarMatrix.setTranslate(x, y - height);
 		float health = ((PlayerModel) entityModel).getHealth() * 1.0f / ((PlayerModel) entityModel).getStartHealth();
-		canvas.drawRect(x - width - healthbarFrame, y - height + healthbarFrame, x + width + healthbarFrame, y - height * (1.25f) - healthbarFrame, Color.BLACK);
+		canvas.drawRect(x - width - healthBarFrame, y - height + healthBarFrame, x + width + healthBarFrame, y - height * (1.25f) - healthBarFrame, Color.BLACK);
 		canvas.drawRect(x - width, y - height, (x - width) + width * health * 2, y - height * (1.25f), Color.RED);
 	}
 
