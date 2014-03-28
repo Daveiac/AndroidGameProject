@@ -5,9 +5,9 @@ import no.ntnu.folk.game.R;
 public enum Projectiles {
 	HANDGUN_BULLET(400, 15, 0, 0, -1,  R.drawable.bullet_small, -1),
 	RIFLE_BULLET(500, 25, 0, 0, -1, R.drawable.bullet_medium, -1),
-	ROCKET(300, 10, 20, 100, -1, R.drawable.bullet_big, R.drawable.explosion),
-	TURTLE(200, 10, 30, 100, -1, R.drawable.turtle, R.drawable.explosion),
-    GRENADE(300, 5, 40, 200, 5, R.drawable.grenade, R.drawable.explosion);
+	ROCKET(300, 10, 20, 100, -1, R.drawable.bullet_big, R.drawable.explosion_medium),
+	TURTLE(200, 10, 30, 100, -1, R.drawable.turtle, R.drawable.explosion_medium),
+    GRENADE(300, 5, 40, 150, 5, R.drawable.grenade, R.drawable.explosion_large);
 
 	private final int muzzleVelocity;
 	private final int directDamage;
