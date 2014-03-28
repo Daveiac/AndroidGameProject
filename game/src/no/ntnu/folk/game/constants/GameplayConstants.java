@@ -3,7 +3,7 @@ package no.ntnu.folk.game.constants;
 public class GameplayConstants {
 	public static final float PLAYER_SPEED = 100;
 	public static final float ACCELERATION = 0;
-    public  static final int EXPLOSION_LENGTH = 10;
+	public static final int EXPLOSION_LENGTH = 10;
 	// Player health
 	public static final int MIN_HEALTH = 100;
 	public static final int DEFAULT_HEALTH = 100;

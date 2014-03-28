@@ -124,10 +124,9 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 			gameState.fireWeapon();
 		}
 		if (swapKey.popPressed()) {
-			if(weaponSelection.isActive()){
+			if (weaponSelection.isActive()) {
 				weaponSelection.setActive(false);
-			}
-			else {
+			} else {
 				weaponButtons = weaponSelection.getWeaponButtons();
 				weaponSelection.setActive(true);
 			}

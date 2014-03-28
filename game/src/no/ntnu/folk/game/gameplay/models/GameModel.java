@@ -1,6 +1,5 @@
 package no.ntnu.folk.game.gameplay.models;
 
-import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameTypes;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Teams;
@@ -9,8 +8,6 @@ import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import no.ntnu.folk.game.gameplay.entities.models.TombStoneModel;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
-import sheep.collision.CollisionListener;
-import sheep.game.Sprite;
 import sheep.math.Vector2;
 
 import java.util.ArrayList;
@@ -20,7 +17,7 @@ import java.util.ArrayList;
  *
  * @author Rune
  */
-public class GameModel{
+public class GameModel {
 	// Entity lists
 	private ArrayList<PlayerModel> players;
 	private ArrayList<ProjectileModel> projectiles;
@@ -181,7 +178,7 @@ public class GameModel{
 						sameTeams = false;
 					}
 				}
-				if(sameTeams){
+				if (sameTeams) {
 					isOver = true;
 				}
 				break;
@@ -191,8 +188,7 @@ public class GameModel{
 		if (isOver) {
 			if (gameType == GameTypes.FFA) {
 				winnerText = "Winner is : " + players.get(0).getName();
-			}
-			else {
+			} else {
 				winnerText = "Winner is team: " + team.toString();
 			}
 		}

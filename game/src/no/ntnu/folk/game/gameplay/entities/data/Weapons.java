@@ -10,7 +10,7 @@ public enum Weapons {
 	ROCKET_LAUNCHER(Projectiles.ROCKET, R.drawable.rocketlancher),
 	RIFLE(Projectiles.RIFLE_BULLET, R.drawable.rifle),
 	TURTLEGUN(Projectiles.TURTLE, R.drawable.turtlegun),
-    GRENADE(Projectiles.GRENADE,R.drawable.grenade);
+	GRENADE(Projectiles.GRENADE, R.drawable.grenade);
 
 	private final Projectiles projectile;
 	private final int image;
@@ -20,7 +20,7 @@ public enum Weapons {
 			ROCKET_LAUNCHER,
 			RIFLE,
 			TURTLEGUN,
-            GRENADE
+			GRENADE
 	};
 
 	/**
