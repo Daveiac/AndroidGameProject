@@ -44,6 +44,7 @@ public class GameLayer extends Layer implements CollisionListener {
 			ArrayList<Direction> playerCollision = collidesWithWall(player);
 			player.setCollision(playerCollision);
 			correctPosition(player, playerCollision);
+			// Checks if a player is harmed by an explosion
 			if (!this.model.getExplosions().isEmpty()) {
 				for (ProjectileModel pm : this.model.getExplosions()) {
 					float exploLeft = pm.getPosition().getX() - pm.getAreaDamageRange();
@@ -249,11 +250,6 @@ public class GameLayer extends Layer implements CollisionListener {
 				attack((PlayerModel) b, (ProjectileModel) a);
 			}
 
-		}
-		if (a instanceof PlayerModel) {
-			if (b instanceof LevelToken) {
-				a.setSpeed(a.getSpeed().getX(), 0);
-			}
 		}
 	}
 	/**
