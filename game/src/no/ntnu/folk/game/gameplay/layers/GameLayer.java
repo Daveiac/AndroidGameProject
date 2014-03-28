@@ -48,7 +48,11 @@ public class GameLayer extends Layer implements CollisionListener {
 	public void draw(Canvas canvas, BoundingBox box) {
 		canvas.save();
 		int[] windowSize = ProgramConstants.getWindowSize();
-		canvas.translate(-model.getCurrentPlayer().getX() + windowSize[0] / 2, -model.getCurrentPlayer().getY() + windowSize[1] / 2);
+		if (model.getProjectiles().isEmpty()) {
+			canvas.translate(-model.getCurrentPlayer().getX() + windowSize[0] / 2, -model.getCurrentPlayer().getY() + windowSize[1] / 2);
+		} else {
+			canvas.translate(-model.getProjectiles().get(0).getX() + windowSize[0] / 2, -model.getProjectiles().get(0).getY() + windowSize[1] / 2);
+		}
 
 		drawLevel(canvas);
 		drawEntities(canvas);
