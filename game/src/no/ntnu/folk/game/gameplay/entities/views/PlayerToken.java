@@ -10,7 +10,6 @@ import java.util.Arrays;
 public class PlayerToken extends EntityToken {
 	private static final float healthBarFrame = 5;
 
-	private float direction;
 	private Matrix healthBarMatrix;
 
 	/**
@@ -20,7 +19,6 @@ public class PlayerToken extends EntityToken {
 	public PlayerToken(PlayerModel model, int image) {
 		super(model, image);
 		this.healthBarMatrix = new Matrix();
-		this.direction = 1;
 	}
 
 	@Override
@@ -61,17 +59,20 @@ public class PlayerToken extends EntityToken {
 				", coll: " + Arrays.toString(entityModel.getCollision().toArray()) +
 				"}";
 	}
-
+	
+	@Override
+	public void update(float dt) {
+		super.update(dt);
+		entityModel.setScale(((PlayerModel) entityModel).getCurrentWeapon().getScale().getY(), 1);
+	}
+	
 	@Override
 	protected float getScaleX() {
-		if (entityModel.getSpeed().getX() != 0) {
-			direction = Math.signum(entityModel.getSpeed().getX());
-		}
-		return direction;
+		return entityModel.getScale().getX();
 	}
 	@Override
 	protected float getScaleY() {
-		return 1;
+		return entityModel.getScale().getY();
 	}
 	/**
 	 * @return 0 as the player does not rotate.

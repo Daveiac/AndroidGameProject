@@ -22,18 +22,24 @@ public class WeaponToken extends EntityToken {
 				", projectile='" + ((WeaponModel) entityModel).getProjectileType() + '\'' +
 				'}';
 	}
+	
+	@Override
+	public void update(float dt) {
+		super.update(dt);
+		if (rotation > 90 && rotation < 270) {
+			entityModel.setScale(1,-1);
+		} else {
+			entityModel.setScale(1,1);
+		}
+	}
 
 	@Override
 	protected float getScaleX() {
-		return 1;
+		return entityModel.getScale().getX();
 	}
 	@Override
 	protected float getScaleY() {
-		if (rotation > 90 && rotation < 270) {
-			return -1;
-		} else {
-			return 1;
-		}
+		return entityModel.getScale().getY();
 	}
 
 	/**
