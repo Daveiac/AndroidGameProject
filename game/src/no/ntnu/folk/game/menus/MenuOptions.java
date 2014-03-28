@@ -15,7 +15,8 @@ public enum MenuOptions {
 
 	DEV_MENU("Developer menu"),
 	UNLIMITED_FIRE("Unlimited fire"),
-	TOGGLE_DEBUG("Toggle debug"),
+	TOGGLE_DEBUG("Toggle debug"), 
+	DEBUG_WALLS("Remove wall texture")
 	;
 
 	private final String label;

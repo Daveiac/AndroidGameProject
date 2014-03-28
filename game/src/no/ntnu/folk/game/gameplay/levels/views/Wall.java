@@ -3,6 +3,7 @@ package no.ntnu.folk.game.gameplay.levels.views;
 import android.graphics.Canvas;
 import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameplayConstants;
+import no.ntnu.folk.game.constants.ProgramConstants;
 import sheep.graphics.Color;
 import sheep.graphics.Image;
 
@@ -49,6 +50,10 @@ public class Wall extends LevelToken {
 	 * @param canvas Where to draw the wall
 	 */
 	public void drawWall(Canvas canvas) {
-		image.draw(canvas, x, y);
+		if(ProgramConstants.isDebugWalls()) {
+			canvas.drawRect(x, y, width, height, Color.GREEN);
+		} else {
+			image.draw(canvas, x, y);
+		}
 	}
 }
