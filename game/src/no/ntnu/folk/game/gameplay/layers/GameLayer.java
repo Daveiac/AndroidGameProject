@@ -2,7 +2,7 @@ package no.ntnu.folk.game.gameplay.layers;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import no.ntnu.folk.game.Program;
+import android.graphics.Typeface;
 import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
@@ -13,23 +13,28 @@ import no.ntnu.folk.game.gameplay.entities.models.TombStoneModel;
 import no.ntnu.folk.game.gameplay.levels.Direction;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.models.GameModel;
+import sheep.collision.CollisionListener;
 import sheep.game.Layer;
+import sheep.game.Sprite;
 import sheep.graphics.Color;
+import sheep.graphics.Font;
 import sheep.graphics.Image;
 import sheep.math.BoundingBox;
 
 import java.util.ArrayList;
 
-public class GameLayer extends Layer {
+public class GameLayer extends Layer implements CollisionListener {
 	private GameModel model;
 	private ArrayList<Integer[]> lastingImageArrayList;
+	private Font headTimerFont;
 
 	public GameLayer(GameModel model) {
 		this.model = model;
 		lastingImageArrayList = new ArrayList<Integer[]>();
 		for (PlayerModel player : model.getPlayers()) {
-			player.addCollisionListener(model);
+			player.addCollisionListener(this);
 		}
+		this.headTimerFont = new Font(255, 255, 255, 50.0f, Typeface.SANS_SERIF, Typeface.NORMAL);
 	}
 
 	@Override
@@ -38,6 +43,7 @@ public class GameLayer extends Layer {
 			ArrayList<Direction> playerCollision = collidesWithWall(player);
 			player.setCollision(playerCollision);
 			correctPosition(player, playerCollision);
+			// Checks if a player is harmed by an explosion
 			if (!this.model.getExplosions().isEmpty()) {
 				for (ProjectileModel pm : this.model.getExplosions()) {
 					float exploLeft = pm.getPosition().getX() - pm.getAreaDamageRange();
@@ -56,13 +62,8 @@ public class GameLayer extends Layer {
 			}
 		}
 		model.getExplosions().clear();
-		for (ProjectileModel projectile : model.getProjectiles()) {
-			if (!collidesWithWall(projectile).isEmpty()) {
-				model.addExplosion(projectile);
-				model.getKill().add(projectile);
-			}
+		checkProjectileCollisions();
 		}
-	}
 
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
@@ -73,48 +74,29 @@ public class GameLayer extends Layer {
 		drawLevel(canvas);
 		drawEntities(canvas);
 		drawLastingImages(canvas);
-        drawTimer(canvas);
+		drawHeadTimer(canvas);
+		canvas.restore();
+        
+		drawTimer(canvas);
 
-        canvas.restore();
     }
 
-    private void drawTimer(Canvas canvas){
-        int timeLeft = (int)model.playerTimeLeft();
-        if (timeLeft > 6) {
-            canvas.drawText(
-                    ""+timeLeft,
-                    model.getCurrentPlayer().getX(),
-                    model.getCurrentPlayer().getY() - ProgramConstants.getWindowSize()[0] * 0.1f,
-                    Color.WHITE
-            );
-        }
-        if(timeLeft < 6){
-            Image i;
-            float x = model.getCurrentPlayer().getX();
-            float y = model.getCurrentPlayer().getY() - ProgramConstants.getWindowSize()[0] * 0.1f;
-            switch (timeLeft){
-                case 5:
-                    i = new Image(R.drawable.five);
-                    i.draw(canvas, x - i.getWidth()/2, y);
-                    break;
-                case 4:
-                    i = new Image(R.drawable.four);
-                    i.draw(canvas, x - i.getWidth()/2, y);
-                    break;
-                case 3:
-                    i = new Image(R.drawable.three);
-                    i.draw(canvas, x - i.getWidth()/2, y);
-                    break;
-                case 2:
-                    i = new Image(R.drawable.two);
-                    i.draw(canvas, x - i.getWidth()/2, y);
-                    break;
-                case 1:
-                    i = new Image(R.drawable.one);
-                    i.draw(canvas, x - i.getWidth()/2, y);
-                    break;
-            }
-        }
+    private void drawHeadTimer(Canvas canvas) {
+    	int timeLeft = (int) model.playerTimeLeft();
+    	if(timeLeft <= GameplayConstants.HEAD_TIMER_START) {
+    		float x = model.getCurrentPlayer().getX();
+    		float y = model.getCurrentPlayer().getY() - ProgramConstants.getWindowSize()[0] * 0.1f;
+    		canvas.drawText(""+timeLeft, x, y, headTimerFont);
+    	}
+	}
+
+	private void drawTimer(Canvas canvas){
+		canvas.drawText(
+				"Time left: " + ((int) model.playerTimeLeft()),
+				ProgramConstants.getWindowSize()[0] * 0.9f,
+				ProgramConstants.getWindowSize()[0] * 0.1f,
+				Color.WHITE
+				);
     }
 
 	private void drawLastingImages(Canvas canvas) {
@@ -251,5 +233,43 @@ public class GameLayer extends Layer {
 			}
 		}
 		return directions;
+	}
+
+	@Override
+	public void collided(Sprite a, Sprite b) {
+		if (a instanceof ProjectileModel) {
+			if (b instanceof PlayerModel) {
+				model.addExplosion((ProjectileModel) a);
+				model.getKill().add((EntityModel) a);
+				hitBy((PlayerModel) b, (ProjectileModel) a);
+			}
+
+		}
+	}
+	/**
+	 * Attack a with a projectile. If the player dies, add it to the kill list and make a new tomb stone.
+	 *
+	 * @param player     Player that was attacked
+	 * @param projectile Projectile used to hitBy
+	 */
+	private void hitBy(PlayerModel player, ProjectileModel projectile) {
+		player.attacked(projectile.getDirectDamage());
+		if (player.getHealth() <= 0) {
+			model.getKill().add(player);
+			model.getTombStones().add(new TombStoneModel(player.getName(), player.getPosition(), R.drawable.tombstone));
+		}
+	}
+	private void checkProjectileCollisions() {
+		for (ProjectileModel projectile : model.getProjectiles()) {
+			if (!collidesWithWall(projectile).isEmpty()) {
+				model.addExplosion(projectile);
+				model.getKill().add(projectile);
+			}
+			else{
+				for(PlayerModel player : model.getPlayers()){
+					projectile.collides(player);
+				}
+			}
+		}
 	}
 }

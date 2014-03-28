@@ -32,10 +32,10 @@ public class PreGameMenu extends MenuState {
 		int position = 0;
 		menuItems = new MenuItem[]{
 				new MenuItem(MenuOptions.START_GAME, position++),
-				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(gameModel.getPlayerCount()) + "players"),
+				new MenuItem(MenuOptions.PLAYER_COUNT, position++, Integer.toString(gameModel.getPlayerCount()) + " players"),
 				new MenuItem(MenuOptions.SELECT_MAP, position++, gameModel.getLevelName()),
-				new MenuItem(MenuOptions.HEALTH, position++, Integer.toString(gameModel.getStartHealth()) + "HP"),
-				new MenuItem(MenuOptions.TURN_TIMER, position++, Integer.toString(gameModel.getTurnTimer()) + "seconds"),
+				new MenuItem(MenuOptions.HEALTH, position++, Integer.toString(gameModel.getStartHealth()) + " HP"),
+				new MenuItem(MenuOptions.TURN_TIMER, position++, Integer.toString(gameModel.getTurnTimer()) + " seconds"),
 				new MenuItem(MenuOptions.GAME_TYPE, position++, gameModel.getGameType().toString()),
 				new MenuItem(MenuOptions.BACK, position++)
 		};
@@ -52,7 +52,7 @@ public class PreGameMenu extends MenuState {
 				break;
 			case PLAYER_COUNT:
 				changePlayerCount();
-				menuItem.setData(Integer.toString(gameModel.getPlayerCount()) + "players");
+				menuItem.setData(Integer.toString(gameModel.getPlayerCount()) + " players");
 				break;
 			case SELECT_MAP:
 				nextLevel();
@@ -60,11 +60,11 @@ public class PreGameMenu extends MenuState {
 				break;
 			case HEALTH:
 				increaseHealth();
-				menuItem.setData(Integer.toString(gameModel.getStartHealth()) + "HP");
+				menuItem.setData(Integer.toString(gameModel.getStartHealth()) + " HP");
 				break;
 			case TURN_TIMER:
 				increaseTurnTimer();
-				menuItem.setData((Integer.toString(gameModel.getTurnTimer()) + "seconds"));
+				menuItem.setData((Integer.toString(gameModel.getTurnTimer()) + " seconds"));
 				break;
 			case GAME_TYPE:
 				selectGameType();

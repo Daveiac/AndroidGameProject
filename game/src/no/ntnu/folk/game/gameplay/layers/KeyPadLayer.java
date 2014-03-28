@@ -35,7 +35,6 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	private Button swapKey;
 	private Button fireKey;
 	private Button endKey;
-	private Button unpauseButton;
 
 	private Image aimImage;
 	private GameState gameState;
@@ -66,7 +65,6 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		Vector2 swapKeyPos = new Vector2(windowSize[0] * 0.92f, windowSize[1] * 0.90f);
 		Vector2 fireKeyPos = new Vector2(windowSize[0] * 0.76f, windowSize[1] * 0.90f);
 		Vector2 endKeyPos = new Vector2(windowSize[0] * 0.60f, windowSize[1] * 0.90f);
-		Vector2 unpauseKeyPos = new Vector2(windowSize[0] * 0.50f, windowSize[1] * 0.50f);
 		buttons = new Button[]{
 				leftKey = new Button(keypadleft, keypadleft, leftKeyPos, true),
 				rightKey = new Button(keypadright, keypadright, rightKeyPos, true),
@@ -76,8 +74,6 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				fireKey = new Button(shootbutton, shootbutton, fireKeyPos, false),
 				endKey = new Button(endturn, endturn, endKeyPos, false),
 		};
-		unpauseButton = new Button(unpause, unpause, unpauseKeyPos, false);
-		unpauseButton.disable();
 	}
 
 	@Override
@@ -134,10 +130,6 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		if (endKey.popPressed()) {
 			gameModel.setGameTime(0);
 		}
-		if (unpauseButton.popPressed()) {
-			gameModel.setPaused(false);
-			unpauseButton.disable();
-		}
 	}
 
 	@Override
@@ -148,7 +140,6 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		for (Button button : weaponButtons) {
 			button.draw(canvas);
 		}
-		unpauseButton.draw(canvas);
 	}
 
 	private void drawOverlay(Canvas canvas) {
@@ -221,7 +212,6 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 
 		if (pauseButton.contains(point.x, point.y)) {
 			gameModel.setPaused(true);
-			unpauseButton.enable();
 			Game.getInstance().pushState(new PauseMenu());
 		}
 		for (Button button : buttons) {
@@ -234,9 +224,6 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				weaponSelection.setWeapon(button);
 				break;
 			}
-		}
-		if (gameModel.isPaused() && unpauseButton.contains(point.x, point.y)) {
-			unpauseButton.touch();
 		}
 		return true;
 	}

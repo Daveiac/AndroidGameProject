@@ -20,7 +20,7 @@ import java.util.ArrayList;
  *
  * @author Rune
  */
-public class GameModel implements CollisionListener {
+public class GameModel{
 	// Entity lists
 	private ArrayList<PlayerModel> players;
 	private ArrayList<ProjectileModel> projectiles;
@@ -154,42 +154,6 @@ public class GameModel implements CollisionListener {
 	 */
 	public void setPaused(boolean paused) {
 		this.paused = paused;
-	}
-
-	/**
-	 * Called when two Sprite collide.
-	 *
-	 * @param a The first Sprite (the sprite being listened to).
-	 * @param b The other Sprite.
-	 */
-	@Override
-	public void collided(Sprite a, Sprite b) {
-		if (a instanceof ProjectileModel) {
-			if (b instanceof PlayerModel) {
-				addExplosion((ProjectileModel) a);
-				kill.add((EntityModel) a);
-				attack((PlayerModel) b, (ProjectileModel) a);
-			}
-
-		}
-		if (a instanceof PlayerModel) {
-			if (b instanceof LevelToken) {
-				a.setSpeed(a.getSpeed().getX(), 0);
-			}
-		}
-	}
-	/**
-	 * Attack with a projectile. If the player dies, add it to the kill list and make a new tomb stone.
-	 *
-	 * @param player     Player that was attacked
-	 * @param projectile Projectile used to attack
-	 */
-	private void attack(PlayerModel player, ProjectileModel projectile) {
-		player.attacked(projectile.getDirectDamage());
-		if (player.getHealth() <= 0) {
-			kill.add(player);
-			tombStones.add(new TombStoneModel(player.getName(), player.getPosition(), R.drawable.tombstone));
-		}
 	}
 
 	/**

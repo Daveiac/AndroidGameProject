@@ -24,16 +24,18 @@ import static android.graphics.Color.BLUE;
 public class GameState extends State {
 	private World gameWorld;
 	private GameModel model;
+	private GameLayer gameLayer;
 
 	/**
 	 * Create a new game.
 	 *
-	 * @param model
+	 * @param model The GameModel for this game
 	 */
 	public GameState(GameModel model) {
 		this.model = model;
 		gameWorld = new World();
-		gameWorld.addLayer(new GameLayer(model));
+		gameLayer = new GameLayer(model);
+		gameWorld.addLayer(gameLayer);
 		gameWorld.addLayer(new KeyPadLayer(this, model));
 	}
 
@@ -42,7 +44,6 @@ public class GameState extends State {
 		super.update(dt);
 		gameWorld.update(dt);
 		updateModels(dt);
-		checkCollisions();
 		model.incrementTime(dt);
 		model.decrementAvailablePlayerTime(dt);
 		if (model.playerTimeUp() || model.getPlayers().indexOf(model.getCurrentPlayer()) == -1) {
@@ -72,13 +73,7 @@ public class GameState extends State {
 			tombStone.update(dt);
 		}
 	}
-	private void checkCollisions() {
-		for (ProjectileModel projectile : model.getProjectiles()) {
-			for (PlayerModel player : model.getPlayers()) {
-				projectile.collides(player);
-			}
-		}
-	}
+
 	/**
 	 * Removes killed entities
 	 */
@@ -114,24 +109,35 @@ public class GameState extends State {
 	 */
 	public void fireWeapon() {
 		if (model.getCurrentPlayer().isCold() || ProgramConstants.isUnlimitedFire()) {
-			Projectiles projectileType = model.getCurrentPlayer().getCurrentWeapon().getProjectileType();
-			ProjectileModel projectile = new ProjectileModel(projectileType, model.getCurrentPlayer());
+			ProjectileModel projectile = makeProjectile();
 			model.getProjectiles().add(projectile);
-			projectile.addCollisionListener(model);
+			projectile.addCollisionListener(gameLayer);
 
+			Vector2 aim = setAimMagnitude();
 
-			Vector2 aim = model.getCurrentPlayer().getAim();
-			double v_aim = Math.sqrt(Math.pow(aim.getX(), 2) + Math.pow(aim.getY(), 2));
-
-			double v = model.getCurrentPlayer().getCurrentWeapon().getProjectileType().getMuzzleVelocity();
-
-			float ratio = (float) (v / v_aim);
-
-
-			projectile.setSpeed(aim.getMultiplied(ratio));
+			projectile.setSpeed(aim);
 			projectile.setAcceleration(0, 50);
 			model.getCurrentPlayer().setCold(false);
 		}
+	}
+
+	/**
+	 * @return A new projectile based on current player
+	 */
+	private ProjectileModel makeProjectile() {
+		Projectiles projectileType = model.getCurrentPlayer().getCurrentWeapon().getProjectileType();
+		return new ProjectileModel(projectileType, model.getCurrentPlayer());
+	}
+
+	/**
+	 * @return Aim vector with correct magnitude
+	 */
+	private Vector2 setAimMagnitude() {
+		Vector2 aim = model.getCurrentPlayer().getAim();
+		double v_aim = Math.sqrt(Math.pow(aim.getX(), 2) + Math.pow(aim.getY(), 2));
+		double v = model.getCurrentPlayer().getCurrentWeapon().getProjectileType().getMuzzleVelocity();
+		float ratio = (float) (v / v_aim);
+		return aim.getMultiplied(ratio);
 	}
 
 }

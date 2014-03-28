@@ -14,6 +14,7 @@ public class GameplayConstants {
 	// TurnTime
 	public static final int MAX_TURN_TIMER = 60; // turn time in seconds
 	public static final int MIN_TURN_TIMER = 20;
+	public static final int HEAD_TIMER_START = 5;
 	// Size of the grid
 	public static final int GRID_SIZE = 50;
 	public static final float GRAVITY = 142;
