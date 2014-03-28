@@ -29,7 +29,7 @@ public class GameState extends State {
 	/**
 	 * Create a new game.
 	 *
-	 * @param model
+	 * @param model The GameModel for this game
 	 */
 	public GameState(GameModel model) {
 		this.model = model;
