@@ -141,7 +141,9 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 			}
 		}
 		if (endKey.popPressed()) {
-			gameModel.setGameTime(0);
+			if (gameModel.getCurrentPlayer().isFiredWeapon() == false) {
+				gameModel.setGameTime(0);
+			}
 		}
 	}
 

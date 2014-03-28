@@ -23,6 +23,7 @@ public class PlayerModel extends EntityModel {
 	private WeaponModel currentWeapon;
 
 	private boolean cold;
+	private boolean firedWeapon;
 
 	/**
 	 * @param name     Constant name for the player during gameplay, will be used to identify different players
@@ -41,6 +42,7 @@ public class PlayerModel extends EntityModel {
 		addMask(team.ordinal());
 		setAcceleration(0, GameplayConstants.ACCELERATION);
 		cold = true;
+		firedWeapon = false;
 	}
 
 	/**
@@ -138,4 +140,11 @@ public class PlayerModel extends EntityModel {
 		this.cold = cold;
 	}
 
+	public boolean isFiredWeapon() {
+		return firedWeapon;
+	}
+
+	public void setFiredWeapon(boolean firedWeapon) {
+		this.firedWeapon = firedWeapon;
+	}
 }

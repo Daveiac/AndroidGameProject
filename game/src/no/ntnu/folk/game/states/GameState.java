@@ -109,6 +109,7 @@ public class GameState extends State {
 	 */
 	public void fireWeapon() {
 		if (model.getCurrentPlayer().isCold() || ProgramConstants.isUnlimitedFire()) {
+			model.getCurrentPlayer().setFiredWeapon(true);
 			ProjectileModel projectile = makeProjectile();
 			model.getProjectiles().add(projectile);
 			projectile.addCollisionListener(gameLayer);
