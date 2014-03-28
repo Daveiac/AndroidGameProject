@@ -96,6 +96,7 @@ public class GameState extends State {
 	/**
 	 * Set current player to the next player if the current player dies.
 	 */
+
 	private void findNextPlayer() {
 		ArrayList<PlayerModel> oldPlayers = model.getPlayers();
 		int i = oldPlayers.indexOf(model.getCurrentPlayer());

@@ -47,6 +47,10 @@ public class GameLayer extends Layer {
 					BoundingBox aoeDamage = new BoundingBox(new Rect((int) exploLeft, (int) exploTop, (int) exploRight, (int) exploBottom));
 					if (aoeDamage.contains(player.getX()-player.getOffset().getX(), player.getY()-player.getOffset().getY())) {
 						player.attacked(pm.getAreaDamage());
+						if (player.getHealth() <= 0) {
+							model.getKill().add(player);
+							model.getTombStones().add(new TombStoneModel(player.getName(), player.getPosition(), R.drawable.tombstone));
+						}
 					}
 				}
 			}
