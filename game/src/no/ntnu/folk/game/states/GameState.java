@@ -108,8 +108,11 @@ public class GameState extends State {
 	 * Fires the weapon the current player is holding
 	 */
 	public void fireWeapon() {
-		if (model.getCurrentPlayer().isCold() || ProgramConstants.isUnlimitedFire()) {
+		if ((model.getCurrentPlayer().isCold() && model.getCurrentPlayer().getCurrentWeapon().isAmmo()) || ProgramConstants.isUnlimitedFire()) {
 			model.getCurrentPlayer().setFiredWeapon(true);
+			if(!ProgramConstants.isUnlimitedFire()) {
+				model.getCurrentPlayer().getCurrentWeapon().reduceAmmo();
+			}
 			ProjectileModel projectile = makeProjectile();
 			model.getProjectiles().add(projectile);
 			projectile.addCollisionListener(gameLayer);
