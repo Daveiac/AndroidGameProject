@@ -18,9 +18,9 @@ public class MenuItem {
 
 	/**
 	 *
-	 * @param option
+	 * @param option what option with button is for
 	 * @param position position of the new menu button
-	 * @param data
+	 * @param data what this button should say
 	 */
 	public MenuItem(MenuOptions option, int position, String data) {
 		this.option = option;
@@ -35,6 +35,10 @@ public class MenuItem {
 		this(option, position, "");
 	}
 
+	/**
+	 * Draws the button in the menu
+	 * @param canvas canvas to draw on
+	 */
 	public void draw(Canvas canvas) {
 		canvas.drawLine(xmin, ymin, xmax, ymin, Color.WHITE);
 		canvas.drawLine(xmin, ymax, xmax, ymax, Color.WHITE);
