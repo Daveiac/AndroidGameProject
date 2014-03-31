@@ -7,7 +7,7 @@ import no.ntnu.folk.game.R;
  *
  */
 public enum Projectiles {
-	HANDGUN_BULLET(400, 15, 0, 0, 999, R.drawable.bullet_small, -1),
+	HANDGUN_BULLET(400, 15, 0, 0, -1, R.drawable.bullet_small, -1),
 	RIFLE_BULLET(500, 30, 0, 0, 3, R.drawable.bullet_medium, -1),
 	ROCKET(300, 5, 20, 100, 5, R.drawable.bullet_big, R.drawable.explosion_medium),
 	TURTLE(200, 5, 30, 100, 2, R.drawable.turtle, R.drawable.explosion_medium),

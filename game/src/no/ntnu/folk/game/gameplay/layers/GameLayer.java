@@ -52,7 +52,7 @@ public class GameLayer extends Layer implements CollisionListener {
 		checkExplosionCollisions();
 		checkPlayerCollisions();
 
-		if (!model.getCurrentPlayer().isCold() && model.getProjectiles().isEmpty()) {
+		if (model.isPlayerTimeUp() && model.getProjectiles().isEmpty()) {
 			model.nextPlayer();
 		}
 	}

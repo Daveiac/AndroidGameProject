@@ -45,9 +45,6 @@ public class GameState extends State {
 		updateModels(dt);
 		model.incrementTime(dt);
 		model.decrementAvailablePlayerTime(dt);
-		if (model.isPlayerTimeUp() || model.getPlayers().indexOf(model.getCurrentPlayer()) == -1) {
-			model.nextPlayer();
-		}
 		killEntities();
 		if (model.isGameOver()) {
 			Program.getGame().pushState(new EndGameMenu(model.getGameTime(), model.getWinnerText()));
@@ -108,7 +105,7 @@ public class GameState extends State {
 	 * Fires the weapon the current player is holding
 	 */
 	public void fireWeapon() {
-		if ((model.getCurrentPlayer().isCold() && model.getCurrentPlayer().getCurrentWeapon().isAmmo()) || ProgramConstants.isUnlimitedFire()) {
+		if ((model.getCurrentPlayer().isCold() && model.getCurrentPlayer().getCurrentWeapon().hasAmmo()) || ProgramConstants.isUnlimitedFire()) {
 			model.getCurrentPlayer().setFiredWeapon(true);
 			if(!ProgramConstants.isUnlimitedFire()) {
 				model.getCurrentPlayer().getCurrentWeapon().reduceAmmo();
