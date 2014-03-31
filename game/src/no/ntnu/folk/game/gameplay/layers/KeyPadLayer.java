@@ -10,6 +10,7 @@ import static no.ntnu.folk.game.R.drawable.swapbutton;
 import static no.ntnu.folk.game.R.drawable.pausegame;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import no.ntnu.folk.game.Program;
 import no.ntnu.folk.game.constants.Direction;
@@ -56,7 +57,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 
 	private float buttonOverlayHeight;
 
-	private SparseArray<PointF> activePointers;
+	private HashMap<Integer, PointF> activePointers;
 
 	/**
 	 * Constructor of the given game state and game model.
@@ -70,7 +71,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		aimImage = new Image(aim);
 		createButtons(ProgramConstants.getWindowSize());
 		weaponButtons = weaponSelection.getWeaponButtons();
-		activePointers = new SparseArray<PointF>();
+		activePointers = new HashMap<Integer, PointF>();
 		Program.getView().setOnTouchListener(this);
 	}
 
@@ -104,10 +105,8 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		// Why I did this: When a state is popped, the OnTouchListener needs to be updated.
 		// Unfortunately I could not find a better way to to do it
 
-		int pointerCount = activePointers.size();
-		for (int i = 0; i < pointerCount; i++) {
+		for (PointF point : activePointers.values()) {
 			boolean buttonPressed = false;
-			PointF point = activePointers.valueAt(i);
 			if (point == null) continue;
 			for (Button button : buttons) {
 				if (button.contains(point.x, point.y)) {
@@ -272,7 +271,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		int pointerId = event.getPointerId(pointerIndex);
 
 		PointF point = new PointF(event.getX(pointerIndex), event.getY(pointerIndex));
-		activePointers.append(pointerId, point);
+		activePointers.put(pointerId, point);
 
 		for (Button button : buttons) {
 			if (button.contains(point.x, point.y)) {
