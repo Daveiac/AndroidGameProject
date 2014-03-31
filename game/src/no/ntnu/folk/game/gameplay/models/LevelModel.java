@@ -13,8 +13,6 @@ import sheep.graphics.Image;
 /**
  * Model of a single level. It is created with its name as a unique ID.
  * This object contains the level tokens necessary to model the whole level.
- *
- * @author b2
  */
 public class LevelModel {
 
@@ -38,36 +36,65 @@ public class LevelModel {
 		LevelParser.parseLevel(this);
 	}
 
+	/**
+	 * @return The id of the level model.
+	 */
 	public int getLevel() {
 		return levelId;
 	}
 
+	/**
+	 * Replaces the grid size of the level with the given width and height.
+	 * @param width		The new width of the grid.
+	 * @param height	The new height of the grid.
+	 */
 	public void setSize(int width, int height) {
 		gridSize[0] = width;
 		gridSize[1] = height;
 	}
 
+	/**
+	 * Adds the available start positions for this level model.
+	 * @param x	The x position.
+	 * @param y	The y position.
+	 */
 	public void addStartPosition(int x, int y) {
 		int[] startPosition = {x * GameplayConstants.GRID_SIZE, y * GameplayConstants.GRID_SIZE};
 		startPositions.add(startPosition);
 	}
 
+	/**
+	 * @return The available start positions for this level.
+	 */
 	public ArrayList<int[]> getStartPositions() {
 		return startPositions;
 	}
 
+	/**
+	 * @return The grid of this level.
+	 */
 	public LevelToken[][] getGrid() {
 		return this.grid;
 	}
 
+	/**
+	 * Replaces the grid of this level model with a new one.
+	 * @param grid The new grid for this level model.
+	 */
 	public void setGrid(LevelToken[][] grid) {
 		this.grid = grid;
 	}
 
+	/**
+	 * @return All the level tokens that belong to this level model.
+	 */
 	public ArrayList<LevelToken> getLevelTokens() {
 		return levelTokens;
 	}
 
+	/**
+	 * @return The background image for this level model.
+	 */
 	public static Image getBackground() {
 		return image;
 	}
