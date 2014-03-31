@@ -4,6 +4,10 @@ import no.ntnu.folk.game.menus.MenuItem;
 import no.ntnu.folk.game.menus.MenuOptions;
 import no.ntnu.folk.game.states.MenuState;
 
+/**
+ * The main menu. It contains the options of continuing to the game or accessing the developer menu.
+ *
+ */
 public class MainMenu extends MenuState {
 
 	// TODO
