@@ -10,7 +10,6 @@ public class Button {
 	private BoundingBox boundingBox;
 
 	private Image idleImage;
-	private Image pressedImage;
 
 	private boolean enabled = true;
 	private boolean pressed = false;
@@ -19,14 +18,12 @@ public class Button {
 	private float y;
 
 	/**
-	 * @param idleImage    Image when idle
-	 * @param pressedImage Image when pressed
-	 * @param center       Center position
-	 * @param canHold      If true, this button can be held an will still be active. If false, this button only activates on first update
+	 * @param idleImage Image when idle
+	 * @param center    Center position
+	 * @param canHold   If true, this button can be held an will still be active. If false, this button only activates on first update
 	 */
-	public Button(int idleImage, int pressedImage, Vector2 center, boolean canHold) {
+	public Button(int idleImage, Vector2 center, boolean canHold) {
 		this.idleImage = new Image(idleImage);
-		this.pressedImage = new Image(pressedImage);
 		this.canHold = canHold;
 		this.x = center.getX() - this.idleImage.getWidth() / 2;
 		this.y = center.getY() - this.idleImage.getHeight() / 2;
@@ -45,11 +42,7 @@ public class Button {
 	 */
 	public void draw(Canvas canvas) {
 		if (enabled) {
-			if (pressed) {
-				idleImage.draw(canvas, x, y);
-			} else {
-				pressedImage.draw(canvas, x, y);
-			}
+			idleImage.draw(canvas, x, y);
 		}
 	}
 
@@ -64,12 +57,14 @@ public class Button {
 		pressed = false;
 		return wasPressed && isEnabled();
 	}
+
 	/**
 	 * This button was touched
 	 */
 	public void touch() {
 		pressed = true;
 	}
+
 	/**
 	 * Button is held (or touch input is moved into the button)
 	 */
@@ -78,6 +73,7 @@ public class Button {
 			pressed = true;
 		}
 	}
+
 	/**
 	 * Button is released
 	 */
@@ -100,23 +96,24 @@ public class Button {
 	public boolean isEnabled() {
 		return enabled;
 	}
-	
+
 	/**
 	 * Enables this button.
 	 */
 	public void enable() {
 		enabled = true;
 	}
-	
+
 	/**
 	 * Disables this button.
 	 */
 	public void disable() {
 		enabled = false;
 	}
-	
+
 	/**
 	 * Enables or disables this button by the given parameter.
+	 *
 	 * @param enabled The status of button
 	 */
 	public void setEnabled(boolean enabled) {

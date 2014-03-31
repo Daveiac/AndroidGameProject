@@ -86,13 +86,13 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		Vector2 fireKeyPos = new Vector2(windowSize[0] * 0.76f, windowSize[1] * 0.90f);
 		Vector2 endKeyPos = new Vector2(windowSize[0] * 0.60f, windowSize[1] * 0.90f);
 		buttons = new Button[]{
-				leftKey = new Button(keypadleft, keypadleft, leftKeyPos, true),
-				rightKey = new Button(keypadright, keypadright, rightKeyPos, true),
-				upKey = new Button(keypadup, keypadup, upKeyPos, false),
-				swapKey = new Button(swapbutton, swapbutton, swapKeyPos, false),
-				fireKey = new Button(shootbutton, shootbutton, fireKeyPos, false),
-				endKey = new Button(endturn, endturn, endKeyPos, false),
-				pauseKey = new Button(pausegame, pausegame, pauseKeyPos, false),
+				leftKey = new Button(keypadleft, leftKeyPos, true),
+				rightKey = new Button(keypadright, rightKeyPos, true),
+				upKey = new Button(keypadup, upKeyPos, false),
+				swapKey = new Button(swapbutton, swapKeyPos, false),
+				fireKey = new Button(shootbutton, fireKeyPos, false),
+				endKey = new Button(endturn, endKeyPos, false),
+				pauseKey = new Button(pausegame, pauseKeyPos, false),
 		};
 	}
 
