@@ -50,14 +50,14 @@ public class GameModel {
 		this.currentLevel = new LevelModel(0);
 		this.gameType = GameTypes.FFA;
 		this.turnTimer = GameplayConstants.MIN_TURN_TIMER;
-		tombStones = new ArrayList<TombStoneModel>();
-		kill = new ArrayList<EntityModel>();
-		projectiles = new ArrayList<ProjectileModel>();
-		explosions = new ArrayList<ProjectileModel>();
+		this.tombStones = new ArrayList<TombStoneModel>();
+		this.kill = new ArrayList<EntityModel>();
+		this.projectiles = new ArrayList<ProjectileModel>();
+		this.explosions = new ArrayList<ProjectileModel>();
 
 		// Init time variables
-		gameTime = 0;
-		availablePlayerTime = turnTimer;
+		this.gameTime = 0;
+		this.availablePlayerTime = turnTimer;
 	}
 
 	/**
