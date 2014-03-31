@@ -94,17 +94,32 @@ public class Button {
 		return boundingBox.contains(x, y);
 	}
 
+	/**
+	 * @return Returns true if this button is enabled, else return false.
+	 */
 	public boolean isEnabled() {
 		return enabled;
 	}
+	
+	/**
+	 * Enables this button.
+	 */
 	public void enable() {
 		enabled = true;
 	}
+	
+	/**
+	 * Disables this button.
+	 */
 	public void disable() {
 		enabled = false;
 	}
+	
+	/**
+	 * Enables or disables this button by the given parameter.
+	 * @param enabled The status of button
+	 */
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-
 }
