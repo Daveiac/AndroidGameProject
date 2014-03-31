@@ -49,3 +49,4 @@ game/.project
 game/.classpath
 game/lint.xml
 game/project.properties
+*.png
