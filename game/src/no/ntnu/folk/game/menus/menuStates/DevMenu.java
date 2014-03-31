@@ -5,6 +5,10 @@ import no.ntnu.folk.game.menus.MenuItem;
 import no.ntnu.folk.game.menus.MenuOptions;
 import no.ntnu.folk.game.states.MenuState;
 
+/**
+ * The developer menu. It contains the options accessable for the developer.
+ *
+ */
 public class DevMenu extends MenuState {
 
 	@Override

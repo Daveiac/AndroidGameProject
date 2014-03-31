@@ -7,6 +7,10 @@ import no.ntnu.folk.game.menus.MenuOptions;
 import no.ntnu.folk.game.states.MenuState;
 import sheep.graphics.Font;
 
+/**
+ * The end game menu. It contains the 
+ *
+ */
 public class EndGameMenu extends MenuState {
 	private float gameTime;
 	private String winnerText;
