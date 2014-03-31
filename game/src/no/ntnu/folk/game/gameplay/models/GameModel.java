@@ -116,7 +116,7 @@ public class GameModel {
 			playerNumber++;
 		}
 		currentPlayer = players.get(playerNumber);
-		currentPlayer.setCold(true);
+		currentPlayer.setWeaponFired(false);
 	}
 
 	/**
@@ -202,7 +202,7 @@ public class GameModel {
 	public int getStartHealth() {
 		return startHealth;
 	}
-	
+
 	/**
 	 * Replaces the amount of health each player starts with.
 	 * @param startHealth The amount of health each player starts with.
@@ -217,7 +217,7 @@ public class GameModel {
 	public GameTypes getGameType() {
 		return gameType;
 	}
-	
+
 	/**
 	 * Replaces the game type to be played.
 	 * @param gameType The game type to ble played.
@@ -232,7 +232,7 @@ public class GameModel {
 	public ArrayList<TombStoneModel> getTombStones() {
 		return tombStones;
 	}
-	
+
 	/**
 	 * Replaces the level to be played.
 	 * @param level		The level to be played.
@@ -249,7 +249,7 @@ public class GameModel {
 	public String getLevelName() {
 		return levelName;
 	}
-	
+
 	/**
 	 * Increments the time through the game.
 	 * @param dt The change in time.
@@ -257,7 +257,7 @@ public class GameModel {
 	public void incrementTime(float dt) {
 		gameTime += dt;
 	}
-	
+
 	/**
 	 * Decrements the time the player has each turn.
 	 * @param dt The change in time.
@@ -272,7 +272,7 @@ public class GameModel {
 	public float getGameTime() {
 		return gameTime;
 	}
-	
+
 	/**
 	 * Replaces the game time with the given time.
 	 * @param time The new time for the game.
@@ -280,7 +280,7 @@ public class GameModel {
 	public void setGameTime(int time) {
 		this.availablePlayerTime = time;
 	}
-	
+
 	/**
 	 * @return The current level of the game.
 	 */
@@ -293,14 +293,14 @@ public class GameModel {
 	public ArrayList<EntityModel> getKill() {
 		return kill;
 	}
-	
+
 	/**
 	 * @return The time of the turn.
 	 */
 	public int getTurnTimer() {
 		return this.turnTimer;
 	}
-	
+
 	/**
 	 * Replaces the time of the turn with the new time.
 	 * @param newTimer New time for the turn.
@@ -308,7 +308,7 @@ public class GameModel {
 	public void setTurnTimer(int newTimer) {
 		this.turnTimer = newTimer;
 	}
-	
+
 	/**
 	 * Adds an explosion to the game model when a projectile collision is detected.
 	 * @param model The projectile model which collides and explodes.
@@ -318,14 +318,14 @@ public class GameModel {
 			explosions.add(model);
 		}
 	}
-	
+
 	/**
 	 * @return The explosions of this turn.
 	 */
 	public ArrayList<ProjectileModel> getExplosions() {
 		return this.explosions;
 	}
-	
+
 	/**
 	 * @return The winner text which says who won the game.
 	 */
