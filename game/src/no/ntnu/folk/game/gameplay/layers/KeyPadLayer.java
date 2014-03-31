@@ -12,11 +12,11 @@ import static no.ntnu.folk.game.R.drawable.pausegame;
 import java.util.ArrayList;
 
 import no.ntnu.folk.game.Program;
+import no.ntnu.folk.game.constants.Direction;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.Button;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
-import no.ntnu.folk.game.gameplay.levels.Direction;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import no.ntnu.folk.game.menus.menuStates.PauseMenu;
 import no.ntnu.folk.game.states.GameState;
@@ -94,6 +94,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		for (int i = 0; i < pointerCount; i++) {
 			boolean buttonPressed = false;
 			PointF point = activePointers.valueAt(i);
+			if (point == null) continue;
 			for (Button button : buttons) {
 				if (button.contains(point.x, point.y)) {
 					button.hold();

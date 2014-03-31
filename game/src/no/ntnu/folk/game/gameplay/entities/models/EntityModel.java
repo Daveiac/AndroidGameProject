@@ -1,8 +1,8 @@
 package no.ntnu.folk.game.gameplay.entities.models;
 
 import android.graphics.Canvas;
+import no.ntnu.folk.game.constants.Direction;
 import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
-import no.ntnu.folk.game.gameplay.levels.Direction;
 import sheep.game.Sprite;
 import sheep.math.Vector2;
 
