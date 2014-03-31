@@ -16,6 +16,12 @@ public class MenuItem {
 
 	private String data = "";
 
+	/**
+	 *
+	 * @param option what option with button is for
+	 * @param position position of the new menu button
+	 * @param data what this button should say
+	 */
 	public MenuItem(MenuOptions option, int position, String data) {
 		this.option = option;
 		this.data = data;
@@ -29,6 +35,10 @@ public class MenuItem {
 		this(option, position, "");
 	}
 
+	/**
+	 * Draws the button in the menu
+	 * @param canvas canvas to draw on
+	 */
 	public void draw(Canvas canvas) {
 		canvas.drawLine(xmin, ymin, xmax, ymin, Color.WHITE);
 		canvas.drawLine(xmin, ymax, xmax, ymax, Color.WHITE);
@@ -40,17 +50,36 @@ public class MenuItem {
 		canvas.drawText(this.getData(), xmin + dataOffset, ymin + dataOffset, Font.WHITE_SANS_BOLD_16);
 	}
 
+	/**
+	 *
+	 * @return the option for this button
+	 */
 	public MenuOptions getOption() {
 		return option;
 	}
 
+	/**
+	 *
+	 * @param data, set the text for this button
+	 */
 	public void setData(String data) {
 		this.data = data;
 	}
+
+	/**
+	 *
+	 * @return test for this button
+	 */
 	public String getData() {
 		return data;
 	}
 
+	/**
+	 *
+	 * @param x x-cord
+	 * @param y y-cord
+	 * @return  true if x,y is within this button
+	 */
 	public boolean contains(float x, float y) {
 		return boundingBox.contains(x, y);
 	}

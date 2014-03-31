@@ -37,8 +37,9 @@ public class WeaponSelection {
 		float weaponListY = ProgramConstants.getWindowSize()[1] * 0.75f;
 		weaponButtons = new ArrayList<Button>();
 		for (WeaponModel wm : model.getCurrentPlayer().getWeaponList()) {
-			int offset = model.getCurrentPlayer().getWeaponList().indexOf(wm) * 50;
-			Button button = new Button(wm.getWeapon().getImage(), wm.getWeapon().getImage(), new Vector2(weaponListX, weaponListY - offset), false);
+			int offset = model.getCurrentPlayer().getWeaponList().indexOf(wm) * 75;
+			Button button = new Button(wm.getWeapon().getSelectImage(), new Vector2(weaponListX, weaponListY - offset), false);
+
 			weaponButtons.add(button);
 			button.setEnabled(false);
 		}
@@ -80,6 +81,9 @@ public class WeaponSelection {
 		setActive(false);
 	}
 
+	/**
+	 * @return Returns true if the menu is active, else false.
+	 */
 	public boolean isActive() {
 		return this.isActive;
 	}

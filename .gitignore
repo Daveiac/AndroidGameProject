@@ -50,3 +50,4 @@ game/.classpath
 game/lint.xml
 game/project.properties
 *.png
+drawable-hdpi

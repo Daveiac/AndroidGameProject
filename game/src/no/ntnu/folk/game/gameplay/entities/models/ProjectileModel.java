@@ -13,7 +13,6 @@ public class ProjectileModel extends EntityModel {
 	private int directDamage;
 	private int areaDamage;
 	private int areaDamageRange;
-	private int explosionTimer;
 	private int explosionImage;
 
 	/**
@@ -31,7 +30,6 @@ public class ProjectileModel extends EntityModel {
 		this.directDamage = projectile.getDirectDamage();
 		this.areaDamage = projectile.getAreaDamage();
 		this.areaDamageRange = projectile.getAreaDamageRange();
-		this.explosionTimer = projectile.getExplosionTimer();
 		this.explosionImage = projectile.getExplosionImage();
 		this.setMask(player.getMask());
 		this.setGroup(player.getGroup());
@@ -68,12 +66,5 @@ public class ProjectileModel extends EntityModel {
 	 */
 	public int getExplosion() {
 		return explosionImage;
-	}
-	
-	/**
-	 * @return an explosion timer
-	 */
-	public int getExplosionTimer() {
-		return explosionTimer;
 	}
 }

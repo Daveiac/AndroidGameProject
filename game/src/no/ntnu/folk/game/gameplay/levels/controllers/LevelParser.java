@@ -10,7 +10,16 @@ import no.ntnu.folk.game.gameplay.levels.views.TokenFactory;
 import no.ntnu.folk.game.gameplay.models.LevelModel;
 import sheep.game.Game;
 
+/**
+ * Level parser. This class parses the level corresponding the level model and creates the necessary tokens.
+ *
+ */
 public class LevelParser {
+	
+	/**
+	 * A level parser that parses the level corresponding the level model and creates the necessary tokens.
+	 * @param lvlModel The level model of the current level.
+	 */
 	public static void parseLevel(LevelModel lvlModel) {
 		InputStream is = Game.getInstance().getResources().openRawResource(lvlModel.getLevel());
 		InputStreamReader isr = new InputStreamReader(is);

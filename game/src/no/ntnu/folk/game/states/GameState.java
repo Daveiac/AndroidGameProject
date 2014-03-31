@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import no.ntnu.folk.game.Program;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Projectiles;
+import no.ntnu.folk.game.gameplay.entities.data.Weapons;
 import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
@@ -20,6 +21,11 @@ import java.util.ArrayList;
 
 import static android.graphics.Color.BLACK;
 
+/**
+ * The game state. This state is activated when the game starts after the pre game menu. It contains the game world together with its layers and game model.
+ * The methods do the mechanics when a shot is fired and the consequences of it.
+ *
+ */
 public class GameState extends State {
 	private World gameWorld;
 	private GameModel model;
@@ -45,9 +51,6 @@ public class GameState extends State {
 		updateModels(dt);
 		model.incrementTime(dt);
 		model.decrementAvailablePlayerTime(dt);
-		if (model.playerTimeUp() || model.getPlayers().indexOf(model.getCurrentPlayer()) == -1) {
-			model.nextPlayer();
-		}
 		killEntities();
 		if (model.isGameOver()) {
 			Program.getGame().pushState(new EndGameMenu(model.getGameTime(), model.getWinnerText()));
@@ -63,6 +66,10 @@ public class GameState extends State {
 		gameWorld.draw(canvas);
 	}
 
+	/**
+	 * Updates the corresponding models.
+	 * @param dt The change in time.
+	 */
 	private void updateModels(float dt) {
 		for (PlayerModel player : model.getPlayers()) {
 			player.update(dt);
@@ -100,7 +107,7 @@ public class GameState extends State {
 				if ((model.getPlayers().indexOf(oldPlayers.get(++i)) != -1)) break;
 			}
 			model.setCurrentPlayer(model.getPlayers().get(i));
-			model.getCurrentPlayer().setCold(true);
+			model.getCurrentPlayer().setWeaponFired(false);
 		}
 	}
 
@@ -108,17 +115,20 @@ public class GameState extends State {
 	 * Fires the weapon the current player is holding
 	 */
 	public void fireWeapon() {
-		if (model.getCurrentPlayer().isCold() || ProgramConstants.isUnlimitedFire()) {
-			model.getCurrentPlayer().setFiredWeapon(true);
+		if ((!model.getCurrentPlayer().isWeaponFired() && model.getCurrentPlayer().getCurrentWeapon().hasAmmo()) || ProgramConstants.isUnlimitedFire()) {
+			model.getCurrentPlayer().setWeaponFired(true);
+			if(!ProgramConstants.isUnlimitedFire()) {
+				model.getCurrentPlayer().getCurrentWeapon().reduceAmmo();
+			}
+			if(model.getPlayerTimeLeft() > 5){
+				model.setAvailablePlayerTime(5);
+			}
+			Vector2 aim = setAimMagnitude();
 			ProjectileModel projectile = makeProjectile();
 			model.getProjectiles().add(projectile);
 			projectile.addCollisionListener(gameLayer);
-
-			Vector2 aim = setAimMagnitude();
-
 			projectile.setSpeed(aim);
 			projectile.setAcceleration(0, 50);
-			model.getCurrentPlayer().setCold(false);
 		}
 	}
 

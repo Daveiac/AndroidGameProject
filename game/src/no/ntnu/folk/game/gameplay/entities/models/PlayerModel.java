@@ -22,8 +22,7 @@ public class PlayerModel extends EntityModel {
 	private ArrayList<WeaponModel> weaponList;
 	private WeaponModel currentWeapon;
 
-	private boolean cold;
-	private boolean firedWeapon;
+	private boolean weaponFired;
 
 	/**
 	 * @param name     Constant name for the player during gameplay, will be used to identify different players
@@ -41,8 +40,7 @@ public class PlayerModel extends EntityModel {
 		addGroup(team.ordinal());
 		addMask(team.ordinal());
 		setAcceleration(0, GameplayConstants.ACCELERATION);
-		cold = true;
-		firedWeapon = false;
+		weaponFired = false;
 	}
 
 	/**
@@ -134,32 +132,17 @@ public class PlayerModel extends EntityModel {
 	}
 
 	/**
-	 * @return Returns true if the current weapon is already used this round.
-	 */
-	public boolean isCold() {
-		return cold;
-	}
-	
-	/**
-	 * Changes the status of whether the current weapon is used or not this turn by the given parameter.
-	 * @param cold The status of if the weapon is fired this turn or not
-	 */
-	public void setCold(boolean cold) {
-		this.cold = cold;
-	}
-
-	/**
 	 * @return Returns true if this weapon is currently firing a projectile.
 	 */
-	public boolean isFiredWeapon() {
-		return firedWeapon;
+	public boolean isWeaponFired() {
+		return weaponFired;
 	}
 
 	/**
 	 * Changes the status of whether the current weapon is firing a projectile or not by the given parameter.
-	 * @param firedWeapon
+	 * @param weaponFired
 	 */
-	public void setFiredWeapon(boolean firedWeapon) {
-		this.firedWeapon = firedWeapon;
+	public void setWeaponFired(boolean weaponFired) {
+		this.weaponFired = weaponFired;
 	}
 }
