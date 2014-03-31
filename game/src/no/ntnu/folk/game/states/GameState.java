@@ -119,6 +119,9 @@ public class GameState extends State {
 			if(!ProgramConstants.isUnlimitedFire()) {
 				model.getCurrentPlayer().getCurrentWeapon().reduceAmmo();
 			}
+			if(model.getPlayerTimeLeft() > 5){
+				model.setAvailablePlayerTime(5);
+			}
 			ProjectileModel projectile = makeProjectile();
 			model.getProjectiles().add(projectile);
 			projectile.addCollisionListener(gameLayer);

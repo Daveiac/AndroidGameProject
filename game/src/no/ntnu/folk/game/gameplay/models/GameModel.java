@@ -332,4 +332,7 @@ public class GameModel {
 	public String getWinnerText() {
 		return this.winnerText;
 	}
+	public void setAvailablePlayerTime(int time) {
+		this.availablePlayerTime = time;
+	}
 }
