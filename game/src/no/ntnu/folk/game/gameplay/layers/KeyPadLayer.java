@@ -2,7 +2,6 @@ package no.ntnu.folk.game.gameplay.layers;
 
 import static no.ntnu.folk.game.R.drawable.aim;
 import static no.ntnu.folk.game.R.drawable.endturn;
-import static no.ntnu.folk.game.R.drawable.icon;
 import static no.ntnu.folk.game.R.drawable.keypadleft;
 import static no.ntnu.folk.game.R.drawable.keypadright;
 import static no.ntnu.folk.game.R.drawable.keypadup;

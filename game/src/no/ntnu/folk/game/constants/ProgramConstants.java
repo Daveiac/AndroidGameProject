@@ -38,6 +38,10 @@ public class ProgramConstants {
 	public static boolean isUnlimitedFire() {
 		return unlimitedFire;
 	}
+	
+	/**
+	 * This method toggles the unlimited fire option on or off when debugging.
+	 */
 	public static void toggleUnlimitedFire() {
 		unlimitedFire = !unlimitedFire;
 	}
@@ -45,6 +49,10 @@ public class ProgramConstants {
 	public static boolean isDebugWalls() {
 		return debugWalls;
 	}
+	
+	/**
+	 * This method toggles the option for debugging walls on and off when debugging.
+	 */
 	public static void toggleDebugWalls() {
 		debugWalls = !debugWalls;
 	}
