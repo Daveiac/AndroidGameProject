@@ -1,4 +1,4 @@
-package no.ntnu.folk.game.gameplay;
+package no.ntnu.folk.game.gameplay.layers;
 
 import android.graphics.Canvas;
 import sheep.graphics.Image;

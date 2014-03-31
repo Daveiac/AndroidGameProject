@@ -14,6 +14,7 @@ public class WeaponModel extends EntityModel {
 	private final Projectiles projectileType;
 	private Vector2 aim;
 	private Weapons weapon;
+	private int ammo;
 
 	/**
 	 * Constructing a weaponModel based on a weapon from Weapons
@@ -28,6 +29,7 @@ public class WeaponModel extends EntityModel {
 		);
 		this.weapon = weapon;
 		projectileType = weapon.getProjectile();
+		this.ammo = weapon.getProjectile().getShotsEachGame();
 		aim = new Vector2(10, 0);
 	}
 
@@ -77,5 +79,13 @@ public class WeaponModel extends EntityModel {
 	public Weapons getWeapon() {
 		return weapon;
 	}
-
+	public boolean isAmmo() {
+		return this.ammo > 0;
+	}
+	public int getAmmo() {
+		return this.ammo;
+	}
+	public void reduceAmmo(){
+		this.ammo--;
+	}
 }
