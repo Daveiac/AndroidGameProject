@@ -1,5 +1,10 @@
 package no.ntnu.folk.game.menus;
 
+/**
+ * An enum class for the different options in the menu.
+ * @author The_Alchemist
+ *
+ */
 public enum MenuOptions {
 	PRE_GAME_MENU("Start new game"),
 	PLAYER_COUNT("Player count"),
@@ -21,10 +26,17 @@ public enum MenuOptions {
 
 	private final String label;
 
+	/**
+	 * The MenuOptions constructor. The label decides which option is chosen.
+	 * @param label The label of the given option.
+	 */
 	MenuOptions(String label) {
 		this.label = label;
 	}
 
+	/**
+	 * @return The label of the given option.
+	 */
 	public String getLabel() {
 		return label;
 	}
