@@ -7,6 +7,10 @@ import sheep.graphics.Color;
 
 import java.util.Arrays;
 
+/**
+ * The player token class is a view of the player model class which it represents.
+ *
+ */
 public class PlayerToken extends EntityToken {
 	private static final float healthBarFrame = 5;
 
