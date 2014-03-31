@@ -11,20 +11,39 @@ import sheep.graphics.Font;
 
 import static android.graphics.Color.BLACK;
 
+/**
+ * The menu state. It is a controller for the menu interactions and do the required actions.
+ *
+ */
 public abstract class MenuState extends State implements View.OnTouchListener {
 	protected MenuItem[] menuItems;
 
 	private MenuItem menuItemTouched = null;
 
+	/**
+	 * The menu state constructor.
+	 */
 	protected MenuState() {
 		Program.getView().setOnTouchListener(this);
 		addMenuItems();
 	}
 
+	/**
+	 * Adds the content of the menu.
+	 */
 	protected abstract void addMenuItems();
 
+	/**
+	 * Does the required actions depending on the item clicked.
+	 * @param menuItem The item menu which is clicked.
+	 */
 	protected abstract void clickMenuItem(MenuItem menuItem);
 
+	/**
+	 * Returns the menu item given by the coordinates of the MotionEvent.
+	 * @param event The MotionEvent of which gives the coordinates of the chosen menu item.
+	 * @return Returns the chosen menu item.
+	 */
 	private MenuItem getMenuItemAt(MotionEvent event) {
 		float x = event.getX();
 		float y = event.getY();

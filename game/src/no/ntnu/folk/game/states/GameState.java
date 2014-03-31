@@ -20,6 +20,11 @@ import java.util.ArrayList;
 
 import static android.graphics.Color.BLACK;
 
+/**
+ * The game state. This state is activated when the game starts after the pre game menu. It contains the game world together with its layers and game model.
+ * The methods do the mechanics when a shot is fired and the consequences of it.
+ *
+ */
 public class GameState extends State {
 	private World gameWorld;
 	private GameModel model;
@@ -63,6 +68,10 @@ public class GameState extends State {
 		gameWorld.draw(canvas);
 	}
 
+	/**
+	 * Updates the corresponding models.
+	 * @param dt The change in time.
+	 */
 	private void updateModels(float dt) {
 		for (PlayerModel player : model.getPlayers()) {
 			player.update(dt);
