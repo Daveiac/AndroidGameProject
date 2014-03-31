@@ -119,4 +119,7 @@ public class Button {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+	public Vector2 getPosition() {
+		return new Vector2(x,y);
+	}
 }
