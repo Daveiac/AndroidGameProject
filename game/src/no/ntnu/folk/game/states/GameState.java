@@ -18,7 +18,7 @@ import sheep.math.Vector2;
 
 import java.util.ArrayList;
 
-import static android.graphics.Color.BLUE;
+import static android.graphics.Color.BLACK;
 
 public class GameState extends State {
 	private World gameWorld;
@@ -58,7 +58,7 @@ public class GameState extends State {
 	@Override
 	public void draw(Canvas canvas) {
 		if (canvas == null) return;
-		canvas.drawColor(BLUE);
+		canvas.drawColor(BLACK);
 
 		gameWorld.draw(canvas);
 	}

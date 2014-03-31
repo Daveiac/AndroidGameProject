@@ -8,7 +8,6 @@ import sheep.math.Vector2;
 
 public class WeaponModel extends EntityModel {
 	private final Projectiles projectileType;
-	private boolean cold;
 	private Vector2 aim;
 	private Weapons weapon;
 
@@ -26,7 +25,6 @@ public class WeaponModel extends EntityModel {
 		this.weapon = weapon;
 		projectileType = weapon.getProjectile();
 		aim = new Vector2(10, 0);
-		cold = true;
 	}
 
 	/**
