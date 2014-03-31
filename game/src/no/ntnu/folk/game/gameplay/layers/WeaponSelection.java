@@ -34,12 +34,13 @@ public class WeaponSelection {
 	 * Make the buttons used for selecting weapons.
 	 */
 	private void makeWeaponButtons() {
-		float weaponListX = ProgramConstants.getWindowSize()[0] * 0.92f;
+		float weaponListX = ProgramConstants.getWindowSize()[0] * 0.95f;
 		float weaponListY = ProgramConstants.getWindowSize()[1] * 0.75f;
 		weaponButtons = new ArrayList<Button>();
 		for (WeaponModel wm : model.getCurrentPlayer().getWeaponList()) {
-			int offset = model.getCurrentPlayer().getWeaponList().indexOf(wm) * 75;
-			Button button = new Button(wm.getWeapon().getSelectImage(), new Vector2(weaponListX, weaponListY - offset), false);
+			int image = wm.getWeapon().getSelectImage();
+			float offset = model.getCurrentPlayer().getWeaponList().indexOf(wm) * weaponListY * 0.07f;
+			Button button = new Button(image, new Vector2(weaponListX, weaponListY - offset), false);
 
 			weaponButtons.add(button);
 			button.setEnabled(false);

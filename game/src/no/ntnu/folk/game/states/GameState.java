@@ -115,6 +115,7 @@ public class GameState extends State {
 	 * Fires the weapon the current player is holding
 	 */
 	public void fireWeapon() {
+		System.out.println("fired weapon: " + model.getCurrentPlayer().isWeaponFired());
 		if ((!model.getCurrentPlayer().isWeaponFired() && model.getCurrentPlayer().getCurrentWeapon().hasAmmo()) || ProgramConstants.isUnlimitedFire()) {
 			model.getCurrentPlayer().setWeaponFired(true);
 			if(!ProgramConstants.isUnlimitedFire()) {
