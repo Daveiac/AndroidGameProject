@@ -55,7 +55,7 @@ public class GameState extends State {
 		if (model.isGameOver()) {
 			Program.getGame().pushState(new EndGameMenu(model.getGameTime(), model.getWinnerText()));
 		} else {
-			findNextPlayer();
+			model.nextPlayer();
 		}
 	}
 	@Override
@@ -94,21 +94,6 @@ public class GameState extends State {
 			}
 		}
 		model.getKill().clear();
-	}
-	/**
-	 * Set current player to the next player if the current player dies.
-	 */
-
-	private void findNextPlayer() {
-		ArrayList<PlayerModel> oldPlayers = model.getPlayers();
-		int i = oldPlayers.indexOf(model.getCurrentPlayer());
-		if (model.getPlayers().indexOf(model.getCurrentPlayer()) == -1) {
-			while (true) {
-				if ((model.getPlayers().indexOf(oldPlayers.get(++i)) != -1)) break;
-			}
-			model.setCurrentPlayer(model.getPlayers().get(i));
-			model.getCurrentPlayer().setWeaponFired(false);
-		}
 	}
 
 	/**
