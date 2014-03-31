@@ -5,6 +5,10 @@ import no.ntnu.folk.game.gameplay.entities.models.WeaponModel;
 
 import java.util.ArrayList;
 
+/**
+ * An enum class for the weapons in-game used for creation of weapons.
+ *
+ */
 public enum Weapons {
 	HANDGUN(Projectiles.HANDGUN_BULLET, R.drawable.handgun),
 	ROCKET_LAUNCHER(Projectiles.ROCKET, R.drawable.rocketlancher),

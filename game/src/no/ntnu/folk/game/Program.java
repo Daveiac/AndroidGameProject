@@ -10,6 +10,10 @@ import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.menus.menuStates.MainMenu;
 import sheep.game.Game;
 
+/**
+ * The android activity that runs this game.
+ *
+ */
 public class Program extends Activity {
 	private static View view;
 	private static Game game;
