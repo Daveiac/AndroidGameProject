@@ -86,6 +86,6 @@ public class WeaponModel extends EntityModel {
 		return this.ammo;
 	}
 	public void reduceAmmo(){
-		this.ammo--;
+		if(ammo != -1) this.ammo--;
 	}
 }

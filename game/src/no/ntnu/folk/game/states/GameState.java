@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import no.ntnu.folk.game.Program;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.data.Projectiles;
+import no.ntnu.folk.game.gameplay.entities.data.Weapons;
 import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
