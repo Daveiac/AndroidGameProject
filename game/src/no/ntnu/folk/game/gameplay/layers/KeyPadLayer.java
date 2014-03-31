@@ -100,11 +100,19 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 
 	@Override
 	public void update(float dt) {
-		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
 		Program.getView().setOnTouchListener(this); // FIXME
 		// Why I did this: When a state is popped, the OnTouchListener needs to be updated.
 		// Unfortunately I could not find a better way to to do it
 
+		updateButtons();
+		useButtons();
+	}
+
+	/**
+	 * Update weapons from the active pointers
+	 */
+	private void updateButtons() {
+		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
 		for (PointF point : activePointers.values()) {
 			boolean buttonPressed = false;
 			if (point == null) continue;
@@ -126,26 +134,33 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				}
 			}
 		}
+	}
 
-		boolean leftKeyPressed;
-		boolean rightKeyPressed;
-		if (leftKeyPressed = leftKey.popPressed() && !currentPlayer.getCollision().contains(Direction.LEFT)) {
+	/**
+	 * Use all pressed buttons
+	 */
+	private void useButtons() {
+		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
+		// Direction keys
+		boolean leftKeyPressed = leftKey.popPressed();
+		boolean rightKeyPressed = rightKey.popPressed();
+		if (leftKeyPressed && rightKeyPressed || !leftKeyPressed && !rightKeyPressed) { // If none, or both, keys are pressed
+			currentPlayer.setSpeed(0, currentPlayer.getSpeed().getY());
+		} else if (leftKeyPressed && !currentPlayer.getCollision().contains(Direction.LEFT)) {
 			currentPlayer.setSpeed(-GameplayConstants.PLAYER_SPEED, currentPlayer.getSpeed().getY());
 			currentPlayer.setAim(-Math.abs(currentPlayer.getAim().getX()), currentPlayer.getAim().getY());
-		}
-		if (rightKeyPressed = rightKey.popPressed() && !currentPlayer.getCollision().contains(Direction.RIGHT)) {
+		} else if (rightKeyPressed && !currentPlayer.getCollision().contains(Direction.RIGHT)) {
 			currentPlayer.setSpeed(GameplayConstants.PLAYER_SPEED, currentPlayer.getSpeed().getY());
 			currentPlayer.setAim(Math.abs(currentPlayer.getAim().getX()), currentPlayer.getAim().getY());
-		}
-		if (!leftKeyPressed && !rightKeyPressed || leftKeyPressed && rightKeyPressed) { // If none, or both, keys are pressed
-			currentPlayer.setSpeed(0, currentPlayer.getSpeed().getY());
 		}
 		if (upKey.popPressed() && currentPlayer.getCollision().contains(Direction.DOWN)) {
 			currentPlayer.setSpeed(currentPlayer.getSpeed().getX(), -GameplayConstants.JUMP_FORCE);
 		}
+		// Fire
 		if (fireKey.popPressed()) {
 			gameState.fireWeapon();
 		}
+		// Swap weapon
 		if (swapKey.popPressed()) {
 			if (weaponSelection.isActive()) {
 				weaponSelection.setActive(false);
@@ -154,11 +169,13 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				weaponSelection.setActive(true);
 			}
 		}
+		// End turn
 		if (endKey.popPressed()) {
 			if (!gameModel.getCurrentPlayer().isWeaponFired()) {
 				gameModel.setGameTime(0);
 			}
 		}
+		// Pause
 		if (pauseKey.popPressed()) {
 			Game.getInstance().pushState(new PauseMenu());
 		}
