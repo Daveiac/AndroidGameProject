@@ -12,7 +12,6 @@ import static no.ntnu.folk.game.R.drawable.pausegame;
 import java.util.ArrayList;
 
 import no.ntnu.folk.game.Program;
-import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.Direction;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
@@ -156,7 +155,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 			}
 		}
 		if (endKey.popPressed()) {
-			if (!gameModel.getCurrentPlayer().isFiredWeapon()) {
+			if (!gameModel.getCurrentPlayer().isWeaponFired()) {
 				gameModel.setGameTime(0);
 			}
 		}
