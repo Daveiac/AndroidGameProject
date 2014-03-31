@@ -10,6 +10,10 @@ import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.menus.menuStates.MainMenu;
 import sheep.game.Game;
 
+/**
+ * The android activity that runs this game.
+ *
+ */
 public class Program extends Activity {
 	private static View view;
 	private static Game game;
@@ -32,8 +36,8 @@ public class Program extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		storeWindowSize();
 		initializeGame();

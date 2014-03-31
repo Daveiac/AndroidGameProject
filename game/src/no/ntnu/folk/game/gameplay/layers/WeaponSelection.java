@@ -1,13 +1,12 @@
 package no.ntnu.folk.game.gameplay.layers;
 
+import java.util.ArrayList;
+
 import no.ntnu.folk.game.constants.ProgramConstants;
-import no.ntnu.folk.game.gameplay.Button;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.WeaponModel;
 import no.ntnu.folk.game.gameplay.models.GameModel;
 import sheep.math.Vector2;
-
-import java.util.ArrayList;
 
 /**
  * The layer that will be used to select weapons during gameplay. Just use the
@@ -34,12 +33,14 @@ public class WeaponSelection {
 	 * Make the buttons used for selecting weapons.
 	 */
 	private void makeWeaponButtons() {
-		float weaponListX = ProgramConstants.getWindowSize()[0] * 0.92f;
+		float weaponListX = ProgramConstants.getWindowSize()[0] * 0.95f;
 		float weaponListY = ProgramConstants.getWindowSize()[1] * 0.75f;
 		weaponButtons = new ArrayList<Button>();
 		for (WeaponModel wm : model.getCurrentPlayer().getWeaponList()) {
-			int offset = model.getCurrentPlayer().getWeaponList().indexOf(wm) * 50;
-			Button button = new Button(wm.getWeapon().getImage(), wm.getWeapon().getImage(), new Vector2(weaponListX, weaponListY - offset), false);
+			int image = wm.getWeapon().getSelectImage();
+			float offset = model.getCurrentPlayer().getWeaponList().indexOf(wm) * weaponListY * 0.07f;
+			Button button = new Button(image, new Vector2(weaponListX, weaponListY - offset), false);
+
 			weaponButtons.add(button);
 			button.setEnabled(false);
 		}
@@ -81,6 +82,9 @@ public class WeaponSelection {
 		setActive(false);
 	}
 
+	/**
+	 * @return Returns true if the menu is active, else false.
+	 */
 	public boolean isActive() {
 		return this.isActive;
 	}

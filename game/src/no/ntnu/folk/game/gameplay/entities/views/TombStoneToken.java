@@ -2,6 +2,10 @@ package no.ntnu.folk.game.gameplay.entities.views;
 
 import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
 
+/**
+ * The tombstone token class is a view of the tombstone model class which it represents.
+ *
+ */
 public class TombStoneToken extends EntityToken {
 
 	/**

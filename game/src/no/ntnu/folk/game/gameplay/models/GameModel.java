@@ -38,7 +38,6 @@ public class GameModel {
 	// Game time
 	private float gameTime;
 	private float availablePlayerTime;
-	private boolean paused;
 	private int turnTimer;
 
 	private String winnerText;
@@ -51,22 +50,20 @@ public class GameModel {
 		this.currentLevel = new LevelModel(0);
 		this.gameType = GameTypes.FFA;
 		this.turnTimer = GameplayConstants.MIN_TURN_TIMER;
-		createPlayers();
-		currentPlayer = players.get(0);
-		tombStones = new ArrayList<TombStoneModel>();
-		kill = new ArrayList<EntityModel>();
-		projectiles = new ArrayList<ProjectileModel>();
-		explosions = new ArrayList<ProjectileModel>();
+		this.tombStones = new ArrayList<TombStoneModel>();
+		this.kill = new ArrayList<EntityModel>();
+		this.projectiles = new ArrayList<ProjectileModel>();
+		this.explosions = new ArrayList<ProjectileModel>();
 
 		// Init time variables
-		gameTime = 0;
-		availablePlayerTime = turnTimer;
+		this.gameTime = 0;
+		this.availablePlayerTime = turnTimer;
 	}
 
 	/**
 	 * Create players for this game.
 	 */
-	private void createPlayers() {
+	public void initializeGame() {
 		players = new ArrayList<PlayerModel>(playerCount);
 		ArrayList<int[]> startPos = currentLevel.getStartPositions();
 		for (int i = 0; i < playerCount; i++) {
@@ -81,6 +78,7 @@ public class GameModel {
 			PlayerModel player = new PlayerModel(name, position, team, startHealth);
 			players.add(player);
 		}
+		currentPlayer = players.get(0);
 	}
 
 	/**
@@ -118,7 +116,7 @@ public class GameModel {
 			playerNumber++;
 		}
 		currentPlayer = players.get(playerNumber);
-		currentPlayer.setCold(true);
+		currentPlayer.setWeaponFired(false);
 	}
 
 	/**
@@ -133,26 +131,14 @@ public class GameModel {
 	/**
 	 * @return True if the time is up for current player
 	 */
-	public boolean playerTimeUp() {
+	public boolean isPlayerTimeUp() {
 		return availablePlayerTime <= 0;
 	}
 	/**
 	 * @return time left of this turn for the current player
 	 */
-	public float playerTimeLeft() {
+	public float getPlayerTimeLeft() {
 		return this.availablePlayerTime;
-	}
-	/**
-	 * @return true if the game is paused
-	 */
-	public boolean isPaused() {
-		return this.paused;
-	}
-	/**
-	 * @param paused Set whether or not the game is paused
-	 */
-	public void setPaused(boolean paused) {
-		this.paused = paused;
 	}
 
 	/**
@@ -195,51 +181,109 @@ public class GameModel {
 		return isOver;
 	}
 
+	/**
+	 * @return The amount of players participating.
+	 */
 	public int getPlayerCount() {
-		return players.size();
+		return playerCount;
 	}
+
+	/**
+	 * Replaces the number of players participating.
+	 * @param playerCount The amount of players participating.
+	 */
 	public void setPlayerCount(int playerCount) {
 		this.playerCount = playerCount;
-		createPlayers();
 	}
+
+	/**
+	 * @return The amount of health each player starts with.
+	 */
 	public int getStartHealth() {
 		return startHealth;
 	}
+
+	/**
+	 * Replaces the amount of health each player starts with.
+	 * @param startHealth The amount of health each player starts with.
+	 */
 	public void setStartHealth(int startHealth) {
 		this.startHealth = startHealth;
-		createPlayers();
 	}
+
+	/**
+	 * @return The game type to be played.
+	 */
 	public GameTypes getGameType() {
 		return gameType;
 	}
+
+	/**
+	 * Replaces the game type to be played.
+	 * @param gameType The game type to ble played.
+	 */
 	public void setGameType(GameTypes gameType) {
 		this.gameType = gameType;
-		createPlayers();
 	}
 
+	/**
+	 * @return The tomb stones corresponding the players.
+	 */
 	public ArrayList<TombStoneModel> getTombStones() {
 		return tombStones;
 	}
+
+	/**
+	 * Replaces the level to be played.
+	 * @param level		The level to be played.
+	 * @param levelName	The name of the level to be played.
+	 */
 	public void setLevel(int level, String levelName) {
 		this.levelName = levelName;
 		currentLevel = new LevelModel(level);
-		createPlayers();
 	}
+
+	/**
+	 * @return The name of the current level.
+	 */
 	public String getLevelName() {
 		return levelName;
 	}
+
+	/**
+	 * Increments the time through the game.
+	 * @param dt The change in time.
+	 */
 	public void incrementTime(float dt) {
 		gameTime += dt;
 	}
+
+	/**
+	 * Decrements the time the player has each turn.
+	 * @param dt The change in time.
+	 */
 	public void decrementAvailablePlayerTime(float dt) {
 		availablePlayerTime -= dt;
 	}
+
+	/**
+	 * @return The game time.
+	 */
 	public float getGameTime() {
 		return gameTime;
 	}
+
+	/**
+	 * Replaces the game time with the given time.
+	 * @param time The new time for the game.
+	 */
 	public void setGameTime(int time) {
 		this.availablePlayerTime = time;
 	}
+
+	/**
+	 * @return The current level of the game.
+	 */
 	public LevelModel getCurrentLevel() {
 		return currentLevel;
 	}
@@ -250,21 +294,45 @@ public class GameModel {
 		return kill;
 	}
 
+	/**
+	 * @return The time of the turn.
+	 */
 	public int getTurnTimer() {
 		return this.turnTimer;
 	}
+
+	/**
+	 * Replaces the time of the turn with the new time.
+	 * @param newTimer New time for the turn.
+	 */
 	public void setTurnTimer(int newTimer) {
 		this.turnTimer = newTimer;
 	}
+
+	/**
+	 * Adds an explosion to the game model when a projectile collision is detected.
+	 * @param model The projectile model which collides and explodes.
+	 */
 	public void addExplosion(ProjectileModel model) {
 		if (model.getExplosion() != -1) {
 			explosions.add(model);
 		}
 	}
+
+	/**
+	 * @return The explosions of this turn.
+	 */
 	public ArrayList<ProjectileModel> getExplosions() {
 		return this.explosions;
 	}
+
+	/**
+	 * @return The winner text which says who won the game.
+	 */
 	public String getWinnerText() {
 		return this.winnerText;
+	}
+	public void setAvailablePlayerTime(int time) {
+		this.availablePlayerTime = time;
 	}
 }

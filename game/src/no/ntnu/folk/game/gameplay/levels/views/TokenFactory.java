@@ -1,17 +1,24 @@
 package no.ntnu.folk.game.gameplay.levels.views;
 
 public class TokenFactory {
-
-	public static LevelToken createToken(String name, int x, int y) {
+	/**
+	 * This method creates a level token depending on the character input
+	 * 
+	 * @param c The character that determines the token
+	 * @param x The x position of the token
+	 * @param y The y position of the token
+	 * @return
+	 */
+	
+	public static LevelToken createToken(char c, int x, int y) {
 		LevelToken token = null;
-
-		if (name.equals("Wall")) {
-			//This is now deprecated, using a new level parser. NO IT'S NOT!
+		switch (c) {
+		case 'w':
 			token = new Wall(x, y);
+			break;
+		default:
+			break;
 		}
-//		else if (name.equals("Structure")) { //TODO add sturcture if we wanted that
-//			token = new Structure(new Image(R.drawable.structure));
-//		}
 		return token;
 	}
 }

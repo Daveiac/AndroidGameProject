@@ -9,6 +9,10 @@ import sheep.collision.Shape;
 import sheep.graphics.Color;
 import sheep.graphics.Image;
 
+/**
+ * A superclass of all the entity tokens in the game to represent a view of the given entity model.
+ *
+ */
 public abstract class EntityToken {
 	// EntityModel
 	protected final EntityModel entityModel;
@@ -52,8 +56,15 @@ public abstract class EntityToken {
 		transformation.postRotate(getRotation());
 		transformation.postTranslate(entityModel.getX(), entityModel.getY()); // getX and getY is located in Sprite
 	}
+	
+	/**
+	 * @return Scaled x value
+	 */
 	protected abstract float getScaleX();
 
+	/**
+	 * @return Scaled y value
+	 */
 	protected abstract float getScaleY();
 
 	/**
@@ -111,9 +122,16 @@ public abstract class EntityToken {
 				'}';
 	}
 
+	/**
+	 * @return Returns the entity model
+	 */
 	public EntityModel getEntityModel() {
 		return entityModel;
 	}
+	
+	/**
+	 * @return Returns the transformation matrix used for drawing images
+	 */
 	public Matrix getTransformation() {
 		return this.transformation;
 	}

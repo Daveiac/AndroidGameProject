@@ -4,15 +4,16 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import no.ntnu.folk.game.R;
+import no.ntnu.folk.game.constants.Direction;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.EntityModel;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import no.ntnu.folk.game.gameplay.entities.models.TombStoneModel;
-import no.ntnu.folk.game.gameplay.levels.Direction;
 import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
 import no.ntnu.folk.game.gameplay.models.GameModel;
+import no.ntnu.folk.game.gameplay.models.LevelModel;
 import sheep.collision.CollisionListener;
 import sheep.game.Layer;
 import sheep.game.Sprite;
@@ -23,11 +24,19 @@ import sheep.math.BoundingBox;
 
 import java.util.ArrayList;
 
+/**
+ * The game layer used in this game. It contains the game model and draws its content.
+ *
+ */
 public class GameLayer extends Layer implements CollisionListener {
 	private GameModel model;
 	private ArrayList<Integer[]> lastingImageArrayList;
 	private Font headTimerFont;
 
+	/**
+	 * The constructor of the given game model.
+	 * @param model The game model used in the game
+	 */
 	public GameLayer(GameModel model) {
 		this.model = model;
 		lastingImageArrayList = new ArrayList<Integer[]>();
@@ -43,13 +52,14 @@ public class GameLayer extends Layer implements CollisionListener {
 		checkExplosionCollisions();
 		checkPlayerCollisions();
 
-		if (!model.getCurrentPlayer().isCold() && model.getProjectiles().isEmpty()) {
+		if (model.isPlayerTimeUp() && model.getProjectiles().isEmpty()) {
 			model.nextPlayer();
 		}
 	}
 
 	@Override
 	public void draw(Canvas canvas, BoundingBox box) {
+		drawBackground(canvas);
 		canvas.save();
 		int[] windowSize = ProgramConstants.getWindowSize();
 		if (model.getProjectiles().isEmpty()) {
@@ -64,13 +74,27 @@ public class GameLayer extends Layer implements CollisionListener {
 		drawHeadTimer(canvas);
 
 		canvas.restore();
-
+		
 		drawTimer(canvas);
 
 	}
 
+	/**
+	 * Draws the background of the game model.
+	 * @param canvas The canvas for this game layer.
+	 */
+	private void drawBackground(Canvas canvas) {
+		if(!ProgramConstants.isDebugWalls()) {
+			LevelModel.getBackground().draw(canvas, 0, 0); // Background image
+		}
+	}
+
+	/**
+	 * Draws the head timer of the player.
+	 * @param canvas The canvas for this game layer.
+	 */
 	private void drawHeadTimer(Canvas canvas) {
-		int timeLeft = (int) model.playerTimeLeft();
+		int timeLeft = (int) model.getPlayerTimeLeft();
 		if (timeLeft <= GameplayConstants.HEAD_TIMER_START) {
 			float x = model.getCurrentPlayer().getX();
 			float y = model.getCurrentPlayer().getY() - ProgramConstants.getWindowSize()[0] * 0.1f;
@@ -78,15 +102,23 @@ public class GameLayer extends Layer implements CollisionListener {
 		}
 	}
 
+	/**
+	 * Draws the time left of the turn.
+	 * @param canvas The canvas for this game layer.
+	 */
 	private void drawTimer(Canvas canvas) {
 		canvas.drawText(
-				"Time left: " + ((int) model.playerTimeLeft()),
+				"Time left: " + ((int) model.getPlayerTimeLeft()),
 				ProgramConstants.getWindowSize()[0] * 0.9f,
 				ProgramConstants.getWindowSize()[0] * 0.1f,
 				Color.WHITE
 		);
 	}
 
+	/**
+	 * Draws the lasting images of the game model.
+	 * @param canvas The canvas for this game layer.
+	 */
 	private void drawLastingImages(Canvas canvas) {
 		ArrayList<Integer[]> remove = new ArrayList<Integer[]>();
 		for (Integer[] o : lastingImageArrayList) {
@@ -144,6 +176,11 @@ public class GameLayer extends Layer implements CollisionListener {
 		}
 	}
 
+	/**
+	 * Used to give the entity models their correct position.
+	 * @param entity The entity model
+	 * @param collision The collisions corresponding to the entity model
+	 */
 	private void correctPosition(EntityModel entity, ArrayList<Direction> collision) {
 		boolean down = false;
 		float offX = entity.getOffset().getX();
@@ -181,6 +218,11 @@ public class GameLayer extends Layer implements CollisionListener {
 		}
 	}
 
+	/**
+	 * Checks in which directions the given entity model collides with a wall and returns the result as a list.
+	 * @param entity The entity model
+	 * @return The list containing the direction of wall collisions
+	 */
 	private ArrayList<Direction> collidesWithWall(EntityModel entity) {
 		int gridSize = GameplayConstants.GRID_SIZE;
 		float offset = ((entity instanceof PlayerModel) ? (GameplayConstants.GRID_SIZE / 4) : 0);
@@ -249,6 +291,10 @@ public class GameLayer extends Layer implements CollisionListener {
 			model.getTombStones().add(new TombStoneModel(player.getName(), player.getPosition(), R.drawable.tombstone));
 		}
 	}
+	
+	/**
+	 * Checks if the projectile collides with something.
+	 */
 	private void checkProjectileCollisions() {
 		for (ProjectileModel projectile : model.getProjectiles()) {
 			if (!collidesWithWall(projectile).isEmpty()) {
@@ -261,10 +307,12 @@ public class GameLayer extends Layer implements CollisionListener {
 					projectile.collides(player);
 				}
 			}
-			model.getCurrentPlayer().setFiredWeapon(false);
 		}
 	}
 
+	/**
+	 * Checks if the projectile explosion hits something.
+	 */
 	private void checkExplosionCollisions() {
 		if (!this.model.getExplosions().isEmpty()) {
 			for (ProjectileModel pm : this.model.getExplosions()) {
@@ -286,6 +334,9 @@ public class GameLayer extends Layer implements CollisionListener {
 		}
 	}
 
+	/**
+	 * Checks if the player collides with the environment.
+	 */
 	private void checkPlayerCollisions() {
 		for (PlayerModel player : model.getPlayers()) {
 			ArrayList<Direction> playerCollision = collidesWithWall(player);

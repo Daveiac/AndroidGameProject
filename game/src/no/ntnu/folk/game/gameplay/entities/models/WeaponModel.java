@@ -6,11 +6,15 @@ import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
 import no.ntnu.folk.game.gameplay.entities.views.WeaponToken;
 import sheep.math.Vector2;
 
+/**
+ * The weapon model class. Contains the data of the specific model determined by the Weapons class.
+ *
+ */
 public class WeaponModel extends EntityModel {
 	private final Projectiles projectileType;
-	private boolean cold;
 	private Vector2 aim;
 	private Weapons weapon;
+	private int ammo;
 
 	/**
 	 * Constructing a weaponModel based on a weapon from Weapons
@@ -25,8 +29,8 @@ public class WeaponModel extends EntityModel {
 		);
 		this.weapon = weapon;
 		projectileType = weapon.getProjectile();
+		this.ammo = weapon.getProjectile().getShotsEachGame();
 		aim = new Vector2(10, 0);
-		cold = true;
 	}
 
 	/**
@@ -49,19 +53,39 @@ public class WeaponModel extends EntityModel {
 		return projectileType;
 	}
 
+	/**
+	 * Sets the position of the crosshair.
+	 * @param x x coordinate
+	 * @param y y coordinate
+	 */
 	public void setAim(float x, float y) {
 		aim.set(x, y);
 		if (aim.getLength() == 0) {
 			aim.set(10, 0);
 		}
 	}
+	
+	/**
+	 * @return Vector with the crosshair coordinates.
+	 */
 	public Vector2 getAim() {
 		return new Vector2(aim.getX(), aim.getY());
 //		return aim; // Using this one instead has an interesting effect!
 	}
 
+	/**
+	 * @return Which type of weapon this is.
+	 */
 	public Weapons getWeapon() {
 		return weapon;
 	}
-
+	public boolean hasAmmo() {
+		return this.ammo > 0 || this.ammo == -1;
+	}
+	public int getAmmo() {
+		return this.ammo;
+	}
+	public void reduceAmmo(){
+		if(ammo != -1) this.ammo--;
+	}
 }

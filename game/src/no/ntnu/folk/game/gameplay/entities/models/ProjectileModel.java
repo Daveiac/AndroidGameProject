@@ -5,11 +5,14 @@ import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
 import no.ntnu.folk.game.gameplay.entities.views.ProjectileToken;
 import sheep.math.Vector2;
 
+/**
+ * The projectile model class. Contains the data of the specific model determined by the Projectiles class.
+ *
+ */
 public class ProjectileModel extends EntityModel {
 	private int directDamage;
 	private int areaDamage;
 	private int areaDamageRange;
-	private int explosionTimer;
 	private int explosionImage;
 
 	/**
@@ -27,7 +30,6 @@ public class ProjectileModel extends EntityModel {
 		this.directDamage = projectile.getDirectDamage();
 		this.areaDamage = projectile.getAreaDamage();
 		this.areaDamageRange = projectile.getAreaDamageRange();
-		this.explosionTimer = projectile.getExplosionTimer();
 		this.explosionImage = projectile.getExplosionImage();
 		this.setMask(player.getMask());
 		this.setGroup(player.getGroup());
@@ -64,8 +66,5 @@ public class ProjectileModel extends EntityModel {
 	 */
 	public int getExplosion() {
 		return explosionImage;
-	}
-	public int getExplosionTimer() {
-		return explosionTimer;
 	}
 }

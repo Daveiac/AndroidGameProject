@@ -4,6 +4,10 @@ import no.ntnu.folk.game.menus.MenuItem;
 import no.ntnu.folk.game.menus.MenuOptions;
 import no.ntnu.folk.game.states.MenuState;
 
+/**
+ * The pause menu. It contains the options to accessing the developer menu, returning to main menu or continuing the current game.
+ *
+ */
 public class PauseMenu extends MenuState {
 	// TODO
 

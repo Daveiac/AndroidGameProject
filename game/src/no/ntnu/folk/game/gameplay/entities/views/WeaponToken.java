@@ -3,6 +3,10 @@ package no.ntnu.folk.game.gameplay.entities.views;
 import no.ntnu.folk.game.gameplay.entities.models.WeaponModel;
 import sheep.math.Vector2;
 
+/**
+ * The weapon token class is a view of the weapon model class which it represents.
+ *
+ */
 public class WeaponToken extends EntityToken {
 	private int rotation;
 	/**

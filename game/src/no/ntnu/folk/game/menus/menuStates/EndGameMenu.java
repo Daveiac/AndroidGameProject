@@ -7,10 +7,19 @@ import no.ntnu.folk.game.menus.MenuOptions;
 import no.ntnu.folk.game.states.MenuState;
 import sheep.graphics.Font;
 
+/**
+ * The end game menu. It represents the winner of the game together with the time played and the option to return to main menu.
+ *
+ */
 public class EndGameMenu extends MenuState {
 	private float gameTime;
 	private String winnerText;
 
+	/**
+	 * The end game menu constructor.
+	 * @param gameTime		The game time at the end of the game.
+	 * @param winnerText	The winner text containing who won the game.
+	 */
 	public EndGameMenu(float gameTime, String winnerText) {
 		this.gameTime = gameTime;
 		this.winnerText = winnerText;
