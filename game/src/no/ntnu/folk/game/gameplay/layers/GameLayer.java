@@ -94,7 +94,7 @@ public class GameLayer extends Layer implements CollisionListener {
 	 * @param canvas The canvas for this game layer.
 	 */
 	private void drawHeadTimer(Canvas canvas) {
-		int timeLeft = (int) model.playerTimeLeft();
+		int timeLeft = (int) model.getPlayerTimeLeft();
 		if (timeLeft <= GameplayConstants.HEAD_TIMER_START) {
 			float x = model.getCurrentPlayer().getX();
 			float y = model.getCurrentPlayer().getY() - ProgramConstants.getWindowSize()[0] * 0.1f;
@@ -108,7 +108,7 @@ public class GameLayer extends Layer implements CollisionListener {
 	 */
 	private void drawTimer(Canvas canvas) {
 		canvas.drawText(
-				"Time left: " + ((int) model.playerTimeLeft()),
+				"Time left: " + ((int) model.getPlayerTimeLeft()),
 				ProgramConstants.getWindowSize()[0] * 0.9f,
 				ProgramConstants.getWindowSize()[0] * 0.1f,
 				Color.WHITE

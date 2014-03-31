@@ -45,7 +45,7 @@ public class GameState extends State {
 		updateModels(dt);
 		model.incrementTime(dt);
 		model.decrementAvailablePlayerTime(dt);
-		if (model.playerTimeUp() || model.getPlayers().indexOf(model.getCurrentPlayer()) == -1) {
+		if (model.isPlayerTimeUp() || model.getPlayers().indexOf(model.getCurrentPlayer()) == -1) {
 			model.nextPlayer();
 		}
 		killEntities();

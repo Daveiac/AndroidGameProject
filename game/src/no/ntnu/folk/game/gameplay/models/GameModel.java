@@ -38,7 +38,6 @@ public class GameModel {
 	// Game time
 	private float gameTime;
 	private float availablePlayerTime;
-	private boolean paused;
 	private int turnTimer;
 
 	private String winnerText;
@@ -133,26 +132,14 @@ public class GameModel {
 	/**
 	 * @return True if the time is up for current player
 	 */
-	public boolean playerTimeUp() {
+	public boolean isPlayerTimeUp() {
 		return availablePlayerTime <= 0;
 	}
 	/**
 	 * @return time left of this turn for the current player
 	 */
-	public float playerTimeLeft() {
+	public float getPlayerTimeLeft() {
 		return this.availablePlayerTime;
-	}
-	/**
-	 * @return true if the game is paused
-	 */
-	public boolean isPaused() {
-		return this.paused;
-	}
-	/**
-	 * @param paused Set whether or not the game is paused
-	 */
-	public void setPaused(boolean paused) {
-		this.paused = paused;
 	}
 
 	/**
