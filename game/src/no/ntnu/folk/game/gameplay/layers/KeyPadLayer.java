@@ -33,6 +33,10 @@ import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 
+/**
+ * The key pad layer of the game. It contains all the user interactions and its actions as well as drawing the user interface.
+ *
+ */
 public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	private Button[] buttons;
 	private Button leftKey;
@@ -54,6 +58,11 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 
 	private SparseArray<PointF> activePointers;
 
+	/**
+	 * Constructor of the given game state and game model.
+	 * @param gameState The game state
+	 * @param gameModel The game model
+	 */
 	public KeyPadLayer(GameState gameState, GameModel gameModel) {
 		this.gameState = gameState;
 		this.gameModel = gameModel;
@@ -64,6 +73,11 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		activePointers = new SparseArray<PointF>();
 		Program.getView().setOnTouchListener(this);
 	}
+
+	/**
+	 * Creates the buttons used for user interactions.
+	 * @param windowSize The size of the window
+	 */
 	private void createButtons(int[] windowSize) {
 		Vector2 leftKeyPos = new Vector2(windowSize[0] * 0.08f, windowSize[1] * 0.90f);
 		Vector2 rightKeyPos = new Vector2(windowSize[0] * 0.32f, windowSize[1] * 0.90f);
@@ -74,12 +88,12 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		Vector2 endKeyPos = new Vector2(windowSize[0] * 0.60f, windowSize[1] * 0.90f);
 		buttons = new Button[]{
 				leftKey = new Button(keypadleft, keypadleft, leftKeyPos, true),
-						rightKey = new Button(keypadright, keypadright, rightKeyPos, true),
-						upKey = new Button(keypadup, keypadup, upKeyPos, false),
-						swapKey = new Button(swapbutton, swapbutton, swapKeyPos, false),
-						fireKey = new Button(shootbutton, shootbutton, fireKeyPos, false),
-						endKey = new Button(endturn, endturn, endKeyPos, false),
-						pauseKey = new Button(pausegame, pausegame, pauseKeyPos, false),
+				rightKey = new Button(keypadright, keypadright, rightKeyPos, true),
+				upKey = new Button(keypadup, keypadup, upKeyPos, false),
+				swapKey = new Button(swapbutton, swapbutton, swapKeyPos, false),
+				fireKey = new Button(shootbutton, shootbutton, fireKeyPos, false),
+				endKey = new Button(endturn, endturn, endKeyPos, false),
+				pauseKey = new Button(pausegame, pausegame, pauseKeyPos, false),
 		};
 	}
 
@@ -142,7 +156,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 			}
 		}
 		if (endKey.popPressed()) {
-			if (gameModel.getCurrentPlayer().isFiredWeapon() == false) {
+			if (!gameModel.getCurrentPlayer().isFiredWeapon()) {
 				gameModel.setGameTime(0);
 			}
 		}
@@ -162,6 +176,10 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		}
 	}
 
+	/**
+	 * Draws the overlay
+	 * @param canvas The canvas of the layer.
+	 */
 	private void drawOverlay(Canvas canvas) {
 		int ws[] = ProgramConstants.getWindowSize();
 		buttonOverlayHeight = ws[1] * 0.8f;
@@ -173,6 +191,10 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		canvas.drawRect(buttonOverlayLeft, buttonOverlayHeight, buttonOverlayRight, buttonOverlayBot, p);
 	}
 
+	/**
+	 * Draws the crosshair.
+	 * @param canvas The canvas of the layer.
+	 */
 	private void drawAim(Canvas canvas) {
 		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
 		float aimX = currentPlayer.getAim().getX() + ProgramConstants.getWindowSize()[0] / 2;
@@ -182,6 +204,11 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		}
 		aimImage.draw(canvas, aimX - aimImage.getWidth() / 2, aimY - aimImage.getHeight() / 2);
 	}
+
+	/**
+	 * Draws the buttons used for user interactions.
+	 * @param canvas The canvas of the layer.
+	 */
 	private void drawButtons(Canvas canvas) {
 		for (Button button : buttons) {
 			button.draw(canvas);
@@ -194,35 +221,40 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		int pointerId = event.getPointerId(pointerIndex);
 		int maskedAction = event.getActionMasked();
 		switch (maskedAction) {
-		case MotionEvent.ACTION_DOWN:
-		case MotionEvent.ACTION_POINTER_DOWN:
-			onTouchDown(event);
-			break;
-		case MotionEvent.ACTION_MOVE:
-			int pointerCount = event.getPointerCount();
-			for (int i = 0; i < pointerCount; i++) {
-				PointF point = activePointers.get(event.getPointerId(i));
-				if (point != null) {
-					point.set(event.getX(i), event.getY(i));
+			case MotionEvent.ACTION_DOWN:
+			case MotionEvent.ACTION_POINTER_DOWN:
+				onTouchDown(event);
+				break;
+			case MotionEvent.ACTION_MOVE:
+				int pointerCount = event.getPointerCount();
+				for (int i = 0; i < pointerCount; i++) {
+					PointF point = activePointers.get(event.getPointerId(i));
+					if (point != null) {
+						point.set(event.getX(i), event.getY(i));
+					}
 				}
-			}
-			break;
-		case MotionEvent.ACTION_UP:
-		case MotionEvent.ACTION_POINTER_UP:
-		case MotionEvent.ACTION_CANCEL:
-			for (Button button : buttons) {
-				if (button.contains(activePointers.get(pointerId).x, activePointers.get(pointerId).y)) {
-					button.release();
+				break;
+			case MotionEvent.ACTION_UP:
+			case MotionEvent.ACTION_POINTER_UP:
+			case MotionEvent.ACTION_CANCEL:
+				for (Button button : buttons) {
+					if (button.contains(activePointers.get(pointerId).x, activePointers.get(pointerId).y)) {
+						button.release();
+					}
 				}
-			}
-			activePointers.remove(pointerId);
-			break;
-		default:
-			break;
+				activePointers.remove(pointerId);
+				break;
+			default:
+				break;
 		}
 		return false;
 	}
 
+	/**
+	 * Called when a on touch down event is dispatched to a view. This allows listeners to get a chance to respond before the target view.
+	 * @param event The MotionEvent object containing full information about the event.
+	 * @return True if the listener has consumed the event, false otherwise.
+	 */
 	private boolean onTouchDown(MotionEvent event) {
 		int pointerIndex = event.getActionIndex();
 		int pointerId = event.getPointerId(pointerIndex);

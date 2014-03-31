@@ -81,6 +81,9 @@ public class WeaponSelection {
 		setActive(false);
 	}
 
+	/**
+	 * @return Returns true if the menu is active, else false.
+	 */
 	public boolean isActive() {
 		return this.isActive;
 	}
