@@ -50,17 +50,36 @@ public class MenuItem {
 		canvas.drawText(this.getData(), xmin + dataOffset, ymin + dataOffset, Font.WHITE_SANS_BOLD_16);
 	}
 
+	/**
+	 *
+	 * @return the option for this button
+	 */
 	public MenuOptions getOption() {
 		return option;
 	}
 
+	/**
+	 *
+	 * @param data, set the text for this button
+	 */
 	public void setData(String data) {
 		this.data = data;
 	}
+
+	/**
+	 *
+	 * @return test for this button
+	 */
 	public String getData() {
 		return data;
 	}
 
+	/**
+	 *
+	 * @param x x-cord
+	 * @param y y-cord
+	 * @return  true if x,y is within this button
+	 */
 	public boolean contains(float x, float y) {
 		return boundingBox.contains(x, y);
 	}
