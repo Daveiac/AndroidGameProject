@@ -44,7 +44,9 @@ public class LevelParser {
 						} else {
 							LevelToken levelToken = TokenFactory.createToken(line.charAt(x), x, y);
 							grid[y][x] = levelToken;
-							lvlModel.getLevelTokens().add(levelToken);
+							if(levelToken != null) {
+								lvlModel.getLevelTokens().add(levelToken);
+							}
 						}
 					}
 				}
