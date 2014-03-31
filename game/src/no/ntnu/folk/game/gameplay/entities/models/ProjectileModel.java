@@ -5,6 +5,10 @@ import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
 import no.ntnu.folk.game.gameplay.entities.views.ProjectileToken;
 import sheep.math.Vector2;
 
+/**
+ * The projectile model class. Contains the data of the specific model determined by the Projectiles class.
+ *
+ */
 public class ProjectileModel extends EntityModel {
 	private int directDamage;
 	private int areaDamage;
@@ -65,6 +69,10 @@ public class ProjectileModel extends EntityModel {
 	public int getExplosion() {
 		return explosionImage;
 	}
+	
+	/**
+	 * @return an explosion timer
+	 */
 	public int getExplosionTimer() {
 		return explosionTimer;
 	}
