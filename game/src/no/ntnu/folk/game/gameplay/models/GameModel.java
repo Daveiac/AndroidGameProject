@@ -185,7 +185,7 @@ public class GameModel {
 	 * @return The amount of players participating.
 	 */
 	public int getPlayerCount() {
-		return players.size();
+		return playerCount;
 	}
 
 	/**

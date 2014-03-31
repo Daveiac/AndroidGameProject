@@ -16,6 +16,12 @@ public class MenuItem {
 
 	private String data = "";
 
+	/**
+	 *
+	 * @param option
+	 * @param position position of the new menu button
+	 * @param data
+	 */
 	public MenuItem(MenuOptions option, int position, String data) {
 		this.option = option;
 		this.data = data;
