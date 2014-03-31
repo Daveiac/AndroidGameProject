@@ -10,6 +10,7 @@ import static no.ntnu.folk.game.R.drawable.swapbutton;
 import static no.ntnu.folk.game.R.drawable.pausegame;
 
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 import no.ntnu.folk.game.Program;
 import no.ntnu.folk.game.constants.Direction;
@@ -29,7 +30,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -56,7 +56,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 
 	private float buttonOverlayHeight;
 
-	private SparseArray<PointF> activePointers;
+	private ConcurrentHashMap<Integer, PointF> activePointers;
 
 	/**
 	 * Constructor of the given game state and game model.
@@ -70,7 +70,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		aimImage = new Image(aim);
 		createButtons(ProgramConstants.getWindowSize());
 		weaponButtons = weaponSelection.getWeaponButtons();
-		activePointers = new SparseArray<PointF>();
+		activePointers = new ConcurrentHashMap<Integer, PointF>();
 		Program.getView().setOnTouchListener(this);
 	}
 
@@ -112,10 +112,8 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 	 */
 	private void updateButtons() {
 		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
-		int pointerCount = activePointers.size();
-		for (int i = 0; i < pointerCount; i++) {
+		for (PointF point : activePointers.values()) {
 			boolean buttonPressed = false;
-			PointF point = activePointers.valueAt(i);
 			if (point == null) continue;
 			for (Button button : buttons) {
 				if (button.contains(point.x, point.y)) {
@@ -290,7 +288,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		int pointerId = event.getPointerId(pointerIndex);
 
 		PointF point = new PointF(event.getX(pointerIndex), event.getY(pointerIndex));
-		activePointers.append(pointerId, point);
+		activePointers.put(pointerId, point);
 
 		for (Button button : buttons) {
 			if (button.contains(point.x, point.y)) {
