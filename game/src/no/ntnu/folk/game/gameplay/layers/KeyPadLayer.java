@@ -12,6 +12,7 @@ import static no.ntnu.folk.game.R.drawable.pausegame;
 import java.util.ArrayList;
 
 import no.ntnu.folk.game.Program;
+import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.Direction;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;

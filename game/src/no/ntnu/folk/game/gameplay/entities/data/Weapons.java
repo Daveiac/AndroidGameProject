@@ -10,14 +10,15 @@ import java.util.ArrayList;
  *
  */
 public enum Weapons {
-	HANDGUN(Projectiles.HANDGUN_BULLET, R.drawable.handgun),
-	ROCKET_LAUNCHER(Projectiles.ROCKET, R.drawable.rocketlancher),
-	RIFLE(Projectiles.RIFLE_BULLET, R.drawable.rifle),
-	TURTLEGUN(Projectiles.TURTLE, R.drawable.turtlegun),
-	GRENADE(Projectiles.GRENADE, R.drawable.grenade);
+	HANDGUN(Projectiles.HANDGUN_BULLET, R.drawable.handgun, R.drawable.handgun),
+	ROCKET_LAUNCHER(Projectiles.ROCKET, R.drawable.rocketlancher, R.drawable.rocketlancher),
+	RIFLE(Projectiles.RIFLE_BULLET, R.drawable.rifle, R.drawable.rifle),
+	TURTLEGUN(Projectiles.TURTLE, R.drawable.turtlegun, R.drawable.turtlegun),
+	GRENADE(Projectiles.GRENADE, R.drawable.grenade, R.drawable.grenade);
 
 	private final Projectiles projectile;
 	private final int image;
+	private final int selectImage;
 
 	private static Weapons[] defaultWeapons = new Weapons[]{
 			HANDGUN,
@@ -31,9 +32,10 @@ public enum Weapons {
 	 * @param projectile The type of projectile used in this weapon
 	 * @param image      Image used for drawing this weapon
 	 */
-	Weapons(Projectiles projectile, int image) {
+	Weapons(Projectiles projectile, int image, int selectImage) {
 		this.projectile = projectile;
 		this.image = image;
+		this.selectImage = selectImage;
 	}
 
 	/**
@@ -59,5 +61,8 @@ public enum Weapons {
 	 */
 	public int getImage() {
 		return image;
+	}
+	public int getSelectImage() {
+		return this.selectImage;
 	}
 }
