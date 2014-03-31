@@ -93,6 +93,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		for (int i = 0; i < pointerCount; i++) {
 			boolean buttonPressed = false;
 			PointF point = activePointers.valueAt(i);
+			if (point == null) continue;
 			for (Button button : buttons) {
 				if (button.contains(point.x, point.y)) {
 					button.hold();
