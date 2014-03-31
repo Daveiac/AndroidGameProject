@@ -1,15 +1,14 @@
 package no.ntnu.folk.game.gameplay.levels.controllers;
 
-import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
-import no.ntnu.folk.game.gameplay.levels.views.TokenFactory;
-import no.ntnu.folk.game.gameplay.levels.views.Wall;
-import no.ntnu.folk.game.gameplay.models.LevelModel;
-import sheep.game.Game;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import no.ntnu.folk.game.gameplay.levels.views.LevelToken;
+import no.ntnu.folk.game.gameplay.levels.views.TokenFactory;
+import no.ntnu.folk.game.gameplay.models.LevelModel;
+import sheep.game.Game;
 
 /**
  * Level parser. This class parses the level corresponding the level model and creates the necessary tokens.
@@ -40,12 +39,12 @@ public class LevelParser {
 				} else if (line.length() != 0 && !line.startsWith("#")) {
 					y++;
 					for (int x = 0; x < line.length(); x++) {
-						if (line.charAt(x) == 'w') {
-							Wall wall = (Wall) TokenFactory.createToken("Wall", x, y);
-							grid[y][x] = wall;
-							lvlModel.getLevelTokens().add(wall);
-						} else if (line.charAt(x) == 's') {
+						if (line.charAt(x) == 's') {
 							lvlModel.addStartPosition(x, y);
+						} else {
+							LevelToken levelToken = TokenFactory.createToken(line.charAt(x), x, y);
+							grid[y][x] = levelToken;
+							lvlModel.getLevelTokens().add(levelToken);
 						}
 					}
 				}

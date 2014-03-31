@@ -307,7 +307,6 @@ public class GameLayer extends Layer implements CollisionListener {
 					projectile.collides(player);
 				}
 			}
-			model.getCurrentPlayer().setWeaponFired(false);
 		}
 	}
 
