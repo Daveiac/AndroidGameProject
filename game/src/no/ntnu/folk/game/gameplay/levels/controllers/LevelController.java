@@ -5,7 +5,7 @@ import no.ntnu.folk.game.R;
 import java.lang.reflect.Field;
 
 /**
- * Level controller. Loads levels .
+ * Level controller. Loads levels from source folder.
  */
 public class LevelController {
 
