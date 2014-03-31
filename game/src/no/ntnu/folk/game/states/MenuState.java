@@ -19,11 +19,14 @@ public abstract class MenuState extends State implements View.OnTouchListener {
 	protected MenuItem[] menuItems;
 
 	private MenuItem menuItemTouched = null;
+	private String name;
 
 	/**
 	 * The menu state constructor.
+	 * @param name
 	 */
-	protected MenuState() {
+	protected MenuState(String name) {
+		this.name = name;
 		Program.getView().setOnTouchListener(this);
 		addMenuItems();
 	}
@@ -68,7 +71,7 @@ public abstract class MenuState extends State implements View.OnTouchListener {
 		if (canvas == null) return;
 		canvas.drawColor(BLACK);
 
-		canvas.drawText(getClass().getSimpleName(), ProgramConstants.getWindowSize()[0] / 2, ProgramConstants.getWindowSize()[1] / 28, Font.WHITE_SANS_BOLD_20);  // Temp
+		canvas.drawText(name, ProgramConstants.getWindowSize()[0] / 2, ProgramConstants.getWindowSize()[1] / 28, Font.WHITE_SANS_BOLD_20);  // Temp
 
 		for (MenuItem menuItem : menuItems) {
 			menuItem.draw(canvas);

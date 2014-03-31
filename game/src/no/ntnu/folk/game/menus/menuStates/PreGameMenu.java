@@ -19,6 +19,10 @@ public class PreGameMenu extends MenuState {
 	private GameModel gameModel;
 	private int currentLevel;
 
+	public PreGameMenu() {
+		super("Prepare games");
+	}
+
 	/**
 	 * Make all the buttons to the menu
 	 */

@@ -9,6 +9,9 @@ import no.ntnu.folk.game.states.MenuState;
  *
  */
 public class PauseMenu extends MenuState {
+	public PauseMenu() {
+		super("Pause");
+	}
 	// TODO
 
 	@Override

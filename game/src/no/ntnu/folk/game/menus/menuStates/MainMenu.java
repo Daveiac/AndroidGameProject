@@ -9,6 +9,9 @@ import no.ntnu.folk.game.states.MenuState;
  *
  */
 public class MainMenu extends MenuState {
+	public MainMenu() {
+		super("Main menu");
+	}
 
 	// TODO
 

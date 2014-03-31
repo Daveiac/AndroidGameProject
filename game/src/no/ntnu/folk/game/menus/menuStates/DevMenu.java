@@ -11,6 +11,10 @@ import no.ntnu.folk.game.states.MenuState;
  */
 public class DevMenu extends MenuState {
 
+	public DevMenu() {
+		super("Developer menu");
+	}
+
 	@Override
 	protected void addMenuItems() {
 		int position = 0;

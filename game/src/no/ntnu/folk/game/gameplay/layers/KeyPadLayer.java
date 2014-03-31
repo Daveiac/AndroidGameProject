@@ -1,18 +1,10 @@
 package no.ntnu.folk.game.gameplay.layers;
 
-import static no.ntnu.folk.game.R.drawable.aim;
-import static no.ntnu.folk.game.R.drawable.endturn;
-import static no.ntnu.folk.game.R.drawable.keypadleft;
-import static no.ntnu.folk.game.R.drawable.keypadright;
-import static no.ntnu.folk.game.R.drawable.keypadup;
-import static no.ntnu.folk.game.R.drawable.shootbutton;
-import static no.ntnu.folk.game.R.drawable.swapbutton;
-import static no.ntnu.folk.game.R.drawable.pausegame;
-
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import no.ntnu.folk.game.Program;
+import no.ntnu.folk.game.R;
 import no.ntnu.folk.game.constants.Direction;
 import no.ntnu.folk.game.constants.GameplayConstants;
 import no.ntnu.folk.game.constants.ProgramConstants;
@@ -67,7 +59,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		this.gameState = gameState;
 		this.gameModel = gameModel;
 		weaponSelection = new WeaponSelection(gameModel);
-		aimImage = new Image(aim);
+		aimImage = new Image(R.drawable.aim);
 		createButtons(ProgramConstants.getWindowSize());
 		weaponButtons = weaponSelection.getWeaponButtons();
 		activePointers = new ConcurrentHashMap<Integer, PointF>();
@@ -87,13 +79,13 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		Vector2 fireKeyPos = new Vector2(windowSize[0] * 0.76f, windowSize[1] * 0.90f);
 		Vector2 endKeyPos = new Vector2(windowSize[0] * 0.60f, windowSize[1] * 0.90f);
 		buttons = new Button[]{
-				leftKey = new Button(keypadleft, leftKeyPos, true),
-				rightKey = new Button(keypadright, rightKeyPos, true),
-				upKey = new Button(keypadup, upKeyPos, false),
-				swapKey = new Button(swapbutton, swapKeyPos, false),
-				fireKey = new Button(shootbutton, fireKeyPos, false),
-				endKey = new Button(endturn, endKeyPos, false),
-				pauseKey = new Button(pausegame, pauseKeyPos, false),
+				leftKey = new Button(R.drawable.keypadleft, leftKeyPos, true),
+				rightKey = new Button(R.drawable.keypadright, rightKeyPos, true),
+				upKey = new Button(R.drawable.keypadup, upKeyPos, false),
+				swapKey = new Button(R.drawable.swapbutton, swapKeyPos, false),
+				fireKey = new Button(R.drawable.shootbutton, fireKeyPos, false),
+				endKey = new Button(R.drawable.endturn, endKeyPos, false),
+				pauseKey = new Button(R.drawable.pausegame, pauseKeyPos, false),
 		};
 	}
 

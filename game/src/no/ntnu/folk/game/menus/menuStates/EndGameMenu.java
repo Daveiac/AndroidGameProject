@@ -21,6 +21,7 @@ public class EndGameMenu extends MenuState {
 	 * @param winnerText	The winner text containing who won the game.
 	 */
 	public EndGameMenu(float gameTime, String winnerText) {
+		super("Game over");
 		this.gameTime = gameTime;
 		this.winnerText = winnerText;
 	}
