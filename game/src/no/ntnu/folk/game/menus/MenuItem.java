@@ -6,6 +6,9 @@ import sheep.graphics.Color;
 import sheep.graphics.Font;
 import sheep.math.BoundingBox;
 
+/**
+ * Used to create buttons in menus, to be used in MenuStates
+ */
 public class MenuItem {
 	private final BoundingBox boundingBox;
 	private final MenuOptions option;

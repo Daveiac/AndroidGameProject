@@ -21,6 +21,7 @@ import no.ntnu.folk.game.menus.menuStates.PauseMenu;
 import no.ntnu.folk.game.states.GameState;
 import sheep.game.Game;
 import sheep.game.Layer;
+import sheep.graphics.Font;
 import sheep.graphics.Image;
 import sheep.math.BoundingBox;
 import sheep.math.Vector2;
@@ -169,8 +170,21 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		drawOverlay(canvas);
 		drawButtons(canvas);
 		drawAim(canvas);
+		drawWeaponSelect(canvas);
+	}
+
+	public void drawWeaponSelect(Canvas canvas) {
 		for (Button button : weaponButtons) {
 			button.draw(canvas);
+			if (button.isEnabled()) {
+				int ammo = gameModel.getCurrentPlayer().getWeaponList().get(weaponButtons.indexOf(button)).getAmmo();
+				if(ammo == -1){
+					canvas.drawText("99", button.getPosition().getX() - 30, button.getPosition().getY() + 25, Font.WHITE_SANS_BOLD_20);
+				}
+				else{
+					canvas.drawText(""+ammo, button.getPosition().getX() - 30, button.getPosition().getY() + 25, Font.WHITE_SANS_BOLD_20);
+				}
+			}
 		}
 	}
 

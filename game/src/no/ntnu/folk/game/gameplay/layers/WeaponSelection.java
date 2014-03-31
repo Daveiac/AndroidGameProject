@@ -4,6 +4,7 @@ import no.ntnu.folk.game.constants.ProgramConstants;
 import no.ntnu.folk.game.gameplay.entities.models.PlayerModel;
 import no.ntnu.folk.game.gameplay.entities.models.WeaponModel;
 import no.ntnu.folk.game.gameplay.models.GameModel;
+import sheep.graphics.Image;
 import sheep.math.Vector2;
 
 import java.util.ArrayList;
