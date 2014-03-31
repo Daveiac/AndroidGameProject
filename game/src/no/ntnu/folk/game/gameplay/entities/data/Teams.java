@@ -3,6 +3,10 @@ package no.ntnu.folk.game.gameplay.entities.data;
 import no.ntnu.folk.game.R;
 import sheep.graphics.Color;
 
+/**
+ * An enum class for the teams in-game used for creation of teams.
+ *
+ */
 public enum Teams {
 	BLUE(Color.BLUE, R.drawable.player0),
 	RED(Color.RED, R.drawable.player1),
@@ -24,6 +28,10 @@ public enum Teams {
 		this.playerImage = playerImage;
 	}
 
+	/**
+	 * @param ordinal An int to achieve the targetable team.
+	 * @return Team given by the ordinal
+	 */
 	public static Teams getTeamFromOrdinal(int ordinal) {
 		return values()[ordinal];
 	}

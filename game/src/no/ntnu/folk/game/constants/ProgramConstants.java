@@ -1,5 +1,9 @@
 package no.ntnu.folk.game.constants;
 
+/**
+ * A class that contains all the program constants.
+ *
+ */
 public class ProgramConstants {
 	// Debugging
 	public static boolean debugging = false;

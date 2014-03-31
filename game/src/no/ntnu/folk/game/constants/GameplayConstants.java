@@ -1,5 +1,9 @@
 package no.ntnu.folk.game.constants;
 
+/**
+ * A class containing all the gameplay constants.
+ *
+ */
 public class GameplayConstants {
 	
 	/**

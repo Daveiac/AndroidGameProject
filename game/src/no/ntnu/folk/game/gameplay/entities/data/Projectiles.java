@@ -2,6 +2,10 @@ package no.ntnu.folk.game.gameplay.entities.data;
 
 import no.ntnu.folk.game.R;
 
+/**
+ * An enum class for the projectiles in-game used for creation of projectiles.
+ *
+ */
 public enum Projectiles {
 	HANDGUN_BULLET(400, 15, 0, 0, -1, R.drawable.bullet_small, -1),
 	RIFLE_BULLET(500, 25, 0, 0, -1, R.drawable.bullet_medium, -1),
@@ -75,6 +79,9 @@ public enum Projectiles {
 		return explosionImage;
 	}
 
+	/**
+	 * @return Explosion timer for this projectile
+	 */
 	public int getExplosionTimer() {
 		return explosionTimer;
 	}
