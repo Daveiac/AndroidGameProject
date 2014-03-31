@@ -50,8 +50,6 @@ public class GameModel {
 		this.currentLevel = new LevelModel(0);
 		this.gameType = GameTypes.FFA;
 		this.turnTimer = GameplayConstants.MIN_TURN_TIMER;
-		createPlayers();
-		currentPlayer = players.get(0);
 		tombStones = new ArrayList<TombStoneModel>();
 		kill = new ArrayList<EntityModel>();
 		projectiles = new ArrayList<ProjectileModel>();
@@ -65,7 +63,7 @@ public class GameModel {
 	/**
 	 * Create players for this game.
 	 */
-	private void createPlayers() {
+	public void startGame() {
 		players = new ArrayList<PlayerModel>(playerCount);
 		ArrayList<int[]> startPos = currentLevel.getStartPositions();
 		for (int i = 0; i < playerCount; i++) {
@@ -80,6 +78,7 @@ public class GameModel {
 			PlayerModel player = new PlayerModel(name, position, team, startHealth);
 			players.add(player);
 		}
+		currentPlayer = players.get(0);
 	}
 
 	/**
@@ -195,7 +194,6 @@ public class GameModel {
 	 */
 	public void setPlayerCount(int playerCount) {
 		this.playerCount = playerCount;
-		createPlayers();
 	}
 
 	/**
@@ -211,7 +209,6 @@ public class GameModel {
 	 */
 	public void setStartHealth(int startHealth) {
 		this.startHealth = startHealth;
-		createPlayers();
 	}
 
 	/**
@@ -227,7 +224,6 @@ public class GameModel {
 	 */
 	public void setGameType(GameTypes gameType) {
 		this.gameType = gameType;
-		createPlayers();
 	}
 
 	/**
@@ -245,7 +241,6 @@ public class GameModel {
 	public void setLevel(int level, String levelName) {
 		this.levelName = levelName;
 		currentLevel = new LevelModel(level);
-		createPlayers();
 	}
 
 	/**
