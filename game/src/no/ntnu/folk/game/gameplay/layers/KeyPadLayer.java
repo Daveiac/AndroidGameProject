@@ -63,6 +63,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		activePointers = new SparseArray<PointF>();
 		Program.getView().setOnTouchListener(this);
 	}
+
 	private void createButtons(int[] windowSize) {
 		Vector2 leftKeyPos = new Vector2(windowSize[0] * 0.08f, windowSize[1] * 0.90f);
 		Vector2 rightKeyPos = new Vector2(windowSize[0] * 0.32f, windowSize[1] * 0.90f);
@@ -73,12 +74,12 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		Vector2 endKeyPos = new Vector2(windowSize[0] * 0.60f, windowSize[1] * 0.90f);
 		buttons = new Button[]{
 				leftKey = new Button(keypadleft, keypadleft, leftKeyPos, true),
-						rightKey = new Button(keypadright, keypadright, rightKeyPos, true),
-						upKey = new Button(keypadup, keypadup, upKeyPos, false),
-						swapKey = new Button(swapbutton, swapbutton, swapKeyPos, false),
-						fireKey = new Button(shootbutton, shootbutton, fireKeyPos, false),
-						endKey = new Button(endturn, endturn, endKeyPos, false),
-						pauseKey = new Button(pausegame, pausegame, pauseKeyPos, false),
+				rightKey = new Button(keypadright, keypadright, rightKeyPos, true),
+				upKey = new Button(keypadup, keypadup, upKeyPos, false),
+				swapKey = new Button(swapbutton, swapbutton, swapKeyPos, false),
+				fireKey = new Button(shootbutton, shootbutton, fireKeyPos, false),
+				endKey = new Button(endturn, endturn, endKeyPos, false),
+				pauseKey = new Button(pausegame, pausegame, pauseKeyPos, false),
 		};
 	}
 
@@ -141,7 +142,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 			}
 		}
 		if (endKey.popPressed()) {
-			if (gameModel.getCurrentPlayer().isFiredWeapon() == false) {
+			if (!gameModel.getCurrentPlayer().isFiredWeapon()) {
 				gameModel.setGameTime(0);
 			}
 		}
@@ -181,6 +182,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		}
 		aimImage.draw(canvas, aimX - aimImage.getWidth() / 2, aimY - aimImage.getHeight() / 2);
 	}
+
 	private void drawButtons(Canvas canvas) {
 		for (Button button : buttons) {
 			button.draw(canvas);
@@ -193,31 +195,31 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		int pointerId = event.getPointerId(pointerIndex);
 		int maskedAction = event.getActionMasked();
 		switch (maskedAction) {
-		case MotionEvent.ACTION_DOWN:
-		case MotionEvent.ACTION_POINTER_DOWN:
-			onTouchDown(event);
-			break;
-		case MotionEvent.ACTION_MOVE:
-			int pointerCount = event.getPointerCount();
-			for (int i = 0; i < pointerCount; i++) {
-				PointF point = activePointers.get(event.getPointerId(i));
-				if (point != null) {
-					point.set(event.getX(i), event.getY(i));
+			case MotionEvent.ACTION_DOWN:
+			case MotionEvent.ACTION_POINTER_DOWN:
+				onTouchDown(event);
+				break;
+			case MotionEvent.ACTION_MOVE:
+				int pointerCount = event.getPointerCount();
+				for (int i = 0; i < pointerCount; i++) {
+					PointF point = activePointers.get(event.getPointerId(i));
+					if (point != null) {
+						point.set(event.getX(i), event.getY(i));
+					}
 				}
-			}
-			break;
-		case MotionEvent.ACTION_UP:
-		case MotionEvent.ACTION_POINTER_UP:
-		case MotionEvent.ACTION_CANCEL:
-			for (Button button : buttons) {
-				if (button.contains(activePointers.get(pointerId).x, activePointers.get(pointerId).y)) {
-					button.release();
+				break;
+			case MotionEvent.ACTION_UP:
+			case MotionEvent.ACTION_POINTER_UP:
+			case MotionEvent.ACTION_CANCEL:
+				for (Button button : buttons) {
+					if (button.contains(activePointers.get(pointerId).x, activePointers.get(pointerId).y)) {
+						button.release();
+					}
 				}
-			}
-			activePointers.remove(pointerId);
-			break;
-		default:
-			break;
+				activePointers.remove(pointerId);
+				break;
+			default:
+				break;
 		}
 		return false;
 	}
