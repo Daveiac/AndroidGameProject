@@ -179,7 +179,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 			if (button.isEnabled()) {
 				int ammo = gameModel.getCurrentPlayer().getWeaponList().get(weaponButtons.indexOf(button)).getAmmo();
 				if(ammo == -1){
-					canvas.drawText("99", button.getPosition().getX() - 30, button.getPosition().getY() + 25, Font.WHITE_SANS_BOLD_20);
+					canvas.drawText("-", button.getPosition().getX() - 30, button.getPosition().getY() + 25, Font.WHITE_SANS_BOLD_20);
 				}
 				else{
 					canvas.drawText(""+ammo, button.getPosition().getX() - 30, button.getPosition().getY() + 25, Font.WHITE_SANS_BOLD_20);
