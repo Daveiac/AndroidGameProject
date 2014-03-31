@@ -4,6 +4,10 @@ import no.ntnu.folk.game.gameplay.entities.views.EntityToken;
 import no.ntnu.folk.game.gameplay.entities.views.TombStoneToken;
 import sheep.math.Vector2;
 
+/**
+ * The model for the tomb stones which occure after a players death.
+ *
+ */
 public class TombStoneModel extends EntityModel {
 
 	/**

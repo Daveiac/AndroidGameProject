@@ -133,17 +133,32 @@ public class PlayerModel extends EntityModel {
 		health -= Math.abs(damage);
 	}
 
+	/**
+	 * @return Returns true if the current weapon is already used this round.
+	 */
 	public boolean isCold() {
 		return cold;
 	}
+	
+	/**
+	 * Changes the status of whether the current weapon is used or not this turn by the given parameter.
+	 * @param cold The status of if the weapon is fired this turn or not
+	 */
 	public void setCold(boolean cold) {
 		this.cold = cold;
 	}
 
+	/**
+	 * @return Returns true if this weapon is currently firing a projectile.
+	 */
 	public boolean isFiredWeapon() {
 		return firedWeapon;
 	}
 
+	/**
+	 * Changes the status of whether the current weapon is firing a projectile or not by the given parameter.
+	 * @param firedWeapon
+	 */
 	public void setFiredWeapon(boolean firedWeapon) {
 		this.firedWeapon = firedWeapon;
 	}

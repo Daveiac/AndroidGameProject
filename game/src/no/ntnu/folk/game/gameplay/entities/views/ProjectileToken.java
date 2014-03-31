@@ -3,6 +3,10 @@ package no.ntnu.folk.game.gameplay.entities.views;
 import no.ntnu.folk.game.gameplay.entities.models.ProjectileModel;
 import sheep.math.Vector2;
 
+/**
+ * The projectile token class is a view of the projectile model class which it represents.
+ *
+ */
 public class ProjectileToken extends EntityToken {
 
 	private int rotation;
