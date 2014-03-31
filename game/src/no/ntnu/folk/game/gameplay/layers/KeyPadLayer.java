@@ -161,7 +161,6 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 			}
 		}
 		if (pauseKey.popPressed()) {
-			gameModel.setPaused(true);
 			Game.getInstance().pushState(new PauseMenu());
 		}
 	}
