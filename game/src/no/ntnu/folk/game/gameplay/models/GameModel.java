@@ -63,7 +63,7 @@ public class GameModel {
 	/**
 	 * Create players for this game.
 	 */
-	public void startGame() {
+	public void initializeGame() {
 		players = new ArrayList<PlayerModel>(playerCount);
 		ArrayList<int[]> startPos = currentLevel.getStartPositions();
 		for (int i = 0; i < playerCount; i++) {
