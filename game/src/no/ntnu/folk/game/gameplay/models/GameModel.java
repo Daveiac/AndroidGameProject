@@ -185,7 +185,7 @@ public class GameModel {
 	 * @return The amount of players participating.
 	 */
 	public int getPlayerCount() {
-		return players.size();
+		return playerCount;
 	}
 
 	/**
@@ -331,5 +331,8 @@ public class GameModel {
 	 */
 	public String getWinnerText() {
 		return this.winnerText;
+	}
+	public void setAvailablePlayerTime(int time) {
+		this.availablePlayerTime = time;
 	}
 }

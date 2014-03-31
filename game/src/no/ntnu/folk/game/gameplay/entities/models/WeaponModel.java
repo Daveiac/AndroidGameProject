@@ -79,13 +79,13 @@ public class WeaponModel extends EntityModel {
 	public Weapons getWeapon() {
 		return weapon;
 	}
-	public boolean isAmmo() {
-		return this.ammo > 0;
+	public boolean hasAmmo() {
+		return this.ammo > 0 || this.ammo == -1;
 	}
 	public int getAmmo() {
 		return this.ammo;
 	}
 	public void reduceAmmo(){
-		this.ammo--;
+		if(ammo != -1) this.ammo--;
 	}
 }
