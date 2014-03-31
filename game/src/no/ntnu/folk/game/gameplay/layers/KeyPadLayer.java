@@ -10,6 +10,7 @@ import static no.ntnu.folk.game.R.drawable.swapbutton;
 import static no.ntnu.folk.game.R.drawable.pausegame;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import no.ntnu.folk.game.Program;
 import no.ntnu.folk.game.constants.Direction;
@@ -56,7 +57,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 
 	private float buttonOverlayHeight;
 
-	private SparseArray<PointF> activePointers;
+	private HashMap<Integer, PointF> activePointers;
 
 	/**
 	 * Constructor of the given game state and game model.
@@ -70,7 +71,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		aimImage = new Image(aim);
 		createButtons(ProgramConstants.getWindowSize());
 		weaponButtons = weaponSelection.getWeaponButtons();
-		activePointers = new SparseArray<PointF>();
+		activePointers = new HashMap<Integer, PointF>();
 		Program.getView().setOnTouchListener(this);
 	}
 
@@ -99,15 +100,21 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 
 	@Override
 	public void update(float dt) {
-		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
 		Program.getView().setOnTouchListener(this); // FIXME
 		// Why I did this: When a state is popped, the OnTouchListener needs to be updated.
 		// Unfortunately I could not find a better way to to do it
 
-		int pointerCount = activePointers.size();
-		for (int i = 0; i < pointerCount; i++) {
+		updateButtons();
+		useButtons();
+	}
+
+	/**
+	 * Update weapons from the active pointers
+	 */
+	private void updateButtons() {
+		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
+		for (PointF point : activePointers.values()) {
 			boolean buttonPressed = false;
-			PointF point = activePointers.valueAt(i);
 			if (point == null) continue;
 			for (Button button : buttons) {
 				if (button.contains(point.x, point.y)) {
@@ -127,26 +134,33 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				}
 			}
 		}
+	}
 
-		boolean leftKeyPressed;
-		boolean rightKeyPressed;
-		if (leftKeyPressed = leftKey.popPressed() && !currentPlayer.getCollision().contains(Direction.LEFT)) {
+	/**
+	 * Use all pressed buttons
+	 */
+	private void useButtons() {
+		PlayerModel currentPlayer = gameModel.getCurrentPlayer();
+		// Direction keys
+		boolean leftKeyPressed = leftKey.popPressed();
+		boolean rightKeyPressed = rightKey.popPressed();
+		if (leftKeyPressed && rightKeyPressed || !leftKeyPressed && !rightKeyPressed) { // If none, or both, keys are pressed
+			currentPlayer.setSpeed(0, currentPlayer.getSpeed().getY());
+		} else if (leftKeyPressed && !currentPlayer.getCollision().contains(Direction.LEFT)) {
 			currentPlayer.setSpeed(-GameplayConstants.PLAYER_SPEED, currentPlayer.getSpeed().getY());
 			currentPlayer.setAim(-Math.abs(currentPlayer.getAim().getX()), currentPlayer.getAim().getY());
-		}
-		if (rightKeyPressed = rightKey.popPressed() && !currentPlayer.getCollision().contains(Direction.RIGHT)) {
+		} else if (rightKeyPressed && !currentPlayer.getCollision().contains(Direction.RIGHT)) {
 			currentPlayer.setSpeed(GameplayConstants.PLAYER_SPEED, currentPlayer.getSpeed().getY());
 			currentPlayer.setAim(Math.abs(currentPlayer.getAim().getX()), currentPlayer.getAim().getY());
-		}
-		if (!leftKeyPressed && !rightKeyPressed || leftKeyPressed && rightKeyPressed) { // If none, or both, keys are pressed
-			currentPlayer.setSpeed(0, currentPlayer.getSpeed().getY());
 		}
 		if (upKey.popPressed() && currentPlayer.getCollision().contains(Direction.DOWN)) {
 			currentPlayer.setSpeed(currentPlayer.getSpeed().getX(), -GameplayConstants.JUMP_FORCE);
 		}
+		// Fire
 		if (fireKey.popPressed()) {
 			gameState.fireWeapon();
 		}
+		// Swap weapon
 		if (swapKey.popPressed()) {
 			if (weaponSelection.isActive()) {
 				weaponSelection.setActive(false);
@@ -155,12 +169,14 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 				weaponSelection.setActive(true);
 			}
 		}
+		// End turn
 		if (endKey.popPressed()) {
 			if (!gameModel.getCurrentPlayer().isWeaponFired()) {
 				weaponSelection.setActive(false);
 				gameModel.nextPlayer();
 			}
 		}
+		// Pause
 		if (pauseKey.popPressed()) {
 			Game.getInstance().pushState(new PauseMenu());
 		}
@@ -273,7 +289,7 @@ public class KeyPadLayer extends Layer implements View.OnTouchListener {
 		int pointerId = event.getPointerId(pointerIndex);
 
 		PointF point = new PointF(event.getX(pointerIndex), event.getY(pointerIndex));
-		activePointers.append(pointerId, point);
+		activePointers.put(pointerId, point);
 
 		for (Button button : buttons) {
 			if (button.contains(point.x, point.y)) {
