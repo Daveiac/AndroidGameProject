@@ -37,8 +37,9 @@ public class WeaponSelection {
 		float weaponListY = ProgramConstants.getWindowSize()[1] * 0.75f;
 		weaponButtons = new ArrayList<Button>();
 		for (WeaponModel wm : model.getCurrentPlayer().getWeaponList()) {
-			int offset = model.getCurrentPlayer().getWeaponList().indexOf(wm) * 50;
-			Button button = new Button(wm.getWeapon().getImage(), new Vector2(weaponListX, weaponListY - offset), false);
+			int offset = model.getCurrentPlayer().getWeaponList().indexOf(wm) * 150;
+			Button button = new Button(wm.getWeapon().getSelectImage(), wm.getWeapon().getSelectImage(), new Vector2(weaponListX, weaponListY - offset), false);
+
 			weaponButtons.add(button);
 			button.setEnabled(false);
 		}
